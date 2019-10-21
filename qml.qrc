@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>AnchorChangeState.qml</file>
+        <file>SettingsIcon.qml</file>
+        <file>ControlsButton.qml</file>
+        <file>SettingsButton.qml</file>
+        <file>ControlsRect.qml</file>
+        <file>ControlsTitleBar.qml</file>
+        <file>BeautifyRect.qml</file>
+        <file>GraphRect.qml</file>
+        <file>GraphCanvas.qml</file>
+        <file>GraphCanvasJS.js</file>
+    </qresource>
+</RCC>
