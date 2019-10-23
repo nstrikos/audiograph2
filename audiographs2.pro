@@ -14,7 +14,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        main.cpp
+        fparser/fparser.cc \
+        fparser/fpoptimizer.cc \
+        function.cpp \
+        main.cpp \
+        point.cpp
 
 RESOURCES += qml.qrc
 
@@ -29,4 +33,17 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-DISTFILES +=
+DISTFILES += \
+    fparser/extrasrc/fp_identifier_parser.inc \
+    fparser/extrasrc/fp_opcode_add.inc
+
+HEADERS += \
+    constants.h \
+    fparser/extrasrc/fpaux.hh \
+    fparser/extrasrc/fptypes.hh \
+    fparser/fparser.hh \
+    fparser/fparser_gmpint.hh \
+    fparser/fparser_mpfr.hh \
+    fparser/fpconfig.hh \
+    function.h \
+    point.h
