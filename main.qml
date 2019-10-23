@@ -55,4 +55,12 @@ Window {
     onWidthChanged: setAnchor()
     onHeightChanged: setAnchor()
     onAnchorToLeftChanged: anchorChangeState.anchorChanged()
+
+    Connections {
+        target: myfunction
+        onUpdate: {
+            graphRect.updatePoints()
+        }
+        onError: console.log(err)
+    }
 }

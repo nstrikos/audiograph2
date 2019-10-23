@@ -3,6 +3,7 @@
 #include <QQmlContext>
 
 #include "function.h"
+#include "curve.h"
 
 
 int main(int argc, char *argv[])
@@ -10,8 +11,12 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
+    qmlRegisterType<Curve>("Curve", 1, 0, "Curve");
+
+
 
     Function function;
+    qRegisterMetaType<Function*>("Function*");
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("myfunction", &function);

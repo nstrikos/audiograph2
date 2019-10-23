@@ -42,6 +42,7 @@ Rectangle {
                 placeholderText: (parent.width > 0) ? "Function expression" : ""
                 height: 50
                 selectByMouse: true
+                onTextChanged: calculate()
 //                onTextChanged: {
 //                    expression = text
 //                    textInput2.text = "-10"
@@ -189,5 +190,16 @@ Rectangle {
     }
 
     BeautifyRect {
+    }
+
+    function calculate () {
+        myfunction.calculate(textInput.text,
+                             textInput2.text,
+                             textInput3.text,
+                             textInput4.text,
+                             textInput5.text,
+                             "100",
+                             graphRect.width,
+                             graphRect.height)
     }
 }

@@ -11,10 +11,10 @@ function initializeCanvas()
 
     if (canvas.width > 0 && canvas.height > 0) {
         //There is a problem initializing canvas, that's why we use canvasDataAreValid variable
-        canvasDataAreValid = true
-        canvasData = ctx.createImageData(canvas.width, canvas.height)
+        //canvasDataAreValid = true
+        //canvasData = ctx.createImageData(canvas.width, canvas.height)
         ctx.reset()
-        ctx.fillStyle = myparameters.backgroundColor;
+        ctx.fillStyle = "white"//myparameters.backgroundColor;
         ctx.fillRect(0, 0, canvas.width, canvas.height)
     }
 }
@@ -45,7 +45,7 @@ function drawGrid()
 
     ctx.lineWidth = 0.1
     //ctx.setLineDash([1, 4]);
-    ctx.strokeStyle = myparameters.axesColor;
+    ctx.strokeStyle = "black"//myparameters.axesColor;
 
     drawVerticalLines()
 
@@ -66,7 +66,7 @@ function drawAxes()
     var y1 = myfunction.maxY()
     ctx.beginPath()
     ctx.lineWidth = 4
-    ctx.strokeStyle = myparameters.axesColor;
+    ctx.strokeStyle = "black"//myparameters.axesColor;
     ctx.setLineDash([]);
     var xAxes =  Math.round( strip( canvas.width / (x1 - x0) * (0 - x0) ) )
     var yAxes = Math.round( strip(canvas.height / (y1 - y0) * (0 - y0) ) )
@@ -140,7 +140,7 @@ function drawVerticalLines()
     while ( i < xGridCoords.length) {
         x = xGridCoords[i];
         ctx.font = "10px sans-serif";
-        ctx.fillStyle = myparameters.axesColor;
+        ctx.fillStyle = "black"//myparameters.axesColor;
         var text = +parseFloat(xGridValues[i]).toFixed(5)
         var w = ctx.measureText(text).width
         if ( (x + w/2) >= canvas.width )
@@ -192,7 +192,7 @@ function drawHorizontalLines()
     var y = 0;
     while ( i < yGridCoords.length) {
         y = yGridCoords[i];
-        ctx.fillStyle = myparameters.axesColor;
+        ctx.fillStyle = "black"//myparameters.axesColor;
         if (i === (yGridCoords.length - 1) )
             ctx.fillText(+parseFloat(yGridValues[i]).toFixed(5), 0, y + 10);
         else

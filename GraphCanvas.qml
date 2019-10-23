@@ -6,6 +6,12 @@ import "GraphCanvasJS.js" as CanvasJS
 Canvas {
     id: canvas
 
+    property var ctx
+    property var xGridValues: []
+    property var yGridValues: []
+    property var xGridCoords: []
+    property var yGridCoords: []
+
     renderStrategy: Canvas.Immediate
 
     function updatePoints() {
