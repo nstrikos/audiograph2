@@ -56,10 +56,23 @@ Window {
     onHeightChanged: setAnchor()
     onAnchorToLeftChanged: anchorChangeState.anchorChanged()
 
+    Item {
+        id: graphParameters
+        property var minX: -10
+        property var maxX: 10
+        property var minY: -5
+        property var maxY: 5
+    }
+
     Connections {
         target: myfunction
         onUpdate: {
-            graphRect.updatePoints()
+            graphParameters.minX = myfunction.minX();
+            graphParameters.maxX = myfunction.maxX();
+            graphParameters.minY = myfunction.minY();
+            graphParameters.maxY = myfunction.maxY();
+
+            graphRect.updateCanvas()
         }
         onError: console.log(err)
     }

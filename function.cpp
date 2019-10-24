@@ -9,15 +9,14 @@ void Function::calculate(QString expression,
                          QString minX,
                          QString maxX,
                          QString minY,
-                         QString maxY,
-                         QString numPoints)
+                         QString maxY)
 {
     m_expression = expression;
     m_minXString = minX;
     m_maxXString = maxX;
     m_minYString = minY;
     m_maxYString = maxY;
-    m_pointsString = numPoints;
+//    m_pointsString = numPoints;
 
     performCalculation();
 }
@@ -47,7 +46,7 @@ void Function::replaceConstants()
 
 bool Function::check()
 {
-    bool okMin, okMax, okMinY, okMaxY, okPoints;
+    bool okMin, okMax, okMinY, okMaxY;//, okPoints;
     double minDouble = m_minXString.toDouble(&okMin);
     if (okMin) {
         m_minX = minDouble;
@@ -84,14 +83,14 @@ bool Function::check()
         return false;
     }
 
-    int pointsInt = m_pointsString.toInt(&okPoints);
-    if (okPoints) {
-        m_numPoints = pointsInt;
-    }
-    else {
-        emit error(tr("Points must be a positive integer number"));
-        return false;
-    }
+//    int pointsInt = m_pointsString.toInt(&okPoints);
+//    if (okPoints) {
+//        m_numPoints = pointsInt;
+//    }
+//    else {
+//        emit error(tr("Points must be a positive integer number"));
+//        return false;
+//    }
 
     if (m_maxX <= m_minX) {
         emit error(tr("Maximum must be greater than minimum."));
@@ -103,15 +102,15 @@ bool Function::check()
         return false;
     }
 
-    if (m_numPoints < MIN_POINTS) {
-        emit error (tr("Points must be greater than zero."));
-        return false;
-    }
+//    if (m_numPoints < MIN_POINTS) {
+//        emit error (tr("Points must be greater than zero."));
+//        return false;
+//    }
 
-    if (m_numPoints > MAX_POINTS) {
-        emit error (tr("Points must be fewer than 10000"));
-        return false;
-    }
+//    if (m_numPoints > MAX_POINTS) {
+//        emit error (tr("Points must be fewer than 10000"));
+//        return false;
+//    }
 
 
     m_fparser.AddConstant("pi", M_PI);

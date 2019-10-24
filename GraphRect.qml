@@ -27,8 +27,30 @@ Rectangle {
         color: "red"
     }
 
-    function updatePoints() {
-        graphCanvas.updatePoints()
+    PinchArea {
+        anchors.fill: parent
+        onPinchStarted: controlsRect.startPinch()
+        onPinchUpdated: controlsRect.handlePinch(pinch.scale)
+        MouseArea {
+            anchors.fill: parent
+            onWheel: controlsRect.handleZoom(wheel.angleDelta.y)
+
+            onPressedChanged: {
+                if (pressed)
+                    controlsRect.startDrag(mouseX, mouseY)
+            }
+            onPositionChanged: {
+                if (pressed)
+                    controlsRect.handleDrag(mouseX, mouseY)
+            }
+        }
+    }
+
+    function updateCanvas() {
+        graphCanvas.updateCanvas()
         curve.draw(myfunction)
     }
+
+    onWidthChanged: controlsRect.calculate()
+    onHeightChanged: controlsRect.calculate()
 }

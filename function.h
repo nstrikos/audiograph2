@@ -18,8 +18,7 @@ public:
                                QString minX,
                                QString maxX,
                                QString minY,
-                               QString maxY,
-                               QString numPoints);
+                               QString maxY);
 
     double x(int i) const;
     double y(int i) const;

@@ -8,15 +8,9 @@ function paintCanvas()
 function initializeCanvas()
 {
     ctx = canvas.getContext("2d")
-
-    if (canvas.width > 0 && canvas.height > 0) {
-        //There is a problem initializing canvas, that's why we use canvasDataAreValid variable
-        //canvasDataAreValid = true
-        //canvasData = ctx.createImageData(canvas.width, canvas.height)
-        ctx.reset()
-        ctx.fillStyle = "white"//myparameters.backgroundColor;
-        ctx.fillRect(0, 0, canvas.width, canvas.height)
-    }
+    ctx.reset()
+    ctx.fillStyle = "white"//myparameters.backgroundColor;
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
 }
 
 function initializeArrays()
@@ -38,8 +32,8 @@ function drawGrid()
 {
     drawAxes()
 
-    var xStart = myfunction.minX()
-    var xEnd = myfunction.maxX()
+    var xStart = graphParameters.minX
+    var xEnd = graphParameters.maxX
     var xInterval = findInterval(xEnd - xStart)
     findVerticalGridLines(xStart, xEnd, xInterval)
 
@@ -49,8 +43,8 @@ function drawGrid()
 
     drawVerticalLines()
 
-    var yStart = myfunction.minY()
-    var yEnd = myfunction.maxY()
+    var yStart = graphParameters.minY
+    var yEnd = graphParameters.maxY
     var yInterval = findInterval(yEnd - yStart)
     findHorizontalGridLines(yStart, yEnd, yInterval)
     drawHorizontalLines()
@@ -58,12 +52,12 @@ function drawGrid()
     ctx.stroke()
 }
 
-function drawAxes()
+function drawAxes(minX, maxX, minY, maxY)
 {
-    var x0 = myfunction.minX()
-    var x1 = myfunction.maxX()
-    var y0 = myfunction.minY()
-    var y1 = myfunction.maxY()
+    var x0 = graphParameters.minX
+    var x1 = graphParameters.maxX
+    var y0 = graphParameters.minY
+    var y1 = graphParameters.maxY
     ctx.beginPath()
     ctx.lineWidth = 4
     ctx.strokeStyle = "black"//myparameters.axesColor;

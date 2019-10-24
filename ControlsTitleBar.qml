@@ -1,19 +1,18 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
-import QtQuick.Controls.Styles.Flat 1.0 as Flat
 
 Rectangle {
     id: controlsTitleBar
     width: parent.width
-    height: 35 * Flat.FlatStyle.scaleFactor
-    color: Flat.FlatStyle.defaultTextColor
+    height: 35
+    color: "black"
     z: 10000
     
     Label {
         text: (parent.width > 0) ? "Function parameters" : ""
-        font.family: Flat.FlatStyle.fontFamily
-        font.pixelSize: Math.round(12 * Flat.FlatStyle.scaleFactor)
+        //font.family: Flat.FlatStyle.fontFamily
+        font.pixelSize: 18
 //        renderType: Text.QtRendering
         renderType: Text.NativeRendering
         font.hintingPreference: Font.PreferFullHinting

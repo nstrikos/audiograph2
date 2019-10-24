@@ -14,7 +14,9 @@ Canvas {
 
     renderStrategy: Canvas.Immediate
 
-    function updatePoints() {
+    function updateCanvas() {
         CanvasJS.paintCanvas()
     }
+
+    onAvailableChanged: updateCanvas()
 }
