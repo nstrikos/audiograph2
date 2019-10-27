@@ -22,6 +22,7 @@ Rectangle {
     Curve {
         id: curve
         anchors.fill: parent
+        visible: false
         layer.enabled: true
         layer.samples: 256
         color: "red"
@@ -31,6 +32,7 @@ Rectangle {
         anchors.fill: parent
         onPinchStarted: controlsRect.startPinch()
         onPinchUpdated: controlsRect.handlePinch(pinch.scale)
+        onPinchFinished: controlsRect.pinchFinished()
         MouseArea {
             anchors.fill: parent
             onWheel: controlsRect.handleZoom(wheel.angleDelta.y)
@@ -49,6 +51,7 @@ Rectangle {
     function updateCanvas() {
         graphCanvas.updateCanvas()
         curve.draw(myfunction)
+        curve.visible = true
     }
 
     onWidthChanged: controlsRect.calculate()

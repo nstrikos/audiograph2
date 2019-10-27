@@ -199,6 +199,9 @@ Rectangle {
         var distanceX = maxX - minX
         var centerX = (maxX + minX) / 2
 
+        var pow = -Math.floor(Math.log10(distanceX)) + 1
+        var ten = Math.pow(10, pow)
+
         var distanceY = maxY - minY
         var centerY = (maxY + minY) / 2
 
@@ -215,23 +218,10 @@ Rectangle {
         minY = centerY - distanceY / 2
         maxY = centerY + distanceY / 2
 
-        minX = Math.round(minX * 100) / 100
-        maxX = Math.round(maxX * 100) / 100
-        minY = Math.round(minY * 100) / 100
-        maxY = Math.round(maxY * 100) / 100
-
-
-        //        if (angleDelta < 0) {
-        //            minX = Math.round(minX * 1.10 * 100) / 100
-        //            maxX = Math.round(maxX * 1.10 * 100) / 100
-        //            minY = Math.round(minY * 1.10 * 100) / 100
-        //            maxY = Math.round(maxY * 1.10 * 100) / 100
-        //        } else {
-        //            minX = Math.round(minX * 0.90 * 100) / 100
-        //            maxX = Math.round(maxX * 0.90 * 100) / 100
-        //            minY = Math.round(minY * 0.90 * 100) / 100
-        //            maxY = Math.round(maxY * 0.90 * 100) / 100
-        //        }
+        minX = Math.round(minX * ten) / ten
+        maxX = Math.round(maxX * ten) / ten
+        minY = Math.round(minY * ten) / ten
+        maxY = Math.round(maxY * ten) / ten
 
         active = false
 
@@ -263,32 +253,41 @@ Rectangle {
     function handleDrag(diffX, diffY) {
         active = false
 
+        var distanceX = maxX - minX
+
+        var pow = -Math.floor(Math.log10(distanceX)) + 2
+        var ten = Math.pow(10, pow)
+
         diffX = diffX - x0
         diffY = diffY - y0
         diffX = (maxX - minX) / graphRect.width * diffX
-        diffY = (maxY- minY) / graphRect.height * diffY
+        diffY = (maxY - minY) / graphRect.height * diffY
 
-        textInput2.text = Math.round( (minX - diffX) * 100) / 100
-        textInput3.text = Math.round( (maxX - diffX) * 100) / 100
-        textInput4.text = Math.round( (minY + diffY) * 100) / 100
-        textInput5.text = Math.round( (maxY + diffY) * 100) / 100
+        textInput2.text = Math.round( (minX - diffX) * ten) / ten
+        textInput3.text = Math.round( (maxX - diffX) * ten) / ten
+        textInput4.text = Math.round( (minY + diffY) * ten) / ten
+        textInput5.text = Math.round( (maxY + diffY) * ten) / ten
         calculate()
 
         active = true
     }
 
-    function handlePinch(scale) {
-//        console.log(scale)
-        scale = Math.round( 1 / scale * 100) / 100
-//        console.log(scale)
+    function startPinch() {
+        minX = Number(textInput2.text)
+        maxX = Number(textInput3.text)
+        minY = Number(textInput4.text)
+        maxY = Number(textInput5.text)
+        active = false
+    }
 
-        var minX = Number(textInput2.text)
-        var maxX = Number(textInput3.text)
-        var minY = Number(textInput4.text)
-        var maxY = Number(textInput5.text)
+    function handlePinch(scale) {
+        scale = 1 / scale
 
         var distanceX = maxX - minX
         var centerX = (maxX + minX) / 2
+
+        var pow = -Math.floor(Math.log10(distanceX)) + 2
+        var ten = Math.pow(10, pow)
 
         var distanceY = maxY - minY
         var centerY = (maxY + minY) / 2
@@ -297,36 +296,22 @@ Rectangle {
         distanceX = distanceX * scale
         distanceY = distanceY * scale
 
-        minX = centerX - distanceX / 2
-        maxX = centerX + distanceX / 2
-        minY = centerY - distanceY / 2
-        maxY = centerY + distanceY / 2
-
-//        minX = Math.round(minX * 100) / 100
-//        maxX = Math.round(maxX * 100) / 100
-//        minY = Math.round(minY * 100) / 100
-//        maxY = Math.round(maxY * 100) / 100
+        var n_minX = centerX - distanceX / 2
+        var n_maxX = centerX + distanceX / 2
+        var n_minY = centerY - distanceY / 2
+        var n_maxY = centerY + distanceY / 2
 
         active = false
 
-        textInput2.text = minX
-        textInput3.text = maxX
-        textInput4.text = minY
-        textInput5.text = maxY
+        textInput2.text = Math.round(n_minX * ten) / ten
+        textInput3.text = Math.round(n_maxX * ten) / ten
+        textInput4.text = Math.round(n_minY * ten) / ten
+        textInput5.text = Math.round(n_maxY * ten) / ten
         calculate()
+    }
 
+    function pinchFinished() {
         active = true
-
-
-        //        active = false
-
-        //        textInput2.text = Math.round( scale * minX * 100) / 100
-        //        textInput3.text = Math.round( scale * maxX * 100) / 100
-        //        textInput4.text = Math.round( scale * minY * 100) / 100
-        //        textInput5.text = Math.round( scale * maxY * 100) / 100
-        //        calculate()
-
-        //        active = true
     }
 
     function calculate () {
