@@ -30,6 +30,7 @@ public:
     Q_INVOKABLE double maxX() const;
     Q_INVOKABLE double minY() const;
     Q_INVOKABLE double maxY() const;
+    Q_INVOKABLE zoom(double delta);
 
 signals:
     void update();

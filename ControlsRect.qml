@@ -191,46 +191,42 @@ Rectangle {
     }
 
     function handleZoom(angleDelta) {
-        var minX = Number(textInput2.text)
-        var maxX = Number(textInput3.text)
-        var minY = Number(textInput4.text)
-        var maxY = Number(textInput5.text)
+        myfunction.zoom(angleDelta)
 
-        var distanceX = maxX - minX
-        var centerX = (maxX + minX) / 2
-
-        var pow = -Math.floor(Math.log10(distanceX)) + 1
+        var minX = myfunction.minX()
+        var maxX = myfunction.maxX()
+        var minY = myfunction.minY()
+        var maxY = myfunction.maxY()
+        var distance = maxX - minX
+        var pow = -Math.floor(Math.log10(distance)) + 1
         var ten = Math.pow(10, pow)
 
-        var distanceY = maxY - minY
-        var centerY = (maxY + minY) / 2
-
-        if (angleDelta < 0) {
-            distanceX = distanceX * 1.1
-            distanceY = distanceY * 1.1
-        } else {
-            distanceX = distanceX * 0.9
-            distanceY = distanceY * 0.9
+        if (pow > 0) {
+            minX = minX.toFixed(pow)
+            maxX = maxX.toFixed(pow)
+        }
+        else {
+            minX = minX.toFixed(0)
+            maxX = maxX.toFixed(0)
         }
 
-        minX = centerX - distanceX / 2
-        maxX = centerX + distanceX / 2
-        minY = centerY - distanceY / 2
-        maxY = centerY + distanceY / 2
-
-        minX = Math.round(minX * ten) / ten
-        maxX = Math.round(maxX * ten) / ten
-        minY = Math.round(minY * ten) / ten
-        maxY = Math.round(maxY * ten) / ten
+        distance = maxY - minY
+        pow = -Math.floor(Math.log10(distance)) + 1
+        ten = Math.pow(10, pow)
+        if (pow > 0) {
+            minY = minY.toFixed(pow)
+            maxY = maxY.toFixed(pow)
+        }
+        else {
+            minY = minY.toFixed(0)
+            maxY = maxY.toFixed(0)
+        }
 
         active = false
-
         textInput2.text = minX
         textInput3.text = maxX
         textInput4.text = minY
         textInput5.text = maxY
-        calculate()
-
         active = true
     }
 

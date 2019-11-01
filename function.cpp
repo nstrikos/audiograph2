@@ -16,7 +16,7 @@ void Function::calculate(QString expression,
     m_maxXString = maxX;
     m_minYString = minY;
     m_maxYString = maxY;
-//    m_pointsString = numPoints;
+    //    m_pointsString = numPoints;
 
     performCalculation();
 }
@@ -25,7 +25,7 @@ void Function::performCalculation()
 {
     replaceConstants();
     if (check())
-        calculatePoints();    
+        calculatePoints();
 }
 
 void Function::replaceConstants()
@@ -83,14 +83,14 @@ bool Function::check()
         return false;
     }
 
-//    int pointsInt = m_pointsString.toInt(&okPoints);
-//    if (okPoints) {
-//        m_numPoints = pointsInt;
-//    }
-//    else {
-//        emit error(tr("Points must be a positive integer number"));
-//        return false;
-//    }
+    //    int pointsInt = m_pointsString.toInt(&okPoints);
+    //    if (okPoints) {
+    //        m_numPoints = pointsInt;
+    //    }
+    //    else {
+    //        emit error(tr("Points must be a positive integer number"));
+    //        return false;
+    //    }
 
     if (m_maxX <= m_minX) {
         emit error(tr("Maximum must be greater than minimum."));
@@ -102,15 +102,15 @@ bool Function::check()
         return false;
     }
 
-//    if (m_numPoints < MIN_POINTS) {
-//        emit error (tr("Points must be greater than zero."));
-//        return false;
-//    }
+    //    if (m_numPoints < MIN_POINTS) {
+    //        emit error (tr("Points must be greater than zero."));
+    //        return false;
+    //    }
 
-//    if (m_numPoints > MAX_POINTS) {
-//        emit error (tr("Points must be fewer than 10000"));
-//        return false;
-//    }
+    //    if (m_numPoints > MAX_POINTS) {
+    //        emit error (tr("Points must be fewer than 10000"));
+    //        return false;
+    //    }
 
 
     m_fparser.AddConstant("pi", M_PI);
@@ -207,4 +207,35 @@ double Function::minValue() const
 double Function::maxValue() const
 {
     return m_maxValue;
+}
+
+Function::zoom(double delta)
+{
+    double factor;
+    if (delta < 0)
+        factor = 1.1;
+    else
+        factor = 0.9;
+
+    double minX = m_minX;
+    double maxX = m_maxX;
+    double minY = m_minY;
+    double maxY = m_maxY;
+
+    double distanceX = maxX - minX;
+    double centerX = (maxX + minX) / 2;
+
+    double distanceY = maxY - minY;
+    double centerY = (maxY + minY) / 2;
+
+    distanceX = distanceX * factor;
+    distanceY = distanceY * factor;
+
+    if ( (abs(distanceX) > 0.00001) && (abs(distanceY) > 0.00001) ) {
+        m_minX = centerX - distanceX / 2;
+        m_maxX = centerX + distanceX / 2;
+        m_minY = centerY - distanceY / 2;
+        m_maxY = centerY + distanceY / 2;
+        calculatePoints();
+    }
 }
