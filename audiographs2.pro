@@ -20,6 +20,7 @@ SOURCES += \
         fparser/fpoptimizer.cc \
         function.cpp \
         main.cpp \
+        parameters.cpp \
         point.cpp
 
 RESOURCES += qml.qrc
@@ -50,4 +51,5 @@ HEADERS += \
     fparser/fparser_mpfr.hh \
     fparser/fpconfig.hh \
     function.h \
+    parameters.h \
     point.h

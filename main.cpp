@@ -4,6 +4,7 @@
 
 #include "function.h"
 #include "curve.h"
+#include "parameters.h"
 
 
 int main(int argc, char *argv[])
@@ -16,10 +17,12 @@ int main(int argc, char *argv[])
 
 
     Function function;
+    Parameters parameters;
     qRegisterMetaType<Function*>("Function*");
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("myfunction", &function);
+    engine.rootContext()->setContextProperty("parameters", &parameters);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

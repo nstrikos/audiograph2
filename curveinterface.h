@@ -13,11 +13,7 @@ public:
     CurveInterface();
     ~CurveInterface();
 
-    void setColor(const QColor &color);
-    QColor color() const;
-
 protected:
-    QColor m_color;
     Function *m_function;
     QVector<Point> m_points;
     void calcCoords(int width, int height);

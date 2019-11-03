@@ -35,13 +35,3 @@ void CurveInterface::calcCoords(int width, int height)
         }
     }
 }
-
-QColor CurveInterface::color() const
-{
-    return m_color;
-}
-
-void CurveInterface::setColor(const QColor &color)
-{
-    m_color = color;
-}

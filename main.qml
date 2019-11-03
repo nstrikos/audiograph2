@@ -21,10 +21,8 @@ Window {
         id: graphRect
     }
 
-    Rectangle {
+    SettingsRect {
         id: settingsRect
-        anchors.leftMargin: window.width / 8
-        color: "yellow"
     }
 
     ControlsButton {

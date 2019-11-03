@@ -15,9 +15,12 @@ public:
     ~Curve();
 
     Q_INVOKABLE void draw(Function *function);
+    void setColor(const QColor &color);
+    QColor color() const;
 
 private:
     QSGNode *updatePaintNode(QSGNode *, UpdatePaintNodeData *);
+    QColor m_color;
 };
 
 #endif // CURVE_H

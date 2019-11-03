@@ -58,7 +58,7 @@ QSGNode *Curve::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
             tmpGeometry->setDrawingMode(QSGGeometry::DrawTriangleFan);
             tmpNode->setGeometry(tmpGeometry);
             QSGFlatColorMaterial *tmpMaterial = new QSGFlatColorMaterial;
-            tmpMaterial->setColor(DEFAULT_LINE_COLOR);
+            tmpMaterial->setColor(m_color);
             tmpNode->setMaterial(tmpMaterial);
             tmpNode->setFlag(QSGNode::OwnsMaterial);
             node->appendChildNode(tmpNode);
@@ -68,6 +68,10 @@ QSGNode *Curve::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
     } else {
         node = static_cast<QSGGeometryNode *>(oldNode);
         geometry = node->geometry();
+        QSGFlatColorMaterial *material = new QSGFlatColorMaterial;
+        material->setColor(m_color);
+        node->setMaterial(material);
+        node->setFlag(QSGNode::OwnsMaterial);
 #ifndef Q_OS_ANDROID
         geometry->allocate(LINE_POINTS);
 #else
@@ -107,6 +111,10 @@ QSGNode *Curve::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
                 for (int i = 0; i < LINE_POINTS; i++) {
                     QSGGeometryNode *tmpNode = nodeVector.at(i);
                     QSGGeometry::Point2D *vertices = geometryVector.at(i)->vertexDataAsPoint2D();
+                    QSGFlatColorMaterial *material = new QSGFlatColorMaterial;
+                    material->setColor(m_color);
+                    tmpNode->setMaterial(material);
+                    tmpNode->setFlag(QSGNode::OwnsMaterial);
 
                     int cx;
                     int cy;
@@ -123,6 +131,7 @@ QSGNode *Curve::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
                         vertices[ii].set(x + cx, y + cy);//output vertex
                     }
                     tmpNode->markDirty(QSGNode::DirtyGeometry);
+                    tmpNode->markDirty(QSGNode::DirtyMaterial);
                 }
             }
         }
@@ -130,5 +139,17 @@ QSGNode *Curve::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
 #endif
 
     node->markDirty(QSGNode::DirtyGeometry);
+    node->markDirty(QSGNode::DirtyMaterial);
     return node;
+}
+
+QColor Curve::color() const
+{
+    return m_color;
+}
+
+void Curve::setColor(const QColor &color)
+{
+    m_color = color;
+    update();
 }

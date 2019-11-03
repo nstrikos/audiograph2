@@ -11,5 +11,7 @@
         <file>GraphRect.qml</file>
         <file>GraphCanvas.qml</file>
         <file>GraphCanvasJS.js</file>
+        <file>SettingsRect.qml</file>
+        <file>BeautifyGraphRect.qml</file>
     </qresource>
 </RCC>

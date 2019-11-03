@@ -3,7 +3,6 @@ import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
 import Curve 1.0
 
-
 Rectangle {
     id: graphRect
     z: 10
@@ -13,6 +12,7 @@ Rectangle {
     layer.samples: 256
 
     property var graphCanvas: graphCanvas
+    property color curveColor: parameters.lineColor
 
     GraphCanvas {
         id: graphCanvas
@@ -26,6 +26,10 @@ Rectangle {
         layer.enabled: true
         layer.samples: 256
         color: "red"
+    }
+
+    onCurveColorChanged: {
+        curve.color = curveColor
     }
 
     PinchArea {
@@ -56,4 +60,34 @@ Rectangle {
 
     onWidthChanged: controlsRect.calculate()
     onHeightChanged: controlsRect.calculate()
+
+    BeautifyGraphRect {
+
+    }
+
+    BeautifyGraphRect {
+        anchors.top: parent.top
+        anchors.bottom: undefined
+        height: 8
+        visible: (settingsRect.height > 0) && (!anchorToLeft)
+
+        gradient: Gradient {
+            GradientStop {
+                color: Qt.rgba(0, 0, 0, 0.4)
+                position: 0
+            }
+            GradientStop {
+                color: Qt.rgba(0, 0, 0, 0.15)
+                position: 0.5
+            }
+            GradientStop {
+                color: Qt.rgba(0, 0, 0, 0)
+                position: 1
+            }
+        }
+    }
+
+    BeautifyRect {
+        visible: (settingsRect.width > 0)
+    }
 }
