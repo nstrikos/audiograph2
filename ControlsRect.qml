@@ -19,10 +19,13 @@ Rectangle {
         anchors.topMargin: 40
         anchors.bottom: parent.bottom
         contentHeight: 500
+        clip: true
 
         Item {
             id: controlsMainRect
             width: parent.width
+            anchors.topMargin: 20
+            anchors.top: parent.top
 
             Label {
                 id: label1
