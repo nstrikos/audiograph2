@@ -299,11 +299,18 @@ Rectangle {
 
         active = false
 
+        myfunction.calculate(textInput.text,
+                             n_minX,
+                             n_maxX,
+                             n_minY,
+                             n_maxY,
+                             graphRect.width,
+                             graphRect.height)
+
         textInput2.text = Math.round(n_minX * ten) / ten
         textInput3.text = Math.round(n_maxX * ten) / ten
         textInput4.text = Math.round(n_minY * ten) / ten
         textInput5.text = Math.round(n_maxY * ten) / ten
-        calculate()
     }
 
     function pinchFinished() {

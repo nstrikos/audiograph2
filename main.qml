@@ -5,8 +5,10 @@ import QtQuick.Controls 2.12
 Window {
     id: window
     visible: true
-    width: Screen.width
-    height: Screen.height
+    width: Qt.platform.os === "android" ? 320 : Screen.width
+    height: Qt.platform.os === "android" ? 350 : Screen.height
+    minimumWidth: 320
+    minimumHeight: 320
     title: qsTr("Audiographs")
 
     property bool anchorToLeft: undefined

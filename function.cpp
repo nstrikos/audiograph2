@@ -209,7 +209,7 @@ double Function::maxValue() const
     return m_maxValue;
 }
 
-Function::zoom(double delta)
+void Function::zoom(double delta)
 {
     double factor;
     if (delta < 0)
@@ -217,6 +217,16 @@ Function::zoom(double delta)
     else
         factor = 0.9;
 
+    performZoom(factor);
+}
+
+void Function::pinch(double scale)
+{
+    performZoom(scale);
+}
+
+void Function::performZoom(double factor)
+{
     double minX = m_minX;
     double maxX = m_maxX;
     double minY = m_minY;

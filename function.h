@@ -30,7 +30,8 @@ public:
     Q_INVOKABLE double maxX() const;
     Q_INVOKABLE double minY() const;
     Q_INVOKABLE double maxY() const;
-    Q_INVOKABLE zoom(double delta);
+    Q_INVOKABLE void zoom(double delta);
+    Q_INVOKABLE void pinch(double scale);
 
 signals:
     void update();
@@ -41,6 +42,7 @@ private:
     void replaceConstants();
     bool check();
     void calculatePoints();
+    void performZoom(double factor);
     QString m_expression;
     QString m_minXString;
     QString m_maxXString;
