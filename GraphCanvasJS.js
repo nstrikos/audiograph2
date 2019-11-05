@@ -9,7 +9,7 @@ function initializeCanvas()
 {
     ctx = canvas.getContext("2d")
     ctx.reset()
-    ctx.fillStyle = "white"//myparameters.backgroundColor;
+    ctx.fillStyle = parameters.backgroundColor;
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 }
 

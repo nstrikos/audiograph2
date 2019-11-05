@@ -11,33 +11,54 @@ Rectangle {
     anchors.leftMargin: window.width / 8
 
     property color lineColor: parameters.lineColor
+    property color backgroundColor: parameters.backgroundColor
 
     TabView {
         id: frame
         anchors.fill: parent
         anchors.margins: 4
         Tab {
-            title: "Tab 1"
+            title: qsTr("Graph settings")
             Flickable {
-                Row {
+                Label {
+                    id: label1
                     anchors.top: parent.top
-                    anchors.topMargin: 30
-                    spacing: 20
-                    Label {
-                        id: label1
-                        text: qsTr("Graph color") + ":"
+                    anchors.topMargin: 50
+                    text: qsTr("Graph color") + ":"
+                }
+                Rectangle {
+                    id: lineColorRect
+                    height: 50
+                    width: 50
+                    anchors.verticalCenter: label1.verticalCenter
+                    anchors.left: parent.horizontalCenter
+                    anchors.leftMargin: -80
+                    color: lineColor
+                    border.color: "gray"
+                    MouseArea {
+                        anchors.fill: parent
+                        onPressed: openColorDialog("line color")
                     }
-                    Rectangle {
-                        id: lineColorRect
-                        height: 50
-                        width: 50
-                        anchors.verticalCenter: label1.verticalCenter
-                        color: lineColor
-                        border.color: "gray"
-                        MouseArea {
-                            anchors.fill: parent
-                            onPressed: openColorDialog("line color")
-                        }
+                }
+
+                Label {
+                    id: label2
+                    text: qsTr("Background color") + ":"
+                    anchors.top: label1.bottom
+                    anchors.topMargin: 50
+                }
+                Rectangle {
+                    id: backGroundColorRect
+                    height: 50
+                    width: 50
+                    anchors.verticalCenter: label2.verticalCenter
+                    anchors.left: parent.horizontalCenter
+                    anchors.leftMargin: -80
+                    color: backgroundColor
+                    border.color: "gray"
+                    MouseArea {
+                        anchors.fill: parent
+                        onPressed: openColorDialog("background color")
                     }
                 }
             }
@@ -69,10 +90,13 @@ Rectangle {
         property var request
         onAccepted: {
             if (request === "line color") {
-                console.log("Dialog color: ", color)
                 parameters.lineColor = color
                 lineColor = color
                 graphRect.curveColor = color
+            } else if (request === "background color") {
+                parameters.backgroundColor = color
+                backgroundColor = color
+                graphRect.graphCanvas.updateCanvas()
             }
         }
     }
@@ -80,7 +104,10 @@ Rectangle {
     function openColorDialog(request) {
         if (request === "line color") {
             colorDialog.color = parameters.lineColor
+        } else if (request === "background color") {
+            colorDialog.color = parameters.backgroundColor
         }
+
         colorDialog.request = request
         colorDialog.open()
     }

@@ -21,6 +21,7 @@ public:
 private:
     QSGNode *updatePaintNode(QSGNode *, UpdatePaintNodeData *);
     QColor m_color;
+    QColor m_newColor;
 };
 
 #endif // CURVE_H

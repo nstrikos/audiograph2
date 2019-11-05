@@ -9,6 +9,7 @@ Curve::Curve(QQuickItem *parent)
     : QQuickItem(parent)
 {
     setFlag(ItemHasContents, true);
+    m_newColor = m_color;
 }
 
 Curve::~Curve()
@@ -68,10 +69,13 @@ QSGNode *Curve::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
     } else {
         node = static_cast<QSGGeometryNode *>(oldNode);
         geometry = node->geometry();
-        QSGFlatColorMaterial *material = new QSGFlatColorMaterial;
-        material->setColor(m_color);
-        node->setMaterial(material);
-        node->setFlag(QSGNode::OwnsMaterial);
+        if (m_newColor != m_color) {
+            QSGFlatColorMaterial *material = new QSGFlatColorMaterial;
+            material->setColor(m_color);
+            node->setMaterial(material);
+            node->setFlag(QSGNode::OwnsMaterial);
+            node->markDirty(QSGNode::DirtyMaterial);
+        }
 #ifndef Q_OS_ANDROID
         geometry->allocate(LINE_POINTS);
 #else
@@ -111,10 +115,14 @@ QSGNode *Curve::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
                 for (int i = 0; i < LINE_POINTS; i++) {
                     QSGGeometryNode *tmpNode = nodeVector.at(i);
                     QSGGeometry::Point2D *vertices = geometryVector.at(i)->vertexDataAsPoint2D();
-                    QSGFlatColorMaterial *material = new QSGFlatColorMaterial;
-                    material->setColor(m_color);
-                    tmpNode->setMaterial(material);
-                    tmpNode->setFlag(QSGNode::OwnsMaterial);
+                    if (m_newColor != m_color) {
+                        QSGFlatColorMaterial *material = new QSGFlatColorMaterial;
+                        material->setColor(m_color);
+                        tmpNode->setMaterial(material);
+                        tmpNode->setFlag(QSGNode::OwnsMaterial);
+                        tmpNode->markDirty(QSGNode::DirtyMaterial);
+                    }
+
 
                     int cx;
                     int cy;
@@ -131,7 +139,6 @@ QSGNode *Curve::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
                         vertices[ii].set(x + cx, y + cy);//output vertex
                     }
                     tmpNode->markDirty(QSGNode::DirtyGeometry);
-                    tmpNode->markDirty(QSGNode::DirtyMaterial);
                 }
             }
         }
@@ -139,7 +146,7 @@ QSGNode *Curve::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
 #endif
 
     node->markDirty(QSGNode::DirtyGeometry);
-    node->markDirty(QSGNode::DirtyMaterial);
+    m_newColor = m_color;
     return node;
 }
 
