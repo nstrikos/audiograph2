@@ -8,9 +8,11 @@ function paintCanvas()
 function initializeCanvas()
 {
     ctx = canvas.getContext("2d")
-    ctx.reset()
-    ctx.fillStyle = parameters.backgroundColor;
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    if (ctx !== null) {
+        ctx.reset()
+        ctx.fillStyle = parameters.backgroundColor;
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+    }
 }
 
 function initializeArrays()
@@ -32,24 +34,29 @@ function drawGrid()
 {
     drawAxes()
 
-    var xStart = graphParameters.minX
-    var xEnd = graphParameters.maxX
-    var xInterval = findInterval(xEnd - xStart)
-    findVerticalGridLines(xStart, xEnd, xInterval)
+    if (parameters.showAxes) {
 
-    ctx.lineWidth = 0.1
-    //ctx.setLineDash([1, 4]);
-    ctx.strokeStyle = "black"//myparameters.axesColor;
 
-    drawVerticalLines()
+        var xStart = graphParameters.minX
+        var xEnd = graphParameters.maxX
 
-    var yStart = graphParameters.minY
-    var yEnd = graphParameters.maxY
-    var yInterval = findInterval(yEnd - yStart)
-    findHorizontalGridLines(yStart, yEnd, yInterval)
-    drawHorizontalLines()
-    ctx.setLineDash([]);
-    ctx.stroke()
+        var xInterval = findInterval(xEnd - xStart)
+        findVerticalGridLines(xStart, xEnd, xInterval)
+
+        ctx.lineWidth = 0.1
+        //ctx.setLineDash([1, 4]);
+        ctx.strokeStyle = "black"//myparameters.axesColor;
+
+        drawVerticalLines()
+
+        var yStart = graphParameters.minY
+        var yEnd = graphParameters.maxY
+        var yInterval = findInterval(yEnd - yStart)
+        findHorizontalGridLines(yStart, yEnd, yInterval)
+        drawHorizontalLines()
+        ctx.setLineDash([]);
+        ctx.stroke()
+    }
 }
 
 function drawAxes(minX, maxX, minY, maxY)
@@ -59,8 +66,8 @@ function drawAxes(minX, maxX, minY, maxY)
     var y0 = graphParameters.minY
     var y1 = graphParameters.maxY
     ctx.beginPath()
-    ctx.lineWidth = 4
-    ctx.strokeStyle = "black"//myparameters.axesColor;
+    ctx.lineWidth = parameters.axesSize
+    ctx.strokeStyle = parameters.axesColor
     ctx.setLineDash([]);
     var xAxes =  Math.round( strip( canvas.width / (x1 - x0) * (0 - x0) ) )
     var yAxes = Math.round( strip(canvas.height / (y1 - y0) * (0 - y0) ) )

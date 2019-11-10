@@ -71,7 +71,6 @@ Window {
             graphParameters.maxX = myfunction.maxX();
             graphParameters.minY = myfunction.minY();
             graphParameters.maxY = myfunction.maxY();
-
             graphRect.updateCanvas()
         }
         onError: console.log(err)

@@ -12,6 +12,7 @@ Rectangle {
 
     property color lineColor: parameters.lineColor
     property color backgroundColor: parameters.backgroundColor
+    property color axesColor: parameters.axesColor
 
     TabView {
         id: frame
@@ -20,19 +21,26 @@ Rectangle {
         Tab {
             title: qsTr("Graph settings")
             Flickable {
+                anchors.fill: parent
+                contentHeight: 500
+                clip: true
                 Label {
                     id: label1
                     anchors.top: parent.top
                     anchors.topMargin: 50
+                    anchors.left: parent.left
+                    width: 80
+                    height: 25
                     text: qsTr("Graph color") + ":"
                 }
                 Rectangle {
                     id: lineColorRect
                     height: 50
-                    width: 50
                     anchors.verticalCenter: label1.verticalCenter
-                    anchors.left: parent.horizontalCenter
-                    anchors.leftMargin: -80
+                    anchors.left: label1.right
+                    anchors.leftMargin: 10
+                    anchors.right: parent.right
+                    anchors.rightMargin: 10
                     color: lineColor
                     border.color: "gray"
                     MouseArea {
@@ -43,22 +51,138 @@ Rectangle {
 
                 Label {
                     id: label2
-                    text: qsTr("Background color") + ":"
+                    text: qsTr("Background") + ":"
                     anchors.top: label1.bottom
+                    anchors.left: parent.left
                     anchors.topMargin: 50
+                    width: 80
+                    height: 25
                 }
                 Rectangle {
                     id: backGroundColorRect
                     height: 50
-                    width: 50
                     anchors.verticalCenter: label2.verticalCenter
-                    anchors.left: parent.horizontalCenter
-                    anchors.leftMargin: -80
+                    anchors.left: label2.right
+                    anchors.leftMargin: 10
+                    anchors.right: parent.right
+                    anchors.rightMargin: 10
                     color: backgroundColor
                     border.color: "gray"
                     MouseArea {
                         anchors.fill: parent
                         onPressed: openColorDialog("background color")
+                    }
+                }
+
+                Label {
+                    id: label3
+                    text: qsTr("Width") + ":"
+                    anchors.top: label2.bottom
+                    anchors.topMargin: 50
+                    anchors.left: parent.left
+                    width: 80
+                    height: 25
+                }
+                SpinBox {
+                    id: lineWidthSpinbox
+                    height: 50
+                    anchors.verticalCenter: label3.verticalCenter
+                    anchors.left: label3.right
+                    anchors.leftMargin: 10
+                    anchors.right: parent.right
+                    anchors.rightMargin: 10
+                    minimumValue: 1
+                    maximumValue: 10
+                    value: parameters.lineWidth
+                    onValueChanged: {
+                        graphRect.curveWidth = value
+                        parameters.lineWidth = value
+                    }
+                }
+                Label {
+                    id: label4
+                    anchors.top: label3.bottom
+                    anchors.topMargin: 50
+                    anchors.left: parent.left
+                    width: 80
+                    height: 25
+                    text: qsTr("Axes") + ":"
+                }
+                Rectangle {
+                    id: axesColorRect
+                    height: 50
+                    anchors.verticalCenter: label4.verticalCenter
+                    anchors.left: label4.right
+                    anchors.leftMargin: 10
+                    anchors.right: parent.right
+                    anchors.rightMargin: 10
+                    color: axesColor
+                    border.color: "gray"
+                    MouseArea {
+                        anchors.fill: parent
+                        onPressed: openColorDialog("axes color")
+                    }
+                }
+                Label {
+                    id: label5
+                    text: qsTr("Axes size") + ":"
+                    anchors.top: label4.bottom
+                    anchors.topMargin: 50
+                    anchors.left: parent.left
+                    width: 80
+                    height: 25
+                }
+                SpinBox {
+                    id: axesSizeSpinbox
+                    height: 50
+                    anchors.verticalCenter: label5.verticalCenter
+                    anchors.left: label5.right
+                    anchors.leftMargin: 10
+                    anchors.right: parent.right
+                    anchors.rightMargin: 10
+                    minimumValue: 1
+                    maximumValue: 10
+                    value: parameters.axesSize
+                    onValueChanged: {
+                        parameters.axesSize = value
+                        graphRect.graphCanvas.updateCanvas()
+                    }
+                }
+                Label {
+                    id: label6
+                    text: qsTr("Show grid") + ":"
+                    anchors.top: label5.bottom
+                    anchors.topMargin: 50
+                    anchors.left: parent.left
+                    width: 80
+                    height: 25
+                }
+                Rectangle {
+                    id: showAxesCheckBox
+                    height: 50
+                    anchors.verticalCenter: label6.verticalCenter
+                    anchors.left: label6.right
+                    anchors.leftMargin: 10
+                    anchors.right: parent.right
+                    anchors.rightMargin: 10
+                    color: checked ? "gray" : "light gray"
+                    property bool checked: parameters.showAxes
+                    Text {
+//                        anchors.fill: parent
+                        text: showAxesCheckBox.checked ? qsTr("On") : qsTr("Off")
+                        anchors.centerIn: parent
+                        font.pointSize: 18
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onPressed: {
+                            showAxesCheckBox.checked = ! showAxesCheckBox.checked
+                        }
+                    }
+                    onCheckedChanged: {
+                        parameters.showAxes = checked
+                        graphRect.graphCanvas.updateCanvas()
                     }
                 }
             }
@@ -97,6 +221,10 @@ Rectangle {
                 parameters.backgroundColor = color
                 backgroundColor = color
                 graphRect.graphCanvas.updateCanvas()
+            } else if (request === "axes color") {
+                parameters.axesColor = color
+                axesColor = color
+                graphRect.graphCanvas.updateCanvas()
             }
         }
     }
@@ -106,6 +234,8 @@ Rectangle {
             colorDialog.color = parameters.lineColor
         } else if (request === "background color") {
             colorDialog.color = parameters.backgroundColor
+        } else if (request === "axes color") {
+            colorDialog.color = parameters.axesColor
         }
 
         colorDialog.request = request

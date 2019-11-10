@@ -7,6 +7,7 @@ Rectangle {
     anchors.rightMargin: window.width / 4
 
     property bool active: true
+    property alias expression: textInput.text
 
     ControlsTitleBar {
         id: controlsTitleBar

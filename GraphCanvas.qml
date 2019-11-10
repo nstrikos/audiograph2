@@ -15,7 +15,8 @@ Canvas {
     renderStrategy: Canvas.Immediate
 
     function updateCanvas() {
-        CanvasJS.paintCanvas()
+        if (available)
+            CanvasJS.paintCanvas()
     }
 
     onAvailableChanged: updateCanvas()

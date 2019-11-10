@@ -10,6 +10,7 @@ Curve::Curve(QQuickItem *parent)
 {
     setFlag(ItemHasContents, true);
     m_newColor = m_color;
+    m_lineWidth = 10;
 }
 
 Curve::~Curve()
@@ -43,7 +44,7 @@ QSGNode *Curve::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
         geometry = new QSGGeometry(QSGGeometry::defaultAttributes_Point2D(), 1);
 #endif
 
-        geometry->setLineWidth(LINE_WIDTH);
+        geometry->setLineWidth(m_lineWidth);
         geometry->setDrawingMode(QSGGeometry::DrawPoints);
         node->setGeometry(geometry);
         node->setFlag(QSGNode::OwnsGeometry);
@@ -69,6 +70,7 @@ QSGNode *Curve::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
     } else {
         node = static_cast<QSGGeometryNode *>(oldNode);
         geometry = node->geometry();
+        geometry->setLineWidth(m_lineWidth);
         if (m_newColor != m_color) {
             QSGFlatColorMaterial *material = new QSGFlatColorMaterial;
             material->setColor(m_color);
@@ -148,6 +150,18 @@ QSGNode *Curve::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
     node->markDirty(QSGNode::DirtyGeometry);
     m_newColor = m_color;
     return node;
+}
+
+int Curve::lineWidth() const
+{
+    return m_lineWidth;
+}
+
+void Curve::setLineWidth(int lineWidth)
+{
+    m_lineWidth = lineWidth;
+    update();
+    qDebug() << lineWidth;
 }
 
 QColor Curve::color() const

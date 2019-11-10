@@ -69,6 +69,7 @@ int Parameters::lineWidth() const
 void Parameters::setLineWidth(int lineWidth)
 {
     m_lineWidth = lineWidth;
+    write();
 }
 
 QColor Parameters::backgroundColor() const
@@ -224,6 +225,7 @@ QColor Parameters::axesColor() const
 void Parameters::setAxesColor(const QColor &axesColor)
 {
     m_axesColor = axesColor;
+    write();
 }
 
 bool Parameters::showAxes() const
@@ -234,6 +236,7 @@ bool Parameters::showAxes() const
 void Parameters::setShowAxes(bool showAxes)
 {
     m_showAxes = showAxes;
+    write();
 }
 
 int Parameters::axesSize() const

@@ -13,6 +13,7 @@ Rectangle {
 
     property var graphCanvas: graphCanvas
     property color curveColor: parameters.lineColor
+    property var curveWidth: parameters.lineWidth
 
     GraphCanvas {
         id: graphCanvas
@@ -25,28 +26,35 @@ Rectangle {
         visible: false
         layer.enabled: true
         layer.samples: 256
-        color: "red"
+        color: parameters.lineColor
+        lineWidth: parameters.lineWidth
     }
 
-    onCurveColorChanged: {
-        curve.color = curveColor
-    }
+    onCurveColorChanged: curve.color = curveColor
+
+    onCurveWidthChanged: curve.lineWidth = curveWidth
 
     PinchArea {
         anchors.fill: parent
-        onPinchStarted: controlsRect.startPinch()
+        onPinchStarted: {
+            if (controlsRect.expression !== "")
+                controlsRect.startPinch()
+        }
         onPinchUpdated: controlsRect.handlePinch(pinch.scale)
         onPinchFinished: controlsRect.pinchFinished()
         MouseArea {
             anchors.fill: parent
-            onWheel: controlsRect.handleZoom(wheel.angleDelta.y)
+            onWheel: {
+                if (controlsRect.expression !== "")
+                    controlsRect.handleZoom(wheel.angleDelta.y)
+            }
 
             onPressedChanged: {
-                if (pressed)
+                if (pressed && controlsRect.expression !== "")
                     controlsRect.startDrag(mouseX, mouseY)
             }
             onPositionChanged: {
-                if (pressed)
+                if (pressed && controlsRect.expression !== "")
                     controlsRect.handleDrag(mouseX, mouseY)
             }
         }

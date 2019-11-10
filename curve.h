@@ -9,6 +9,7 @@ class Curve : public QQuickItem, public CurveInterface
     Q_OBJECT
 
     Q_PROPERTY(QColor color READ color WRITE setColor)
+    Q_PROPERTY(int lineWidth READ lineWidth WRITE setLineWidth)
 
 public:
     Curve(QQuickItem *parent = 0);
@@ -18,10 +19,14 @@ public:
     void setColor(const QColor &color);
     QColor color() const;
 
+    int lineWidth() const;
+    void setLineWidth(int lineWidth);
+
 private:
     QSGNode *updatePaintNode(QSGNode *, UpdatePaintNodeData *);
     QColor m_color;
     QColor m_newColor;
+    int m_lineWidth;
 };
 
 #endif // CURVE_H
