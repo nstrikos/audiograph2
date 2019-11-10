@@ -16,8 +16,6 @@ void Function::calculate(QString expression,
     m_maxXString = maxX;
     m_minYString = minY;
     m_maxYString = maxY;
-    //    m_pointsString = numPoints;
-
     performCalculation();
 }
 
@@ -83,15 +81,6 @@ bool Function::check()
         return false;
     }
 
-    //    int pointsInt = m_pointsString.toInt(&okPoints);
-    //    if (okPoints) {
-    //        m_numPoints = pointsInt;
-    //    }
-    //    else {
-    //        emit error(tr("Points must be a positive integer number"));
-    //        return false;
-    //    }
-
     if (m_maxX <= m_minX) {
         emit error(tr("Maximum must be greater than minimum."));
         return false;
@@ -101,17 +90,6 @@ bool Function::check()
         emit error(tr("Maximum Y must be greater than minimum Y."));
         return false;
     }
-
-    //    if (m_numPoints < MIN_POINTS) {
-    //        emit error (tr("Points must be greater than zero."));
-    //        return false;
-    //    }
-
-    //    if (m_numPoints > MAX_POINTS) {
-    //        emit error (tr("Points must be fewer than 10000"));
-    //        return false;
-    //    }
-
 
     m_fparser.AddConstant("pi", M_PI);
     m_fparser.AddConstant("e", M_E);

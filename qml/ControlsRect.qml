@@ -1,5 +1,4 @@
 import QtQuick 2.12
-import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
 
 Rectangle {
@@ -7,7 +6,6 @@ Rectangle {
     anchors.rightMargin: window.width / 4
 
     property bool active: true
-    property alias expression: textInput.text
 
     ControlsTitleBar {
         id: controlsTitleBar
@@ -47,7 +45,6 @@ Rectangle {
                 height: 50
                 selectByMouse: true
                 onTextChanged: {
-                    //                    expression = text
                     textInput2.text = "-10"
                     textInput3.text = "10"
                     textInput4.text = "-5"
@@ -76,7 +73,6 @@ Rectangle {
                 placeholderText: (parent.width > 0) ? "minimum X" : ""
                 height: 50
                 selectByMouse: true
-                //                property bool active: true
                 onTextChanged: {
                     if (active)
                         calculate()
@@ -103,9 +99,7 @@ Rectangle {
                 placeholderText: (parent.width > 0) ? "maximum X" : ""
                 height: 50
                 selectByMouse: true
-                //                property bool active: true
                 onTextChanged: {
-                    ////                    maxX = text
                     if (active)
                         calculate()
                 }
@@ -131,7 +125,6 @@ Rectangle {
                 placeholderText: (parent.width > 0) ? "minimum Y" : ""
                 height: 50
                 selectByMouse: true
-                //                property bool active: true
                 onTextChanged: {
                     if (active)
                         calculate()
@@ -158,36 +151,11 @@ Rectangle {
                 placeholderText: (parent.width > 0) ? "maximum Y" : ""
                 height: 50
                 selectByMouse: true
-                //                property bool active: true
                 onTextChanged: {
                     if (active)
                         calculate()
                 }
             }
-
-            //            Label {
-            //                id: label6
-            //                text: (parent.width > 0) ? "Points : " : ""
-            //                anchors.left: parent.left
-            //                anchors.leftMargin: 5
-            //                anchors.top: textInput5.bottom
-            //                anchors.topMargin: 40
-            //                width: 50
-            //            }
-
-            //            TextField {
-            //                id: textInput6
-            //                anchors.left: label4.right
-            //                anchors.leftMargin: 10
-            //                anchors.verticalCenter: label6.verticalCenter
-            //                anchors.right: parent.right
-            //                anchors.rightMargin: 10
-            //                placeholderText: (parent.width > 0) ? "number of points" : ""
-            //                height: 50
-            //                selectByMouse: true
-            ////                onTextChanged: calculate()
-            ////                KeyNavigation.tab: graphRect
-            //            }
         }
     }
 
@@ -195,43 +163,49 @@ Rectangle {
     }
 
     function handleZoom(angleDelta) {
-        myfunction.zoom(angleDelta)
+        if (textInput.text !== "") {
+            //First we perform zoom
+            //Then we round parameters to display them
+            //Displayed parameters do not correspond to
+            //actual parameters used to calculate function
+            myfunction.zoom(angleDelta)
 
-        var minX = myfunction.minX()
-        var maxX = myfunction.maxX()
-        var minY = myfunction.minY()
-        var maxY = myfunction.maxY()
-        var distance = maxX - minX
-        var pow = -Math.floor(Math.log10(distance)) + 1
-        var ten = Math.pow(10, pow)
+            var minX = myfunction.minX()
+            var maxX = myfunction.maxX()
+            var minY = myfunction.minY()
+            var maxY = myfunction.maxY()
+            var distance = maxX - minX
+            var pow = -Math.floor(Math.log10(distance)) + 1
+            var ten = Math.pow(10, pow)
 
-        if (pow > 0) {
-            minX = minX.toFixed(pow)
-            maxX = maxX.toFixed(pow)
-        }
-        else {
-            minX = minX.toFixed(0)
-            maxX = maxX.toFixed(0)
-        }
+            if (pow > 0) {
+                minX = minX.toFixed(pow)
+                maxX = maxX.toFixed(pow)
+            }
+            else {
+                minX = minX.toFixed(0)
+                maxX = maxX.toFixed(0)
+            }
 
-        distance = maxY - minY
-        pow = -Math.floor(Math.log10(distance)) + 1
-        ten = Math.pow(10, pow)
-        if (pow > 0) {
-            minY = minY.toFixed(pow)
-            maxY = maxY.toFixed(pow)
-        }
-        else {
-            minY = minY.toFixed(0)
-            maxY = maxY.toFixed(0)
-        }
+            distance = maxY - minY
+            pow = -Math.floor(Math.log10(distance)) + 1
+            ten = Math.pow(10, pow)
+            if (pow > 0) {
+                minY = minY.toFixed(pow)
+                maxY = maxY.toFixed(pow)
+            }
+            else {
+                minY = minY.toFixed(0)
+                maxY = maxY.toFixed(0)
+            }
 
-        active = false
-        textInput2.text = minX
-        textInput3.text = maxX
-        textInput4.text = minY
-        textInput5.text = maxY
-        active = true
+            active = false
+            textInput2.text = minX
+            textInput3.text = maxX
+            textInput4.text = minY
+            textInput5.text = maxY
+            active = true
+        }
     }
 
     property var minX
@@ -242,83 +216,93 @@ Rectangle {
     property var y0
 
     function startDrag(x, y) {
-        x0 = x
-        y0 = y
-        minX = Number(textInput2.text)
-        maxX = Number(textInput3.text)
-        minY = Number(textInput4.text)
-        maxY = Number(textInput5.text)
+        if (textInput.text !== "") {
+            x0 = x
+            y0 = y
+            minX = Number(textInput2.text)
+            maxX = Number(textInput3.text)
+            minY = Number(textInput4.text)
+            maxY = Number(textInput5.text)
+        }
     }
 
     function handleDrag(diffX, diffY) {
-        active = false
+        if (textInput.text !== "") {
+            active = false
 
-        var distanceX = maxX - minX
+            var distanceX = maxX - minX
 
-        var pow = -Math.floor(Math.log10(distanceX)) + 2
-        var ten = Math.pow(10, pow)
+            var pow = -Math.floor(Math.log10(distanceX)) + 2
+            var ten = Math.pow(10, pow)
 
-        diffX = diffX - x0
-        diffY = diffY - y0
-        diffX = (maxX - minX) / graphRect.width * diffX
-        diffY = (maxY - minY) / graphRect.height * diffY
+            diffX = diffX - x0
+            diffY = diffY - y0
+            diffX = (maxX - minX) / graphRect.width * diffX
+            diffY = (maxY - minY) / graphRect.height * diffY
 
-        textInput2.text = Math.round( (minX - diffX) * ten) / ten
-        textInput3.text = Math.round( (maxX - diffX) * ten) / ten
-        textInput4.text = Math.round( (minY + diffY) * ten) / ten
-        textInput5.text = Math.round( (maxY + diffY) * ten) / ten
-        calculate()
+            textInput2.text = Math.round( (minX - diffX) * ten) / ten
+            textInput3.text = Math.round( (maxX - diffX) * ten) / ten
+            textInput4.text = Math.round( (minY + diffY) * ten) / ten
+            textInput5.text = Math.round( (maxY + diffY) * ten) / ten
+            calculate()
 
-        active = true
+            active = true
+        }
     }
 
     function startPinch() {
-        minX = Number(textInput2.text)
-        maxX = Number(textInput3.text)
-        minY = Number(textInput4.text)
-        maxY = Number(textInput5.text)
-        active = false
+        if (textInput.text !== "") {
+            minX = Number(textInput2.text)
+            maxX = Number(textInput3.text)
+            minY = Number(textInput4.text)
+            maxY = Number(textInput5.text)
+            active = false
+        }
     }
 
     function handlePinch(scale) {
-        scale = 1 / scale
+        if (textInput.text !== "") {
+            scale = 1 / scale
 
-        var distanceX = maxX - minX
-        var centerX = (maxX + minX) / 2
+            var distanceX = maxX - minX
+            var centerX = (maxX + minX) / 2
 
-        var pow = -Math.floor(Math.log10(distanceX)) + 2
-        var ten = Math.pow(10, pow)
+            var pow = -Math.floor(Math.log10(distanceX)) + 2
+            var ten = Math.pow(10, pow)
 
-        var distanceY = maxY - minY
-        var centerY = (maxY + minY) / 2
+            var distanceY = maxY - minY
+            var centerY = (maxY + minY) / 2
 
 
-        distanceX = distanceX * scale
-        distanceY = distanceY * scale
+            distanceX = distanceX * scale
+            distanceY = distanceY * scale
 
-        var n_minX = centerX - distanceX / 2
-        var n_maxX = centerX + distanceX / 2
-        var n_minY = centerY - distanceY / 2
-        var n_maxY = centerY + distanceY / 2
+            var n_minX = centerX - distanceX / 2
+            var n_maxX = centerX + distanceX / 2
+            var n_minY = centerY - distanceY / 2
+            var n_maxY = centerY + distanceY / 2
 
-        active = false
+            active = false
 
-        myfunction.calculate(textInput.text,
-                             n_minX,
-                             n_maxX,
-                             n_minY,
-                             n_maxY,
-                             graphRect.width,
-                             graphRect.height)
+            myfunction.calculate(textInput.text,
+                                 n_minX,
+                                 n_maxX,
+                                 n_minY,
+                                 n_maxY,
+                                 graphRect.width,
+                                 graphRect.height)
 
-        textInput2.text = Math.round(n_minX * ten) / ten
-        textInput3.text = Math.round(n_maxX * ten) / ten
-        textInput4.text = Math.round(n_minY * ten) / ten
-        textInput5.text = Math.round(n_maxY * ten) / ten
+            textInput2.text = Math.round(n_minX * ten) / ten
+            textInput3.text = Math.round(n_maxX * ten) / ten
+            textInput4.text = Math.round(n_minY * ten) / ten
+            textInput5.text = Math.round(n_maxY * ten) / ten
+        }
     }
 
     function pinchFinished() {
-        active = true
+        if (textInput.text !== "") {
+            active = true
+        }
     }
 
     function calculate () {
@@ -326,8 +310,6 @@ Rectangle {
                              textInput2.text,
                              textInput3.text,
                              textInput4.text,
-                             textInput5.text,
-                             graphRect.width,
-                             graphRect.height)
+                             textInput5.text)
     }
 }

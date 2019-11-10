@@ -44,7 +44,6 @@ function drawGrid()
         findVerticalGridLines(xStart, xEnd, xInterval)
 
         ctx.lineWidth = 0.1
-        //ctx.setLineDash([1, 4]);
         ctx.strokeStyle = "black"//myparameters.axesColor;
 
         drawVerticalLines()

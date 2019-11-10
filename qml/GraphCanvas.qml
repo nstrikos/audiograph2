@@ -1,5 +1,4 @@
 import QtQuick 2.9
-import QtQml 2.2
 
 import "GraphCanvasJS.js" as CanvasJS
 
@@ -20,4 +19,6 @@ Canvas {
     }
 
     onAvailableChanged: updateCanvas()
+    onWidthChanged: updateCanvas()
+    onHeightChanged: updateCanvas()
 }

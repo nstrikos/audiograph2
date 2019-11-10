@@ -1,8 +1,5 @@
 import QtQuick 2.12
-import QtQuick.Window 2.12
-import QtQuick.Controls 2.12
 import QtQuick.Controls 1.4
-import QtQuick.Layouts 1.12
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Dialogs 1.3
 
@@ -22,7 +19,7 @@ Rectangle {
             title: qsTr("Graph settings")
             Flickable {
                 anchors.fill: parent
-                contentHeight: 500
+                contentHeight: 800
                 clip: true
                 Label {
                     id: label1
@@ -168,10 +165,9 @@ Rectangle {
                     color: checked ? "gray" : "light gray"
                     property bool checked: parameters.showAxes
                     Text {
-//                        anchors.fill: parent
                         text: showAxesCheckBox.checked ? qsTr("On") : qsTr("Off")
                         anchors.centerIn: parent
-                        font.pointSize: 18
+                        font.pointSize: 16
                     }
 
                     MouseArea {
@@ -185,6 +181,31 @@ Rectangle {
                         graphRect.graphCanvas.updateCanvas()
                     }
                 }
+
+                Button {
+                    id: resetBuuton
+                    text: qsTr("Reset")
+                    anchors.top: label6.bottom
+                    anchors.topMargin: 50
+                    anchors.left: label6.right
+                    anchors.right: parent.right
+                    anchors.leftMargin: 10
+                    anchors.rightMargin: 10
+                    width: 80
+                    height: 50
+                    onClicked: {
+                        parameters.reset()
+                        lineColor = parameters.lineColor
+                        graphRect.curveColor = parameters.lineColor
+                        backGroundColorRect.color = parameters.backgroundColor
+                        graphRect.curveWidth = parameters.lineWidth
+                        lineWidthSpinbox.value = parameters.lineWidth
+                        axesColorRect.color = parameters.axesColor
+                        axesSizeSpinbox.value = parameters.axesSize
+                        showAxesCheckBox.checked = parameters.showAxes
+                        graphRect.updateCanvas()
+                    }
+                }
             }
         }
         Tab { title: "Tab 2" }
@@ -195,7 +216,7 @@ Rectangle {
             tab: Rectangle {
                 color: styleData.selected ? "gray" :"light gray"
                 border.color:  "gray"
-                implicitWidth: settingsRect.width / 2//Math.max(text.width + 4, 180)
+                implicitWidth: settingsRect.width / 2
                 implicitHeight: 30
                 radius: 2
                 Text {

@@ -1,10 +1,12 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
-import QtQuick.Controls 2.12
 
 Window {
     id: window
     visible: true
+
+    //on android setting width and height results in
+    //not showing correctly the application
     width: Qt.platform.os === "android" ? 320 : Screen.width
     height: Qt.platform.os === "android" ? 350 : Screen.height
     minimumWidth: 320
@@ -56,17 +58,14 @@ Window {
     onHeightChanged: setAnchor()
     onAnchorToLeftChanged: anchorChangeState.anchorChanged()
 
-    Item {
+    GraphParameters {
         id: graphParameters
-        property var minX: -10
-        property var maxX: 10
-        property var minY: -5
-        property var maxY: 5
     }
 
     Connections {
         target: myfunction
         onUpdate: {
+            //We need graphParameters for displaying the grid
             graphParameters.minX = myfunction.minX();
             graphParameters.maxX = myfunction.maxX();
             graphParameters.minY = myfunction.minY();

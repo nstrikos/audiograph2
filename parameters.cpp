@@ -117,7 +117,7 @@ void Parameters::read()
     if (!lineColor.isValid())
         lineColor = Qt::red;
 
-    int lineWidth = settings.value("lineWidth", 1).toInt();
+    int lineWidth = settings.value("lineWidth", 4).toInt();
 
     QColor backgroundColor = settings.value("backgroundColor", "").value<QColor>();
     if (!backgroundColor.isValid())
@@ -199,7 +199,7 @@ void Parameters::reset()
     setPointColor(Qt::blue);
     setPointSize(5);
     setLineColor(Qt::red);
-    setLineWidth(1);
+    setLineWidth(4);
     setBackgroundColor(Qt::white);
     setHighlightColor("#00ddff");
     setHighlightSize(20);

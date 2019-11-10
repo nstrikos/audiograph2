@@ -1,5 +1,4 @@
 import QtQuick 2.12
-import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
 
 Rectangle {
@@ -11,9 +10,7 @@ Rectangle {
     
     Label {
         text: (parent.width > 0) ? "Function parameters" : ""
-        //font.family: Flat.FlatStyle.fontFamily
         font.pixelSize: 18
-//        renderType: Text.QtRendering
         renderType: Text.NativeRendering
         font.hintingPreference: Font.PreferFullHinting
         color: "white"

@@ -21,8 +21,10 @@ Curve::~Curve()
 void Curve::draw(Function *function)
 {
     m_function = function;
-    calcCoords(this->width(), this->height());
-    update();
+    if (m_function != nullptr && m_function->lineSize() > 0) {
+        calcCoords(this->width(), this->height());
+        update();
+    }
 }
 
 QSGNode *Curve::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
@@ -99,7 +101,7 @@ QSGNode *Curve::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
     QSGGeometry::Point2D *lineVertices = geometry->vertexDataAsPoint2D();
 
 #ifndef Q_OS_ANDROID
-    if (m_function != nullptr) {
+    if (m_function != nullptr && m_function->lineSize() > 0) {
         for (int i = 0; i < LINE_POINTS; i++)
             lineVertices[i].set(m_points[i].x, m_points[i].y);
     } else {
@@ -131,7 +133,7 @@ QSGNode *Curve::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
                     cx = m_points[i].x;
                     cy = m_points[i].y;
 
-                    int r = 5;
+                    int r = m_lineWidth;
                     for(int ii = 0; ii < POINT_SEGMENTS; ii++) {
                         float theta = 2.0f * 3.1415926f * float(ii) / float(POINT_SEGMENTS);//get the current angle
 

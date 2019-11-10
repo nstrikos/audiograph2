@@ -1,6 +1,4 @@
 import QtQuick 2.12
-import QtQuick.Window 2.12
-import QtQuick.Controls 2.12
 import Curve 1.0
 
 Rectangle {
@@ -36,25 +34,19 @@ Rectangle {
 
     PinchArea {
         anchors.fill: parent
-        onPinchStarted: {
-            if (controlsRect.expression !== "")
-                controlsRect.startPinch()
-        }
+        onPinchStarted: controlsRect.startPinch()
         onPinchUpdated: controlsRect.handlePinch(pinch.scale)
         onPinchFinished: controlsRect.pinchFinished()
         MouseArea {
             anchors.fill: parent
-            onWheel: {
-                if (controlsRect.expression !== "")
-                    controlsRect.handleZoom(wheel.angleDelta.y)
-            }
+            onWheel: controlsRect.handleZoom(wheel.angleDelta.y)
 
             onPressedChanged: {
-                if (pressed && controlsRect.expression !== "")
+                if (pressed)
                     controlsRect.startDrag(mouseX, mouseY)
             }
             onPositionChanged: {
-                if (pressed && controlsRect.expression !== "")
+                if (pressed)
                     controlsRect.handleDrag(mouseX, mouseY)
             }
         }

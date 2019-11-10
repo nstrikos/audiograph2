@@ -1,17 +1,18 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
-        <file>AnchorChangeState.qml</file>
-        <file>SettingsIcon.qml</file>
-        <file>ControlsButton.qml</file>
-        <file>SettingsButton.qml</file>
-        <file>ControlsRect.qml</file>
-        <file>ControlsTitleBar.qml</file>
-        <file>BeautifyRect.qml</file>
-        <file>GraphRect.qml</file>
-        <file>GraphCanvas.qml</file>
-        <file>GraphCanvasJS.js</file>
-        <file>SettingsRect.qml</file>
-        <file>BeautifyGraphRect.qml</file>
+        <file>qml/AnchorChangeState.qml</file>
+        <file>qml/BeautifyGraphRect.qml</file>
+        <file>qml/BeautifyRect.qml</file>
+        <file>qml/ControlsButton.qml</file>
+        <file>qml/ControlsRect.qml</file>
+        <file>qml/ControlsTitleBar.qml</file>
+        <file>qml/GraphCanvas.qml</file>
+        <file>qml/GraphCanvasJS.js</file>
+        <file>qml/GraphRect.qml</file>
+        <file>qml/SettingsButton.qml</file>
+        <file>qml/SettingsIcon.qml</file>
+        <file>qml/SettingsRect.qml</file>
+        <file>qml/main.qml</file>
+        <file>qml/GraphParameters.qml</file>
     </qresource>
 </RCC>
