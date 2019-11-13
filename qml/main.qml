@@ -19,20 +19,20 @@ Window {
         id: controlsRect
     }
 
-    GraphRect {
-        id: graphRect
-    }
-
-    SettingsRect {
-        id: settingsRect
-    }
-
     ControlsButton {
         id: controlsButton
     }
 
+    GraphRect {
+        id: graphRect
+    }
+
     SettingsButton {
         id: settingsButton
+    }
+
+    SettingsRect {
+        id: settingsRect
     }
 
     AnchorChangeState {

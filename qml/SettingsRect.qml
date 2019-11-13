@@ -30,19 +30,39 @@ Rectangle {
                     height: 25
                     text: qsTr("Graph color") + ":"
                 }
-                Rectangle {
-                    id: lineColorRect
+                FocusScope {
                     height: 50
                     anchors.verticalCenter: label1.verticalCenter
                     anchors.left: label1.right
                     anchors.leftMargin: 10
                     anchors.right: parent.right
                     anchors.rightMargin: 10
-                    color: lineColor
-                    border.color: "gray"
-                    MouseArea {
+                    property alias color: lineColorRect.color
+                    activeFocusOnTab: true
+                    Accessible.name: qsTr("Graph color")
+                    onActiveFocusChanged: {
+                        if (activeFocus) {
+                            lineColorRect.border.color = "blue"
+                            lineColorRect.border.width = 4
+                        }
+                        else {
+                            lineColorRect.border.color = "gray"
+                            lineColorRect.border.width = 1
+                        }
+                    }
+                    Keys.onSpacePressed: openColorDialog("line color")
+                    Keys.onEnterPressed: openColorDialog("line color")
+                    Keys.onReturnPressed: openColorDialog("line color")
+
+                    Rectangle {
+                        id: lineColorRect
                         anchors.fill: parent
-                        onPressed: openColorDialog("line color")
+                        color: lineColor
+                        border.color: "gray"
+                        MouseArea {
+                            anchors.fill: parent
+                            onPressed: openColorDialog("line color")
+                        }
                     }
                 }
 
@@ -55,19 +75,38 @@ Rectangle {
                     width: 80
                     height: 25
                 }
-                Rectangle {
-                    id: backGroundColorRect
+                FocusScope {
                     height: 50
                     anchors.verticalCenter: label2.verticalCenter
                     anchors.left: label2.right
                     anchors.leftMargin: 10
                     anchors.right: parent.right
                     anchors.rightMargin: 10
-                    color: backgroundColor
-                    border.color: "gray"
-                    MouseArea {
+                    activeFocusOnTab: true
+                    property alias color: backGroundColorRect.color
+                    Accessible.name: qsTr("Background color")
+                    onActiveFocusChanged: {
+                        if (activeFocus) {
+                            backGroundColorRect.border.color = "blue"
+                            backGroundColorRect.border.width = 4
+                        }
+                        else {
+                            backGroundColorRect.border.color = "gray"
+                            backGroundColorRect.border.width = 1
+                        }
+                    }
+                    Keys.onSpacePressed: openColorDialog("background color")
+                    Keys.onEnterPressed: openColorDialog("background color")
+                    Keys.onReturnPressed: openColorDialog("background color")
+                    Rectangle {
+                        id: backGroundColorRect
                         anchors.fill: parent
-                        onPressed: openColorDialog("background color")
+                        color: backgroundColor
+                        border.color: "gray"
+                        MouseArea {
+                            anchors.fill: parent
+                            onPressed: openColorDialog("background color")
+                        }
                     }
                 }
 
@@ -91,6 +130,7 @@ Rectangle {
                     minimumValue: 1
                     maximumValue: 10
                     value: parameters.lineWidth
+                    Accessible.name: qsTr("Line width")
                     onValueChanged: {
                         graphRect.curveWidth = value
                         parameters.lineWidth = value
@@ -105,19 +145,38 @@ Rectangle {
                     height: 25
                     text: qsTr("Axes") + ":"
                 }
-                Rectangle {
-                    id: axesColorRect
+                FocusScope {
                     height: 50
                     anchors.verticalCenter: label4.verticalCenter
                     anchors.left: label4.right
                     anchors.leftMargin: 10
                     anchors.right: parent.right
                     anchors.rightMargin: 10
-                    color: axesColor
-                    border.color: "gray"
-                    MouseArea {
+                    property alias color: axesColorRect.color
+                    Accessible.name: qsTr("Axes color")
+                    activeFocusOnTab: true
+                    onActiveFocusChanged: {
+                        if (activeFocus) {
+                            axesColorRect.border.color = "blue"
+                            axesColorRect.border.width = 4
+                        }
+                        else {
+                            axesColorRect.border.color = "gray"
+                            axesColorRect.border.width = 1
+                        }
+                    }
+                    Keys.onSpacePressed: openColorDialog("axes color")
+                    Keys.onEnterPressed: openColorDialog("axes color")
+                    Keys.onReturnPressed: openColorDialog("axes color")
+                    Rectangle {
+                        id: axesColorRect
                         anchors.fill: parent
-                        onPressed: openColorDialog("axes color")
+                        color: axesColor
+                        border.color: "gray"
+                        MouseArea {
+                            anchors.fill: parent
+                            onPressed: openColorDialog("axes color")
+                        }
                     }
                 }
                 Label {
@@ -140,6 +199,7 @@ Rectangle {
                     minimumValue: 1
                     maximumValue: 10
                     value: parameters.axesSize
+                    Accessible.name: qsTr("Axes size")
                     onValueChanged: {
                         parameters.axesSize = value
                         graphRect.graphCanvas.updateCanvas()
@@ -154,31 +214,51 @@ Rectangle {
                     width: 80
                     height: 25
                 }
-                Rectangle {
-                    id: showAxesCheckBox
+                FocusScope {
                     height: 50
                     anchors.verticalCenter: label6.verticalCenter
                     anchors.left: label6.right
                     anchors.leftMargin: 10
                     anchors.right: parent.right
                     anchors.rightMargin: 10
-                    color: checked ? "gray" : "light gray"
-                    property bool checked: parameters.showAxes
-                    Text {
-                        text: showAxesCheckBox.checked ? qsTr("On") : qsTr("Off")
-                        anchors.centerIn: parent
-                        font.pointSize: 16
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onPressed: {
-                            showAxesCheckBox.checked = ! showAxesCheckBox.checked
+                    property alias color: showAxesCheckBox.color
+                    activeFocusOnTab: true
+                    Accessible.name: qsTr("Show grid")
+                    onActiveFocusChanged: {
+                        if (activeFocus) {
+                            showAxesCheckBox.border.color = "blue"
+                            showAxesCheckBox.border.width = 4
+                        }
+                        else {
+                            showAxesCheckBox.border.color = "gray"
+                            showAxesCheckBox.border.width = 1
                         }
                     }
-                    onCheckedChanged: {
-                        parameters.showAxes = checked
-                        graphRect.graphCanvas.updateCanvas()
+                    Keys.onSpacePressed: showAxesCheckBox.checked = ! showAxesCheckBox.checked
+                    Keys.onEnterPressed: showAxesCheckBox.checked = ! showAxesCheckBox.checked
+                    Keys.onReturnPressed: showAxesCheckBox.checked = ! showAxesCheckBox.checked
+
+                    Rectangle {
+                        id: showAxesCheckBox
+                        anchors.fill: parent
+                        color: showAxesCheckBox.checked ? "gray" : "light gray"
+                        property bool checked: parameters.showAxes
+                        Text {
+                            text: showAxesCheckBox.checked ? qsTr("On") : qsTr("Off")
+                            anchors.centerIn: parent
+                            font.pointSize: 16
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onPressed: {
+                                showAxesCheckBox.checked = ! showAxesCheckBox.checked
+                            }
+                        }
+                        onCheckedChanged: {
+                            parameters.showAxes = checked
+                            graphRect.graphCanvas.updateCanvas()
+                        }
                     }
                 }
 
@@ -193,6 +273,7 @@ Rectangle {
                     anchors.rightMargin: 10
                     width: 80
                     height: 50
+                    Accessible.name: qsTr("Reset graph settings")
                     onClicked: {
                         parameters.reset()
                         lineColor = parameters.lineColor

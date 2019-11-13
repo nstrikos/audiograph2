@@ -51,6 +51,11 @@ Rectangle {
                     textInput5.text = "5"
                     calculate()
                 }
+                onActiveFocusChanged: {
+                    if (activeFocus)
+                        console.log("Textinput")
+                }
+                Accessible.name: qsTr("Set expression")
             }
 
             Label {
@@ -77,6 +82,11 @@ Rectangle {
                     if (active)
                         calculate()
                 }
+                onActiveFocusChanged: {
+                    if (activeFocus)
+                        console.log("Textinput2")
+                }
+                Accessible.name: qsTr("Set minimum x")
             }
 
             Label {
@@ -103,6 +113,11 @@ Rectangle {
                     if (active)
                         calculate()
                 }
+                onActiveFocusChanged: {
+                    if (activeFocus)
+                        console.log("Textinput3")
+                }
+                Accessible.name: qsTr("Set maximum x")
             }
 
             Label {
@@ -129,6 +144,11 @@ Rectangle {
                     if (active)
                         calculate()
                 }
+                onActiveFocusChanged: {
+                    if (activeFocus)
+                        console.log("Textinput4")
+                }
+                Accessible.name: qsTr("Set minimum Y")
             }
 
             Label {
@@ -155,6 +175,11 @@ Rectangle {
                     if (active)
                         calculate()
                 }
+                onActiveFocusChanged: {
+                    if (activeFocus)
+                        console.log("Textinput5")
+                }
+                Accessible.name: qsTr("Set maximum Y")
             }
         }
     }
