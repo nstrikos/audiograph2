@@ -14,5 +14,7 @@
         <file>qml/SettingsRect.qml</file>
         <file>qml/main.qml</file>
         <file>qml/GraphParameters.qml</file>
+        <file>qml/GraphSettingsTab.qml</file>
+        <file>qml/AudioSettingsTab.qml</file>
     </qresource>
 </RCC>
