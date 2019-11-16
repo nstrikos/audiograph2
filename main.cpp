@@ -5,6 +5,7 @@
 #include "function.h"
 #include "curve.h"
 #include "parameters.h"
+#include "audio.h"
 
 
 int main(int argc, char *argv[])
@@ -18,11 +19,13 @@ int main(int argc, char *argv[])
 
     Function function;
     Parameters parameters;
+    Audio audio;
     qRegisterMetaType<Function*>("Function*");
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("myfunction", &function);
     engine.rootContext()->setContextProperty("parameters", &parameters);
+    engine.rootContext()->setContextProperty("audio", &audio);
 
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

@@ -1,4 +1,4 @@
-QT += quick
+QT += quick multimedia
 
 CONFIG += c++11
 
@@ -14,11 +14,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        audio.cpp \
+        audioengine.cpp \
         curve.cpp \
         curveinterface.cpp \
         fparser/fparser.cc \
         fparser/fpoptimizer.cc \
         function.cpp \
+        generator.cpp \
+        generator/genclipper.cpp \
+        generator/genfunctioncalculator.cpp \
+        generator/genmaxfinder.cpp \
+        generator/genminfinder.cpp \
+        generator/genmod.cpp \
+        generator/genmodvalues.cpp \
+        generator/genparameters.cpp \
+        generator/genphicalculator.cpp \
+        generator/gensum.cpp \
         main.cpp \
         parameters.cpp \
         point.cpp
@@ -41,6 +53,9 @@ DISTFILES += \
     fparser/extrasrc/fp_opcode_add.inc
 
 HEADERS += \
+    atmsp.h \
+    audio.h \
+    audioengine.h \
     constants.h \
     curve.h \
     curveinterface.h \
@@ -51,5 +66,15 @@ HEADERS += \
     fparser/fparser_mpfr.hh \
     fparser/fpconfig.hh \
     function.h \
+    generator.h \
+    generator/genclipper.h \
+    generator/genfunctioncalculator.h \
+    generator/genmaxfinder.h \
+    generator/genminfinder.h \
+    generator/genmod.h \
+    generator/genmodvalues.h \
+    generator/genparameters.h \
+    generator/genphicalculator.h \
+    generator/gensum.h \
     parameters.h \
     point.h

@@ -228,7 +228,7 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onPressed: {
-                            startSoundButton.checked = ! startSoundButton.checked
+                            startSoundButton.checked = !startSoundButton.checked
                         }
                     }
                     onCheckedChanged: {
@@ -396,5 +396,11 @@ Rectangle {
 
     function startSoundButtonClicked() {
         startSoundButton.checked = !startSoundButton.checked
+        audio.start(textInput.text,
+                    textInput2.text,
+                    textInput3.text,
+                    10,
+                    200,
+                    2000)
     }
 }
