@@ -15,6 +15,17 @@ Window {
 
     property bool anchorToLeft: undefined
 
+    Item {
+        anchors.fill: parent
+        focus: true
+        Keys.onPressed: {
+            if (event.key === Qt.Key_F2) {
+                controlsRect.startSoundButtonClicked()
+                event.accepted = true;
+            }
+        }
+    }
+
     ControlsRect {
         id: controlsRect
     }

@@ -11,6 +11,13 @@ Rectangle {
     property color backgroundColor: parameters.backgroundColor
     property color axesColor: parameters.axesColor
 
+    Keys.onPressed: {
+        if (event.key === Qt.Key_F2) {
+            controlsRect.startSoundButtonClicked()
+            event.accepted = true;
+        }
+    }
+
     TabView {
         id: frame
         anchors.fill: parent

@@ -21,6 +21,13 @@ FocusScope {
     Keys.onEnterPressed: anchorChangeState.settingsButtonPressed()
     Keys.onReturnPressed: anchorChangeState.settingsButtonPressed()
 
+    Keys.onPressed: {
+        if (event.key === Qt.Key_F2) {
+            controlsRect.startSoundButtonClicked()
+            event.accepted = true;
+        }
+    }
+
     Rectangle {
         id: borderRect
         anchors.fill: parent

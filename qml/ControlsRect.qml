@@ -7,6 +7,14 @@ Rectangle {
 
     property bool active: true
 
+    focus: true
+    Keys.onPressed: {
+        if (event.key === Qt.Key_F2) {
+            startSoundButtonClicked()
+            event.accepted = true;
+        }
+    }
+
     ControlsTitleBar {
         id: controlsTitleBar
     }
@@ -181,6 +189,54 @@ Rectangle {
                 }
                 Accessible.name: qsTr("Set maximum Y")
             }
+
+            FocusScope {
+                height: 50
+                anchors.top: label5.bottom
+                anchors.topMargin: 50
+                anchors.left: label5.right
+                anchors.leftMargin: 10
+                anchors.right: parent.right
+                anchors.rightMargin: 10
+                activeFocusOnTab: true
+                Accessible.name: qsTr("Start sound button")
+                onActiveFocusChanged: {
+                    if (activeFocus) {
+                        startSoundButton.border.color = "blue"
+                        startSoundButton.border.width = 4
+                    }
+                    else {
+                        startSoundButton.border.color = "gray"
+                        startSoundButton.border.width = 1
+                    }
+                }
+                Keys.onSpacePressed: startSoundButton.checked = ! startSoundButton.checked
+                Keys.onEnterPressed: startSoundButton.checked = ! startSoundButton.checked
+                Keys.onReturnPressed: startSoundButton.checked = ! startSoundButton.checked
+
+                Rectangle {
+                    id: startSoundButton
+                    anchors.fill: parent
+                    color: startSoundButton.checked ? "gray" : "light gray"
+                    property bool checked: true
+                    Text {
+                        text: startSoundButton.checked ? qsTr("Start sound") : qsTr("Stop sound")
+                        anchors.centerIn: parent
+                        font.pointSize: 16
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onPressed: {
+                            startSoundButton.checked = ! startSoundButton.checked
+                        }
+                    }
+                    onCheckedChanged: {
+                        //parameters.showAxes = checked
+                        //graphRect.graphCanvas.updateCanvas()
+                    }
+                }
+            }
         }
     }
 
@@ -336,5 +392,9 @@ Rectangle {
                              textInput3.text,
                              textInput4.text,
                              textInput5.text)
+    }
+
+    function startSoundButtonClicked() {
+        startSoundButton.checked = !startSoundButton.checked
     }
 }
