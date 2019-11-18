@@ -140,6 +140,7 @@ void Parameters::read()
     bool showLine = settings.value("showLine", true).toBool();
 
     bool showAxes = settings.value("showAxes", true).toBool();
+    bool invertTheme = settings.value("invertTheme", false).toBool();
 
     double volume = settings.value("volume", 1.0).toDouble();
     double rate = settings.value("rate", 0.5).toDouble();
@@ -162,6 +163,7 @@ void Parameters::read()
     setShowPoints(showPoints);
     setShowLine(showLine);
     setShowAxes(showAxes);
+    setInvertTheme(invertTheme);
     setVolume(volume);
     setRate(rate);
     setPitch(pitch);
@@ -187,6 +189,7 @@ void Parameters::write()
     settings.setValue("showPoints", m_showPoints);
     settings.setValue("showLine", m_showLine);
     settings.setValue("showAxes", m_showAxes);
+    settings.setValue("invertTheme", m_invertTheme);
     settings.setValue("volume", m_volume);
     settings.setValue("rate", m_rate);
     settings.setValue("pitch", m_pitch);
@@ -211,6 +214,7 @@ void Parameters::reset()
     setShowPoints(true);
     setShowLine(true);
     setShowAxes(true);
+    setInvertTheme(false);
 }
 
 void Parameters::resetAudio()
@@ -324,5 +328,16 @@ bool Parameters::useNotes() const
 void Parameters::setUseNotes(bool value)
 {
     m_useNotes = value;
+    write();
+}
+
+bool Parameters::invertTheme() const
+{
+    return m_invertTheme;
+}
+
+void Parameters::setInvertTheme(bool invertTheme)
+{
+    m_invertTheme = invertTheme;
     write();
 }

@@ -73,6 +73,11 @@ Window {
         id: graphParameters
     }
 
+    function setColor() {
+        controlsRect.color = !parameters.invertTheme ? "white" : "black"
+        controlsRect.fontColor = parameters.invertTheme ? "white" : "black"
+    }
+
     Connections {
         target: myfunction
         onUpdate: {

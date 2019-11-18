@@ -16,7 +16,7 @@ Tab {
             anchors.left: parent.left
             width: 80
             height: 25
-            text: qsTr("Graph color") + ":"
+            text: qsTr("Graph\ncolor") + ":"
         }
         FocusScope {
             height: 50
@@ -322,11 +322,68 @@ Tab {
                 }
             }
         }
+
+        Label {
+            id: label9
+            text: qsTr("Invert theme") + ":"
+            anchors.top: label8.bottom
+            anchors.topMargin: 50
+            anchors.left: parent.left
+            width: 80
+            height: 25
+        }
+        FocusScope {
+            height: 50
+            anchors.verticalCenter: label9.verticalCenter
+            anchors.left: label9.right
+            anchors.leftMargin: 10
+            anchors.right: parent.right
+            anchors.rightMargin: 10
+            property alias color: invertThemeCheckBox.color
+            activeFocusOnTab: true
+            Accessible.name: qsTr("Show grid")
+            onActiveFocusChanged: {
+                if (activeFocus) {
+                    invertThemeCheckBox.border.color = "blue"
+                    invertThemeCheckBox.border.width = 4
+                }
+                else {
+                    invertThemeCheckBox.border.color = "gray"
+                    invertThemeCheckBox.border.width = 1
+                }
+            }
+            Keys.onSpacePressed: invertThemeCheckBox.checked = ! invertThemeCheckBox.checked
+            Keys.onEnterPressed: invertThemeCheckBox.checked = ! invertThemeCheckBox.checked
+            Keys.onReturnPressed: invertThemeCheckBox.checked = ! invertThemeCheckBox.checked
+
+            Rectangle {
+                id: invertThemeCheckBox
+                anchors.fill: parent
+                color: invertThemeCheckBox.checked ? "gray" : "light gray"
+                property bool checked: parameters.showAxes
+                Text {
+                    text: invertThemeCheckBox.checked ? qsTr("On") : qsTr("Off")
+                    anchors.centerIn: parent
+                    font.pointSize: 16
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onPressed: {
+                        invertThemeCheckBox.checked = ! invertThemeCheckBox.checked
+                    }
+                }
+                onCheckedChanged: {
+                    parameters.invertTheme = checked
+                    window.setColor()
+                }
+            }
+        }
         
         Button {
             id: resetButton
             text: qsTr("Reset")
-            anchors.top: label8.bottom
+            anchors.top: label9.bottom
             anchors.topMargin: 50
             anchors.left: label8.right
             anchors.right: parent.right
@@ -348,6 +405,8 @@ Tab {
                 axesSizeSpinbox.value = parameters.axesSize
                 showAxesCheckBox.checked = parameters.showAxes
                 graphRect.updateCanvas()
+                invertThemeCheckBox.checked = parameters.invertTheme
+                window.setColor()
             }
         }
     }

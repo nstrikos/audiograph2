@@ -106,17 +106,17 @@ Tab {
             Accessible.name: qsTr("Use notes")
             onActiveFocusChanged: {
                 if (activeFocus) {
-                    showAxesCheckBox.border.color = "blue"
-                    showAxesCheckBox.border.width = 4
+                    useNotesCheckBox.border.color = "blue"
+                    useNotesCheckBox.border.width = 4
                 }
                 else {
-                    showAxesCheckBox.border.color = "gray"
-                    showAxesCheckBox.border.width = 1
+                    useNotesCheckBox.border.color = "gray"
+                    useNotesCheckBox.border.width = 1
                 }
             }
-            Keys.onSpacePressed: showAxesCheckBox.checked = ! showAxesCheckBox.checked
-            Keys.onEnterPressed: showAxesCheckBox.checked = ! showAxesCheckBox.checked
-            Keys.onReturnPressed: showAxesCheckBox.checked = ! showAxesCheckBox.checked
+            Keys.onSpacePressed: useNotesCheckBox.checked = ! useNotesCheckBox.checked
+            Keys.onEnterPressed: useNotesCheckBox.checked = ! useNotesCheckBox.checked
+            Keys.onReturnPressed: useNotesCheckBox.checked = ! useNotesCheckBox.checked
 
             Rectangle {
                 id: useNotesCheckBox

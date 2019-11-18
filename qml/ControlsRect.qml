@@ -6,6 +6,10 @@ Rectangle {
     anchors.rightMargin: window.width / 4
 
     property bool active: true
+    color : !parameters.invertTheme ? "white" : "black"
+    property color fontColor: parameters.invertTheme ? "white" : "black"
+
+
 
     focus: true
     Keys.onPressed: {
@@ -40,6 +44,7 @@ Rectangle {
                 anchors.left: parent.left
                 anchors.leftMargin: 5
                 width: 50
+                color: fontColor
             }
 
             TextField {
@@ -52,6 +57,14 @@ Rectangle {
                 placeholderText: (parent.width > 0) ? "Function expression" : ""
                 height: 50
                 selectByMouse: true
+                color: fontColor
+                background: Rectangle {
+                    id: backRect
+                    color: controlsRect.color
+                    border.color: activeFocus ? "blue" : "light gray"
+                    border.width: 2
+                }
+
                 onTextChanged: {
                     textInput2.text = "-10"
                     textInput3.text = "10"
@@ -60,8 +73,13 @@ Rectangle {
                     calculate()
                 }
                 onActiveFocusChanged: {
-                    if (activeFocus)
-                        console.log("Textinput")
+                    if (activeFocus) {
+                        backRect.border.color = "blue"
+                        backRect.border.width = 4
+                    } else {
+                        backRect.border.color = "light gray"
+                        backRect.border.width = 2
+                    }
                 }
                 Accessible.name: qsTr("Set expression")
             }
@@ -74,6 +92,7 @@ Rectangle {
                 anchors.top: textInput.bottom
                 anchors.topMargin: 40
                 width: 50
+                color: fontColor
             }
 
             TextField {
@@ -86,13 +105,25 @@ Rectangle {
                 placeholderText: (parent.width > 0) ? "minimum X" : ""
                 height: 50
                 selectByMouse: true
+                color: fontColor
+                background: Rectangle {
+                    id: backRect2
+                    color: controlsRect.color
+                    border.color: activeFocus ? "blue" : "light gray"
+                    border.width: 2
+                }
                 onTextChanged: {
                     if (active)
                         calculate()
                 }
                 onActiveFocusChanged: {
-                    if (activeFocus)
-                        console.log("Textinput2")
+                    if (activeFocus) {
+                        backRect2.border.color = "blue"
+                        backRect2.border.width = 4
+                    } else {
+                        backRect2.border.color = "light gray"
+                        backRect2.border.width = 2
+                    }
                 }
                 Accessible.name: qsTr("Set minimum x")
             }
@@ -105,6 +136,7 @@ Rectangle {
                 anchors.top: textInput2.bottom
                 anchors.topMargin: 40
                 width: 50
+                color: fontColor
             }
 
             TextField {
@@ -136,6 +168,7 @@ Rectangle {
                 anchors.top: textInput3.bottom
                 anchors.topMargin: 40
                 width: 50
+                color: fontColor
             }
 
             TextField {
@@ -167,6 +200,7 @@ Rectangle {
                 anchors.top: textInput4.bottom
                 anchors.topMargin: 40
                 width: 50
+                color: fontColor
             }
 
             TextField {
@@ -223,6 +257,7 @@ Rectangle {
                         text: startSoundButton.checked ? qsTr("Start sound") : qsTr("Stop sound")
                         anchors.centerIn: parent
                         font.pointSize: 16
+                        color: fontColor
                     }
 
                     MouseArea {

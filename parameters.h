@@ -23,6 +23,7 @@ class Parameters : public QObject
     Q_PROPERTY(QColor axesColor READ axesColor WRITE setAxesColor NOTIFY axesColorChanged)
     Q_PROPERTY(int axesSize READ axesSize WRITE setAxesSize NOTIFY axesSizeChanged)
     Q_PROPERTY(bool showAxes READ showAxes WRITE setShowAxes NOTIFY showAxesChanged)
+    Q_PROPERTY(bool invertTheme READ invertTheme WRITE setInvertTheme NOTIFY invertThemeChanged)
     Q_PROPERTY(double volume READ volume WRITE setVolume NOTIFY volumeChanged)
     Q_PROPERTY(double rate READ rate WRITE setRate NOTIFY rateChanged)
     Q_PROPERTY(double pitch READ pitch WRITE setPitch NOTIFY pitchChanged)
@@ -97,6 +98,9 @@ public:
     bool useNotes() const;
     void setUseNotes(bool value);
 
+    bool invertTheme() const;
+    void setInvertTheme(bool invertTheme);
+
 private:
     bool m_showPoints;
     bool m_showLine;
@@ -110,6 +114,7 @@ private:
     QColor m_axesColor;
     int m_axesSize;
     int m_highlightSize;
+    bool m_invertTheme;
     double m_volume;
     double m_rate;
     double m_pitch;
@@ -133,6 +138,7 @@ signals:
     void axesColorChanged();
     void axesSizeChanged();
     void showAxesChanged();
+    void invertThemeChanged();
     void volumeChanged();
     void rateChanged();
     void pitchChanged();
