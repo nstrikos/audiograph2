@@ -124,9 +124,82 @@ Tab {
                 parameters.lineWidth = value
             }
         }
+
         Label {
             id: label4
             anchors.top: label3.bottom
+            anchors.topMargin: 50
+            anchors.left: parent.left
+            width: 80
+            height: 25
+            text: qsTr("Highlight") + ":"
+        }
+        FocusScope {
+            height: 50
+            anchors.verticalCenter: label4.verticalCenter
+            anchors.left: label4.right
+            anchors.leftMargin: 10
+            anchors.right: parent.right
+            anchors.rightMargin: 10
+            property alias color: highlightColorRect.color
+            activeFocusOnTab: true
+            Accessible.name: qsTr("Highlight color")
+            onActiveFocusChanged: {
+                if (activeFocus) {
+                    highlightColorRect.border.color = "blue"
+                    highlightColorRect.border.width = 4
+                }
+                else {
+                    highlightColorRect.border.color = "gray"
+                    highlightColorRect.border.width = 1
+                }
+            }
+            Keys.onSpacePressed: openColorDialog("highlight color")
+            Keys.onEnterPressed: openColorDialog("highlight color")
+            Keys.onReturnPressed: openColorDialog("hightlight color")
+
+            Rectangle {
+                id: highlightColorRect
+                anchors.fill: parent
+                color: highlightColor
+                border.color: "gray"
+                MouseArea {
+                    anchors.fill: parent
+                    onPressed: openColorDialog("highlight color")
+                }
+            }
+        }
+
+        Label {
+            id: label5
+            text: qsTr("Highlight\nsize") + ":"
+            anchors.top: label4.bottom
+            anchors.topMargin: 50
+            anchors.left: parent.left
+            width: 80
+            height: 25
+        }
+        SpinBox {
+            id: highlightSizeSpinbox
+            height: 50
+            anchors.verticalCenter: label5.verticalCenter
+            anchors.left: label5.right
+            anchors.leftMargin: 10
+            anchors.right: parent.right
+            anchors.rightMargin: 10
+            minimumValue: 5
+            maximumValue: 20
+            value: parameters.highlightSize
+            Accessible.name: qsTr("Highlight size")
+            onValueChanged: {
+                graphRect.highlightSize = value
+                parameters.highlightSize = value
+            }
+        }
+
+        Label {
+            id: label6
+            anchors.top: label5.bottom
             anchors.topMargin: 50
             anchors.left: parent.left
             width: 80
@@ -135,8 +208,8 @@ Tab {
         }
         FocusScope {
             height: 50
-            anchors.verticalCenter: label4.verticalCenter
-            anchors.left: label4.right
+            anchors.verticalCenter: label6.verticalCenter
+            anchors.left: label6.right
             anchors.leftMargin: 10
             anchors.right: parent.right
             anchors.rightMargin: 10
@@ -168,9 +241,9 @@ Tab {
             }
         }
         Label {
-            id: label5
-            text: qsTr("Axes size") + ":"
-            anchors.top: label4.bottom
+            id: label7
+            text: qsTr("Axes size")
+            anchors.top: label6.bottom
             anchors.topMargin: 50
             anchors.left: parent.left
             width: 80
@@ -179,8 +252,8 @@ Tab {
         SpinBox {
             id: axesSizeSpinbox
             height: 50
-            anchors.verticalCenter: label5.verticalCenter
-            anchors.left: label5.right
+            anchors.verticalCenter: label7.verticalCenter
+            anchors.left: label7.right
             anchors.leftMargin: 10
             anchors.right: parent.right
             anchors.rightMargin: 10
@@ -194,9 +267,9 @@ Tab {
             }
         }
         Label {
-            id: label6
+            id: label8
             text: qsTr("Show grid") + ":"
-            anchors.top: label5.bottom
+            anchors.top: label7.bottom
             anchors.topMargin: 50
             anchors.left: parent.left
             width: 80
@@ -204,8 +277,8 @@ Tab {
         }
         FocusScope {
             height: 50
-            anchors.verticalCenter: label6.verticalCenter
-            anchors.left: label6.right
+            anchors.verticalCenter: label8.verticalCenter
+            anchors.left: label8.right
             anchors.leftMargin: 10
             anchors.right: parent.right
             anchors.rightMargin: 10
@@ -253,9 +326,9 @@ Tab {
         Button {
             id: resetButton
             text: qsTr("Reset")
-            anchors.top: label6.bottom
+            anchors.top: label8.bottom
             anchors.topMargin: 50
-            anchors.left: label6.right
+            anchors.left: label8.right
             anchors.right: parent.right
             anchors.leftMargin: 10
             anchors.rightMargin: 10
@@ -269,6 +342,8 @@ Tab {
                 backGroundColorRect.color = parameters.backgroundColor
                 graphRect.curveWidth = parameters.lineWidth
                 lineWidthSpinbox.value = parameters.lineWidth
+                highlightColor = parameters.highlightColor
+                graphRect.highlightColor = parameters.highlightColor
                 axesColorRect.color = parameters.axesColor
                 axesSizeSpinbox.value = parameters.axesSize
                 showAxesCheckBox.checked = parameters.showAxes

@@ -9,6 +9,7 @@ Rectangle {
 
     property color lineColor: parameters.lineColor
     property color backgroundColor: parameters.backgroundColor
+    property color highlightColor: parameters.highlightColor
     property color axesColor: parameters.axesColor
 
     Keys.onPressed: {
@@ -22,9 +23,9 @@ Rectangle {
         id: frame
         anchors.fill: parent
         anchors.margins: 4
-        GraphSettingsTab {
-        }
         AudioSettingsTab {
+        }
+        GraphSettingsTab {
         }
         Tab { title: "Tab 2" }
         Tab { title: "Tab 3" }
@@ -64,6 +65,10 @@ Rectangle {
                 parameters.axesColor = color
                 axesColor = color
                 graphRect.graphCanvas.updateCanvas()
+            } else if (request === "highlight color") {
+                parameters.highlightColor = color
+                highlightColor = color
+                graphRect.highlightColor = color
             }
         }
     }
@@ -75,6 +80,8 @@ Rectangle {
             colorDialog.color = parameters.backgroundColor
         } else if (request === "axes color") {
             colorDialog.color = parameters.axesColor
+        } else if (request === "highlight color") {
+            colorDialog.color = parameters.highlightColor
         }
 
         colorDialog.request = request

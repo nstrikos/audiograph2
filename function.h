@@ -22,7 +22,6 @@ public:
 
     double x(int i) const;
     double y(int i) const;
-    int lineSize() const;
     double maxValue() const;
     double minValue() const;
 
@@ -30,6 +29,7 @@ public:
     Q_INVOKABLE double maxX() const;
     Q_INVOKABLE double minY() const;
     Q_INVOKABLE double maxY() const;
+    Q_INVOKABLE int lineSize() const;
     Q_INVOKABLE void zoom(double delta);
     Q_INVOKABLE void pinch(double scale);
 

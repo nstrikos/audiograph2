@@ -1,5 +1,6 @@
 import QtQuick 2.12
 import Curve 1.0
+import CurveMovingPoint 1.0
 
 Rectangle {
     id: graphRect
@@ -12,6 +13,10 @@ Rectangle {
     property var graphCanvas: graphCanvas
     property color curveColor: parameters.lineColor
     property var curveWidth: parameters.lineWidth
+    property color highlightColor: parameters.highlightColor
+    property var highlightSize: parameters.highlightSize
+
+    property alias curveMovingPoint: curveMovingPoint
 
     GraphCanvas {
         id: graphCanvas
@@ -28,9 +33,19 @@ Rectangle {
         lineWidth: parameters.lineWidth
     }
 
-    onCurveColorChanged: curve.color = curveColor
+    CurveMovingPoint {
+        id: curveMovingPoint
+        anchors.fill: parent
+        layer.enabled: true
+        layer.samples: 256
+        color: parameters.highlightColor
+        size: parameters.highlightSize
+    }
 
+    onCurveColorChanged: curve.color = curveColor
     onCurveWidthChanged: curve.lineWidth = curveWidth
+    onHighlightColorChanged: curveMovingPoint.color = highlightColor
+    onHighlightSizeChanged: curveMovingPoint.size = highlightSize
 
     PinchArea {
         anchors.fill: parent
@@ -56,6 +71,14 @@ Rectangle {
         graphCanvas.updateCanvas()
         curve.draw(myfunction)
         curve.visible = true
+    }
+
+    function startMovingPoint() {
+        curveMovingPoint.drawPoint(myfunction, parameters.duration)
+    }
+
+    function stopMovingPoint() {
+        curveMovingPoint.stopPoint()
     }
 
     onWidthChanged: controlsRect.calculate()

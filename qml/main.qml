@@ -85,4 +85,9 @@ Window {
         }
         onError: console.log(err)
     }
+
+    Connections {
+        target: graphRect.curveMovingPoint
+        onFinished: controlsRect.stopAudio()
+    }
 }

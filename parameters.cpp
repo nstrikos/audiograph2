@@ -148,6 +148,7 @@ void Parameters::read()
     int duration = settings.value("duration", 10).toInt();
     int minFreq = settings.value("minFreq", 200).toInt();
     int maxFreq = settings.value("maxFreq", 2000).toInt();
+    bool useNotes = settings.value("useNotes", false).toBool();
 
     setPointColor(pointColor);
     setPointSize(pointSize);
@@ -167,6 +168,7 @@ void Parameters::read()
     setDuration(duration);
     setMinFreq(minFreq);
     setMaxFreq(maxFreq);
+    setUseNotes(useNotes);
 }
 
 void Parameters::write()
@@ -191,6 +193,7 @@ void Parameters::write()
     settings.setValue("duration", m_duration);
     settings.setValue("minFreq", m_minFreq);
     settings.setValue("maxFreq", m_maxFreq);
+    settings.setValue("useNotes", m_useNotes);
     settings.sync();
 }
 
@@ -215,6 +218,7 @@ void Parameters::resetAudio()
     setDuration(10);
     setMinFreq(200);
     setMaxFreq(2000);
+    setUseNotes(false);
 }
 
 QColor Parameters::axesColor() const
@@ -287,6 +291,7 @@ int Parameters::duration() const
 void Parameters::setDuration(int duration)
 {
     m_duration = duration;
+    write();
 }
 
 int Parameters::minFreq() const
@@ -297,6 +302,7 @@ int Parameters::minFreq() const
 void Parameters::setMinFreq(int minFreq)
 {
     m_minFreq = minFreq;
+    write();
 }
 
 int Parameters::maxFreq() const
@@ -307,4 +313,16 @@ int Parameters::maxFreq() const
 void Parameters::setMaxFreq(int maxFreq)
 {
     m_maxFreq = maxFreq;
+    write();
+}
+
+bool Parameters::useNotes() const
+{
+    return m_useNotes;
+}
+
+void Parameters::setUseNotes(bool value)
+{
+    m_useNotes = value;
+    write();
 }

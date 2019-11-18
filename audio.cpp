@@ -1,4 +1,5 @@
 #include "audio.h"
+#include "atmsp.h"
 
 Audio::Audio()
 {
@@ -19,6 +20,13 @@ void Audio::start(QString expression,
                   QString fmax)
 {
     reset();
+
+    ATMSP<double> parser;
+    ATMSB<double> byteCode;
+
+    size_t err = parser.parse(byteCode, expression.toStdString(), "x");
+    if ( err  )
+        return;
 
     double m_start = start.toDouble();
     double m_end = end.toDouble();

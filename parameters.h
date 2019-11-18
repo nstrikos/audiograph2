@@ -29,6 +29,7 @@ class Parameters : public QObject
     Q_PROPERTY(int duration READ duration WRITE setDuration NOTIFY durationChanged)
     Q_PROPERTY(int minFreq READ minFreq WRITE setMinFreq NOTIFY minFreqChanged)
     Q_PROPERTY(int maxFreq READ maxFreq WRITE setMaxFreq NOTIFY maxFreqChanged)
+    Q_PROPERTY(bool useNotes READ useNotes WRITE setUseNotes NOTIFY useNotesChanged)
 
 public:
     Parameters();
@@ -93,6 +94,9 @@ public:
     int maxFreq() const;
     void setMaxFreq(int maxFreq);
 
+    bool useNotes() const;
+    void setUseNotes(bool value);
+
 private:
     bool m_showPoints;
     bool m_showLine;
@@ -112,6 +116,7 @@ private:
     int m_duration;
     int m_minFreq;
     int m_maxFreq;
+    bool m_useNotes;
 
     const QString POINTCOLOR = "pointColor";
 
@@ -134,6 +139,7 @@ signals:
     void durationChanged();
     void minFreqChanged();
     void maxFreqChanged();
+    void useNotesChanged();
 };
 
 #endif // PARAMETERS_H

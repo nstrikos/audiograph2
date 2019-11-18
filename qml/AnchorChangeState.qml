@@ -343,6 +343,7 @@ Item {
     ]
 
     function controlsButtonPressed() {
+        controlsRect.stopAudio()
         if (state == 'state1') {
             state = 'state2'
         }
@@ -357,6 +358,7 @@ Item {
     }
 
     function settingsButtonPressed() {
+        controlsRect.stopAudio()
         if (state == 'state1' || state == 'state2')
             state = 'state3'
         else if (state == 'state3')

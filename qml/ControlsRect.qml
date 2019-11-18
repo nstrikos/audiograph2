@@ -228,7 +228,7 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onPressed: {
-                            startSoundButton.checked = !startSoundButton.checked
+                            startSoundButtonClicked()
                         }
                     }
                     onCheckedChanged: {
@@ -395,12 +395,37 @@ Rectangle {
     }
 
     function startSoundButtonClicked() {
-        startSoundButton.checked = !startSoundButton.checked
-        audio.start(textInput.text,
-                    textInput2.text,
-                    textInput3.text,
-                    10,
-                    200,
-                    2000)
+        if (startSoundButton.checked)
+            startAudio()
+        else
+            stopAudio()
+    }
+
+    function startAudio() {
+        if (myfunction.lineSize() > 0) {
+            if (parameters.useNotes) {
+                audioNotes.startNotes(myfunction,
+                                      parameters.minFreq,
+                                      parameters.maxFreq,
+                                      parameters.duration)
+            } else {
+                audio.start(textInput.text,
+                            textInput2.text,
+                            textInput3.text,
+                            parameters.duration,
+                            parameters.minFreq,
+                            parameters.maxFreq)
+            }
+
+            graphRect.startMovingPoint()
+            startSoundButton.checked = false
+        }
+    }
+
+    function stopAudio() {
+        audio.stop()
+        audioNotes.stopNotes()
+        graphRect.stopMovingPoint()
+        startSoundButton.checked = true
     }
 }
