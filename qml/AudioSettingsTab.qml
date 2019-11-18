@@ -17,6 +17,7 @@ Tab {
             width: 80
             height: 25
             text: qsTr("Duration") + ":"
+            color: "white"
         }
 
         SpinBox {
@@ -33,6 +34,14 @@ Tab {
             minimumValue: 1
             maximumValue: 100
             onValueChanged: parameters.duration = value
+            style: SpinBoxStyle{
+                background: Rectangle {
+                    color: "black"
+                    border.color: "gray"
+                    radius: 2
+                }
+                textColor: "white"
+            }
         }
         
         Label {

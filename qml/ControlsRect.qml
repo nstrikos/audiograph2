@@ -149,13 +149,25 @@ Rectangle {
                 placeholderText: (parent.width > 0) ? "maximum X" : ""
                 height: 50
                 selectByMouse: true
+                color: fontColor
+                background: Rectangle {
+                    id: backRect3
+                    color: controlsRect.color
+                    border.color: activeFocus ? "blue" : "light gray"
+                    border.width: 2
+                }
                 onTextChanged: {
                     if (active)
                         calculate()
                 }
                 onActiveFocusChanged: {
-                    if (activeFocus)
-                        console.log("Textinput3")
+                    if (activeFocus) {
+                        backRect3.border.color = "blue"
+                        backRect3.border.width = 4
+                    } else {
+                        backRect3.border.color = "light gray"
+                        backRect3.border.width = 2
+                    }
                 }
                 Accessible.name: qsTr("Set maximum x")
             }
@@ -181,13 +193,25 @@ Rectangle {
                 placeholderText: (parent.width > 0) ? "minimum Y" : ""
                 height: 50
                 selectByMouse: true
+                color: fontColor
+                background: Rectangle {
+                    id: backRect4
+                    color: controlsRect.color
+                    border.color: activeFocus ? "blue" : "light gray"
+                    border.width: 2
+                }
                 onTextChanged: {
                     if (active)
                         calculate()
                 }
                 onActiveFocusChanged: {
-                    if (activeFocus)
-                        console.log("Textinput4")
+                    if (activeFocus) {
+                        backRect4.border.color = "blue"
+                        backRect4.border.width = 4
+                    } else {
+                        backRect4.border.color = "light gray"
+                        backRect4.border.width = 2
+                    }
                 }
                 Accessible.name: qsTr("Set minimum Y")
             }
@@ -213,13 +237,25 @@ Rectangle {
                 placeholderText: (parent.width > 0) ? "maximum Y" : ""
                 height: 50
                 selectByMouse: true
+                color: fontColor
+                background: Rectangle {
+                    id: backRect5
+                    color: controlsRect.color
+                    border.color: activeFocus ? "blue" : "light gray"
+                    border.width: 2
+                }
                 onTextChanged: {
                     if (active)
                         calculate()
                 }
                 onActiveFocusChanged: {
-                    if (activeFocus)
-                        console.log("Textinput5")
+                    if (activeFocus) {
+                        backRect5.border.color = "blue"
+                        backRect5.border.width = 4
+                    } else {
+                        backRect5.border.color = "light gray"
+                        backRect5.border.width = 2
+                    }
                 }
                 Accessible.name: qsTr("Set maximum Y")
             }

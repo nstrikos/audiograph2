@@ -45,7 +45,7 @@ Rectangle {
                     color: styleData.selected ? "white" : "black"
                 }
             }
-            frame: Rectangle { color: "white" }
+            frame: Rectangle { color: !parameters.invertTheme ? "white" : "black" }
         }
     }
 
