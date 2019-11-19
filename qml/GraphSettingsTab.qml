@@ -113,8 +113,8 @@ Rectangle {
             anchors.leftMargin: 10
             anchors.right: parent.right
             anchors.rightMargin: 10
-            minimumValue: 1
-            maximumValue: 10
+            from: 1
+            to: 10
             value: parameters.lineWidth
             Accessible.name: qsTr("Line width")
             onValueChanged: {
@@ -185,8 +185,8 @@ Rectangle {
             anchors.leftMargin: 10
             anchors.right: parent.right
             anchors.rightMargin: 10
-            minimumValue: 5
-            maximumValue: 20
+            from: 5
+            to: 20
             value: parameters.highlightSize
             Accessible.name: qsTr("Highlight size")
             onValueChanged: {
@@ -255,8 +255,8 @@ Rectangle {
             anchors.leftMargin: 10
             anchors.right: parent.right
             anchors.rightMargin: 10
-            minimumValue: 1
-            maximumValue: 10
+            from: 1
+            to: 10
             value: parameters.axesSize
             Accessible.name: qsTr("Axes size")
             onValueChanged: {
