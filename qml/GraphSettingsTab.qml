@@ -1,10 +1,8 @@
 import QtQuick 2.12
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls 2.12
 import QtQuick.Dialogs 1.3
 
-Tab {
-    title: qsTr("Graph settings")
+Rectangle {
     Flickable {
         anchors.fill: parent
         contentHeight: 800

@@ -1,6 +1,7 @@
 import QtQuick 2.12
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls 2.12
+//import QtQuick.Controls.Styles 1.4
+import QtQuick.Layouts 1.12
 import QtQuick.Dialogs 1.3
 
 Rectangle {
@@ -18,36 +19,65 @@ Rectangle {
             event.accepted = true;
         }
     }
-
-    TabView {
-        id: frame
-        anchors.fill: parent
-        anchors.margins: 4
-        AudioSettingsTab {
+    TabBar {
+        id: bar
+        width: parent.width
+        TabButton {
+            text: qsTr("Home")
         }
-        GraphSettingsTab {
+        TabButton {
+            text: qsTr("Discover")
         }
-        Tab { title: "Tab 2" }
-        Tab { title: "Tab 3" }
-
-        style: TabViewStyle {
-            frameOverlap: 10
-            tab: Rectangle {
-                color: styleData.selected ? "gray" :"light gray"
-                border.color:  "gray"
-                implicitWidth: settingsRect.width / 2
-                implicitHeight: 30
-                radius: 2
-                Text {
-                    id: text
-                    anchors.centerIn: parent
-                    text: styleData.title
-                    color: styleData.selected ? "white" : "black"
-                }
-            }
-            frame: Rectangle { color: !parameters.invertTheme ? "white" : "black" }
+        TabButton {
+            text: qsTr("Activity")
         }
     }
+
+    StackLayout {
+        width: parent.width
+        anchors.top: bar.bottom
+        anchors.bottom: parent.bottom
+        currentIndex: bar.currentIndex
+        AudioSettingsTab {
+            id: audioSettingsTab
+        }
+        GraphSettingsTab {
+            id: graphSettingsTab
+        }
+        Item {
+            id: activityTab
+        }
+    }
+
+//    TabView {
+//        id: frame
+//        anchors.fill: parent
+//        anchors.margins: 4
+//        AudioSettingsTab {
+//        }
+//        GraphSettingsTab {
+//        }
+//        Tab { title: "Tab 2" }
+//        Tab { title: "Tab 3" }
+
+//        style: TabViewStyle {
+//            frameOverlap: 10
+//            tab: Rectangle {
+//                color: styleData.selected ? "gray" :"light gray"
+//                border.color:  "gray"
+//                implicitWidth: settingsRect.width / 2
+//                implicitHeight: 30
+//                radius: 2
+//                Text {
+//                    id: text
+//                    anchors.centerIn: parent
+//                    text: styleData.title
+//                    color: styleData.selected ? "white" : "black"
+//                }
+//            }
+//            frame: Rectangle { color: !parameters.invertTheme ? "white" : "black" }
+//        }
+//    }
 
     ColorDialog {
         id: colorDialog

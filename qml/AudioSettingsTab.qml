@@ -1,10 +1,8 @@
 import QtQuick 2.12
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls 2.12
 import QtQuick.Dialogs 1.3
 
-Tab {
-    title: qsTr("Audio settings")
+Rectangle {
     Flickable {
         anchors.fill: parent
         contentHeight: 500
@@ -31,17 +29,9 @@ Tab {
             activeFocusOnTab: true
             Accessible.name: qsTr("Duration")
             value: parameters.duration
-            minimumValue: 1
-            maximumValue: 100
+            from: 1
+            to: 100
             onValueChanged: parameters.duration = value
-            style: SpinBoxStyle{
-                background: Rectangle {
-                    color: "black"
-                    border.color: "gray"
-                    radius: 2
-                }
-                textColor: "white"
-            }
         }
         
         Label {
@@ -64,8 +54,8 @@ Tab {
             activeFocusOnTab: true
             Accessible.name: qsTr("Minimum frequency")
             value: parameters.minFreq
-            minimumValue: 200
-            maximumValue: 4000
+            from: 200
+            to: 4000
             onValueChanged: parameters.minFreq = value
         }
         
@@ -89,8 +79,8 @@ Tab {
             activeFocusOnTab: true
             Accessible.name: qsTr("Maximum frequency")
             value: parameters.maxFreq
-            minimumValue: 400
-            maximumValue: 8000
+            from: 400
+            to: 8000
             onValueChanged: parameters.maxFreq = value
         }
 
