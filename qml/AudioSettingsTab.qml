@@ -3,7 +3,18 @@ import QtQuick.Controls 2.12
 import QtQuick.Dialogs 1.3
 
 Rectangle {
-    color: "black"
+    color: bgColor
+
+    property bool invertTheme: parameters.invertTheme
+
+    property color fontColor:  parameters.invertTheme ? "white" : "black"
+    onInvertThemeChanged: {
+        fontColor = parameters.invertTheme ? "white" : "black"
+        bgColor = !parameters.invertTheme ? "white" : "black"
+    }
+
+    property color bgColor: !parameters.invertTheme ? "white" : "black"
+
     Flickable {
         anchors.fill: parent
         contentHeight: 500
@@ -15,7 +26,7 @@ Rectangle {
             anchors.left: parent.left
             width: 80
             height: 25
-            color: "white"
+            color: fontColor
             text: qsTr("Duration") + ":"
         }
 
@@ -34,14 +45,14 @@ Rectangle {
             to: 100
             onValueChanged: parameters.duration = value
 
-            editable: true
+            editable: false
 
             contentItem: TextInput {
                 z: 2
                 text: durationSpinbox.textFromValue(durationSpinbox.value, durationSpinbox.locale)
 
                 font: durationSpinbox.font
-                color: "white"//"#21be2b"
+                color: fontColor
                 selectionColor: "#21be2b"
                 selectedTextColor: "#ffffff"
                 horizontalAlignment: Qt.AlignHCenter
@@ -57,13 +68,24 @@ Rectangle {
                 height: parent.height
                 implicitWidth: 40
                 implicitHeight: 40
-                color: "black"//durationSpinbox.up.pressed ? "#e4e4e4" : "#f6f6f6"
-                border.color: durationSpinbox.activeFocus ? "blue" : "white"
+                color: "light gray"
+                border.color: {
+                    if (durationSpinbox.activeFocus) {
+                        if (invertTheme)
+                            return "yellow"
+                        else
+                            return "blue"
+                    }
+                    else {
+                        return "light gray"
+                    }
+                }
+                border.width: durationSpinbox.activeFocus ? 2 : 1
 
                 Text {
                     text: "+"
                     font.pixelSize: durationSpinbox.font.pixelSize * 2
-                    color: "white"//"#21be2b"
+                    color: fontColor
                     anchors.fill: parent
                     fontSizeMode: Text.Fit
                     horizontalAlignment: Text.AlignHCenter
@@ -76,14 +98,24 @@ Rectangle {
                 height: parent.height
                 implicitWidth: 40
                 implicitHeight: 40
-                color: "black"//durationSpinbox.down.pressed ? "#e4e4e4" : "#f6f6f6"
-                border.color: durationSpinbox.activeFocus ? "blue" : "white"
-
+                color: "light gray"
+                border.color: {
+                    if (durationSpinbox.activeFocus) {
+                        if (invertTheme)
+                            return "yellow"
+                        else
+                            return "blue"
+                    }
+                    else {
+                        return "light gray"
+                    }
+                }
+                border.width: durationSpinbox.activeFocus ? 2 : 1
 
                 Text {
                     text: "-"
                     font.pixelSize: durationSpinbox.font.pixelSize * 2
-                    color: "white"//"#21be2b"
+                    color: fontColor
                     anchors.fill: parent
                     fontSizeMode: Text.Fit
                     horizontalAlignment: Text.AlignHCenter
@@ -93,9 +125,19 @@ Rectangle {
 
             background: Rectangle {
                 implicitWidth: 140
-                color: "black"
-                border.color: durationSpinbox.activeFocus ? "blue" : "white"
-                border.width: 2
+                color: bgColor
+                border.color: {
+                    if (durationSpinbox.activeFocus) {
+                        if (invertTheme)
+                            return "yellow"
+                        else
+                            return "blue"
+                    }
+                    else {
+                        return "light gray"
+                    }
+                }
+                border.width: durationSpinbox.activeFocus ? 2 : 1
             }
 
         }
@@ -108,7 +150,7 @@ Rectangle {
             anchors.topMargin: 50
             width: 80
             height: 25
-            color: "white"
+            color: fontColor
         }
         SpinBox {
             id: minFreqSpinbox
@@ -126,14 +168,14 @@ Rectangle {
             stepSize: 100
             onValueChanged: parameters.minFreq = value
 
-            editable: true
+            editable: false
 
             contentItem: TextInput {
                 z: 2
                 text: minFreqSpinbox.textFromValue(minFreqSpinbox.value, minFreqSpinbox.locale)
 
                 font: minFreqSpinbox.font
-                color: "white"//"#21be2b"
+                color: fontColor
                 selectionColor: "#21be2b"
                 selectedTextColor: "#ffffff"
                 horizontalAlignment: Qt.AlignHCenter
@@ -149,13 +191,23 @@ Rectangle {
                 height: parent.height
                 implicitWidth: 40
                 implicitHeight: 40
-                color: "black"//durationSpinbox.up.pressed ? "#e4e4e4" : "#f6f6f6"
-                border.color: minFreqSpinbox.activeFocus ? "blue" : "white"
-
+                color: "light gray"
+                border.color: {
+                    if (minFreqSpinbox.activeFocus) {
+                        if (invertTheme)
+                            return "yellow"
+                        else
+                            return "blue"
+                    }
+                    else {
+                        return "light gray"
+                    }
+                }
+                border.width: minFreqSpinbox.activeFocus ? 2 : 1
                 Text {
                     text: "+"
                     font.pixelSize: minFreqSpinbox.font.pixelSize * 2
-                    color: "white"//"#21be2b"
+                    color: fontColor
                     anchors.fill: parent
                     fontSizeMode: Text.Fit
                     horizontalAlignment: Text.AlignHCenter
@@ -168,14 +220,25 @@ Rectangle {
                 height: parent.height
                 implicitWidth: 40
                 implicitHeight: 40
-                color: "black"//durationSpinbox.down.pressed ? "#e4e4e4" : "#f6f6f6"
-                border.color: minFreqSpinbox.activeFocus ? "blue" : "white"
+                color: "light gray"
+                border.color: {
+                    if (minFreqSpinbox.activeFocus) {
+                        if (invertTheme)
+                            return "yellow"
+                        else
+                            return "blue"
+                    }
+                    else {
+                        return "light gray"
+                    }
+                }
+                border.width: minFreqSpinbox.activeFocus ? 2 : 1
 
 
                 Text {
                     text: "-"
                     font.pixelSize: minFreqSpinbox.font.pixelSize * 2
-                    color: "white"//"#21be2b"
+                    color: fontColor
                     anchors.fill: parent
                     fontSizeMode: Text.Fit
                     horizontalAlignment: Text.AlignHCenter
@@ -185,9 +248,19 @@ Rectangle {
 
             background: Rectangle {
                 implicitWidth: 140
-                color: "black"
-                border.color: minFreqSpinbox.activeFocus ? "blue" : "white"
-                border.width: 2
+                color: bgColor
+                border.color: {
+                    if (minFreqSpinbox.activeFocus) {
+                        if (invertTheme)
+                            return "yellow"
+                        else
+                            return "blue"
+                    }
+                    else {
+                        return "light gray"
+                    }
+                }
+                border.width: minFreqSpinbox.activeFocus ? 2 : 1
             }
         }
         
@@ -199,7 +272,7 @@ Rectangle {
             anchors.left: parent.left
             width: 80
             height: 25
-            color: "white"
+            color: fontColor
         }
         SpinBox {
             id: maxFreqSpinbox
@@ -217,14 +290,14 @@ Rectangle {
             stepSize: 100
             onValueChanged: parameters.maxFreq = value
 
-            editable: true
+            editable: false
 
             contentItem: TextInput {
                 z: 2
                 text: maxFreqSpinbox.textFromValue(maxFreqSpinbox.value, maxFreqSpinbox.locale)
 
                 font: maxFreqSpinbox.font
-                color: "white"//"#21be2b"
+                color: fontColor
                 selectionColor: "#21be2b"
                 selectedTextColor: "#ffffff"
                 horizontalAlignment: Qt.AlignHCenter
@@ -240,13 +313,24 @@ Rectangle {
                 height: parent.height
                 implicitWidth: 40
                 implicitHeight: 40
-                color: "black"//durationSpinbox.up.pressed ? "#e4e4e4" : "#f6f6f6"
-                border.color: maxFreqSpinbox.activeFocus ? "blue" : "white"
+                color: "light gray"
+                border.color: {
+                    if (maxFreqSpinbox.activeFocus) {
+                        if (invertTheme)
+                            return "yellow"
+                        else
+                            return "blue"
+                    }
+                    else {
+                        return "light gray"
+                    }
+                }
+                border.width: maxFreqSpinbox.activeFocus ? 2 : 1
 
                 Text {
                     text: "+"
                     font.pixelSize: maxFreqSpinbox.font.pixelSize * 2
-                    color: "white"//"#21be2b"
+                    color: fontColor
                     anchors.fill: parent
                     fontSizeMode: Text.Fit
                     horizontalAlignment: Text.AlignHCenter
@@ -259,14 +343,24 @@ Rectangle {
                 height: parent.height
                 implicitWidth: 40
                 implicitHeight: 40
-                color: "black"//durationSpinbox.down.pressed ? "#e4e4e4" : "#f6f6f6"
-                border.color: maxFreqSpinbox.activeFocus ? "blue" : "white"
+                color: "light gray"
+                border.color: {
+                    if (maxFreqSpinbox.activeFocus) {
+                        if (invertTheme)
+                            return "yellow"
+                        else
+                            return "blue"
+                    }
+                    else {
+                        return "light gray"
+                    }
+                }
 
 
                 Text {
                     text: "-"
                     font.pixelSize: maxFreqSpinbox.font.pixelSize * 2
-                    color: "white"//"#21be2b"
+                    color: fontColor
                     anchors.fill: parent
                     fontSizeMode: Text.Fit
                     horizontalAlignment: Text.AlignHCenter
@@ -276,9 +370,19 @@ Rectangle {
 
             background: Rectangle {
                 implicitWidth: 140
-                color: "black"
-                border.color: maxFreqSpinbox.activeFocus ? "blue" : "white"
-                border.width: 2
+                color: bgColor
+                border.color: {
+                    if (maxFreqSpinbox.activeFocus) {
+                        if (invertTheme)
+                            return "yellow"
+                        else
+                            return "blue"
+                    }
+                    else {
+                        return "light gray"
+                    }
+                }
+                border.width: maxFreqSpinbox.activeFocus ? 2 : 1
             }
         }
 
@@ -290,7 +394,7 @@ Rectangle {
             anchors.left: parent.left
             width: 80
             height: 25
-            color: "white"
+            color: fontColor
         }
 
         FocusScope {
@@ -305,7 +409,10 @@ Rectangle {
             Accessible.name: qsTr("Use notes")
             onActiveFocusChanged: {
                 if (activeFocus) {
-                    useNotesCheckBox.border.color = "blue"
+                    if (invertTheme)
+                        useNotesCheckBox.border.color = "yellow"
+                    else
+                        useNotesCheckBox.border.color = "blue"
                     useNotesCheckBox.border.width = 4
                 }
                 else {
@@ -320,14 +427,14 @@ Rectangle {
             Rectangle {
                 id: useNotesCheckBox
                 anchors.fill: parent
-                color: "black"//useNotesCheckBox.checked ? "gray" : "light gray"
+                color: bgColor
                 property bool checked: parameters.useNotes
-                border.color: "white"
+                border.color: "light gray"
                 Text {
                     text: useNotesCheckBox.checked ? qsTr("On") : qsTr("Off")
                     anchors.centerIn: parent
                     font.pointSize: 16
-                    color: "white"
+                    color: fontColor
                 }
 
                 MouseArea {
@@ -357,7 +464,7 @@ Rectangle {
                 text: resetButton.text
                 font: resetButton.font
                 opacity: enabled ? 1.0 : 0.3
-                color: "white"//resetButton.down ? "#17a81a" : "#21be2b"
+                color: fontColor
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 elide: Text.ElideRight
@@ -366,8 +473,8 @@ Rectangle {
                 implicitWidth: 100
                 implicitHeight: 40
                 opacity: enabled ? 1 : 0.3
-                border.color: "white"//resetButton.down ? "#17a81a" : "#21be2b"
-                color: "black"
+                border.color: "light gray"
+                color: bgColor
                 border.width: 1
                 radius: 2
             }

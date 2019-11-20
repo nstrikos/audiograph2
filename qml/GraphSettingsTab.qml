@@ -3,6 +3,7 @@ import QtQuick.Controls 2.12
 import QtQuick.Dialogs 1.3
 
 Rectangle {
+    color: "black"
     Flickable {
         anchors.fill: parent
         contentHeight: 800
@@ -15,6 +16,7 @@ Rectangle {
             width: 80
             height: 25
             text: qsTr("Graph\ncolor") + ":"
+            color: "white"
         }
         FocusScope {
             height: 50
@@ -60,6 +62,7 @@ Rectangle {
             anchors.topMargin: 50
             width: 80
             height: 25
+            color: "white"
         }
         FocusScope {
             height: 50
@@ -104,6 +107,7 @@ Rectangle {
             anchors.left: parent.left
             width: 80
             height: 25
+            color: "white"
         }
         SpinBox {
             id: lineWidthSpinbox
@@ -121,6 +125,69 @@ Rectangle {
                 graphRect.curveWidth = value
                 parameters.lineWidth = value
             }
+            editable: false
+
+            contentItem: TextInput {
+                z: 2
+                text: lineWidthSpinbox.textFromValue(lineWidthSpinbox.value, lineWidthSpinbox.locale)
+
+                font: lineWidthSpinbox.font
+                color: "white"//"#21be2b"
+                selectionColor: "#21be2b"
+                selectedTextColor: "#ffffff"
+                horizontalAlignment: Qt.AlignHCenter
+                verticalAlignment: Qt.AlignVCenter
+
+                readOnly: !lineWidthSpinbox.editable
+                validator: lineWidthSpinbox.validator
+                inputMethodHints: Qt.ImhFormattedNumbersOnly
+            }
+
+            up.indicator: Rectangle {
+                x: lineWidthSpinbox.mirrored ? 0 : parent.width - width
+                height: parent.height
+                implicitWidth: 40
+                implicitHeight: 40
+                color: "black"//durationSpinbox.up.pressed ? "#e4e4e4" : "#f6f6f6"
+                border.color: lineWidthSpinbox.activeFocus ? "blue" : "white"
+
+                Text {
+                    text: "+"
+                    font.pixelSize: lineWidthSpinbox.font.pixelSize * 2
+                    color: "white"//"#21be2b"
+                    anchors.fill: parent
+                    fontSizeMode: Text.Fit
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+
+            down.indicator: Rectangle {
+                x: lineWidthSpinbox.mirrored ? parent.width - width : 0
+                height: parent.height
+                implicitWidth: 40
+                implicitHeight: 40
+                color: "black"//durationSpinbox.down.pressed ? "#e4e4e4" : "#f6f6f6"
+                border.color: lineWidthSpinbox.activeFocus ? "blue" : "white"
+
+
+                Text {
+                    text: "-"
+                    font.pixelSize: lineWidthSpinbox.font.pixelSize * 2
+                    color: "white"//"#21be2b"
+                    anchors.fill: parent
+                    fontSizeMode: Text.Fit
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+
+            background: Rectangle {
+                implicitWidth: 140
+                color: "black"
+                border.color: lineWidthSpinbox.activeFocus ? "blue" : "white"
+                border.width: 2
+            }
         }
 
         Label {
@@ -131,6 +198,7 @@ Rectangle {
             width: 80
             height: 25
             text: qsTr("Highlight") + ":"
+            color: "white"
         }
         FocusScope {
             height: 50
@@ -176,6 +244,7 @@ Rectangle {
             anchors.left: parent.left
             width: 80
             height: 25
+            color: "white"
         }
         SpinBox {
             id: highlightSizeSpinbox
@@ -193,6 +262,69 @@ Rectangle {
                 graphRect.highlightSize = value
                 parameters.highlightSize = value
             }
+            editable: true
+
+            contentItem: TextInput {
+                z: 2
+                text: highlightSizeSpinbox.textFromValue(highlightSizeSpinbox.value, highlightSizeSpinbox.locale)
+
+                font: highlightSizeSpinbox.font
+                color: "white"//"#21be2b"
+                selectionColor: "#21be2b"
+                selectedTextColor: "#ffffff"
+                horizontalAlignment: Qt.AlignHCenter
+                verticalAlignment: Qt.AlignVCenter
+
+                readOnly: !highlightSizeSpinbox.editable
+                validator: highlightSizeSpinbox.validator
+                inputMethodHints: Qt.ImhFormattedNumbersOnly
+            }
+
+            up.indicator: Rectangle {
+                x: highlightSizeSpinbox.mirrored ? 0 : parent.width - width
+                height: parent.height
+                implicitWidth: 40
+                implicitHeight: 40
+                color: "black"//durationSpinbox.up.pressed ? "#e4e4e4" : "#f6f6f6"
+                border.color: highlightSizeSpinbox.activeFocus ? "blue" : "white"
+
+                Text {
+                    text: "+"
+                    font.pixelSize: highlightSizeSpinbox.font.pixelSize * 2
+                    color: "white"//"#21be2b"
+                    anchors.fill: parent
+                    fontSizeMode: Text.Fit
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+
+            down.indicator: Rectangle {
+                x: highlightSizeSpinbox.mirrored ? parent.width - width : 0
+                height: parent.height
+                implicitWidth: 40
+                implicitHeight: 40
+                color: "black"//durationSpinbox.down.pressed ? "#e4e4e4" : "#f6f6f6"
+                border.color: highlightSizeSpinbox.activeFocus ? "blue" : "white"
+
+
+                Text {
+                    text: "-"
+                    font.pixelSize: highlightSizeSpinbox.font.pixelSize * 2
+                    color: "white"//"#21be2b"
+                    anchors.fill: parent
+                    fontSizeMode: Text.Fit
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+
+            background: Rectangle {
+                implicitWidth: 140
+                color: "black"
+                border.color: highlightSizeSpinbox.activeFocus ? "blue" : "white"
+                border.width: 2
+            }
         }
 
         Label {
@@ -203,6 +335,7 @@ Rectangle {
             width: 80
             height: 25
             text: qsTr("Axes") + ":"
+            color: "white"
         }
         FocusScope {
             height: 50
@@ -231,7 +364,7 @@ Rectangle {
                 id: axesColorRect
                 anchors.fill: parent
                 color: axesColor
-                border.color: "gray"
+                border.color: "white"
                 MouseArea {
                     anchors.fill: parent
                     onPressed: openColorDialog("axes color")
@@ -246,6 +379,7 @@ Rectangle {
             anchors.left: parent.left
             width: 80
             height: 25
+            color: "white"
         }
         SpinBox {
             id: axesSizeSpinbox
@@ -263,6 +397,69 @@ Rectangle {
                 parameters.axesSize = value
                 graphRect.graphCanvas.updateCanvas()
             }
+            editable: true
+
+            contentItem: TextInput {
+                z: 2
+                text: axesSizeSpinbox.textFromValue(axesSizeSpinbox.value, axesSizeSpinbox.locale)
+
+                font: axesSizeSpinbox.font
+                color: "white"//"#21be2b"
+                selectionColor: "#21be2b"
+                selectedTextColor: "#ffffff"
+                horizontalAlignment: Qt.AlignHCenter
+                verticalAlignment: Qt.AlignVCenter
+
+                readOnly: !axesSizeSpinbox.editable
+                validator: axesSizeSpinbox.validator
+                inputMethodHints: Qt.ImhFormattedNumbersOnly
+            }
+
+            up.indicator: Rectangle {
+                x: axesSizeSpinbox.mirrored ? 0 : parent.width - width
+                height: parent.height
+                implicitWidth: 40
+                implicitHeight: 40
+                color: "black"//durationSpinbox.up.pressed ? "#e4e4e4" : "#f6f6f6"
+                border.color: axesSizeSpinbox.activeFocus ? "blue" : "white"
+
+                Text {
+                    text: "+"
+                    font.pixelSize: axesSizeSpinbox.font.pixelSize * 2
+                    color: "white"//"#21be2b"
+                    anchors.fill: parent
+                    fontSizeMode: Text.Fit
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+
+            down.indicator: Rectangle {
+                x: axesSizeSpinbox.mirrored ? parent.width - width : 0
+                height: parent.height
+                implicitWidth: 40
+                implicitHeight: 40
+                color: "black"//durationSpinbox.down.pressed ? "#e4e4e4" : "#f6f6f6"
+                border.color: axesSizeSpinbox.activeFocus ? "blue" : "white"
+
+
+                Text {
+                    text: "-"
+                    font.pixelSize: axesSizeSpinbox.font.pixelSize * 2
+                    color: "white"//"#21be2b"
+                    anchors.fill: parent
+                    fontSizeMode: Text.Fit
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+
+            background: Rectangle {
+                implicitWidth: 140
+                color: "black"
+                border.color: axesSizeSpinbox.activeFocus ? "blue" : "white"
+                border.width: 2
+            }
         }
         Label {
             id: label8
@@ -272,6 +469,7 @@ Rectangle {
             anchors.left: parent.left
             width: 80
             height: 25
+            color: "white"
         }
         FocusScope {
             height: 50
@@ -300,12 +498,14 @@ Rectangle {
             Rectangle {
                 id: showAxesCheckBox
                 anchors.fill: parent
-                color: showAxesCheckBox.checked ? "gray" : "light gray"
+                color: "black"//showAxesCheckBox.checked ? "gray" : "light gray"
+                border.color: "white"
                 property bool checked: parameters.showAxes
                 Text {
                     text: showAxesCheckBox.checked ? qsTr("On") : qsTr("Off")
                     anchors.centerIn: parent
                     font.pointSize: 16
+                    color: "white"
                 }
                 
                 MouseArea {
@@ -329,6 +529,7 @@ Rectangle {
             anchors.left: parent.left
             width: 80
             height: 25
+            color: "white"
         }
         FocusScope {
             height: 50
@@ -357,12 +558,14 @@ Rectangle {
             Rectangle {
                 id: invertThemeCheckBox
                 anchors.fill: parent
-                color: invertThemeCheckBox.checked ? "gray" : "light gray"
+                color: "black"//invertThemeCheckBox.checked ? "gray" : "light gray"
+                border.color: "white"
                 property bool checked: parameters.showAxes
                 Text {
                     text: invertThemeCheckBox.checked ? qsTr("On") : qsTr("Off")
                     anchors.centerIn: parent
                     font.pointSize: 16
+                    color: "white"
                 }
 
                 MouseArea {
@@ -373,6 +576,7 @@ Rectangle {
                 }
                 onCheckedChanged: {
                     parameters.invertTheme = checked
+                    audioSettingsTab.invertTheme = checked
                     window.setColor()
                 }
             }
@@ -390,6 +594,24 @@ Rectangle {
             width: 80
             height: 50
             Accessible.name: qsTr("Reset graph settings")
+            contentItem: Text {
+                text: resetButton.text
+                font: resetButton.font
+                opacity: enabled ? 1.0 : 0.3
+                color: "white"//resetButton.down ? "#17a81a" : "#21be2b"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+            }
+            background: Rectangle {
+                implicitWidth: 100
+                implicitHeight: 40
+                opacity: enabled ? 1 : 0.3
+                border.color: "white"//resetButton.down ? "#17a81a" : "#21be2b"
+                color: "black"
+                border.width: 1
+                radius: 2
+            }
             onClicked: {
                 parameters.reset()
                 lineColor = parameters.lineColor

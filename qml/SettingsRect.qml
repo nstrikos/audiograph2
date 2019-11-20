@@ -23,13 +23,10 @@ Rectangle {
         id: bar
         width: parent.width
         TabButton {
-            text: qsTr("Home")
+            text: qsTr("Audio")
         }
         TabButton {
-            text: qsTr("Discover")
-        }
-        TabButton {
-            text: qsTr("Activity")
+            text: qsTr("Graph")
         }
     }
 
