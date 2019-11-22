@@ -8,9 +8,12 @@ Rectangle {
     property bool invertTheme: parameters.invertTheme
 
     property color fontColor:  parameters.invertTheme ? "white" : "black"
+    property color lightColor: parameters.invertTheme ? "yellow" : "blue"
+
     onInvertThemeChanged: {
         fontColor = parameters.invertTheme ? "white" : "black"
         bgColor = !parameters.invertTheme ? "white" : "black"
+        lightColor = parameters.invertTheme ? "yellow" : "blue"
     }
 
     property color bgColor: !parameters.invertTheme ? "white" : "black"
@@ -22,20 +25,22 @@ Rectangle {
         Label {
             id: label1
             anchors.top: parent.top
-            anchors.topMargin: 50
+            anchors.topMargin: 30
             anchors.left: parent.left
+            anchors.leftMargin: 10
             width: 80
-            height: 25
+            height: 15
             color: fontColor
             text: qsTr("Duration") + ":"
         }
 
         SpinBox {
             id: durationSpinbox
-            height: 50
+            height: 30
+            width: 150
             anchors.verticalCenter: label1.verticalCenter
-            anchors.left: parent.left
-            anchors.leftMargin: 80
+//            anchors.left: parent.left
+//            anchors.leftMargin: 80
             anchors.right: parent.right
             anchors.rightMargin: 10
             activeFocusOnTab: true
@@ -66,8 +71,8 @@ Rectangle {
             up.indicator: Rectangle {
                 x: durationSpinbox.mirrored ? 0 : parent.width - width
                 height: parent.height
-                implicitWidth: 40
-                implicitHeight: 40
+                implicitWidth: 30
+                implicitHeight: 30
                 color: "light gray"
                 border.color: {
                     if (durationSpinbox.activeFocus) {
@@ -96,8 +101,8 @@ Rectangle {
             down.indicator: Rectangle {
                 x: durationSpinbox.mirrored ? parent.width - width : 0
                 height: parent.height
-                implicitWidth: 40
-                implicitHeight: 40
+                implicitWidth: 30
+                implicitHeight: 30
                 color: "light gray"
                 border.color: {
                     if (durationSpinbox.activeFocus) {
@@ -144,20 +149,22 @@ Rectangle {
         
         Label {
             id: label2
-            text: qsTr("Minimum\nfrequency") + ":"
+            text: qsTr("Minimum frequency") + ":"
             anchors.top: label1.bottom
             anchors.left: parent.left
-            anchors.topMargin: 50
+            anchors.topMargin: 30
+            anchors.leftMargin: 10
             width: 80
-            height: 25
+            height: 15
             color: fontColor
         }
         SpinBox {
             id: minFreqSpinbox
-            height: 50
+            height: 30
+            width: 150
             anchors.verticalCenter: label2.verticalCenter
-            anchors.left: parent.left
-            anchors.leftMargin: 80
+//            anchors.left: parent.left
+//            anchors.leftMargin: 80
             anchors.right: parent.right
             anchors.rightMargin: 10
             activeFocusOnTab: true
@@ -189,8 +196,8 @@ Rectangle {
             up.indicator: Rectangle {
                 x: minFreqSpinbox.mirrored ? 0 : parent.width - width
                 height: parent.height
-                implicitWidth: 40
-                implicitHeight: 40
+                implicitWidth: 30
+                implicitHeight: 30
                 color: "light gray"
                 border.color: {
                     if (minFreqSpinbox.activeFocus) {
@@ -218,8 +225,8 @@ Rectangle {
             down.indicator: Rectangle {
                 x: minFreqSpinbox.mirrored ? parent.width - width : 0
                 height: parent.height
-                implicitWidth: 40
-                implicitHeight: 40
+                implicitWidth: 30
+                implicitHeight: 30
                 color: "light gray"
                 border.color: {
                     if (minFreqSpinbox.activeFocus) {
@@ -266,20 +273,22 @@ Rectangle {
         
         Label {
             id: label3
-            text: qsTr("Maximum\nfrequency") + ":"
+            text: qsTr("Maximum frequency") + ":"
             anchors.top: label2.bottom
-            anchors.topMargin: 50
+            anchors.topMargin: 30
             anchors.left: parent.left
+            anchors.leftMargin: 10
             width: 80
-            height: 25
+            height: 15
             color: fontColor
         }
         SpinBox {
             id: maxFreqSpinbox
-            height: 50
+            height: 30
+            width: 150
             anchors.verticalCenter: label3.verticalCenter
-            anchors.left: parent.left
-            anchors.leftMargin: 80
+//            anchors.left: parent.left
+//            anchors.leftMargin: 80
             anchors.right: parent.right
             anchors.rightMargin: 10
             activeFocusOnTab: true
@@ -311,8 +320,8 @@ Rectangle {
             up.indicator: Rectangle {
                 x: maxFreqSpinbox.mirrored ? 0 : parent.width - width
                 height: parent.height
-                implicitWidth: 40
-                implicitHeight: 40
+                implicitWidth: 30
+                implicitHeight: 30
                 color: "light gray"
                 border.color: {
                     if (maxFreqSpinbox.activeFocus) {
@@ -341,8 +350,8 @@ Rectangle {
             down.indicator: Rectangle {
                 x: maxFreqSpinbox.mirrored ? parent.width - width : 0
                 height: parent.height
-                implicitWidth: 40
-                implicitHeight: 40
+                implicitWidth: 30
+                implicitHeight: 30
                 color: "light gray"
                 border.color: {
                     if (maxFreqSpinbox.activeFocus) {
@@ -355,6 +364,8 @@ Rectangle {
                         return "light gray"
                     }
                 }
+
+                border.width: maxFreqSpinbox.activeFocus ? 2 : 1
 
 
                 Text {
@@ -390,36 +401,27 @@ Rectangle {
             id: label4
             text: qsTr("Use notes") + ":"
             anchors.top: label3.bottom
-            anchors.topMargin: 50
+            anchors.topMargin: 30
             anchors.left: parent.left
+            anchors.leftMargin: 10
             width: 80
-            height: 25
+            height: 15
             color: fontColor
         }
 
         FocusScope {
-            height: 50
+            id: useNotesFocusScope
+            height: 30
+            width: 150
             anchors.verticalCenter: label4.verticalCenter
-            anchors.left: parent.left
-            anchors.leftMargin: 80
+//            anchors.left: parent.left
+//            anchors.leftMargin: 80
             anchors.right: parent.right
             anchors.rightMargin: 10
             property alias color: useNotesCheckBox.color
             activeFocusOnTab: true
             Accessible.name: qsTr("Use notes")
-            onActiveFocusChanged: {
-                if (activeFocus) {
-                    if (invertTheme)
-                        useNotesCheckBox.border.color = "yellow"
-                    else
-                        useNotesCheckBox.border.color = "blue"
-                    useNotesCheckBox.border.width = 4
-                }
-                else {
-                    useNotesCheckBox.border.color = "gray"
-                    useNotesCheckBox.border.width = 1
-                }
-            }
+
             Keys.onSpacePressed: useNotesCheckBox.checked = ! useNotesCheckBox.checked
             Keys.onEnterPressed: useNotesCheckBox.checked = ! useNotesCheckBox.checked
             Keys.onReturnPressed: useNotesCheckBox.checked = ! useNotesCheckBox.checked
@@ -429,7 +431,8 @@ Rectangle {
                 anchors.fill: parent
                 color: bgColor
                 property bool checked: parameters.useNotes
-                border.color: "light gray"
+                border.color: useNotesFocusScope.activeFocus ? lightColor : "light gray"
+                border.width: useNotesFocusScope.activeFocus ? 2 : 1
                 Text {
                     text: useNotesCheckBox.checked ? qsTr("On") : qsTr("Off")
                     anchors.centerIn: parent
@@ -453,12 +456,11 @@ Rectangle {
             id: resetButton
             text: qsTr("Reset")
             anchors.top: label4.bottom
-            anchors.topMargin: 50
+            anchors.topMargin: 30
             anchors.left: parent.left
-            anchors.leftMargin: 80
+            anchors.leftMargin: 10
             anchors.right: parent.right
             anchors.rightMargin: 10
-            width: 80
             height: 50
             contentItem: Text {
                 text: resetButton.text
@@ -473,9 +475,9 @@ Rectangle {
                 implicitWidth: 100
                 implicitHeight: 40
                 opacity: enabled ? 1 : 0.3
-                border.color: "light gray"
+                border.color: resetButton.activeFocus ? lightColor : "light gray"
                 color: bgColor
-                border.width: 1
+                border.width: resetButton.activeFocus ? 2 : 1
                 radius: 2
             }
             Accessible.name: qsTr("Reset audio settings")

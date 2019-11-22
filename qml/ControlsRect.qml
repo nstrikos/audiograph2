@@ -8,6 +8,15 @@ Rectangle {
     property bool active: true
     color : !parameters.invertTheme ? "white" : "black"
     property color fontColor: parameters.invertTheme ? "white" : "black"
+    property color bgColor: !parameters.invertTheme ? "white" : "black"
+    property color lightColor: parameters.invertTheme ? "yellow" : "blue"
+    property bool invertTheme: parameters.invertTheme
+
+    onInvertThemeChanged: {
+        fontColor: parameters.invertTheme ? "white" : "black"
+        bgColor = !parameters.invertTheme ? "white" : "black"
+        lightColor = parameters.invertTheme ? "yellow" : "blue"
+    }
 
 
 
@@ -61,8 +70,17 @@ Rectangle {
                 background: Rectangle {
                     id: backRect
                     color: controlsRect.color
-                    border.color: activeFocus ? "blue" : "light gray"
-                    border.width: 2
+                    border.color: {
+                        if (textInput.activeFocus) {
+                            if (invertTheme)
+                                return "yellow"
+                            else
+                                return "blue"
+                        } else {
+                            return "light gray"
+                        }
+                    }
+                    border.width: textInput.activeFocus ? 2 : 1
                 }
 
                 onTextChanged: {
@@ -71,15 +89,6 @@ Rectangle {
                     textInput4.text = "-5"
                     textInput5.text = "5"
                     calculate()
-                }
-                onActiveFocusChanged: {
-                    if (activeFocus) {
-                        backRect.border.color = "blue"
-                        backRect.border.width = 4
-                    } else {
-                        backRect.border.color = "light gray"
-                        backRect.border.width = 2
-                    }
                 }
                 Accessible.name: qsTr("Set expression")
             }
@@ -109,21 +118,21 @@ Rectangle {
                 background: Rectangle {
                     id: backRect2
                     color: controlsRect.color
-                    border.color: activeFocus ? "blue" : "light gray"
-                    border.width: 2
+                    border.color: {
+                        if (textInput2.activeFocus) {
+                            if (invertTheme)
+                                return "yellow"
+                            else
+                                return "blue"
+                        } else {
+                            return "light gray"
+                        }
+                    }
+                    border.width: textInput2.activeFocus ? 2 : 1
                 }
                 onTextChanged: {
                     if (active)
                         calculate()
-                }
-                onActiveFocusChanged: {
-                    if (activeFocus) {
-                        backRect2.border.color = "blue"
-                        backRect2.border.width = 4
-                    } else {
-                        backRect2.border.color = "light gray"
-                        backRect2.border.width = 2
-                    }
                 }
                 Accessible.name: qsTr("Set minimum x")
             }
@@ -153,21 +162,21 @@ Rectangle {
                 background: Rectangle {
                     id: backRect3
                     color: controlsRect.color
-                    border.color: activeFocus ? "blue" : "light gray"
-                    border.width: 2
+                    border.color: {
+                        if (textInput3.activeFocus) {
+                            if (invertTheme)
+                                return "yellow"
+                            else
+                                return "blue"
+                        } else {
+                            return "light gray"
+                        }
+                    }
+                    border.width: textInput3.activeFocus ? 2 : 1
                 }
                 onTextChanged: {
                     if (active)
                         calculate()
-                }
-                onActiveFocusChanged: {
-                    if (activeFocus) {
-                        backRect3.border.color = "blue"
-                        backRect3.border.width = 4
-                    } else {
-                        backRect3.border.color = "light gray"
-                        backRect3.border.width = 2
-                    }
                 }
                 Accessible.name: qsTr("Set maximum x")
             }
@@ -197,21 +206,21 @@ Rectangle {
                 background: Rectangle {
                     id: backRect4
                     color: controlsRect.color
-                    border.color: activeFocus ? "blue" : "light gray"
-                    border.width: 2
+                    border.color: {
+                        if (textInput4.activeFocus) {
+                            if (invertTheme)
+                                return "yellow"
+                            else
+                                return "blue"
+                        } else {
+                            return "light gray"
+                        }
+                    }
+                    border.width: textInput4.activeFocus ? 2 : 1
                 }
                 onTextChanged: {
                     if (active)
                         calculate()
-                }
-                onActiveFocusChanged: {
-                    if (activeFocus) {
-                        backRect4.border.color = "blue"
-                        backRect4.border.width = 4
-                    } else {
-                        backRect4.border.color = "light gray"
-                        backRect4.border.width = 2
-                    }
                 }
                 Accessible.name: qsTr("Set minimum Y")
             }
@@ -241,26 +250,27 @@ Rectangle {
                 background: Rectangle {
                     id: backRect5
                     color: controlsRect.color
-                    border.color: activeFocus ? "blue" : "light gray"
-                    border.width: 2
+                    border.color: {
+                        if (textInput5.activeFocus) {
+                            if (invertTheme)
+                                return "yellow"
+                            else
+                                return "blue"
+                        } else {
+                            return "light gray"
+                        }
+                    }
+                    border.width: textInput5.activeFocus ? 2 : 1
                 }
                 onTextChanged: {
                     if (active)
                         calculate()
                 }
-                onActiveFocusChanged: {
-                    if (activeFocus) {
-                        backRect5.border.color = "blue"
-                        backRect5.border.width = 4
-                    } else {
-                        backRect5.border.color = "light gray"
-                        backRect5.border.width = 2
-                    }
-                }
                 Accessible.name: qsTr("Set maximum Y")
             }
 
             FocusScope {
+                id: startButtonFocusScope
                 height: 50
                 anchors.top: label5.bottom
                 anchors.topMargin: 50
@@ -270,16 +280,6 @@ Rectangle {
                 anchors.rightMargin: 10
                 activeFocusOnTab: true
                 Accessible.name: qsTr("Start sound button")
-                onActiveFocusChanged: {
-                    if (activeFocus) {
-                        startSoundButton.border.color = "blue"
-                        startSoundButton.border.width = 4
-                    }
-                    else {
-                        startSoundButton.border.color = "gray"
-                        startSoundButton.border.width = 1
-                    }
-                }
                 Keys.onSpacePressed: startSoundButton.checked = ! startSoundButton.checked
                 Keys.onEnterPressed: startSoundButton.checked = ! startSoundButton.checked
                 Keys.onReturnPressed: startSoundButton.checked = ! startSoundButton.checked
@@ -287,7 +287,9 @@ Rectangle {
                 Rectangle {
                     id: startSoundButton
                     anchors.fill: parent
-                    color: startSoundButton.checked ? "gray" : "light gray"
+                    color: bgColor
+                    border.color: startButtonFocusScope.activeFocus ? lightColor : "light gray"
+                    border.width: startButtonFocusScope.activeFocus ? 2 : 1
                     property bool checked: true
                     Text {
                         text: startSoundButton.checked ? qsTr("Start sound") : qsTr("Stop sound")
