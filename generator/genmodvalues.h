@@ -18,6 +18,8 @@ public:
                  QString expression,
                  double start,
                  double end,
+                 double minY,
+                 double maxY,
                  unsigned long long int timeLength,
                  int fmin,
                  int fmax,
@@ -34,6 +36,8 @@ private:
     int m_sampleRate;
     double m_start;
     double m_end;
+    double m_minY;
+    double m_maxY;
 };
 
 #endif // GENMODVALUES_H

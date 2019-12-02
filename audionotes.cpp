@@ -93,13 +93,19 @@ void AudioNotes::timerExpired()
         i = 0;
 
     double min = m_function->minValue();
+    if (min < m_function->minY())
+        min = m_function->minY();
     double max = m_function->maxValue();
+    if (max > m_function->maxX())
+        max = m_function->maxY();
     double a;
     double b;
     double l;
     double freq;
     bool n = true;
     if (max != min) {
+        m_fmin = 110;
+        m_fmax = 2959.96;
         a =  (m_fmax-m_fmin)/(max - min);
         b = m_fmax - a * max;
         l = m_function->y(i);

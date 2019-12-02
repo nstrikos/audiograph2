@@ -44,7 +44,33 @@ void AudioPoints::setFreq(double freq, bool useNotes, bool n)
     m_n = n;
 
     if (useNotes) {
-        if ( xx >= 220.0 && xx <  233.08) // A3
+        if ( xx < 110.0)
+            xx = 110.0;
+        else if ( xx >= 110.0 && xx <  116.54) // A2
+            xx = 110;
+        else if ( xx >= 116.54 && xx < 123.47) //A#2
+            xx = 116.54;
+        else if ( xx >= 123.47 && xx < 130.81) //B2
+            xx = 123.47;
+        else if ( xx >= 130.81 && xx < 138.59) //C3
+            xx = 130.81;
+        else if ( xx >= 138.59 && xx < 146.83) //C#3
+            xx = 138.59;
+        else if ( xx >= 146.83 && xx < 155.56) //D3
+            xx = 146.83;
+        else if ( xx >= 155.56 && xx < 164.81) //D#3
+            xx = 155.56;
+        else if ( xx >= 164.81 && xx < 174.61) //E3
+            xx = 164.81;
+        else if ( xx >= 174.61 && xx < 185.00) //F3
+            xx = 174.61;
+        else if ( xx >= 185.00 && xx < 196.00) //F#3
+            xx = 185.00;
+        else if ( xx >= 196.00 && xx < 207.65) //G3
+            xx = 196.00;
+        else if ( xx >= 207.65 && xx < 220.00) //G#3
+            xx = 207.65;
+        else if ( xx >= 220.0 && xx <  233.08) // A3
             xx = 220.0;
         else if ( xx >= 233.08 && xx < 246.94) //A#3
             xx = 233.08;
@@ -134,13 +160,15 @@ void AudioPoints::setFreq(double freq, bool useNotes, bool n)
             xx = 2637.02;
         else if ( xx >= 2793.83 && xx < 2959.96) //F7
             xx = 2793.83;
-        else if ( xx >= 2959.96 && xx < 3135.96) //F#7
+        else if ( xx >= 2959.96)// && xx < 3135.96) //F#7
             xx = 2959.96;
-        else if ( xx >= 3135.96) //G7
-            xx = 3135.96;
+//        else if ( xx >= 3135.96 && xx < 3322.44) //G7
+//            xx = 3135.96;
+//        else if ( xx >= 3322.44)// && xx <= 3520.00) //A7
+//            xx = 3322.44;
     }
 
-        xx = xx / 4;
+        //xx = xx / 4;
 
     if (audioPlaying == false)
         startAudio();

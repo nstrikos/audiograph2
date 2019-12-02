@@ -1,7 +1,7 @@
 #include "audioengine.h"
 #include <QDebug>
 
-AudioEngine::AudioEngine(QString expression, double start, double end, int seconds, int fmin, int fmax)
+AudioEngine::AudioEngine(QString expression, double start, double end, double minY, double maxY, int seconds, int fmin, int fmax)
 {
     generator = NULL;
     audioOutput = nullptr;
@@ -12,6 +12,8 @@ AudioEngine::AudioEngine(QString expression, double start, double end, int secon
     m_expression = expression;
     m_start = start;
     m_end = end;
+    m_minY = minY;
+    m_maxY = maxY;
     checkParameters();
     qDebug() << "Audio engine created with parameters: seconds " << seconds
              << " fmin:" << fmin
@@ -60,7 +62,7 @@ void AudioEngine::resetGenerator()
 {
     if (generator != NULL)
         delete generator;
-    generator = new Generator(format, m_expression, m_start, m_end, seconds, fmin, fmax);
+    generator = new Generator(format, m_expression, m_start, m_end, m_minY, m_maxY, seconds, fmin, fmax);
     generator->start();
     qDebug() << "Generator reset";
 }

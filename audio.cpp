@@ -1,9 +1,10 @@
 #include "audio.h"
-#include "atmsp.h"
 
 Audio::Audio()
 {
     m_audioEngine = nullptr;
+    m_fparser.AddConstant("pi", M_PI);
+    m_fparser.AddConstant("e", M_E);
 }
 
 Audio::~Audio()
@@ -15,27 +16,38 @@ Audio::~Audio()
 void Audio::start(QString expression,
                   QString start,
                   QString end,
+                  QString minY,
+                  QString maxY,
                   QString seconds,
                   QString fmin,
                   QString fmax)
 {
     reset();
 
-    ATMSP<double> parser;
-    ATMSB<double> byteCode;
+    QString piString = QString::number(M_PI);
+    QString eString = QString::number(M_E);
+    expression.replace("pi", piString);
+    expression.replace("e", eString);
 
-    size_t err = parser.parse(byteCode, expression.toStdString(), "x");
-    if ( err  )
+    std::string exp = expression.toStdString();
+
+    int res = m_fparser.Parse(exp, "x");
+    if (res >= 0)
         return;
+
 
     double m_start = start.toDouble();
     double m_end = end.toDouble();
+    double m_minY = minY.toDouble();
+    double m_maxY = maxY.toDouble();
     int m_seconds = seconds.toInt();
     int m_fmin = fmin.toInt();
     int m_fmax = fmax.toInt();
     m_audioEngine = new AudioEngine(expression,
                                     m_start,
                                     m_end,
+                                    m_minY,
+                                    m_maxY,
                                     m_seconds,
                                     m_fmin,
                                     m_fmax);

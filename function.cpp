@@ -1,4 +1,5 @@
 #include "function.h"
+#include <QDebug>
 
 Function::~Function()
 {
@@ -22,8 +23,13 @@ void Function::calculate(QString expression,
 void Function::performCalculation()
 {
     replaceConstants();
-    if (check())
+    if (check()) {
+        m_validExpression = true;
         calculatePoints();
+    }
+    else {
+        m_validExpression = false;
+    }
 }
 
 void Function::replaceConstants()
@@ -94,7 +100,8 @@ bool Function::check()
     m_fparser.AddConstant("pi", M_PI);
     m_fparser.AddConstant("e", M_E);
     int res = m_fparser.Parse(m_expression.toStdString(), "x");
-    if(res > 0 || m_expression == "") {
+    qDebug() << "Parsing function: " << m_expression << ", result: " << res;
+    if(res >= 0 || m_expression == "") {
         emit error(tr("Cannot understand expression.\n") + m_fparser.ErrorMsg());
         return false;
     }
@@ -123,8 +130,10 @@ void Function::calculatePoints()
         tmpPoint.y = result;
         if (res == 0)
             tmpPoint.isValid = true;
-        else if (res > 0)
+        else if (res > 0) {
             tmpPoint.isValid = false;
+            qDebug() << res << tmpPoint.x << tmpPoint.y;
+        }
 
         m_linePoints.append(tmpPoint);
     }
@@ -150,6 +159,11 @@ double Function::x(int i) const
 double Function::y(int i) const
 {
     return m_linePoints[i].y;
+}
+
+bool Function::isValid(int i) const
+{
+    return m_linePoints[i].isValid;
 }
 
 int Function::lineSize() const
@@ -226,4 +240,14 @@ void Function::performZoom(double factor)
         m_maxY = centerY + distanceY / 2;
         calculatePoints();
     }
+}
+
+bool Function::validExpression() const
+{
+    return m_validExpression;
+}
+
+QString Function::expression() const
+{
+    return m_expression;
 }

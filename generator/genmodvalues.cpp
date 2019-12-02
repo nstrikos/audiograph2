@@ -5,6 +5,8 @@ GenModValues::GenModValues(double *modulationValues,
                            QString expression,
                            double start,
                            double end,
+                           double minY,
+                           double maxY,
                            unsigned long long int timeLength,
                            int fmin,
                            int fmax,
@@ -14,6 +16,8 @@ GenModValues::GenModValues(double *modulationValues,
     m_expression = expression;
     m_start = start;
     m_end = end;
+    m_minY = minY;
+    m_maxY = maxY;
     m_timeLength = timeLength;
     m_fmin = fmin;
     m_fmax = fmax;
@@ -43,6 +47,8 @@ double *GenModValues::modulationValues()
                                               m_expression,
                                               m_timeLength,
                                               m_start,
+                                              m_minY,
+                                              m_maxY,
                                               step,
                                               clip,
                                               cs,

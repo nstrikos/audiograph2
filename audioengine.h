@@ -18,7 +18,7 @@ const int maximumAllowedFmax = 12000;
 class AudioEngine
 {
 public:
-    AudioEngine(QString expression, double m_start, double m_end, int seconds, int fmin, int fmax);
+    AudioEngine(QString expression, double m_start, double m_end, double minY, double maxY, int seconds, int fmin, int fmax);
     ~AudioEngine();
     Q_INVOKABLE void createAudioOutput();
     Q_INVOKABLE void stop();
@@ -42,6 +42,8 @@ private:
     QString m_expression;
     double m_start;
     double m_end;
+    double m_minY;
+    double m_maxY;
 };
 
 #endif // AUDIOENGINE_H

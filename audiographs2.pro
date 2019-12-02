@@ -56,7 +56,6 @@ DISTFILES += \
     fparser/extrasrc/fp_opcode_add.inc
 
 HEADERS += \
-    atmsp.h \
     audio.h \
     audioengine.h \
     audionotes.h \

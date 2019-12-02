@@ -4,7 +4,15 @@
 #include <qendian.h>
 #include <qmath.h>
 
-Generator::Generator(QAudioFormat format, QString expression, double start, double end, int seconds, int fmin, int fmax)
+Generator::Generator(QAudioFormat format,
+                     QString expression,
+                     double start,
+                     double end,
+                     double minY,
+                     double maxY,
+                     int seconds,
+                     int fmin,
+                     int fmax)
 {
     //Initialize generator variables
     pos = 0;
@@ -15,6 +23,8 @@ Generator::Generator(QAudioFormat format, QString expression, double start, doub
     m_expression = expression;
     m_start = start;
     m_end = end;
+    m_minY = minY;
+    m_maxY = maxY;
 
     if (format.isValid())
     {
@@ -103,6 +113,8 @@ void Generator::computeFunction()
                                                   m_expression,
                                                   m_start,
                                                   m_end,
+                                                  m_minY,
+                                                  m_maxY,
                                                   timeLength,
                                                   fmin,
                                                   fmax,

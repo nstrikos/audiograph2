@@ -317,6 +317,7 @@ Rectangle {
     }
 
     function handleZoom(angleDelta) {
+        stopAudio()
         if (textInput.text !== "") {
             //First we perform zoom
             //Then we round parameters to display them
@@ -370,6 +371,7 @@ Rectangle {
     property var y0
 
     function startDrag(x, y) {
+        stopAudio()
         if (textInput.text !== "") {
             x0 = x
             y0 = y
@@ -405,6 +407,7 @@ Rectangle {
     }
 
     function startPinch() {
+        stopAudio()
         if (textInput.text !== "") {
             minX = Number(textInput2.text)
             maxX = Number(textInput3.text)
@@ -460,6 +463,7 @@ Rectangle {
     }
 
     function calculate () {
+        stopAudio()
         myfunction.calculate(textInput.text,
                              textInput2.text,
                              textInput3.text,
@@ -475,7 +479,7 @@ Rectangle {
     }
 
     function startAudio() {
-        if (myfunction.lineSize() > 0) {
+        if (myfunction.validExpression()) {
             if (parameters.useNotes) {
                 audioNotes.startNotes(myfunction,
                                       parameters.minFreq,
@@ -485,6 +489,8 @@ Rectangle {
                 audio.start(textInput.text,
                             textInput2.text,
                             textInput3.text,
+                            textInput4.text,
+                            textInput5.text,
                             parameters.duration,
                             parameters.minFreq,
                             parameters.maxFreq)

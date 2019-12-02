@@ -73,6 +73,10 @@ Rectangle {
         curve.visible = true
     }
 
+    function clearCanvas() {
+        curve.clear()
+    }
+
     function startMovingPoint() {
         curveMovingPoint.drawPoint(myfunction, parameters.duration)
     }
@@ -81,8 +85,8 @@ Rectangle {
         curveMovingPoint.stopPoint()
     }
 
-    onWidthChanged: controlsRect.calculate()
-    onHeightChanged: controlsRect.calculate()
+    onWidthChanged: updateCanvas()
+    onHeightChanged: updateCanvas()
 
     BeautifyGraphRect {
 

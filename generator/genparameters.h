@@ -10,6 +10,8 @@ public:
                   QString expression,
                   unsigned long long int length,
                   double start,
+                  double minY,
+                  double maxY,
                   double step,
                   double clip,
                   double *cs,
@@ -34,11 +36,16 @@ public:
     void setfc(double fc);
     double fc();
 
+    double minY() const;
+    double maxY() const;
+
 private:
     double *m_functionValues;
     QString m_expression;
     double m_start;
     double m_step;
+    double m_minY;
+    double m_maxY;
     unsigned long long int m_length;
     double m_clip;
     double *m_cs;

@@ -166,6 +166,16 @@ void Curve::setLineWidth(int lineWidth)
     qDebug() << lineWidth;
 }
 
+void Curve::clear()
+{
+    for (int i = 0; i < m_points.size(); i++) {
+        m_points[i].x = -10;
+        m_points[i].y = -10;
+    }
+
+    update();
+}
+
 QColor Curve::color() const
 {
     return m_color;

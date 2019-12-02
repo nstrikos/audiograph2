@@ -22,9 +22,11 @@ public:
 
     double x(int i) const;
     double y(int i) const;
+    bool isValid(int i) const;
     double maxValue() const;
     double minValue() const;
 
+    Q_INVOKABLE QString expression() const;
     Q_INVOKABLE double minX() const;
     Q_INVOKABLE double maxX() const;
     Q_INVOKABLE double minY() const;
@@ -32,6 +34,9 @@ public:
     Q_INVOKABLE int lineSize() const;
     Q_INVOKABLE void zoom(double delta);
     Q_INVOKABLE void pinch(double scale);
+
+
+    Q_INVOKABLE bool validExpression() const;
 
 signals:
     void update();
@@ -57,6 +62,7 @@ private:
     double m_minValue;
     int m_numPoints;
     FunctionParser m_fparser;
+    bool m_validExpression;
 
     QVector<Point> m_linePoints;
     QVector<Point> m_points;

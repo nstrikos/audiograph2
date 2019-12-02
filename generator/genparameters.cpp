@@ -4,6 +4,8 @@ GenParameters::GenParameters(double *functionValues,
                              QString expression,
                              unsigned long long length,
                              double start,
+                             double minY,
+                             double maxY,
                              double step,
                              double clip,
                              double *cs,
@@ -17,6 +19,8 @@ GenParameters::GenParameters(double *functionValues,
     m_expression = expression;
     m_length = length;
     m_start = start;
+    m_minY = minY;
+    m_maxY = maxY;
     m_step = step;
     m_clip = clip;
     m_cs = cs;
@@ -95,4 +99,14 @@ void GenParameters::setfc(double fc)
 double GenParameters::fc()
 {
     return m_fc;
+}
+
+double GenParameters::minY() const
+{
+    return m_minY;
+}
+
+double GenParameters::maxY() const
+{
+    return m_maxY;
 }

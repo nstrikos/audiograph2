@@ -370,6 +370,7 @@ Item {
     }
 
     function anchorChanged() {
+        controlsRect.stopAudio()
         if (anchorToLeft == false) {
             if (state == 'state1')
                 state = 'state4'

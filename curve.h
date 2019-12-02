@@ -21,6 +21,7 @@ public:
 
     int lineWidth() const;
     void setLineWidth(int lineWidth);
+    Q_INVOKABLE void clear();
 
 private:
     QSGNode *updatePaintNode(QSGNode *, UpdatePaintNodeData *);

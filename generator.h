@@ -13,7 +13,15 @@ class Generator : public QIODevice
     Q_OBJECT
 
 public:
-    Generator(QAudioFormat format, QString expression, double start, double end, int seconds, int fmin, int fmax);
+    Generator(QAudioFormat format,
+              QString expression,
+              double start,
+              double end,
+              double minY,
+              double maxY,
+              int seconds,
+              int fmin,
+              int fmax);
     ~Generator();
     void start();
 
@@ -38,4 +46,6 @@ private:
     QString m_expression;
     double m_start;
     double m_end;
+    double m_minY;
+    double m_maxY;
 };

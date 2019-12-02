@@ -51,6 +51,7 @@ Window {
     }
 
     function setAnchor() {
+        controlsRect.stopAudio()
         if (width >= height)
             anchorToLeft = true
         else
@@ -82,13 +83,17 @@ Window {
         target: myfunction
         onUpdate: {
             //We need graphParameters for displaying the grid
+            console.log("Update function: ", myfunction.expression())
             graphParameters.minX = myfunction.minX();
             graphParameters.maxX = myfunction.maxX();
             graphParameters.minY = myfunction.minY();
             graphParameters.maxY = myfunction.maxY();
             graphRect.updateCanvas()
         }
-        onError: console.log(err)
+        onError: {
+            console.log("Error: ", err, myfunction.expression())
+            graphRect.clearCanvas()
+        }
     }
 
     Connections {

@@ -1,5 +1,4 @@
 #include "genfunctioncalculator.h"
-#include "atmsp.h"
 #include <limits>
 #include <QDebug>
 #include <QElapsedTimer>
@@ -46,6 +45,8 @@ GenFunctionCalculatorThread::GenFunctionCalculatorThread(GenParameters *params,
     m_first = first;
     m_last = last;
 
+    m_fparser.AddConstant("pi", M_PI);
+    m_fparser.AddConstant("e", M_E);
 }
 
 void GenFunctionCalculatorThread::run()
@@ -56,21 +57,38 @@ void GenFunctionCalculatorThread::run()
     double *functionValues = m_params->functionValues();
     unsigned long long int i = 0;
 
-    std::string exp = m_params->expression().toStdString();
+    QString expression = m_params->expression();
+    QString piString = QString::number(M_PI);
+    QString eString = QString::number(M_E);
+    expression.replace("pi", piString);
+    expression.replace("e", eString);
 
-    ATMSP<double> parser;
-    ATMSB<double> byteCode;
+    std::string exp = expression.toStdString();
 
+//    ATMSP<double> parser;
+//    ATMSB<double> byteCode;
+
+    double vals[] = { 0 };
     double result;
 
-    size_t err = parser.parse(byteCode, exp, "x");
-    if ( err  )
-        qDebug() << "Parsing failed";
+//    size_t err = parser.parse(byteCode, exp, "x");
+//    if ( err  )
+//        qDebug() << "Parsing failed";
+
+    int res = m_fparser.Parse(exp, "x");
+
 
     for (i = m_first; i < m_last; i++) {
         x = start + i * step;
-        byteCode.var[0] = x;   // x is 1st in the above variables list, so it has index 0
-        result = byteCode.run();
+        //byteCode.var[0] = x;   // x is 1st in the above variables list, so it has index 0
+        //result = byteCode.run();
+        vals[0] = x;
+        result = m_fparser.Eval(vals);
+        res = m_fparser.EvalError();
+        if (result > 10 * m_params->maxY())
+            result = 10 * m_params->maxY();
+        if (result < 10 * m_params->minY())
+            result = 10 * m_params->minY();
 //        if (x > -4.0 && x < -3.0)
 //            result = 440.0;
 //        if (x >= -3.0 && x < -2.0)
