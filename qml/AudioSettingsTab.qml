@@ -451,11 +451,66 @@ Rectangle {
                 }
             }
         }
+
+        Label {
+            id: label5
+            text: qsTr("Explore mode") + ":"
+            anchors.top: label4.bottom
+            anchors.topMargin: 30
+            anchors.left: parent.left
+            anchors.leftMargin: 10
+            width: 80
+            height: 15
+            color: fontColor
+        }
+
+        FocusScope {
+            id: exploreModeFocusScope
+            height: 30
+            width: 150
+            anchors.verticalCenter: label5.verticalCenter
+//            anchors.left: parent.left
+//            anchors.leftMargin: 80
+            anchors.right: parent.right
+            anchors.rightMargin: 10
+            property alias color: exploreModeCheckBox.color
+            activeFocusOnTab: true
+            Accessible.name: qsTr("Explore mode")
+
+            Keys.onSpacePressed: exploreModeCheckBox.checked = ! exploreModeCheckBox.checked
+            Keys.onEnterPressed: exploreModeCheckBox.checked = ! exploreModeCheckBox.checked
+            Keys.onReturnPressed: exploreModeCheckBox.checked = ! exploreModeCheckBox.checked
+
+            Rectangle {
+                id: exploreModeCheckBox
+                anchors.fill: parent
+                color: bgColor
+                property bool checked: parameters.exploreMode
+                border.color: exploreModeFocusScope.activeFocus ? lightColor : "light gray"
+                border.width: exploreModeFocusScope.activeFocus ? 2 : 1
+                Text {
+                    text: exploreModeCheckBox.checked ? qsTr("On") : qsTr("Off")
+                    anchors.centerIn: parent
+                    font.pointSize: 16
+                    color: fontColor
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onPressed: {
+                        exploreModeCheckBox.checked = ! exploreModeCheckBox.checked
+                    }
+                }
+                onCheckedChanged: {
+                    parameters.exploreMode = checked
+                }
+            }
+        }
         
         Button {
             id: resetButton
             text: qsTr("Reset")
-            anchors.top: label4.bottom
+            anchors.top: label5.bottom
             anchors.topMargin: 30
             anchors.left: parent.left
             anchors.leftMargin: 10

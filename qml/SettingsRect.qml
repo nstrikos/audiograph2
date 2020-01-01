@@ -17,6 +17,8 @@ Rectangle {
         if (event.key === Qt.Key_F2) {
             controlsRect.startSoundButtonClicked()
             event.accepted = true;
+        } else if (event.key === Qt.Key_F8) {
+            console.log("F8 pressed")
         }
     }
     TabBar {

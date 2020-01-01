@@ -150,6 +150,7 @@ void Parameters::read()
     int minFreq = settings.value("minFreq", 200).toInt();
     int maxFreq = settings.value("maxFreq", 2000).toInt();
     bool useNotes = settings.value("useNotes", false).toBool();
+    bool exploreMode = settings.value("exploreMode", false).toBool();
 
     setPointColor(pointColor);
     setPointSize(pointSize);
@@ -171,6 +172,7 @@ void Parameters::read()
     setMinFreq(minFreq);
     setMaxFreq(maxFreq);
     setUseNotes(useNotes);
+    setExploreMode(exploreMode);
 }
 
 void Parameters::write()
@@ -197,6 +199,7 @@ void Parameters::write()
     settings.setValue("minFreq", m_minFreq);
     settings.setValue("maxFreq", m_maxFreq);
     settings.setValue("useNotes", m_useNotes);
+    settings.setValue("exploreMode", m_exploreMode);
     settings.sync();
 }
 
@@ -215,6 +218,7 @@ void Parameters::reset()
     setShowLine(true);
     setShowAxes(true);
     setInvertTheme(false);
+    setExploreMode(false);
 }
 
 void Parameters::resetAudio()
@@ -339,5 +343,16 @@ bool Parameters::invertTheme() const
 void Parameters::setInvertTheme(bool invertTheme)
 {
     m_invertTheme = invertTheme;
+    write();
+}
+
+bool Parameters::exploreMode() const
+{
+    return m_exploreMode;
+}
+
+void Parameters::setExploreMode(bool exploreMode)
+{
+    m_exploreMode = exploreMode;
     write();
 }

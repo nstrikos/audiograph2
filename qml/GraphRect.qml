@@ -54,15 +54,26 @@ Rectangle {
         onPinchFinished: controlsRect.pinchFinished()
         MouseArea {
             anchors.fill: parent
-            onWheel: controlsRect.handleZoom(wheel.angleDelta.y)
+            onWheel: {
+                if (!parameters.exploreMode)
+                    controlsRect.handleZoom(wheel.angleDelta.y)
+            }
 
             onPressedChanged: {
-                if (pressed)
-                    controlsRect.startDrag(mouseX, mouseY)
+                if (!parameters.exploreMode) {
+                    if (pressed)
+                        controlsRect.startDrag(mouseX, mouseY)
+                }
             }
             onPositionChanged: {
-                if (pressed)
-                    controlsRect.handleDrag(mouseX, mouseY)
+                if (!parameters.exploreMode) {
+                    if (pressed)
+                        controlsRect.handleDrag(mouseX, mouseY)
+                } else {
+                    if (pressed) {
+                        graphRect.curveMovingPoint.setMouseX(myfunction, mouseX)
+                    }
+                }
             }
         }
     }

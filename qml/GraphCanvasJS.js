@@ -140,7 +140,7 @@ function drawVerticalLines()
     while ( i < xGridCoords.length) {
         x = xGridCoords[i];
         ctx.font = "10px sans-serif";
-        ctx.fillStyle = "black"//myparameters.axesColor;
+        ctx.fillStyle = parameters.axesColor;
         var text = +parseFloat(xGridValues[i]).toFixed(5)
         var w = ctx.measureText(text).width
         if ( (x + w/2) >= canvas.width )
@@ -192,7 +192,7 @@ function drawHorizontalLines()
     var y = 0;
     while ( i < yGridCoords.length) {
         y = yGridCoords[i];
-        ctx.fillStyle = "black"//myparameters.axesColor;
+        ctx.fillStyle = parameters.axesColor;
         if (i === (yGridCoords.length - 1) )
             ctx.fillText(+parseFloat(yGridValues[i]).toFixed(5), 0, y + 10);
         else
