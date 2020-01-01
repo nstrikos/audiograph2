@@ -170,7 +170,7 @@ void AudioPoints::setFreq(double freq, bool useNotes, bool n)
     }
 
         //xx = xx / 4;
-
+    m_time = 0;
     if (audioPlaying == false)
         startAudio();
 }
@@ -195,7 +195,9 @@ void AudioPoints::initializeAudio()
     audioOutput = new QAudioOutput(deviceinfo, format, this);
     audioOutput->setBufferSize(BufferSize);
     timer = new QTimer;
+    timer->setTimerType(Qt::PreciseTimer);
     connect(timer, SIGNAL(timeout()), this, SLOT(writeMoreData()));
+    m_time = 0;
     timer->start(TimerMSeconds);
     m_sum = 0;
     m_sum2 = 0;
@@ -210,6 +212,9 @@ void AudioPoints::initializeAudio()
 
 void AudioPoints::writeMoreData()
 {
+    m_time += 5;
+    if (m_time > duration)
+        return;
     int emptyBytes = audioOutput->bytesFree();
     //if (emptyBytes > BufferSize) emptyBytes = BufferSize;// Check how many empty bytes are in the device buffer
     int periodSize = audioOutput->periodSize(); // Check the ideal chunk size, in bytes

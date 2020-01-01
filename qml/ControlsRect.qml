@@ -26,6 +26,10 @@ Rectangle {
             startSoundButtonClicked()
             event.accepted = true;
         } else if (event.key === Qt.Key_F8) {
+            graphRect.stopPoint()
+        } else if (event.key === Qt.Key_F9) {
+            graphRect.previousPoint()
+        } else if (event.key === Qt.Key_F10) {
             graphRect.nextPoint()
         }
     }

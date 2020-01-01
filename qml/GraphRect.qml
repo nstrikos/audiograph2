@@ -20,6 +20,16 @@ Rectangle {
 
     property int currentPoint: 0
 
+    function stopPoint() {
+        audioNotes.stopNotes()
+    }
+
+    function previousPoint() {
+        currentPoint -= 100;
+        curveMovingPoint.setPoint(myfunction, currentPoint)
+        audioNotes.setNote(myfunction, currentPoint, parameters.minFreq, parameters.maxFreq, parameters.useNotes)
+    }
+
     function nextPoint() {
         currentPoint += 100;
         curveMovingPoint.setPoint(myfunction, currentPoint)

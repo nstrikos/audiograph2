@@ -13,6 +13,7 @@ const int BufferSize   = 6000;
 const int ChannelCount = 1;
 const int SampleSize = 16;
 const int TimerMSeconds = 5;
+const int duration = 500;
 
 class AudioPoints : public QObject
 {
@@ -107,6 +108,7 @@ private:
     double m_f10 = 0.0;
 
     bool m_n;
+    int m_time;
 
 signals:
     void f0Changed();
