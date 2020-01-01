@@ -23,6 +23,11 @@ public:
                              int fmin,
                              int fmax,
                              bool useNotes);
+    Q_INVOKABLE void setNote(Function *function,
+                             int currentPoint,
+                             int fmin,
+                             int fmax,
+                             bool useNotes);
     Q_INVOKABLE void stopNotes();
 
 private slots:
@@ -37,6 +42,7 @@ private:
     int m_timeElapsed;
     AudioPoints *m_audioPoints;
     int m_mouseX;
+    int m_currentPoint;
 };
 
 #endif // AUDIONOTES_H

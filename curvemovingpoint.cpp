@@ -169,6 +169,31 @@ void CurveMovingPoint::setMouseX(Function *function, int mouseX)
     update();
 }
 
+void CurveMovingPoint::setPoint(Function *function, int point)
+{
+    m_function = function;
+    m_point = point;
+
+    if (m_point < 0)
+        m_point = 0;
+    if (m_point >= LINE_POINTS)
+        m_point = LINE_POINTS - 1;
+
+    int size = m_function->lineSize();
+    double xStart = m_function->x(0);
+    double xEnd = m_function->x(size - 1);
+    double minY = m_function->minY();
+    double maxY = m_function->maxY();
+    double x =  ( this->width() / (xEnd - xStart) * (m_function->x(m_point) - xStart) );
+    double y = ( this->height() / (maxY - minY) * (m_function->y(m_point) - minY) );
+
+    y = this->height() - y;
+
+    m_X = x;
+    m_Y = y;
+    update();
+}
+
 void CurveMovingPoint::clearMouse()
 {
     stopPoint();

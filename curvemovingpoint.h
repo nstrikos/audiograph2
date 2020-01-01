@@ -73,6 +73,7 @@ public:
 //    void setF10(double f10);
 
     Q_INVOKABLE void setMouseX(Function *function, int mouseX);
+    Q_INVOKABLE void setPoint(Function *function, int point);
     Q_INVOKABLE void clearMouse();
 
     double slowPoint() const;
@@ -109,6 +110,7 @@ private:
 
 
     int m_mouseX;
+    int m_point;
 
 //    AudioPoints m_audioPoints;
 //    Test m_test;

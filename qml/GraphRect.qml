@@ -18,6 +18,14 @@ Rectangle {
 
     property alias curveMovingPoint: curveMovingPoint
 
+    property int currentPoint: 0
+
+    function nextPoint() {
+        currentPoint += 100;
+        curveMovingPoint.setPoint(myfunction, currentPoint)
+        audioNotes.setNote(myfunction, currentPoint, parameters.minFreq, parameters.maxFreq, parameters.useNotes)
+    }
+
     GraphCanvas {
         id: graphCanvas
         anchors.fill: parent
@@ -63,6 +71,9 @@ Rectangle {
                 if (!parameters.exploreMode) {
                     if (pressed)
                         controlsRect.startDrag(mouseX, mouseY)
+                } else {
+                    if (!pressed)
+                        audioNotes.stopNotes()
                 }
             }
             onPositionChanged: {
@@ -72,6 +83,7 @@ Rectangle {
                 } else {
                     if (pressed) {
                         graphRect.curveMovingPoint.setMouseX(myfunction, mouseX)
+                        audioNotes.setNote(myfunction, mouseX, width, parameters.minFreq, parameters.maxFreq, parameters.useNotes)
                     }
                 }
             }

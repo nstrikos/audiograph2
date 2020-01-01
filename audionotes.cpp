@@ -71,6 +71,40 @@ void AudioNotes::setNote(Function *function,
     }
 }
 
+void AudioNotes::setNote(Function *function, int currentPoint, int fmin, int fmax, bool useNotes)
+{
+    m_function = function;
+    m_fmin = fmin;
+    m_fmax = fmax;
+    m_currentPoint = currentPoint;
+
+    if (m_currentPoint < 0)
+        m_currentPoint = 0;
+    if (m_currentPoint >= LINE_POINTS)
+        m_currentPoint = LINE_POINTS - 1;
+
+    double min = m_function->minValue();
+    double max = m_function->maxValue();
+    double a;
+    double b;
+    double l;
+    double freq;
+    bool n = true;
+    if (max != min) {
+        a =  (m_fmax-m_fmin)/(max - min);
+        b = m_fmax - a * max;
+        l = m_function->y(m_currentPoint);
+        if (l >= 0)
+            n = true;
+        else
+            n = false;
+        freq = a * l + b;
+        m_audioPoints->setFreq(freq, useNotes, n);
+    } else {
+        m_audioPoints->setFreq((m_fmax - m_fmin) / 2, useNotes, n);
+    }
+}
+
 void AudioNotes::stopNotes()
 {
     m_timer.stop();

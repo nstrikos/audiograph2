@@ -42,6 +42,7 @@ void AudioPoints::setFreq(double freq, bool useNotes, bool n)
 {
     xx = freq;
     m_n = n;
+    m_n = false;
 
     if (useNotes) {
         if ( xx < 110.0)
