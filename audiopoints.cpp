@@ -205,7 +205,7 @@ void AudioPoints::initializeAudio()
     m_phi2 = 0;
     auIObuffer = audioOutput->start();
 #ifdef Q_OS_WIN
-    auIObuffer = audioOutput->start(); //In windows calling audioOutput->start
+//    auIObuffer = audioOutput->start(); //In windows calling audioOutput->start
     //for second time gives better results
 #endif
 }

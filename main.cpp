@@ -8,6 +8,7 @@
 #include "parameters.h"
 #include "audio.h"
 #include "audionotes.h"
+#include "texttospeech.h"
 
 
 int main(int argc, char *argv[])
@@ -22,6 +23,7 @@ int main(int argc, char *argv[])
     Parameters parameters;
     Audio audio;
     AudioNotes audioNotes;
+    TextToSpeech textToSpeech(parameters);
     qRegisterMetaType<Function*>("Function*");
 
     QQmlApplicationEngine engine;
@@ -29,6 +31,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("parameters", &parameters);
     engine.rootContext()->setContextProperty("audio", &audio);
     engine.rootContext()->setContextProperty("audioNotes", &audioNotes);
+    engine.rootContext()->setContextProperty("textToSpeech", &textToSpeech);
 
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

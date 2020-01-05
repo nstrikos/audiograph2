@@ -9,11 +9,15 @@
 #include <qendian.h>
 
 const int DataFrequencyHz = 48000;
-const int BufferSize   = 6000;
+#ifdef Q_OS_WIN
+const int BufferSize   = 16000;
+#else
+const int BufferSize = 6000;
+#endif
 const int ChannelCount = 1;
 const int SampleSize = 16;
 const int TimerMSeconds = 5;
-const int duration = 500;
+const int duration = 1000;
 
 class AudioPoints : public QObject
 {

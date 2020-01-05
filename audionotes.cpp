@@ -3,6 +3,7 @@
 
 AudioNotes::AudioNotes()
 {
+    m_timer.setTimerType(Qt::PreciseTimer);
     m_timer.setInterval(50);
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(timerExpired()));
     m_audioPoints = new AudioPoints();

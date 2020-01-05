@@ -31,6 +31,10 @@ Rectangle {
             graphRect.previousPoint()
         } else if (event.key === Qt.Key_F10) {
             graphRect.nextPoint()
+        } else if (event.key === Qt.Key_F4) {
+            graphRect.sayXCoordinate()
+        } else if (event.key === Qt.Key_F5) {
+            graphRect.sayYCoordinate()
         }
     }
 

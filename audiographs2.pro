@@ -1,4 +1,4 @@
-QT += quick multimedia
+QT += quick multimedia texttospeech
 
 CONFIG += c++11
 
@@ -36,7 +36,8 @@ SOURCES += \
         generator/gensum.cpp \
         main.cpp \
         parameters.cpp \
-        point.cpp
+        point.cpp \
+        texttospeech.cpp
 
 RESOURCES += qml.qrc
 
@@ -82,4 +83,5 @@ HEADERS += \
     generator/genphicalculator.h \
     generator/gensum.h \
     parameters.h \
-    point.h
+    point.h \
+    texttospeech.h

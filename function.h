@@ -20,8 +20,8 @@ public:
                                QString minY,
                                QString maxY);
 
-    double x(int i) const;
-    double y(int i) const;
+    Q_INVOKABLE double x(int i) const;
+    Q_INVOKABLE double y(int i) const;
     bool isValid(int i) const;
     double maxValue() const;
     double minValue() const;

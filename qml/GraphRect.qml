@@ -20,18 +20,32 @@ Rectangle {
 
     property int currentPoint: 0
 
+    function sayXCoordinate() {
+        var x = Math.round(myfunction.x(currentPoint) * 100) / 100
+        textToSpeech.speak(x)
+    }
+
+    function sayYCoordinate() {
+        var y = Math.round(myfunction.y(currentPoint) * 100) / 100
+        textToSpeech.speak(y)
+    }
+
     function stopPoint() {
         audioNotes.stopNotes()
     }
 
     function previousPoint() {
         currentPoint -= 100;
+        if (currentPoint < 0)
+            currentPoint = 0;
         curveMovingPoint.setPoint(myfunction, currentPoint)
         audioNotes.setNote(myfunction, currentPoint, parameters.minFreq, parameters.maxFreq, parameters.useNotes)
     }
 
     function nextPoint() {
         currentPoint += 100;
+        if (currentPoint >= myfunction.lineSize())
+            currentPoint = myfunction.lineSize() - 1
         curveMovingPoint.setPoint(myfunction, currentPoint)
         audioNotes.setNote(myfunction, currentPoint, parameters.minFreq, parameters.maxFreq, parameters.useNotes)
     }
