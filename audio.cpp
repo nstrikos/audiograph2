@@ -24,11 +24,6 @@ void Audio::start(QString expression,
 {
     reset();
 
-    QString piString = QString::number(M_PI);
-    QString eString = QString::number(M_E);
-    expression.replace("pi", piString);
-    expression.replace("e", eString);
-
     std::string exp = expression.toStdString();
 
     int res = m_fparser.Parse(exp, "x");

@@ -1,6 +1,5 @@
 #include "genfunctioncalculator.h"
 #include <limits>
-#include <QDebug>
 #include <QElapsedTimer>
 #include <QVector>
 
@@ -44,9 +43,6 @@ GenFunctionCalculatorThread::GenFunctionCalculatorThread(GenParameters *params,
     m_params = params;
     m_first = first;
     m_last = last;
-
-    m_fparser.AddConstant("pi", M_PI);
-    m_fparser.AddConstant("e", M_E);
 }
 
 void GenFunctionCalculatorThread::run()
@@ -58,15 +54,10 @@ void GenFunctionCalculatorThread::run()
     unsigned long long int i = 0;
 
     QString expression = m_params->expression();
-    QString piString = QString::number(M_PI);
-    QString eString = QString::number(M_E);
-    expression.replace("pi", piString);
-    expression.replace("e", eString);
-
     std::string exp = expression.toStdString();
 
-//    ATMSP<double> parser;
-//    ATMSB<double> byteCode;
+    m_fparser.AddConstant("pi", M_PI);
+    m_fparser.AddConstant("e", M_E);
 
     double vals[] = { 0 };
     double result;
@@ -76,6 +67,11 @@ void GenFunctionCalculatorThread::run()
 //        qDebug() << "Parsing failed";
 
     int res = m_fparser.Parse(exp, "x");
+
+//    if(res >= 0 || exp == "") {
+//        emit error(tr("Cannot understand expression.\n") + m_fparser.ErrorMsg());
+//        return false;
+//    }
 
 
     for (i = m_first; i < m_last; i++) {
@@ -108,20 +104,20 @@ void GenFunctionCalculatorThread::run()
 
         functionValues[i] = result;
 
-        if (is_positive_infinite(result)) {
-            functionValues[i] = std::numeric_limits<double>::max();
+//        if (is_positive_infinite(result)) {
+//            functionValues[i] = std::numeric_limits<double>::max();
 //            qDebug() << "Positive infinity at i: " << i;
-        }
+//        }
 
-        if (is_negative_infinite(result)) {
-            functionValues[i] = -std::numeric_limits<double>::max();
+//        if (is_negative_infinite(result)) {
+//            functionValues[i] = -std::numeric_limits<double>::max();
 //            qDebug() << "Negative infinity at i: " << i;
-        }
+//        }
 
-        if (is_nan(result)) {
-            functionValues[i] = 0;
+//        if (is_nan(result)) {
+//            functionValues[i] = 0;
 //            qDebug() << "Not a number at i: " << i;
-        }
+//        }
         //        qDebug() << "x: " << x << ", " << functionValues[i];
         //        m_functionValues[i] = sin(x)*x*x*x - x*x*sin(x);
         //        functionValues[i] = -5/(x*x + 1);
