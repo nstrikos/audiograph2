@@ -13,7 +13,7 @@
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QCoreApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
     qmlRegisterType<Curve>("Curve", 1, 0, "Curve");

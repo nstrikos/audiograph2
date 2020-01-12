@@ -52,6 +52,12 @@ void AudioNotes::setNote(Function *function,
 
     double min = m_function->minValue();
     double max = m_function->maxValue();
+
+    if (max > 10 * m_function->maxY())
+        max = 10 * m_function->maxY();
+    if (min < 10 * m_function->minY())
+        min = 10 * m_function->minY();
+
     double a;
     double b;
     double l;
@@ -86,6 +92,12 @@ void AudioNotes::setNote(Function *function, int currentPoint, int fmin, int fma
 
     double min = m_function->minValue();
     double max = m_function->maxValue();
+
+    if (max > m_function->maxY())
+        max = m_function->maxY();
+    if (min < m_function->minY())
+        min = m_function->minY();
+
     double a;
     double b;
     double l;
