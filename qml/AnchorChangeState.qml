@@ -169,13 +169,13 @@ Item {
                 anchors.right: parent.right
             }
             
-            AnchorChanges {
-                target: settingsRect
-                anchors.top: parent.top
-                anchors.bottom: graphRect.top
-                anchors.left: parent.left
-                anchors.right: parent.right
-            }
+//            AnchorChanges {
+//                target: settingsRect
+//                anchors.top: parent.top
+//                anchors.bottom: graphRect.top
+//                anchors.left: parent.left
+//                anchors.right: parent.right
+//            }
             
             PropertyChanges {
                 target: settingsRect
@@ -305,24 +305,6 @@ Item {
                 target: settingsButton
                 anchors.top: graphRect.top
                 anchors.right: graphRect.right
-            }
-            
-            AnchorChanges {
-                target: modeButton
-                anchors.top: graphRect.top
-                anchors.right: settingsButton.left
-            }
-            
-            AnchorChanges {
-                target: modeButton2
-                anchors.top: graphRect.top
-                anchors.right: modeButton.left
-            }
-            
-            AnchorChanges {
-                target: modeButton3
-                anchors.top: graphRect.top
-                anchors.right: modeButton2.left
             }
             
             PropertyChanges {

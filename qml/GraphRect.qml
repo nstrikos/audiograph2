@@ -19,6 +19,7 @@ Rectangle {
     property alias curveMovingPoint: curveMovingPoint
 
     property int currentPoint: 0
+    property int step: 100
 
     function sayXCoordinate() {
         var x = Math.round(myfunction.x(currentPoint) * 100) / 100
@@ -35,7 +36,7 @@ Rectangle {
     }
 
     function previousPoint() {
-        currentPoint -= 100;
+        currentPoint -= step;
         if (currentPoint < 0)
             currentPoint = 0;
         curveMovingPoint.setPoint(myfunction, currentPoint)
@@ -43,11 +44,23 @@ Rectangle {
     }
 
     function nextPoint() {
-        currentPoint += 100;
+        currentPoint += step;
         if (currentPoint >= myfunction.lineSize())
             currentPoint = myfunction.lineSize() - 1
         curveMovingPoint.setPoint(myfunction, currentPoint)
         audioNotes.setNote(myfunction, currentPoint, parameters.minFreq, parameters.maxFreq, parameters.useNotes)
+    }
+
+    function incStep() {
+        step += 10
+        if (step > 100)
+            step = 100
+    }
+
+    function decStep() {
+        step -= 10
+        if (step < 10)
+            step = 10
     }
 
     GraphCanvas {

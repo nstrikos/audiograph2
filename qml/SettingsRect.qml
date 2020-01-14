@@ -15,8 +15,12 @@ Rectangle {
 
     Keys.onPressed: {
         if (event.key === Qt.Key_F2) {
-            controlsRect.startSoundButtonClicked()
+            startSoundButtonClicked()
             event.accepted = true;
+        } else if (event.key === Qt.Key_F11) {
+            graphRect.decStep()
+        } else if (event.key === Qt.Key_F12) {
+            graphRect.incStep()
         } else if (event.key === Qt.Key_F8) {
             graphRect.stopPoint()
         } else if (event.key === Qt.Key_F9) {

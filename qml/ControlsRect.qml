@@ -25,6 +25,10 @@ Rectangle {
         if (event.key === Qt.Key_F2) {
             startSoundButtonClicked()
             event.accepted = true;
+        } else if (event.key === Qt.Key_F11) {
+            graphRect.decStep()
+        } else if (event.key === Qt.Key_F12) {
+            graphRect.incStep()
         } else if (event.key === Qt.Key_F8) {
             graphRect.stopPoint()
         } else if (event.key === Qt.Key_F9) {
@@ -96,8 +100,8 @@ Rectangle {
                 onTextChanged: {
                     textInput2.text = "-10"
                     textInput3.text = "10"
-                    textInput4.text = "-5"
-                    textInput5.text = "5"
+                    textInput4.text = "-10"
+                    textInput5.text = "10"
                     calculate()
                 }
                 Accessible.name: qsTr("Set expression")

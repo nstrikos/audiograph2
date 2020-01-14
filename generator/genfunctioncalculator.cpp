@@ -81,10 +81,13 @@ void GenFunctionCalculatorThread::run()
         vals[0] = x;
         result = m_fparser.Eval(vals);
         res = m_fparser.EvalError();
+
         if (result > 10 * m_params->maxY())
             result = 10 * m_params->maxY();
         if (result < 10 * m_params->minY())
             result = 10 * m_params->minY();
+
+
 //        if (x > -4.0 && x < -3.0)
 //            result = 440.0;
 //        if (x >= -3.0 && x < -2.0)
