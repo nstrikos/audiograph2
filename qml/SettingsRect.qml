@@ -21,8 +21,10 @@ Rectangle {
             graphRect.decStep()
         } else if (event.key === Qt.Key_F12) {
             graphRect.incStep()
+        } else if (event.key === Qt.Key_F7) {
+            graphRect.moveBackward()
         } else if (event.key === Qt.Key_F8) {
-            graphRect.stopPoint()
+            graphRect.moveForward()
         } else if (event.key === Qt.Key_F9) {
             graphRect.previousPoint()
         } else if (event.key === Qt.Key_F10) {
@@ -60,35 +62,35 @@ Rectangle {
         }
     }
 
-//    TabView {
-//        id: frame
-//        anchors.fill: parent
-//        anchors.margins: 4
-//        AudioSettingsTab {
-//        }
-//        GraphSettingsTab {
-//        }
-//        Tab { title: "Tab 2" }
-//        Tab { title: "Tab 3" }
+    //    TabView {
+    //        id: frame
+    //        anchors.fill: parent
+    //        anchors.margins: 4
+    //        AudioSettingsTab {
+    //        }
+    //        GraphSettingsTab {
+    //        }
+    //        Tab { title: "Tab 2" }
+    //        Tab { title: "Tab 3" }
 
-//        style: TabViewStyle {
-//            frameOverlap: 10
-//            tab: Rectangle {
-//                color: styleData.selected ? "gray" :"light gray"
-//                border.color:  "gray"
-//                implicitWidth: settingsRect.width / 2
-//                implicitHeight: 30
-//                radius: 2
-//                Text {
-//                    id: text
-//                    anchors.centerIn: parent
-//                    text: styleData.title
-//                    color: styleData.selected ? "white" : "black"
-//                }
-//            }
-//            frame: Rectangle { color: !parameters.invertTheme ? "white" : "black" }
-//        }
-//    }
+    //        style: TabViewStyle {
+    //            frameOverlap: 10
+    //            tab: Rectangle {
+    //                color: styleData.selected ? "gray" :"light gray"
+    //                border.color:  "gray"
+    //                implicitWidth: settingsRect.width / 2
+    //                implicitHeight: 30
+    //                radius: 2
+    //                Text {
+    //                    id: text
+    //                    anchors.centerIn: parent
+    //                    text: styleData.title
+    //                    color: styleData.selected ? "white" : "black"
+    //                }
+    //            }
+    //            frame: Rectangle { color: !parameters.invertTheme ? "white" : "black" }
+    //        }
+    //    }
 
     ColorDialog {
         id: colorDialog

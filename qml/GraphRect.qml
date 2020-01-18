@@ -21,14 +21,39 @@ Rectangle {
     property int currentPoint: 0
     property int step: 100
 
+    function moveForward() {
+        currentPoint += step;
+        if (currentPoint >= myfunction.lineSize())
+            currentPoint = myfunction.lineSize() - 1
+        curveMovingPoint.setPoint(myfunction, currentPoint)
+        sayYCoordinate()
+    }
+
+    function moveBackward() {
+        currentPoint -= step;
+        if (currentPoint < 0)
+            currentPoint = 0;
+        curveMovingPoint.setPoint(myfunction, currentPoint)
+        sayYCoordinate()
+    }
+
     function sayXCoordinate() {
-        var x = Math.round(myfunction.x(currentPoint) * 100) / 100
-        textToSpeech.speak(x)
+        if (myfunction.isValid(currentPoint)) {
+            var x = Math.round(myfunction.x(currentPoint) * 100) / 100
+            textToSpeech.speak(x)
+        } else {
+            textToSpeech.speak(qsTr("out of function domain"))
+        }
+
     }
 
     function sayYCoordinate() {
-        var y = Math.round(myfunction.y(currentPoint) * 100) / 100
-        textToSpeech.speak(y)
+        if (myfunction.isValid(currentPoint)) {
+            var y = Math.round(myfunction.y(currentPoint) * 100) / 100
+            textToSpeech.speak(y)
+        } else {
+            textToSpeech.speak(qsTr("not defined"))
+        }
     }
 
     function stopPoint() {
@@ -52,15 +77,17 @@ Rectangle {
     }
 
     function incStep() {
-        step += 10
+        step *= 2
+        step = Math.round(step)
         if (step > 100)
             step = 100
     }
 
     function decStep() {
-        step -= 10
-        if (step < 10)
-            step = 10
+        step /= 2
+        step = Math.round(step)
+        if (step < 1)
+            step = 1
     }
 
     GraphCanvas {

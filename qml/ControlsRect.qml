@@ -29,8 +29,10 @@ Rectangle {
             graphRect.decStep()
         } else if (event.key === Qt.Key_F12) {
             graphRect.incStep()
+        } else if (event.key === Qt.Key_F7) {
+            graphRect.moveBackward()
         } else if (event.key === Qt.Key_F8) {
-            graphRect.stopPoint()
+            graphRect.moveForward()
         } else if (event.key === Qt.Key_F9) {
             graphRect.previousPoint()
         } else if (event.key === Qt.Key_F10) {

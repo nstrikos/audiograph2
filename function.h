@@ -22,7 +22,7 @@ public:
 
     Q_INVOKABLE double x(int i) const;
     Q_INVOKABLE double y(int i) const;
-    bool isValid(int i) const;
+    Q_INVOKABLE bool isValid(int i) const;
     double maxValue() const;
     double minValue() const;
 
