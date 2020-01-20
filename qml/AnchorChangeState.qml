@@ -180,6 +180,7 @@ Item {
             PropertyChanges {
                 target: settingsRect
                 height: 0
+                visible: false
             }
             
             PropertyChanges {

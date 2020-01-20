@@ -73,13 +73,13 @@ QSGNode *Curve::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
         node = static_cast<QSGGeometryNode *>(oldNode);
         geometry = node->geometry();
         geometry->setLineWidth(m_lineWidth);
-        if (m_newColor != m_color) {
+//        if (m_newColor != m_color) {
             QSGFlatColorMaterial *material = new QSGFlatColorMaterial;
             material->setColor(m_color);
             node->setMaterial(material);
             node->setFlag(QSGNode::OwnsMaterial);
             node->markDirty(QSGNode::DirtyMaterial);
-        }
+//        }
 #ifndef Q_OS_ANDROID
         geometry->allocate(LINE_POINTS);
 #else
@@ -119,19 +119,48 @@ QSGNode *Curve::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
                 for (int i = 0; i < LINE_POINTS; i++) {
                     QSGGeometryNode *tmpNode = nodeVector.at(i);
                     QSGGeometry::Point2D *vertices = geometryVector.at(i)->vertexDataAsPoint2D();
-                    if (m_newColor != m_color) {
+//                    if (m_newColor != m_color) {
                         QSGFlatColorMaterial *material = new QSGFlatColorMaterial;
                         material->setColor(m_color);
                         tmpNode->setMaterial(material);
                         tmpNode->setFlag(QSGNode::OwnsMaterial);
                         tmpNode->markDirty(QSGNode::DirtyMaterial);
-                    }
+//                    }
 
 
                     int cx;
                     int cy;
                     cx = m_points[i].x;
                     cy = m_points[i].y;
+
+                    int r = m_lineWidth;
+                    for(int ii = 0; ii < POINT_SEGMENTS; ii++) {
+                        float theta = 2.0f * 3.1415926f * float(ii) / float(POINT_SEGMENTS);//get the current angle
+
+                        float x = r * cos(theta);
+                        float y = r * sin(theta);
+
+                        vertices[ii].set(x + cx, y + cy);//output vertex
+                    }
+                    tmpNode->markDirty(QSGNode::DirtyGeometry);
+                }
+            } else {
+                for (int i = 0; i < LINE_POINTS; i++) {
+                    QSGGeometryNode *tmpNode = nodeVector.at(i);
+                    QSGGeometry::Point2D *vertices = geometryVector.at(i)->vertexDataAsPoint2D();
+//                    if (m_newColor != m_color) {
+                        QSGFlatColorMaterial *material = new QSGFlatColorMaterial;
+                        material->setColor(m_color);
+                        tmpNode->setMaterial(material);
+                        tmpNode->setFlag(QSGNode::OwnsMaterial);
+                        tmpNode->markDirty(QSGNode::DirtyMaterial);
+//                    }
+
+
+                    int cx;
+                    int cy;
+                    cx = -10;//m_points[i].x;
+                    cy = -10;//m_points[i].y;
 
                     int r = m_lineWidth;
                     for(int ii = 0; ii < POINT_SEGMENTS; ii++) {
