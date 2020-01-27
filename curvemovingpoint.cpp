@@ -3,6 +3,7 @@
 #include <QtQuick/qsgnode.h>
 #include <QtQuick/qsgflatcolormaterial.h>
 #include <cmath>
+#include "constants.h"
 
 CurveMovingPoint::CurveMovingPoint(QQuickItem *parent)
     : QQuickItem(parent)

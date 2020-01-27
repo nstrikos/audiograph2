@@ -4,9 +4,7 @@
 #include <QObject>
 #include <QVector>
 #include <point.h>
-#include <qmath.h>
 #include "fparser/fparser.hh"
-#include "constants.h"
 
 class Function : public QObject
 {

@@ -37,6 +37,7 @@ SOURCES += \
         main.cpp \
         parameters.cpp \
         point.cpp \
+        pointsinterest.cpp \
         texttospeech.cpp
 
 RESOURCES += qml.qrc
@@ -84,4 +85,5 @@ HEADERS += \
     generator/gensum.h \
     parameters.h \
     point.h \
+    pointsinterest.h \
     texttospeech.h

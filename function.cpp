@@ -1,4 +1,6 @@
 #include "function.h"
+#include "constants.h"
+
 #include <QDebug>
 
 Function::~Function()

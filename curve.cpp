@@ -4,6 +4,7 @@
 #include <QtQuick/qsgflatcolormaterial.h>
 
 #include <cmath>
+#include "constants.h"
 
 Curve::Curve(QQuickItem *parent)
     : QQuickItem(parent)

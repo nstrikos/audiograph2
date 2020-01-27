@@ -1,5 +1,6 @@
 #include "audionotes.h"
 #include "math.h"
+#include "constants.h"
 
 AudioNotes::AudioNotes()
 {

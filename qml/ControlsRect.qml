@@ -41,6 +41,10 @@ Rectangle {
             graphRect.sayXCoordinate()
         } else if (event.key === Qt.Key_F5) {
             graphRect.sayYCoordinate()
+        } else if (event.key === Qt.Key_Control) {
+            pointsInterest.previousPoint()
+        } else if (event.key === Qt.Key_Alt) {
+            pointsInterest.nextPoint()
         }
     }
 

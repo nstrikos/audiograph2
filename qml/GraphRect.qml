@@ -107,6 +107,7 @@ Rectangle {
 
     CurveMovingPoint {
         id: curveMovingPoint
+        objectName: "curveMovingPoint"
         anchors.fill: parent
         layer.enabled: true
         layer.samples: 256
