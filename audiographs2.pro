@@ -24,6 +24,8 @@ SOURCES += \
         fparser/fparser.cc \
         fparser/fpoptimizer.cc \
         function.cpp \
+        function/functioncontroller.cpp \
+        function/functionmodel.cpp \
         generator.cpp \
         generator/genclipper.cpp \
         generator/genfunctioncalculator.cpp \
@@ -73,6 +75,8 @@ HEADERS += \
     fparser/fparser_mpfr.hh \
     fparser/fpconfig.hh \
     function.h \
+    function/functioncontroller.h \
+    function/functionmodel.h \
     generator.h \
     generator/genclipper.h \
     generator/genfunctioncalculator.h \

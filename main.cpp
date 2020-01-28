@@ -11,6 +11,8 @@
 #include "texttospeech.h"
 #include "pointsinterest.h"
 
+#include "function/functioncontroller.h"
+
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
@@ -26,6 +28,7 @@ int main(int argc, char *argv[])
     TextToSpeech textToSpeech(parameters);
 
     qRegisterMetaType<Function*>("Function*");
+//    qRegisterMetaType<FunctionController*>("FunctionController*");
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("myfunction", &myfunction);
@@ -44,9 +47,15 @@ int main(int argc, char *argv[])
 
     QObject *rootObject = engine.rootObjects().first();
     QObject *qmlObject = rootObject->findChild<QObject*>("curveMovingPoint");
+    QObject *qmlObject2 = rootObject->findChild<QObject*>("curve");
+
     CurveMovingPoint *item = static_cast<CurveMovingPoint*>(qmlObject);
+    Curve *curve = static_cast<Curve*>(qmlObject2);
     PointsInterest pointsInterest(myfunction, audioNotes, *item, parameters);
     engine.rootContext()->setContextProperty("pointsInterest", &pointsInterest);
+
+    FunctionController functionController(*curve);
+    engine.rootContext()->setContextProperty("functionController", &functionController);
 
     return app.exec();
 }

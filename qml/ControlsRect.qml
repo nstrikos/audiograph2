@@ -489,6 +489,12 @@ Rectangle {
                              textInput3.text,
                              textInput4.text,
                              textInput5.text)
+
+        functionController.displayFunction(textInput.text,
+                                           textInput2.text,
+                                           textInput3.text,
+                                           textInput4.text,
+                                           textInput5.text)
     }
 
     function startSoundButtonClicked() {

@@ -47,7 +47,7 @@ void PointsInterest::timerExpired()
             m_timer.stop();
         } else {
             //emit drawPoint(m_currentPoint);
-            m_curveMovingPoint.setPoint(&m_function, m_currentPoint);
+//            m_curveMovingPoint.setPoint(&m_function, m_currentPoint);
             m_audioNotes.setNote(&m_function, m_currentPoint, m_parameters.minFreq(), m_parameters.maxFreq(), m_parameters.useNotes());
 
 //            qDebug() << m_function->maxValue();

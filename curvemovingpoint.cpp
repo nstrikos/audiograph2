@@ -23,13 +23,14 @@ CurveMovingPoint::~CurveMovingPoint()
     qDebug() << "Curve moving point destructor called";
 }
 
-void CurveMovingPoint::drawPoint(Function *function, int duration)
+void CurveMovingPoint::drawPoint(FunctionModel &model, int duration)
 {
-    m_function = function;
-    if (m_function->lineSize() > 0) {
+//    m_function = function;
+    m_model = &model;
+    if (model.lineSize() > 0) {
         m_duration = duration * 1000;
         m_timeElapsed = 0;
-        calcCoords(this->width(), this->height());
+        //calcCoords(model ,this->width(), this->height());
         timer.start();
     }
 }
@@ -139,9 +140,10 @@ void CurveMovingPoint::setSlowPoint(double slowPoint)
         timer.setInterval(50);
 }
 
-void CurveMovingPoint::setMouseX(Function *function, int mouseX)
+void CurveMovingPoint::setMouseX(FunctionModel &model, int mouseX)
 {
-    m_function = function;
+    //m_function = function;
+    m_model = &model;
     m_mouseX = mouseX;
 
     if (m_mouseX < 0)
@@ -155,13 +157,13 @@ void CurveMovingPoint::setMouseX(Function *function, int mouseX)
     if (i >= LINE_POINTS)
         i = LINE_POINTS - 1;
 
-    int size = m_function->lineSize();
-    double xStart = m_function->x(0);
-    double xEnd = m_function->x(size - 1);
-    double minY = m_function->minY();
-    double maxY = m_function->maxY();
-    double x =  ( this->width() / (xEnd - xStart) * (m_function->x(i) - xStart) );
-    double y = ( this->height() / (maxY - minY) * (m_function->y(i) - minY) );
+    int size = model.lineSize();
+    double xStart = model.x(0);
+    double xEnd = model.x(size - 1);
+    double minY = model.minY();
+    double maxY = model.maxY();
+    double x =  ( this->width() / (xEnd - xStart) * (model.x(i) - xStart) );
+    double y = ( this->height() / (maxY - minY) * (model.y(i) - minY) );
 
     y = this->height() - y;
 
@@ -170,9 +172,10 @@ void CurveMovingPoint::setMouseX(Function *function, int mouseX)
     update();
 }
 
-void CurveMovingPoint::setPoint(Function *function, int point)
+void CurveMovingPoint::setPoint(FunctionModel &model, int point)
 {
-    m_function = function;
+    //m_function = function;
+    m_model = &model;
     m_point = point;
 
     if (m_point < 0)
@@ -180,13 +183,13 @@ void CurveMovingPoint::setPoint(Function *function, int point)
     if (m_point >= LINE_POINTS)
         m_point = LINE_POINTS - 1;
 
-    int size = m_function->lineSize();
-    double xStart = m_function->x(0);
-    double xEnd = m_function->x(size - 1);
-    double minY = m_function->minY();
-    double maxY = m_function->maxY();
-    double x =  ( this->width() / (xEnd - xStart) * (m_function->x(m_point) - xStart) );
-    double y = ( this->height() / (maxY - minY) * (m_function->y(m_point) - minY) );
+    int size = model.lineSize();
+    double xStart = model.x(0);
+    double xEnd = model.x(size - 1);
+    double minY = model.minY();
+    double maxY = model.maxY();
+    double x =  ( this->width() / (xEnd - xStart) * (model.x(m_point) - xStart) );
+    double y = ( this->height() / (maxY - minY) * (model.y(m_point) - minY) );
 
     y = this->height() - y;
 

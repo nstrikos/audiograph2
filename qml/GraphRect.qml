@@ -97,6 +97,7 @@ Rectangle {
 
     Curve {
         id: curve
+        objectName: "curve"
         anchors.fill: parent
         visible: false
         layer.enabled: true
@@ -156,13 +157,13 @@ Rectangle {
     }
 
     function updateCanvas() {
-        graphCanvas.updateCanvas()
-        curve.draw(myfunction)
+        //graphCanvas.updateCanvas()
+        //curve.draw(myfunction)
         curve.visible = true
     }
 
     function clearCanvas() {
-        curve.clear()
+        //curve.clear()
     }
 
     function startMovingPoint() {

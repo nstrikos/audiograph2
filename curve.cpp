@@ -19,10 +19,12 @@ Curve::~Curve()
     qDebug() << "Curve destructor called";
 }
 
-void Curve::draw(Function *function)
+void Curve::draw(FunctionModel *model)
 {
-    m_function = function;
-    if (m_function != nullptr && m_function->lineSize() > 0) {
+//    m_function = function;
+    m_model = model;
+//    if (m_function != nullptr && m_function->lineSize() > 0) {
+    if (m_model != nullptr &&  m_model->lineSize() > 0) {
         calcCoords(this->width(), this->height());
         update();
     }
@@ -102,7 +104,8 @@ QSGNode *Curve::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
     QSGGeometry::Point2D *lineVertices = geometry->vertexDataAsPoint2D();
 
 #ifndef Q_OS_ANDROID
-    if (m_function != nullptr && m_function->lineSize() > 0) {
+//    if (m_function != nullptr && m_function->lineSize() > 0) {
+    if (m_model != nullptr && m_model->lineSize() > 0) {
         for (int i = 0; i < LINE_POINTS; i++)
             lineVertices[i].set(m_points[i].x, m_points[i].y);
     } else {

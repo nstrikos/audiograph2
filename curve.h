@@ -15,7 +15,7 @@ public:
     Curve(QQuickItem *parent = 0);
     ~Curve();
 
-    Q_INVOKABLE void draw(Function *function);
+    Q_INVOKABLE void draw(FunctionModel *model);
     void setColor(const QColor &color);
     QColor color() const;
 

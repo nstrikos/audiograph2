@@ -22,7 +22,7 @@ public:
     CurveMovingPoint(QQuickItem *parent = 0);
     ~CurveMovingPoint();
 
-    Q_INVOKABLE void drawPoint(Function *function, int duration);
+    Q_INVOKABLE void drawPoint(FunctionModel &model, int duration);
     Q_INVOKABLE void stopPoint();
 
 
@@ -72,8 +72,8 @@ public:
 //    double f10() const;
 //    void setF10(double f10);
 
-    Q_INVOKABLE void setMouseX(Function *function, int mouseX);
-    Q_INVOKABLE void setPoint(Function *function, int point);
+    Q_INVOKABLE void setMouseX(FunctionModel &model, int mouseX);
+    Q_INVOKABLE void setPoint(FunctionModel &model, int point);
     Q_INVOKABLE void clearMouse();
 
     double slowPoint() const;
