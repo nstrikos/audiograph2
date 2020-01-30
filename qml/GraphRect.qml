@@ -1,6 +1,7 @@
 import QtQuick 2.12
 import Curve 1.0
 import CurveMovingPoint 1.0
+import DisplayView 1.0
 
 Rectangle {
     id: graphRect
@@ -106,6 +107,17 @@ Rectangle {
         lineWidth: parameters.lineWidth
     }
 
+    DisplayView {
+        id: displayView
+        objectName: "displayView"
+        anchors.fill: parent
+        visible: true
+        layer.enabled: true
+        layer.samples: 256
+        color: parameters.lineColor
+        lineWidth: parameters.lineWidth
+    }
+
     CurveMovingPoint {
         id: curveMovingPoint
         objectName: "curveMovingPoint"
@@ -157,9 +169,9 @@ Rectangle {
     }
 
     function updateCanvas() {
-        //graphCanvas.updateCanvas()
+        graphCanvas.updateCanvas()
         //curve.draw(myfunction)
-        curve.visible = true
+        //curve.visible = true
     }
 
     function clearCanvas() {

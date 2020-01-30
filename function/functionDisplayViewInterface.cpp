@@ -1,18 +1,23 @@
-#include "curveinterface.h"
+#include "functionDisplayViewInterface.h"
+#include <QDebug>
 
-CurveInterface::CurveInterface()
+FunctionDisplayViewInterface::FunctionDisplayViewInterface()
 {
+    qDebug() << "FunctionDisplayViewInterface: create function display view interface";
     m_model = nullptr;
 }
 
-CurveInterface::~CurveInterface()
+FunctionDisplayViewInterface::~FunctionDisplayViewInterface()
 {
-
+    qDebug() << "FunctionDisplayViewInterface: delete function display view interface";
 }
 
-void CurveInterface::calcCoords(int width, int height)
+void FunctionDisplayViewInterface::calcCoords(int width, int height)
 {
     if (m_model != nullptr) {
+
+        qDebug() << "FunctionDisplayViewInterface: calculate screen coords";
+
         m_points.clear();
         Point tmpPoint;
 

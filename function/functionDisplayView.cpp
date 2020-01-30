@@ -1,26 +1,27 @@
-#include "curve.h"
+#include "functionDisplayView.h"
 
 #include <QtQuick/qsgnode.h>
 #include <QtQuick/qsgflatcolormaterial.h>
 
-#include <cmath>
 #include "constants.h"
 
-Curve::Curve(QQuickItem *parent)
+FunctionDisplayView::FunctionDisplayView(QQuickItem *parent)
     : QQuickItem(parent)
 {
+    qDebug() << "FunctionDisplayView: create function display view";
     setFlag(ItemHasContents, true);
     m_newColor = m_color;
     m_lineWidth = 10;
 }
 
-Curve::~Curve()
+FunctionDisplayView::~FunctionDisplayView()
 {
-    qDebug() << "Curve destructor called";
+    qDebug() << "FunctionDisplayView: delete function display view";
 }
 
-void Curve::draw(FunctionModel *model)
+void FunctionDisplayView::draw(FunctionModel *model)
 {
+    qDebug() << "FunctionDisplayView: draw function";
     m_model = model;
     if (m_model != nullptr &&  m_model->lineSize() > 0) {
         calcCoords(this->width(), this->height());
@@ -28,7 +29,7 @@ void Curve::draw(FunctionModel *model)
     }
 }
 
-QSGNode *Curve::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
+QSGNode *FunctionDisplayView::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
 {
     QSGGeometryNode *node = nullptr;
     QSGGeometry *geometry = nullptr;
@@ -44,6 +45,8 @@ QSGNode *Curve::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
 #ifndef Q_OS_ANDROID
         geometry = new QSGGeometry(QSGGeometry::defaultAttributes_Point2D(), LINE_POINTS);
 #else
+        //For android we use only 1 point as main geometry
+        //all other points are appended to this point
         geometry = new QSGGeometry(QSGGeometry::defaultAttributes_Point2D(), 1);
 #endif
 
@@ -102,7 +105,6 @@ QSGNode *Curve::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
     QSGGeometry::Point2D *lineVertices = geometry->vertexDataAsPoint2D();
 
 #ifndef Q_OS_ANDROID
-//    if (m_function != nullptr && m_function->lineSize() > 0) {
     if (m_model != nullptr && m_model->lineSize() > 0) {
         for (int i = 0; i < LINE_POINTS; i++)
             lineVertices[i].set(m_points[i].x, m_points[i].y);
@@ -185,19 +187,19 @@ QSGNode *Curve::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
     return node;
 }
 
-int Curve::lineWidth() const
+int FunctionDisplayView::lineWidth() const
 {
     return m_lineWidth;
 }
 
-void Curve::setLineWidth(int lineWidth)
+void FunctionDisplayView::setLineWidth(int lineWidth)
 {
     m_lineWidth = lineWidth;
     update();
     qDebug() << lineWidth;
 }
 
-void Curve::clear()
+void FunctionDisplayView::clear()
 {
     for (int i = 0; i < m_points.size(); i++) {
         m_points[i].x = -10;
@@ -207,12 +209,12 @@ void Curve::clear()
     update();
 }
 
-QColor Curve::color() const
+QColor FunctionDisplayView::color() const
 {
     return m_color;
 }
 
-void Curve::setColor(const QColor &color)
+void FunctionDisplayView::setColor(const QColor &color)
 {
     m_color = color;
     update();

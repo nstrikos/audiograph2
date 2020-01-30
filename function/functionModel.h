@@ -26,22 +26,19 @@ public:
 //    double minValue() const;
 
 //    QString expression() const;
-//    double minX() const;
-//    double maxX() const;
+    double minX() const;
+    double maxX() const;
     double minY() const;
     double maxY() const;
     int lineSize() const;
-//    void zoom(double delta);
+    void zoom(double delta);
 //    void pinch(double scale);
 
 //    bool validExpression() const;
 
-    //void error(QString err);
-
-    QString error() const;
-
 signals:
     void update();
+    void error(QString err);
 
 private:
     void performCalculation();

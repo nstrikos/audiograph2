@@ -96,19 +96,24 @@ Window {
     }
 
     Connections {
-        target: myfunction
-        onUpdate: {
+        target: functionController
+        onUpdateFinished: {
             //We need graphParameters for displaying the grid
-            console.log("Update function: ", myfunction.expression())
-            graphParameters.minX = myfunction.minX();
-            graphParameters.maxX = myfunction.maxX();
-            graphParameters.minY = myfunction.minY();
-            graphParameters.maxY = myfunction.maxY();
-            graphRect.updateCanvas()
+            //console.log("Update function: ", myfunction.expression())
+            graphParameters.minX = functionController.minX();
+            graphParameters.maxX = functionController.maxX();
+            graphParameters.minY = functionController.minY();
+            graphParameters.maxY = functionController.maxY();
+            graphRect.updateCanvas()            
         }
         onError: {
             console.log("Error: ", err, myfunction.expression())
-            graphRect.clearCanvas()
+            graphParameters.minX = -10;
+            graphParameters.maxX = 10;
+            graphParameters.minY = -10;
+            graphParameters.maxY = 10;
+            //graphRect.clearCanvas()
+            graphRect.updateCanvas();
         }
     }
 

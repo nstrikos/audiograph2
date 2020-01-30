@@ -2,8 +2,7 @@
 #define CURVEINTERFACE_H
 
 #include <QColor>
-//#include "function.h"
-#include "function/functionmodel.h"
+#include "function/functionModel.h"
 #include "point.h"
 #include <QVector>
 
@@ -15,7 +14,6 @@ public:
     ~CurveInterface();
 
 protected:
-    //Function *m_function;
     QVector<Point> m_points;
     void calcCoords(int width, int height);
     FunctionModel *m_model;

@@ -342,13 +342,13 @@ Rectangle {
             //First we perform zoom
             //Then we round parameters to display them
             //Displayed parameters do not correspond to
-            //actual parameters used to calculate function
-            myfunction.zoom(angleDelta)
+            //actual parameters which are used to calculate function
+            functionController.zoom(angleDelta)
 
-            var minX = myfunction.minX()
-            var maxX = myfunction.maxX()
-            var minY = myfunction.minY()
-            var maxY = myfunction.maxY()
+            var minX = functionController.minX()
+            var maxX = functionController.maxX()
+            var minY = functionController.minY()
+            var maxY = functionController.maxY()
             var distance = maxX - minX
             var pow = -Math.floor(Math.log10(distance)) + 1
             var ten = Math.pow(10, pow)
@@ -461,7 +461,7 @@ Rectangle {
 
             active = false
 
-            myfunction.calculate(textInput.text,
+            functionController.calculate(textInput.text,
                                  n_minX,
                                  n_maxX,
                                  n_minY,
@@ -484,11 +484,11 @@ Rectangle {
 
     function calculate () {
         stopAudio()
-        myfunction.calculate(textInput.text,
-                             textInput2.text,
-                             textInput3.text,
-                             textInput4.text,
-                             textInput5.text)
+//        myfunction.calculate(textInput.text,
+//                             textInput2.text,
+//                             textInput3.text,
+//                             textInput4.text,
+//                             textInput5.text)
 
         functionController.displayFunction(textInput.text,
                                            textInput2.text,

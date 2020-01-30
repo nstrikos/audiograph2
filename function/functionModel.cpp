@@ -1,4 +1,4 @@
-#include "functionmodel.h"
+#include "functionModel.h"
 #include "constants.h"
 
 #include <QDebug>
@@ -63,7 +63,7 @@ bool FunctionModel::check()
         m_minX = minDouble;
     }
     else {
-        //error(tr("Minimum is not a real number."));
+        emit error(tr("Minimum is not a real number."));
         return false;
     }
 
@@ -72,7 +72,7 @@ bool FunctionModel::check()
         m_maxX = maxDouble;
     }
     else {
-        //emit error(tr("Maximum is not a real number."));
+        emit error(tr("Maximum is not a real number."));
         return false;
     }
 
@@ -81,7 +81,7 @@ bool FunctionModel::check()
         m_minY = minYDouble;
     }
     else {
-        //emit error(tr("Minimum Y is not a real number."));
+        emit error(tr("Minimum Y is not a real number."));
         return false;
     }
 
@@ -90,17 +90,17 @@ bool FunctionModel::check()
         m_maxY = maxYDouble;
     }
     else {
-        //emit error(tr("Maximum Y is not a real number."));
+        emit error(tr("Maximum Y is not a real number."));
         return false;
     }
 
     if (m_maxX <= m_minX) {
-        //emit error(tr("Maximum must be greater than minimum."));
+        emit error(tr("Maximum must be greater than minimum."));
         return false;
     }
 
     if (m_maxY <= m_minY) {
-        //emit error(tr("Maximum Y must be greater than minimum Y."));
+        emit error(tr("Maximum Y must be greater than minimum Y."));
         return false;
     }
 
@@ -109,7 +109,7 @@ bool FunctionModel::check()
     int res = m_fparser.Parse(m_expression.toStdString(), "x");
     qDebug() << "Parsing function: " << m_expression << ", result: " << res;
     if(res >= 0 || m_expression == "") {
-        //emit error(tr("Cannot understand expression.\n") + m_fparser.ErrorMsg());
+        emit error(tr("Cannot understand expression.\n") + m_fparser.ErrorMsg());
         return false;
     }
 
@@ -178,15 +178,15 @@ int FunctionModel::lineSize() const
     return m_linePoints.size();
 }
 
-//double FunctionModel::minX() const
-//{
-//    return m_minX;
-//}
+double FunctionModel::minX() const
+{
+    return m_minX;
+}
 
-//double FunctionModel::maxX() const
-//{
-//    return m_maxX;
-//}
+double FunctionModel::maxX() const
+{
+    return m_maxX;
+}
 
 double FunctionModel::minY() const
 {
@@ -208,46 +208,46 @@ double FunctionModel::maxY() const
 //    return m_maxValue;
 //}
 
-//void FunctionModel::zoom(double delta)
-//{
-//    double factor;
-//    if (delta < 0)
-//        factor = 1.1;
-//    else
-//        factor = 0.9;
+void FunctionModel::zoom(double delta)
+{
+    double factor;
+    if (delta < 0)
+        factor = 1.1;
+    else
+        factor = 0.9;
 
-//    performZoom(factor);
-//}
+    performZoom(factor);
+}
 
 //void FunctionModel::pinch(double scale)
 //{
 //    performZoom(scale);
 //}
 
-//void FunctionModel::performZoom(double factor)
-//{
-//    double minX = m_minX;
-//    double maxX = m_maxX;
-//    double minY = m_minY;
-//    double maxY = m_maxY;
+void FunctionModel::performZoom(double factor)
+{
+    double minX = m_minX;
+    double maxX = m_maxX;
+    double minY = m_minY;
+    double maxY = m_maxY;
 
-//    double distanceX = maxX - minX;
-//    double centerX = (maxX + minX) / 2;
+    double distanceX = maxX - minX;
+    double centerX = (maxX + minX) / 2;
 
-//    double distanceY = maxY - minY;
-//    double centerY = (maxY + minY) / 2;
+    double distanceY = maxY - minY;
+    double centerY = (maxY + minY) / 2;
 
-//    distanceX = distanceX * factor;
-//    distanceY = distanceY * factor;
+    distanceX = distanceX * factor;
+    distanceY = distanceY * factor;
 
-//    if ( (abs(distanceX) > 0.00001) && (abs(distanceY) > 0.00001) ) {
-//        m_minX = centerX - distanceX / 2;
-//        m_maxX = centerX + distanceX / 2;
-//        m_minY = centerY - distanceY / 2;
-//        m_maxY = centerY + distanceY / 2;
-//        calculatePoints();
-//    }
-//}
+    if ( (abs(distanceX) > 0.00001) && (abs(distanceY) > 0.00001) ) {
+        m_minX = centerX - distanceX / 2;
+        m_maxX = centerX + distanceX / 2;
+        m_minY = centerY - distanceY / 2;
+        m_maxY = centerY + distanceY / 2;
+        calculatePoints();
+    }
+}
 
 //QString FunctionModel::error() const
 //{
