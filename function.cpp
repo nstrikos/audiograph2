@@ -1,8 +1,6 @@
 #include "function.h"
 #include "constants.h"
 
-#include <QDebug>
-
 Function::~Function()
 {
 
@@ -102,7 +100,6 @@ bool Function::check()
     m_fparser.AddConstant("pi", M_PI);
     m_fparser.AddConstant("e", M_E);
     int res = m_fparser.Parse(m_expression.toStdString(), "x");
-    qDebug() << "Parsing function: " << m_expression << ", result: " << res;
     if(res >= 0 || m_expression == "") {
         emit error(tr("Cannot understand expression.\n") + m_fparser.ErrorMsg());
         return false;
@@ -134,7 +131,6 @@ void Function::calculatePoints()
             tmpPoint.isValid = true;
         else if (res > 0) {
             tmpPoint.isValid = false;
-            qDebug() << res << tmpPoint.x << tmpPoint.y;
         }
 
         m_linePoints.append(tmpPoint);

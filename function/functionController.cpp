@@ -3,9 +3,27 @@
 FunctionController::FunctionController(QObject *parent) : QObject(parent)
 {
     m_view = nullptr;
-    connect(&m_model, SIGNAL(update()), this, SLOT(updateDisplayView()));
-    connect(&m_model, SIGNAL(error(QString)), this, SLOT(clearDisplayView()));
-    connect(&m_model, SIGNAL(error(QString)), this, SIGNAL(error()));
+    m_model = nullptr;
+    m_dragHandler = nullptr;
+    m_zoomer = nullptr;
+    m_pinchHandler = nullptr;
+    m_audio = nullptr;
+}
+
+FunctionController::~FunctionController()
+{
+    //    delete m_zoomer;
+    //    delete m_pinchHandler;
+    if (m_model != nullptr)
+        delete m_model;
+    if (m_dragHandler != nullptr)
+        delete m_dragHandler;
+    if (m_zoomer != nullptr)
+        delete m_zoomer;
+    if (m_pinchHandler != nullptr)
+        delete m_pinchHandler;
+    if (m_audio != nullptr)
+        delete m_audio;
 }
 
 void FunctionController::displayFunction(QString expression,
@@ -14,13 +32,20 @@ void FunctionController::displayFunction(QString expression,
                                          QString minY,
                                          QString maxY)
 {
-    m_model.calculate(expression, minX, maxX, minY, maxY);
+    if (m_model == nullptr) {
+        m_model = new FunctionModel();
+        connect(m_model, SIGNAL(update()), this, SLOT(updateDisplayView()));
+        connect(m_model, SIGNAL(error(QString)), this, SLOT(clearDisplayView()));
+        connect(m_model, SIGNAL(error(QString)), this, SIGNAL(error()));
+        connect(m_model, SIGNAL(newInputValues(double, double, double, double)), this, SIGNAL(newInputValues(double,double,double,double)));
+    }
+    m_model->calculate(expression, minX, maxX, minY, maxY);
 }
 
 void FunctionController::updateDisplayView()
 {
     if (m_view != nullptr)
-        m_view->draw(&m_model);
+        m_view->draw(m_model);
     emit updateFinished();
 }
 
@@ -30,6 +55,11 @@ void FunctionController::clearDisplayView()
         m_view->clear();
 }
 
+void FunctionController::setParameters(Parameters *parameters)
+{
+    m_parameters = parameters;
+}
+
 void FunctionController::setDisplayView(FunctionDisplayView *view)
 {
     m_view = view;
@@ -37,25 +67,58 @@ void FunctionController::setDisplayView(FunctionDisplayView *view)
 
 void FunctionController::zoom(double delta)
 {
-    m_model.zoom(delta);
+    if (m_zoomer == nullptr) {
+        m_zoomer = new FunctionZoomer();
+        connect(m_zoomer, SIGNAL(newInputValues(double,double,double,double)), this, SIGNAL(newInputValues(double,double,double,double)));
+    }
+    m_zoomer->zoom(*m_model, delta);
 }
 
-double FunctionController::minX()
+void FunctionController::startDrag(int x, int y)
 {
-    return m_model.minX();
+    if (m_dragHandler == nullptr) {
+        m_dragHandler = new DragHandler();
+        connect(m_dragHandler, SIGNAL(newInputValues(double,double,double,double)), this, SIGNAL(newInputValues(double,double,double,double)));
+    }
+    m_dragHandler->startDrag(*m_model, x, y);
 }
 
-double FunctionController::maxX()
+void FunctionController::drag(int diffX, int diffY, int width, int height)
 {
-    return m_model.maxX();
+    m_dragHandler->drag(*m_model, diffX, diffY, width, height);
 }
 
-double FunctionController::minY()
+void FunctionController::startPinch()
 {
-    return m_model.minY();
+    if (m_pinchHandler == nullptr) {
+        m_pinchHandler = new PinchHandler();
+        connect(m_pinchHandler, SIGNAL(newInputValues(double,double,double,double)), this, SIGNAL(newInputValues(double,double,double,double)));
+    }
+    m_pinchHandler->startPinch(*m_model);
 }
 
-double FunctionController::maxY()
+void FunctionController::pinch(double scale)
 {
-    return m_model.maxY();
+    m_pinchHandler->pinch(*m_model, scale);
+}
+
+void FunctionController::startAudio()
+{
+    if (m_audio == nullptr)
+        m_audio = new Audio();
+
+    m_audio->start(m_model->expression(),
+                   m_model->minX(),
+                   m_model->maxX(),
+                   m_model->minY(),
+                   m_model->maxX(),
+                   m_parameters->duration(),
+                   m_parameters->minFreq(),
+                   m_parameters->maxFreq());
+}
+
+void FunctionController::stopAudio()
+{
+    if (m_audio != nullptr)
+        m_audio->stop();
 }

@@ -12,6 +12,8 @@ Rectangle {
     property color lightColor: parameters.invertTheme ? "yellow" : "blue"
     property bool invertTheme: parameters.invertTheme
 
+    property alias startSoundButton: startSoundButton
+
     onInvertThemeChanged: {
         fontColor: parameters.invertTheme ? "white" : "black"
         bgColor = !parameters.invertTheme ? "white" : "black"
@@ -336,51 +338,13 @@ Rectangle {
     BeautifyRect {
     }
 
-    function handleZoom(angleDelta) {
-        stopAudio()
-        if (textInput.text !== "") {
-            //First we perform zoom
-            //Then we round parameters to display them
-            //Displayed parameters do not correspond to
-            //actual parameters which are used to calculate function
-            functionController.zoom(angleDelta)
-
-            var minX = functionController.minX()
-            var maxX = functionController.maxX()
-            var minY = functionController.minY()
-            var maxY = functionController.maxY()
-            var distance = maxX - minX
-            var pow = -Math.floor(Math.log10(distance)) + 1
-            var ten = Math.pow(10, pow)
-
-            if (pow > 0) {
-                minX = minX.toFixed(pow)
-                maxX = maxX.toFixed(pow)
-            }
-            else {
-                minX = minX.toFixed(0)
-                maxX = maxX.toFixed(0)
-            }
-
-            distance = maxY - minY
-            pow = -Math.floor(Math.log10(distance)) + 1
-            ten = Math.pow(10, pow)
-            if (pow > 0) {
-                minY = minY.toFixed(pow)
-                maxY = maxY.toFixed(pow)
-            }
-            else {
-                minY = minY.toFixed(0)
-                maxY = maxY.toFixed(0)
-            }
-
-            active = false
-            textInput2.text = minX
-            textInput3.text = maxX
-            textInput4.text = minY
-            textInput5.text = maxY
-            active = true
-        }
+    function newInputValues(minX, maxX, minY, maxY) {
+        active = false
+        textInput2.text = minX
+        textInput3.text = maxX
+        textInput4.text = minY
+        textInput5.text = maxY
+        active = true
     }
 
     property var minX
@@ -390,90 +354,56 @@ Rectangle {
     property var x0
     property var y0
 
-    function startDrag(x, y) {
-        stopAudio()
-        if (textInput.text !== "") {
-            x0 = x
-            y0 = y
-            minX = Number(textInput2.text)
-            maxX = Number(textInput3.text)
-            minY = Number(textInput4.text)
-            maxY = Number(textInput5.text)
-        }
-    }
-
-    function handleDrag(diffX, diffY) {
-        if (textInput.text !== "") {
-            active = false
-
-            var distanceX = maxX - minX
-
-            var pow = -Math.floor(Math.log10(distanceX)) + 2
-            var ten = Math.pow(10, pow)
-
-            diffX = diffX - x0
-            diffY = diffY - y0
-            diffX = (maxX - minX) / graphRect.width * diffX
-            diffY = (maxY - minY) / graphRect.height * diffY
-
-            textInput2.text = Math.round( (minX - diffX) * ten) / ten
-            textInput3.text = Math.round( (maxX - diffX) * ten) / ten
-            textInput4.text = Math.round( (minY + diffY) * ten) / ten
-            textInput5.text = Math.round( (maxY + diffY) * ten) / ten
-            calculate()
-
-            active = true
-        }
-    }
-
     function startPinch() {
         stopAudio()
-        if (textInput.text !== "") {
-            minX = Number(textInput2.text)
-            maxX = Number(textInput3.text)
-            minY = Number(textInput4.text)
-            maxY = Number(textInput5.text)
-            active = false
-        }
+//        if (textInput.text !== "") {
+//            minX = Number(textInput2.text)
+//            maxX = Number(textInput3.text)
+//            minY = Number(textInput4.text)
+//            maxY = Number(textInput5.text)
+//            active = false
+//        }
+        functionController.startPinch()
     }
 
     function handlePinch(scale) {
-        if (textInput.text !== "") {
-            scale = 1 / scale
+//        if (textInput.text !== "") {
+//            scale = 1 / scale
 
-            var distanceX = maxX - minX
-            var centerX = (maxX + minX) / 2
+//            var distanceX = maxX - minX
+//            var centerX = (maxX + minX) / 2
 
-            var pow = -Math.floor(Math.log10(distanceX)) + 2
-            var ten = Math.pow(10, pow)
+//            var pow = -Math.floor(Math.log10(distanceX)) + 2
+//            var ten = Math.pow(10, pow)
 
-            var distanceY = maxY - minY
-            var centerY = (maxY + minY) / 2
+//            var distanceY = maxY - minY
+//            var centerY = (maxY + minY) / 2
 
 
-            distanceX = distanceX * scale
-            distanceY = distanceY * scale
+//            distanceX = distanceX * scale
+//            distanceY = distanceY * scale
 
-            var n_minX = centerX - distanceX / 2
-            var n_maxX = centerX + distanceX / 2
-            var n_minY = centerY - distanceY / 2
-            var n_maxY = centerY + distanceY / 2
+//            var n_minX = centerX - distanceX / 2
+//            var n_maxX = centerX + distanceX / 2
+//            var n_minY = centerY - distanceY / 2
+//            var n_maxY = centerY + distanceY / 2
 
-            active = false
+//            active = false
 
-            functionController.calculate(textInput.text,
-                                 n_minX,
-                                 n_maxX,
-                                 n_minY,
-                                 n_maxY,
-                                 graphRect.width,
-                                 graphRect.height)
+//            functionController.displayFunction(textInput.text,
+//                                 n_minX,
+//                                 n_maxX,
+//                                 n_minY,
+//                                 n_maxY)
 
-            textInput2.text = Math.round(n_minX * ten) / ten
-            textInput3.text = Math.round(n_maxX * ten) / ten
-            textInput4.text = Math.round(n_minY * ten) / ten
-            textInput5.text = Math.round(n_maxY * ten) / ten
-        }
+//            textInput2.text = Math.round(n_minX * ten) / ten
+//            textInput3.text = Math.round(n_maxX * ten) / ten
+//            textInput4.text = Math.round(n_minY * ten) / ten
+//            textInput5.text = Math.round(n_maxY * ten) / ten
+
+//            active = true
+//        }
+        functionController.pinch(scale)
     }
 
     function pinchFinished() {
@@ -484,12 +414,6 @@ Rectangle {
 
     function calculate () {
         stopAudio()
-//        myfunction.calculate(textInput.text,
-//                             textInput2.text,
-//                             textInput3.text,
-//                             textInput4.text,
-//                             textInput5.text)
-
         functionController.displayFunction(textInput.text,
                                            textInput2.text,
                                            textInput3.text,
@@ -512,23 +436,25 @@ Rectangle {
                                       parameters.maxFreq,
                                       parameters.duration)
             } else {
-                audio.start(textInput.text,
-                            textInput2.text,
-                            textInput3.text,
-                            textInput4.text,
-                            textInput5.text,
-                            parameters.duration,
-                            parameters.minFreq,
-                            parameters.maxFreq)
+//                audio.start(textInput.text,
+//                            textInput2.text,
+//                            textInput3.text,
+//                            textInput4.text,
+//                            textInput5.text,
+//                            parameters.duration,
+//                            parameters.minFreq,
+//                            parameters.maxFreq)
+                functionController.startAudio()
             }
 
-            graphRect.startMovingPoint()
+            //graphRect.startMovingPoint()
             startSoundButton.checked = false
         }
     }
 
     function stopAudio() {
-        audio.stop()
+        //audio.stop()
+        functionController.stopAudio()
         audioNotes.stopNotes()
         graphRect.stopMovingPoint()
         startSoundButton.checked = true

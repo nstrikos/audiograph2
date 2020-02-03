@@ -54,6 +54,18 @@ FocusScope {
 
     MouseArea {
         anchors.fill: parent
-        onPressed: anchorChangeState.controlsButtonPressed()
+        onPressed: {
+            if (myItem.state == 'state1') {
+                myItem.state = 'state2'
+            }
+            else if (myItem.state == 'state2' || myItem.state == 'state3') {
+                myItem.state = 'state1'
+            }
+            else if (myItem.state == 'state4') {
+                myItem.state = 'state5'
+            }
+            else if (myItem.state == 'state5' || myItem.state == 'state6')
+                myItem.state = 'state4'
+        }//anchorChangeState.controlsButtonPressed()
     }
 }

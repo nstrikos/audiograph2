@@ -1,6 +1,5 @@
 #include "generator.h"
 
-#include <QDebug>
 #include <qendian.h>
 #include <qmath.h>
 
@@ -30,11 +29,10 @@ Generator::Generator(QAudioFormat format,
     {
         //Proceed to data generation
         generateData(format, seconds);
-        qDebug() << "Generator data created";
     }
     else
     {
-        qDebug() << "Not valid format for generator";
+
     }
 }
 
@@ -42,8 +40,6 @@ Generator::~Generator()
 {
     delete[] modulationValues;
     modulationValues = nullptr;
-
-    qDebug() << "Generator deleted";
 }
 
 void Generator::start()
@@ -58,12 +54,6 @@ void Generator::generateData(const QAudioFormat &format, int seconds)
 
     length = (format.sampleRate() * format.channelCount() * (format.sampleSize() / 8))
             * seconds;
-
-    qDebug() << "Generator channel bytes: " << m_channelBytes;
-    qDebug() << "Generator sample bytes: " << sampleBytes;
-    qDebug() << "Generator length in seconds: " << seconds;
-    qDebug() << "Generator format sampleRate: " << format.sampleRate();
-    qDebug() << "Generator buffer length: " << length ;
 
     Q_ASSERT(length % sampleBytes == 0);
 

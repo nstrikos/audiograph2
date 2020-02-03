@@ -1,8 +1,6 @@
 #include "functionModel.h"
 #include "constants.h"
 
-#include <QDebug>
-
 FunctionModel::FunctionModel(QObject *parent) : QObject(parent)
 {
 
@@ -14,10 +12,10 @@ FunctionModel::~FunctionModel()
 }
 
 void FunctionModel::calculate(QString expression,
-                         QString minX,
-                         QString maxX,
-                         QString minY,
-                         QString maxY)
+                              QString minX,
+                              QString maxX,
+                              QString minY,
+                              QString maxY)
 {
     m_expression = expression;
     m_minXString = minX;
@@ -25,6 +23,16 @@ void FunctionModel::calculate(QString expression,
     m_minYString = minY;
     m_maxYString = maxY;
     performCalculation();
+}
+
+void FunctionModel::calculate(QString expression, double minX, double maxX, double minY, double maxY)
+{
+    m_expression = expression;
+    m_minX = minX;
+    m_maxX = maxX;
+    m_minY = minY;
+    m_maxY = maxY;
+    calculatePoints();
 }
 
 void FunctionModel::performCalculation()
@@ -107,7 +115,6 @@ bool FunctionModel::check()
     m_fparser.AddConstant("pi", M_PI);
     m_fparser.AddConstant("e", M_E);
     int res = m_fparser.Parse(m_expression.toStdString(), "x");
-    qDebug() << "Parsing function: " << m_expression << ", result: " << res;
     if(res >= 0 || m_expression == "") {
         emit error(tr("Cannot understand expression.\n") + m_fparser.ErrorMsg());
         return false;
@@ -139,8 +146,7 @@ void FunctionModel::calculatePoints()
             tmpPoint.isValid = true;
         else if (res > 0) {
             tmpPoint.isValid = false;
-            qDebug() << res << tmpPoint.x << tmpPoint.y;
-        }
+       }
 
         m_linePoints.append(tmpPoint);
     }
@@ -216,7 +222,8 @@ void FunctionModel::zoom(double delta)
     else
         factor = 0.9;
 
-    performZoom(factor);
+    if (m_expression != "")
+        performZoom(factor);
 }
 
 //void FunctionModel::pinch(double scale)
@@ -247,6 +254,33 @@ void FunctionModel::performZoom(double factor)
         m_maxY = centerY + distanceY / 2;
         calculatePoints();
     }
+
+    double distance = maxX - minX;
+    double power = -floor(log10(distance)) + 1;
+    double ten = pow(10, power);
+
+    if (power > 0) {
+        minX = round(minX * ten) / ten;
+        maxX = round(maxX * ten) / ten;
+    }
+    else {
+        minX = round(minX);
+        maxX = round(maxX);
+    }
+
+    distance = maxY - minY;
+    power = -floor(log10(distance)) + 1;
+    ten = pow(10, power);
+    if (power > 0) {
+        minY = round(minY * ten) / ten;
+        maxY = round(maxY * ten) / ten;
+    }
+    else {
+        minY = round(minY);//minY.toFixed(0);
+        maxY = round(maxY);//maxY.toFixed(0);
+    }
+
+    emit newInputValues(minX, maxX, minY, maxY);
 }
 
 //QString FunctionModel::error() const
@@ -259,8 +293,8 @@ void FunctionModel::performZoom(double factor)
 //    return m_validExpression;
 //}
 
-//QString FunctionModel::expression() const
-//{
-//    return m_expression;
-//}
+QString FunctionModel::expression() const
+{
+    return m_expression;
+}
 

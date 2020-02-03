@@ -1,5 +1,4 @@
 #include "audiopoints.h"
-#include <QDebug>
 #include <qmath.h>
 
 AudioPoints::AudioPoints()
@@ -189,7 +188,6 @@ void AudioPoints::initializeAudio()
 
     QAudioDeviceInfo info(QAudioDeviceInfo::defaultOutputDevice());
     if (!info.isFormatSupported(format)) {
-        qWarning() << "Default format not supported - trying to use nearest";
         format = info.nearestFormat(format);
     }
     audioOutput = new QAudioOutput(deviceinfo, format, this);

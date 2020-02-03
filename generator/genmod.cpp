@@ -1,6 +1,5 @@
 #include "genmod.h"
 #include <qmath.h>
-#include <QDebug>
 
 GenMod::GenMod(GenParameters *params)
 {
@@ -58,7 +57,6 @@ void GenModThread::run()
     double *modulationValues = m_params->modulationValues();
     for (i = m_first; i < m_last; i++) {
         ph = 2 * M_PI * fc * i / sampleRate + phi[i];
-//        qDebug() << phi[i];
         modulationValues[i] = qSin(ph);
     }
 }

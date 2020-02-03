@@ -12,13 +12,13 @@ public:
     Audio();
     ~Audio();
     Q_INVOKABLE void start(QString expression,
-                           QString start,
-                           QString end,
-                           QString minY,
-                           QString maxY,
-                           QString seconds,
-                           QString fmin,
-                           QString fmax);
+                           double start,
+                           double end,
+                           double minY,
+                           double maxY,
+                           int seconds,
+                           double fmin,
+                           double fmax);
     Q_INVOKABLE void stop();
 
 private:

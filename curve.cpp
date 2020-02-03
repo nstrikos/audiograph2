@@ -16,7 +16,7 @@ Curve::Curve(QQuickItem *parent)
 
 Curve::~Curve()
 {
-    qDebug() << "Curve destructor called";
+
 }
 
 void Curve::draw(FunctionModel *model)
@@ -194,7 +194,6 @@ void Curve::setLineWidth(int lineWidth)
 {
     m_lineWidth = lineWidth;
     update();
-    qDebug() << lineWidth;
 }
 
 void Curve::clear()

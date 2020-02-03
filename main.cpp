@@ -16,7 +16,7 @@
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
     qmlRegisterType<Curve>("Curve", 1, 0, "Curve");
@@ -27,7 +27,8 @@ int main(int argc, char *argv[])
     FunctionController functionController;
 
     Parameters parameters;
-    Audio audio;
+    functionController.setParameters(&parameters);
+    //Audio audio;
     AudioNotes audioNotes;
     TextToSpeech textToSpeech(parameters);
 
@@ -37,7 +38,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("myfunction", &myfunction);
     engine.rootContext()->setContextProperty("parameters", &parameters);
-    engine.rootContext()->setContextProperty("audio", &audio);
+    //engine.rootContext()->setContextProperty("audio", &audio);
     engine.rootContext()->setContextProperty("audioNotes", &audioNotes);
     engine.rootContext()->setContextProperty("textToSpeech", &textToSpeech);
     engine.rootContext()->setContextProperty("functionController", &functionController);

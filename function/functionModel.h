@@ -19,13 +19,19 @@ public:
                    QString minY,
                    QString maxY);
 
+    void calculate(QString expression,
+                   double minX,
+                   double maxX,
+                   double minY,
+                   double maxY);
+
     double x(int i) const;
     double y(int i) const;
     bool isValid(int i) const;
 //    double maxValue() const;
 //    double minValue() const;
 
-//    QString expression() const;
+    QString expression() const;
     double minX() const;
     double maxX() const;
     double minY() const;
@@ -39,6 +45,7 @@ public:
 signals:
     void update();
     void error(QString err);
+    void newInputValues(double minX, double maxX, double minY, double maxY);
 
 private:
     void performCalculation();

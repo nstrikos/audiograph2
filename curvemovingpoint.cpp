@@ -20,7 +20,7 @@ CurveMovingPoint::CurveMovingPoint(QQuickItem *parent)
 
 CurveMovingPoint::~CurveMovingPoint()
 {
-    qDebug() << "Curve moving point destructor called";
+
 }
 
 void CurveMovingPoint::drawPoint(FunctionModel &model, int duration)
@@ -101,7 +101,6 @@ QColor CurveMovingPoint::color() const
 void CurveMovingPoint::setColor(const QColor &color)
 {
     m_color = color;
-    qDebug() << m_color;
 }
 
 void CurveMovingPoint::timerExpired()

@@ -141,14 +141,18 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onWheel: {
-                if (!parameters.exploreMode)
-                    controlsRect.handleZoom(wheel.angleDelta.y)
+                if (!parameters.exploreMode) {
+                    stopAudio()
+                    functionController.zoom(wheel.angleDelta.y)
+                }
             }
 
             onPressedChanged: {
                 if (!parameters.exploreMode) {
-                    if (pressed)
-                        controlsRect.startDrag(mouseX, mouseY)
+                    if (pressed) {
+                        stopAudio()
+                        functionController.startDrag(mouseX, mouseY)
+                    }
                 } else {
                     if (!pressed)
                         audioNotes.stopNotes()
@@ -156,8 +160,9 @@ Rectangle {
             }
             onPositionChanged: {
                 if (!parameters.exploreMode) {
-                    if (pressed)
-                        controlsRect.handleDrag(mouseX, mouseY)
+                    if (pressed) {
+                        functionController.drag(mouseX, mouseY, width, height)
+                    }
                 } else {
                     if (pressed) {
                         graphRect.curveMovingPoint.setMouseX(myfunction, mouseX)
@@ -179,7 +184,7 @@ Rectangle {
     }
 
     function startMovingPoint() {
-        curveMovingPoint.drawPoint(myfunction, parameters.duration)
+        //curveMovingPoint.drawPoint(myfunction, parameters.duration)
     }
 
     function stopMovingPoint() {
@@ -217,5 +222,12 @@ Rectangle {
 
     BeautifyRect {
         visible: (settingsRect.width > 0)
+    }
+
+    function stopAudio() {
+        //audio.stop()
+        audioNotes.stopNotes()
+        //graphRect.stopMovingPoint()
+        controlsRect.startSoundButton.checked = true
     }
 }

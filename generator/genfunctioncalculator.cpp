@@ -64,7 +64,6 @@ void GenFunctionCalculatorThread::run()
 
 //    size_t err = parser.parse(byteCode, exp, "x");
 //    if ( err  )
-//        qDebug() << "Parsing failed";
 
     int res = m_fparser.Parse(exp, "x");
 
@@ -109,19 +108,15 @@ void GenFunctionCalculatorThread::run()
 
 //        if (is_positive_infinite(result)) {
 //            functionValues[i] = std::numeric_limits<double>::max();
-//            qDebug() << "Positive infinity at i: " << i;
 //        }
 
 //        if (is_negative_infinite(result)) {
 //            functionValues[i] = -std::numeric_limits<double>::max();
-//            qDebug() << "Negative infinity at i: " << i;
 //        }
 
 //        if (is_nan(result)) {
 //            functionValues[i] = 0;
-//            qDebug() << "Not a number at i: " << i;
 //        }
-        //        qDebug() << "x: " << x << ", " << functionValues[i];
         //        m_functionValues[i] = sin(x)*x*x*x - x*x*sin(x);
         //        functionValues[i] = -5/(x*x + 1);
         //        m_functionValues[i] = x;

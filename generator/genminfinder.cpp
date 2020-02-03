@@ -1,5 +1,4 @@
 #include "genminfinder.h"
-#include <QDebug>
 
 GenMinThread::GenMinThread(GenParameters *params, unsigned long long first, unsigned long long last)
 {
@@ -132,8 +131,6 @@ double GenMinFinder::min()
             tmin = m_minThreads.at(i)->tmin();
         }
     }
-
-    qDebug() << "min: " << min << ", tmin: " << tmin;
 
     return min;
 }

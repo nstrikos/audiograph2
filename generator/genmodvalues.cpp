@@ -1,5 +1,4 @@
 #include "genmodvalues.h"
-#include <QDebug>
 
 GenModValues::GenModValues(double *modulationValues,
                            QString expression,
@@ -28,9 +27,6 @@ double *GenModValues::modulationValues()
 {
     double step = (m_end - m_start) / (m_timeLength);
     double max;
-
-
-    qDebug() << "Generator timeLength:" << m_timeLength;
 
     double *functionValues = new double[m_timeLength];
     double *cs = new double[m_timeLength];
@@ -75,8 +71,6 @@ double *GenModValues::modulationValues()
     } else {
         params->setkf(fdev / max);
     }
-
-    qDebug() << "kf:" << params->kf();
 
     GenSum *genSum = new GenSum(params);
     genSum->sum();

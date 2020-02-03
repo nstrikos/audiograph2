@@ -14,13 +14,13 @@ Audio::~Audio()
 }
 
 void Audio::start(QString expression,
-                  QString start,
-                  QString end,
-                  QString minY,
-                  QString maxY,
-                  QString seconds,
-                  QString fmin,
-                  QString fmax)
+                  double start,
+                  double end,
+                  double minY,
+                  double maxY,
+                  int seconds,
+                  double fmin,
+                  double fmax)
 {
     reset();
 
@@ -30,22 +30,14 @@ void Audio::start(QString expression,
     if (res >= 0)
         return;
 
-
-    double m_start = start.toDouble();
-    double m_end = end.toDouble();
-    double m_minY = minY.toDouble();
-    double m_maxY = maxY.toDouble();
-    int m_seconds = seconds.toInt();
-    int m_fmin = fmin.toInt();
-    int m_fmax = fmax.toInt();
     m_audioEngine = new AudioEngine(expression,
-                                    m_start,
-                                    m_end,
-                                    m_minY,
-                                    m_maxY,
-                                    m_seconds,
-                                    m_fmin,
-                                    m_fmax);
+                                    start,
+                                    end,
+                                    minY,
+                                    maxY,
+                                    seconds,
+                                    fmin,
+                                    fmax);
     m_audioEngine->createAudioOutput();
 }
 

@@ -1,5 +1,4 @@
 #include "genmaxfinder.h"
-#include <QDebug>
 
 GenMaxThread::GenMaxThread(GenParameters *params, unsigned long long first, unsigned long long last)
 {
@@ -76,8 +75,6 @@ double GenMaxFinder::max()
             tmax = m_maxThreads.at(i)->tmax();
         }
     }
-
-    qDebug() << "max: " << max << ", tmax: " << tmax;
 
     return max;
 }

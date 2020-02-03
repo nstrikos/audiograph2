@@ -1,22 +1,18 @@
 #include "functionDisplayViewInterface.h"
-#include <QDebug>
 
 FunctionDisplayViewInterface::FunctionDisplayViewInterface()
 {
-    qDebug() << "FunctionDisplayViewInterface: create function display view interface";
     m_model = nullptr;
 }
 
 FunctionDisplayViewInterface::~FunctionDisplayViewInterface()
 {
-    qDebug() << "FunctionDisplayViewInterface: delete function display view interface";
+
 }
 
 void FunctionDisplayViewInterface::calcCoords(int width, int height)
 {
     if (m_model != nullptr) {
-
-        qDebug() << "FunctionDisplayViewInterface: calculate screen coords";
 
         m_points.clear();
         Point tmpPoint;

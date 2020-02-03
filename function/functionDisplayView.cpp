@@ -8,7 +8,6 @@
 FunctionDisplayView::FunctionDisplayView(QQuickItem *parent)
     : QQuickItem(parent)
 {
-    qDebug() << "FunctionDisplayView: create function display view";
     setFlag(ItemHasContents, true);
     m_newColor = m_color;
     m_lineWidth = 10;
@@ -16,12 +15,11 @@ FunctionDisplayView::FunctionDisplayView(QQuickItem *parent)
 
 FunctionDisplayView::~FunctionDisplayView()
 {
-    qDebug() << "FunctionDisplayView: delete function display view";
+
 }
 
 void FunctionDisplayView::draw(FunctionModel *model)
 {
-    qDebug() << "FunctionDisplayView: draw function";
     m_model = model;
     if (m_model != nullptr &&  m_model->lineSize() > 0) {
         calcCoords(this->width(), this->height());
@@ -196,7 +194,6 @@ void FunctionDisplayView::setLineWidth(int lineWidth)
 {
     m_lineWidth = lineWidth;
     update();
-    qDebug() << lineWidth;
 }
 
 void FunctionDisplayView::clear()

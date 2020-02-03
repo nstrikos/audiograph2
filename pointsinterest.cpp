@@ -1,5 +1,4 @@
 #include "pointsinterest.h"
-#include <QDebug>
 
 PointsInterest::PointsInterest(Function& function,
                                AudioNotes& audioNotes,
@@ -24,7 +23,6 @@ PointsInterest::PointsInterest(Function& function,
 
 void PointsInterest::nextPoint()
 {
-    qDebug() << "next point";
     m_forward = true;
     m_currentPoint = m_list.at(1);
     m_timer.setInterval(1);
@@ -33,7 +31,6 @@ void PointsInterest::nextPoint()
 
 void PointsInterest::previousPoint()
 {
-    qDebug() << "previous point";
     m_forward = false;
     m_timer.setInterval(1);
     m_timer.start();
@@ -50,7 +47,6 @@ void PointsInterest::timerExpired()
 //            m_curveMovingPoint.setPoint(&m_function, m_currentPoint);
             m_audioNotes.setNote(&m_function, m_currentPoint, m_parameters.minFreq(), m_parameters.maxFreq(), m_parameters.useNotes());
 
-//            qDebug() << m_function->maxValue();
         }
     } else {
         m_currentPoint--;
