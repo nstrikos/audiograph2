@@ -142,7 +142,6 @@ Rectangle {
             anchors.fill: parent
             onWheel: {
                 if (!parameters.exploreMode) {
-                    stopAudio()
                     functionController.zoom(wheel.angleDelta.y)
                 }
             }
@@ -150,7 +149,6 @@ Rectangle {
             onPressedChanged: {
                 if (!parameters.exploreMode) {
                     if (pressed) {
-                        stopAudio()
                         functionController.startDrag(mouseX, mouseY)
                     }
                 } else {

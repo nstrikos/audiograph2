@@ -204,15 +204,15 @@ double FunctionModel::maxY() const
     return m_maxY;
 }
 
-//double FunctionModel::minValue() const
-//{
-//    return m_minValue;
-//}
+double FunctionModel::minValue() const
+{
+    return m_minValue;
+}
 
-//double FunctionModel::maxValue() const
-//{
-//    return m_maxValue;
-//}
+double FunctionModel::maxValue() const
+{
+    return m_maxValue;
+}
 
 void FunctionModel::zoom(double delta)
 {
@@ -288,10 +288,10 @@ void FunctionModel::performZoom(double factor)
 //    return m_error;
 //}
 
-//bool FunctionModel::validExpression() const
-//{
-//    return m_validExpression;
-//}
+bool FunctionModel::validExpression() const
+{
+    return m_validExpression;
+}
 
 QString FunctionModel::expression() const
 {

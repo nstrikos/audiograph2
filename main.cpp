@@ -28,8 +28,6 @@ int main(int argc, char *argv[])
 
     Parameters parameters;
     functionController.setParameters(&parameters);
-    //Audio audio;
-    AudioNotes audioNotes;
     TextToSpeech textToSpeech(parameters);
 
 //    qRegisterMetaType<Function*>("Function*");
@@ -38,8 +36,6 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("myfunction", &myfunction);
     engine.rootContext()->setContextProperty("parameters", &parameters);
-    //engine.rootContext()->setContextProperty("audio", &audio);
-    engine.rootContext()->setContextProperty("audioNotes", &audioNotes);
     engine.rootContext()->setContextProperty("textToSpeech", &textToSpeech);
     engine.rootContext()->setContextProperty("functionController", &functionController);
 
@@ -55,10 +51,10 @@ int main(int argc, char *argv[])
     QObject *qmlObject = rootObject->findChild<QObject*>("curveMovingPoint");
     QObject *qmlObject2 = rootObject->findChild<QObject*>("displayView");
 
-    CurveMovingPoint *item = static_cast<CurveMovingPoint*>(qmlObject);
+    //CurveMovingPoint *item = static_cast<CurveMovingPoint*>(qmlObject);
     FunctionDisplayView *displayView = static_cast<FunctionDisplayView*>(qmlObject2);
-    PointsInterest pointsInterest(myfunction, audioNotes, *item, parameters);
-    engine.rootContext()->setContextProperty("pointsInterest", &pointsInterest);
+    //PointsInterest pointsInterest(myfunction, audioNotes, *item, parameters);
+    //engine.rootContext()->setContextProperty("pointsInterest", &pointsInterest);
 
     functionController.setDisplayView(displayView);
 

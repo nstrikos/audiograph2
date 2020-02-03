@@ -4,6 +4,7 @@
 
 AudioNotes::AudioNotes()
 {
+    m_model = nullptr;
     m_timer.setTimerType(Qt::PreciseTimer);
     m_timer.setInterval(50);
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(timerExpired()));
@@ -15,12 +16,12 @@ AudioNotes::~AudioNotes()
     delete m_audioPoints;
 }
 
-void AudioNotes::startNotes(Function *function,
+void AudioNotes::startNotes(FunctionModel *model,
                             int fmin,
                             int fmax,
                             int duration)
 {
-    m_function = function;
+    m_model = model;
     m_fmin = fmin;
     m_fmax = fmax;
     m_duration = duration * 1000;
@@ -28,14 +29,14 @@ void AudioNotes::startNotes(Function *function,
     m_timer.start();
 }
 
-void AudioNotes::setNote(Function *function,
+void AudioNotes::setNote(FunctionModel *model,
                          int mouseX,
                          int width,
                          int fmin,
                          int fmax,
                          bool useNotes)
 {
-    m_function = function;
+    m_model = model;
     m_mouseX = mouseX;
     m_fmin = fmin;
     m_fmax = fmax;
@@ -51,13 +52,13 @@ void AudioNotes::setNote(Function *function,
     if (i >= LINE_POINTS)
         i = LINE_POINTS - 1;
 
-    double min = m_function->minValue();
-    double max = m_function->maxValue();
+    double min = m_model->minValue();
+    double max = m_model->maxValue();
 
-    if (max > 10 * m_function->maxY())
-        max = 10 * m_function->maxY();
-    if (min < 10 * m_function->minY())
-        min = 10 * m_function->minY();
+    if (max > 10 * m_model->maxY())
+        max = 10 * m_model->maxY();
+    if (min < 10 * m_model->minY())
+        min = 10 * m_model->minY();
 
     double a;
     double b;
@@ -67,7 +68,7 @@ void AudioNotes::setNote(Function *function,
     if (max != min) {
         a =  (m_fmax-m_fmin)/(max - min);
         b = m_fmax - a * max;
-        l = m_function->y(i);
+        l = m_model->y(i);
         if (l >= 0)
             n = true;
         else
@@ -79,9 +80,9 @@ void AudioNotes::setNote(Function *function,
     }
 }
 
-void AudioNotes::setNote(Function *function, int currentPoint, int fmin, int fmax, bool useNotes)
+void AudioNotes::setNote(FunctionModel *model, int currentPoint, int fmin, int fmax, bool useNotes)
 {
-    m_function = function;
+    m_model = model;
     m_fmin = fmin;
     m_fmax = fmax;
     m_currentPoint = currentPoint;
@@ -91,13 +92,13 @@ void AudioNotes::setNote(Function *function, int currentPoint, int fmin, int fma
     if (m_currentPoint >= LINE_POINTS)
         m_currentPoint = LINE_POINTS - 1;
 
-    double min = m_function->minValue();
-    double max = m_function->maxValue();
+    double min = m_model->minValue();
+    double max = m_model->maxValue();
 
-    if (max > 10 * m_function->maxY())
-        max = 10 * m_function->maxY();
-    if (min < 10 * m_function->minY())
-        min = 10 * m_function->minY();
+    if (max > 10 * m_model->maxY())
+        max = 10 * m_model->maxY();
+    if (min < 10 * m_model->minY())
+        min = 10 * m_model->minY();
 
     double a;
     double b;
@@ -107,7 +108,7 @@ void AudioNotes::setNote(Function *function, int currentPoint, int fmin, int fma
     if (max != min) {
         a =  (m_fmax-m_fmin)/(max - min);
         b = m_fmax - a * max;
-        l = m_function->y(m_currentPoint);
+        l = m_model->y(m_currentPoint);
         if (l >= 0)
             n = true;
         else
@@ -140,12 +141,12 @@ void AudioNotes::timerExpired()
     if (i < 0)
         i = 0;
 
-    double min = m_function->minValue();
-    if (min < 10 * m_function->minY())
-        min = 10 * m_function->minY();
-    double max = m_function->maxValue();
-    if (max > 10 * m_function->maxX())
-        max = 10 * m_function->maxY();
+    double min = m_model->minValue();
+    if (min < 10 * m_model->minY())
+        min = 10 * m_model->minY();
+    double max = m_model->maxValue();
+    if (max > 10 * m_model->maxX())
+        max = 10 * m_model->maxY();
     double a;
     double b;
     double l;
@@ -156,7 +157,7 @@ void AudioNotes::timerExpired()
         m_fmax = 2959.96;
         a =  (m_fmax-m_fmin)/(max - min);
         b = m_fmax - a * max;
-        l = m_function->y(i);
+        l = m_model->y(i);
         if (l >= 0)
             n = true;
         else

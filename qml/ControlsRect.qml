@@ -43,11 +43,11 @@ Rectangle {
             graphRect.sayXCoordinate()
         } else if (event.key === Qt.Key_F5) {
             graphRect.sayYCoordinate()
-        } else if (event.key === Qt.Key_Control) {
-            pointsInterest.previousPoint()
-        } else if (event.key === Qt.Key_Alt) {
-            pointsInterest.nextPoint()
-        }
+        } // else if (event.key === Qt.Key_Control) {
+//            pointsInterest.previousPoint()
+//        } else if (event.key === Qt.Key_Alt) {
+//            pointsInterest.nextPoint()
+//        }
     }
 
     ControlsTitleBar {
@@ -347,62 +347,12 @@ Rectangle {
         active = true
     }
 
-    property var minX
-    property var maxX
-    property var minY
-    property var maxY
-    property var x0
-    property var y0
-
     function startPinch() {
         stopAudio()
-//        if (textInput.text !== "") {
-//            minX = Number(textInput2.text)
-//            maxX = Number(textInput3.text)
-//            minY = Number(textInput4.text)
-//            maxY = Number(textInput5.text)
-//            active = false
-//        }
         functionController.startPinch()
     }
 
     function handlePinch(scale) {
-//        if (textInput.text !== "") {
-//            scale = 1 / scale
-
-//            var distanceX = maxX - minX
-//            var centerX = (maxX + minX) / 2
-
-//            var pow = -Math.floor(Math.log10(distanceX)) + 2
-//            var ten = Math.pow(10, pow)
-
-//            var distanceY = maxY - minY
-//            var centerY = (maxY + minY) / 2
-
-
-//            distanceX = distanceX * scale
-//            distanceY = distanceY * scale
-
-//            var n_minX = centerX - distanceX / 2
-//            var n_maxX = centerX + distanceX / 2
-//            var n_minY = centerY - distanceY / 2
-//            var n_maxY = centerY + distanceY / 2
-
-//            active = false
-
-//            functionController.displayFunction(textInput.text,
-//                                 n_minX,
-//                                 n_maxX,
-//                                 n_minY,
-//                                 n_maxY)
-
-//            textInput2.text = Math.round(n_minX * ten) / ten
-//            textInput3.text = Math.round(n_maxX * ten) / ten
-//            textInput4.text = Math.round(n_minY * ten) / ten
-//            textInput5.text = Math.round(n_maxY * ten) / ten
-
-//            active = true
-//        }
         functionController.pinch(scale)
     }
 
@@ -429,33 +379,15 @@ Rectangle {
     }
 
     function startAudio() {
-        if (myfunction.validExpression()) {
-            if (parameters.useNotes) {
-                audioNotes.startNotes(myfunction,
-                                      parameters.minFreq,
-                                      parameters.maxFreq,
-                                      parameters.duration)
-            } else {
-//                audio.start(textInput.text,
-//                            textInput2.text,
-//                            textInput3.text,
-//                            textInput4.text,
-//                            textInput5.text,
-//                            parameters.duration,
-//                            parameters.minFreq,
-//                            parameters.maxFreq)
-                functionController.startAudio()
-            }
-
-            //graphRect.startMovingPoint()
+        if (functionController.validExpression()) {
+            functionController.audio()
             startSoundButton.checked = false
         }
+
     }
 
     function stopAudio() {
-        //audio.stop()
         functionController.stopAudio()
-        audioNotes.stopNotes()
         graphRect.stopMovingPoint()
         startSoundButton.checked = true
     }

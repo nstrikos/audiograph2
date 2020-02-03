@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QTimer>
-#include "function.h"
+#include "function/functionModel.h"
 #include "audiopoints.h"
 
 class AudioNotes : public QObject
@@ -13,17 +13,17 @@ class AudioNotes : public QObject
 public:
     AudioNotes();
     ~AudioNotes();
-    Q_INVOKABLE void startNotes(Function *function,
+    Q_INVOKABLE void startNotes(FunctionModel *model,
                                 int fmin,
                                 int fmax,
                                 int duration);
-    Q_INVOKABLE void setNote(Function *function,
+    Q_INVOKABLE void setNote(FunctionModel *model,
                              int mouseX,
                              int width,
                              int fmin,
                              int fmax,
                              bool useNotes);
-    Q_INVOKABLE void setNote(Function *function,
+    Q_INVOKABLE void setNote(FunctionModel *model,
                              int currentPoint,
                              int fmin,
                              int fmax,
@@ -34,7 +34,7 @@ private slots:
     void timerExpired();
 
 private:
-    Function *m_function;
+    FunctionModel *m_model;
     int m_fmin;
     int m_fmax;
     int m_duration;

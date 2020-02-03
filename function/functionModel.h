@@ -28,8 +28,8 @@ public:
     double x(int i) const;
     double y(int i) const;
     bool isValid(int i) const;
-//    double maxValue() const;
-//    double minValue() const;
+    double maxValue() const;
+    double minValue() const;
 
     QString expression() const;
     double minX() const;
@@ -40,7 +40,7 @@ public:
     void zoom(double delta);
 //    void pinch(double scale);
 
-//    bool validExpression() const;
+    bool validExpression() const;
 
 signals:
     void update();

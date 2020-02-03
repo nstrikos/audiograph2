@@ -5,6 +5,7 @@
 #include "functionModel.h"
 #include "functionDisplayView.h"
 #include "audio.h"
+#include "audionotes.h"
 #include "parameters.h"
 #include "dragHandler.h"
 #include "functionZoomer.h"
@@ -31,8 +32,10 @@ public:
     Q_INVOKABLE void startPinch();
     Q_INVOKABLE void pinch(double scale);
 
-    Q_INVOKABLE void startAudio();
+    Q_INVOKABLE void audio();
     Q_INVOKABLE void stopAudio();
+
+    Q_INVOKABLE bool validExpression();
 
     void setParameters(Parameters *parameters);
 
@@ -46,9 +49,13 @@ private slots:
     void clearDisplayView();
 
 private:
+    void startAudio();
+    void startNotes();
+
     FunctionModel *m_model;
     FunctionDisplayView *m_view;
     Audio *m_audio;
+    AudioNotes *m_audioNotes;
     Parameters *m_parameters;
 
     FunctionZoomer *m_zoomer;

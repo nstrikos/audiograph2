@@ -8,12 +8,11 @@ FunctionController::FunctionController(QObject *parent) : QObject(parent)
     m_zoomer = nullptr;
     m_pinchHandler = nullptr;
     m_audio = nullptr;
+    m_audioNotes = nullptr;
 }
 
 FunctionController::~FunctionController()
 {
-    //    delete m_zoomer;
-    //    delete m_pinchHandler;
     if (m_model != nullptr)
         delete m_model;
     if (m_dragHandler != nullptr)
@@ -24,6 +23,8 @@ FunctionController::~FunctionController()
         delete m_pinchHandler;
     if (m_audio != nullptr)
         delete m_audio;
+    if (m_audioNotes != nullptr)
+        delete m_audioNotes;
 }
 
 void FunctionController::displayFunction(QString expression,
@@ -32,6 +33,7 @@ void FunctionController::displayFunction(QString expression,
                                          QString minY,
                                          QString maxY)
 {
+    stopAudio();
     if (m_model == nullptr) {
         m_model = new FunctionModel();
         connect(m_model, SIGNAL(update()), this, SLOT(updateDisplayView()));
@@ -71,6 +73,7 @@ void FunctionController::zoom(double delta)
         m_zoomer = new FunctionZoomer();
         connect(m_zoomer, SIGNAL(newInputValues(double,double,double,double)), this, SIGNAL(newInputValues(double,double,double,double)));
     }
+    stopAudio();
     m_zoomer->zoom(*m_model, delta);
 }
 
@@ -80,6 +83,7 @@ void FunctionController::startDrag(int x, int y)
         m_dragHandler = new DragHandler();
         connect(m_dragHandler, SIGNAL(newInputValues(double,double,double,double)), this, SIGNAL(newInputValues(double,double,double,double)));
     }
+    stopAudio();
     m_dragHandler->startDrag(*m_model, x, y);
 }
 
@@ -94,12 +98,39 @@ void FunctionController::startPinch()
         m_pinchHandler = new PinchHandler();
         connect(m_pinchHandler, SIGNAL(newInputValues(double,double,double,double)), this, SIGNAL(newInputValues(double,double,double,double)));
     }
+    stopAudio();
     m_pinchHandler->startPinch(*m_model);
 }
 
 void FunctionController::pinch(double scale)
 {
     m_pinchHandler->pinch(*m_model, scale);
+}
+
+void FunctionController::audio()
+{
+    if (m_model->validExpression()) {
+        if (m_parameters->useNotes()) {
+//                audioNotes.startNotes(myfunction,
+//                                      parameters.minFreq,
+//                                      parameters.maxFreq,
+//                                      parameters.duration)
+            startNotes();
+        } else {
+//                audio.start(textInput.text,
+//                            textInput2.text,
+//                            textInput3.text,
+//                            textInput4.text,
+//                            textInput5.text,
+//                            parameters.duration,
+//                            parameters.minFreq,
+//                            parameters.maxFreq)
+            startAudio();
+        }
+
+        //graphRect.startMovingPoint()
+//        startSoundButton.checked = false
+    }
 }
 
 void FunctionController::startAudio()
@@ -121,4 +152,22 @@ void FunctionController::stopAudio()
 {
     if (m_audio != nullptr)
         m_audio->stop();
+    if (m_audioNotes != nullptr)
+        m_audioNotes->stopNotes();
+}
+
+bool FunctionController::validExpression()
+{
+    return m_model->validExpression();
+}
+
+void FunctionController::startNotes()
+{
+    if (m_audioNotes == nullptr)
+        m_audioNotes = new AudioNotes();
+
+    m_audioNotes->startNotes(m_model,
+                             m_parameters->maxFreq(),
+                             m_parameters->minFreq(),
+                             m_parameters->duration());
 }
