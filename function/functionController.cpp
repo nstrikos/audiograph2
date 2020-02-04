@@ -44,6 +44,13 @@ void FunctionController::displayFunction(QString expression,
     m_model->calculate(expression, minX, maxX, minY, maxY);
 }
 
+void FunctionController::updateView()
+{
+    if (m_view == nullptr)
+        return;
+    m_view->updateView();
+}
+
 void FunctionController::updateDisplayView()
 {
     if (m_view != nullptr)
@@ -69,6 +76,9 @@ void FunctionController::setDisplayView(FunctionDisplayView *view)
 
 void FunctionController::zoom(double delta)
 {
+    if (m_model == nullptr)
+        return;
+
     if (m_zoomer == nullptr) {
         m_zoomer = new FunctionZoomer();
         connect(m_zoomer, SIGNAL(newInputValues(double,double,double,double)), this, SIGNAL(newInputValues(double,double,double,double)));
@@ -79,31 +89,46 @@ void FunctionController::zoom(double delta)
 
 void FunctionController::startDrag(int x, int y)
 {
+    if (m_model == nullptr)
+        return;
+
     if (m_dragHandler == nullptr) {
         m_dragHandler = new DragHandler();
         connect(m_dragHandler, SIGNAL(newInputValues(double,double,double,double)), this, SIGNAL(newInputValues(double,double,double,double)));
     }
+
     stopAudio();
+
     m_dragHandler->startDrag(*m_model, x, y);
 }
 
 void FunctionController::drag(int diffX, int diffY, int width, int height)
 {
+    if (m_model == nullptr)
+        return;
+
     m_dragHandler->drag(*m_model, diffX, diffY, width, height);
 }
 
 void FunctionController::startPinch()
 {
+    if (m_model == nullptr)
+        return;
+
     if (m_pinchHandler == nullptr) {
         m_pinchHandler = new PinchHandler();
         connect(m_pinchHandler, SIGNAL(newInputValues(double,double,double,double)), this, SIGNAL(newInputValues(double,double,double,double)));
     }
+
     stopAudio();
     m_pinchHandler->startPinch(*m_model);
 }
 
 void FunctionController::pinch(double scale)
 {
+    if (m_model == nullptr)
+        return;
+
     m_pinchHandler->pinch(*m_model, scale);
 }
 
@@ -135,6 +160,9 @@ void FunctionController::audio()
 
 void FunctionController::startAudio()
 {
+    if (m_model == nullptr)
+        return;
+
     if (m_audio == nullptr)
         m_audio = new Audio();
 
@@ -170,4 +198,36 @@ void FunctionController::startNotes()
                              m_parameters->maxFreq(),
                              m_parameters->minFreq(),
                              m_parameters->duration());
+}
+
+double FunctionController::minX()
+{
+    if (m_model != nullptr)
+        return m_model->minX();
+    else
+        return -10;
+}
+
+double FunctionController::maxX()
+{
+    if (m_model != nullptr)
+        return m_model->maxX();
+    else
+        return 10;
+}
+
+double FunctionController::minY()
+{
+    if (m_model != nullptr)
+        return m_model->minY();
+    else
+        return -10;
+}
+
+double FunctionController::maxY()
+{
+    if (m_model != nullptr)
+        return m_model->maxY();
+    else
+        return 10;
 }

@@ -24,6 +24,8 @@ public:
                                      QString minY,
                                      QString maxY);
 
+    Q_INVOKABLE void updateView();
+
     void setDisplayView(FunctionDisplayView *view);
 
     Q_INVOKABLE void zoom(double delta);
@@ -36,6 +38,11 @@ public:
     Q_INVOKABLE void stopAudio();
 
     Q_INVOKABLE bool validExpression();
+
+    Q_INVOKABLE double minX();
+    Q_INVOKABLE double maxX();
+    Q_INVOKABLE double minY();
+    Q_INVOKABLE double maxY();
 
     void setParameters(Parameters *parameters);
 

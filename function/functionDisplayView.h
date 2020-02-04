@@ -16,6 +16,8 @@ public:
     FunctionDisplayView(QQuickItem *parent = 0);
     ~FunctionDisplayView () override;
 
+    void updateView();
+
     void draw(FunctionModel *model);
     void clear();
 

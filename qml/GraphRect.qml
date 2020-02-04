@@ -175,6 +175,7 @@ Rectangle {
         graphCanvas.updateCanvas()
         //curve.draw(myfunction)
         //curve.visible = true
+        functionController.updateView()
     }
 
     function clearCanvas() {

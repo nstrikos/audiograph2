@@ -19,6 +19,6 @@ Canvas {
     }
 
     onAvailableChanged: updateCanvas()
-//    onWidthChanged: updateCanvas()
-//    onHeightChanged: updateCanvas()
+    onWidthChanged: updateCanvas()
+    onHeightChanged: updateCanvas()
 }

@@ -13,7 +13,7 @@ Window {
     minimumHeight: 320
     title: qsTr("Audiographs")
 
-//    property bool anchorToLeft: undefined
+    //    property bool anchorToLeft: undefined
 
     Item {
         id: myItem
@@ -394,13 +394,13 @@ Window {
     onWidthChanged: setAnchor()
     onHeightChanged: setAnchor()
 
-//    function setAnchor() {
+    //    function setAnchor() {
 
-//        if (width >= height)
-//            anchorToLeft = true
-//        else
-//            anchorToLeft = false
-//    }
+    //        if (width >= height)
+    //            anchorToLeft = true
+    //        else
+    //            anchorToLeft = false
+    //    }
 
     function clearAnchors() {
         controlsRect.anchors.top = undefined
@@ -472,9 +472,9 @@ Window {
         id: settingsRect
     }
 
-//    AnchorChangeState {
-//        id: anchorChangeState
-//    }
+    //    AnchorChangeState {
+    //        id: anchorChangeState
+    //    }
 
     function setAnchor() {
         controlsRect.stopAudio()
@@ -484,13 +484,13 @@ Window {
             anchorToLeft = false
     }
 
-//    Component.onCompleted: {
-//        setAnchor()
-//        if (anchorToLeft)
-//            anchorChangeState.state = 'state1'
-//        else
-//            anchorChangeState.state = 'state4'
-//    }
+    //    Component.onCompleted: {
+    //        setAnchor()
+    //        if (anchorToLeft)
+    //            anchorChangeState.state = 'state1'
+    //        else
+    //            anchorChangeState.state = 'state4'
+    //    }
 
     Component.onCompleted: {
         setAnchor()
@@ -500,13 +500,9 @@ Window {
             myItem.state = 'state4'
     }
 
-//    onWidthChanged: setAnchor()
-//    onHeightChanged: setAnchor()
-//    onAnchorToLeftChanged: anchorChangeState.anchorChanged()
-
-    GraphParameters {
-        id: graphParameters
-    }
+    //    onWidthChanged: setAnchor()
+    //    onHeightChanged: setAnchor()
+    //    onAnchorToLeftChanged: anchorChangeState.anchorChanged()
 
     function setColor() {
         controlsRect.color = !parameters.invertTheme ? "white" : "black"
@@ -516,12 +512,6 @@ Window {
     Connections {
         target: functionController
         onUpdateFinished: {
-            //We need graphParameters for displaying the grid
-            //console.log("Update function: ", myfunction.expression())
-            //            graphParameters.minX = functionController.minX();
-            //            graphParameters.maxX = functionController.maxX();
-            //            graphParameters.minY = functionController.minY();
-            //            graphParameters.maxY = functionController.maxY();
             graphRect.updateCanvas()
         }
         //        onError: {
