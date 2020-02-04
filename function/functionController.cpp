@@ -67,6 +67,9 @@ void FunctionController::setDisplayView(FunctionDisplayView *view)
 
 void FunctionController::zoom(double delta)
 {
+    if (m_model == nullptr)
+        return;
+
     if (m_zoomer == nullptr) {
         m_zoomer = new FunctionZoomer();
         connect(m_zoomer, SIGNAL(newInputValues(double,double,double,double)), this, SIGNAL(newInputValues(double,double,double,double)));
@@ -76,34 +79,51 @@ void FunctionController::zoom(double delta)
 
 void FunctionController::startDrag(int x, int y)
 {
+    if (m_model == nullptr)
+        return;
+
     if (m_dragHandler == nullptr) {
         m_dragHandler = new DragHandler();
         connect(m_dragHandler, SIGNAL(newInputValues(double,double,double,double)), this, SIGNAL(newInputValues(double,double,double,double)));
     }
+
     m_dragHandler->startDrag(*m_model, x, y);
 }
 
 void FunctionController::drag(int diffX, int diffY, int width, int height)
 {
+    if (m_model == nullptr)
+        return;
+
     m_dragHandler->drag(*m_model, diffX, diffY, width, height);
 }
 
 void FunctionController::startPinch()
 {
+    if (m_model == nullptr)
+        return;
+
     if (m_pinchHandler == nullptr) {
         m_pinchHandler = new PinchHandler();
         connect(m_pinchHandler, SIGNAL(newInputValues(double,double,double,double)), this, SIGNAL(newInputValues(double,double,double,double)));
     }
+
     m_pinchHandler->startPinch(*m_model);
 }
 
 void FunctionController::pinch(double scale)
 {
+    if (m_model == nullptr)
+        return;
+
     m_pinchHandler->pinch(*m_model, scale);
 }
 
 void FunctionController::startAudio()
 {
+    if (m_model == nullptr)
+        return;
+
     if (m_audio == nullptr)
         m_audio = new Audio();
 
