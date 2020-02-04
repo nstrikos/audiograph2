@@ -54,11 +54,8 @@ int main(int argc, char *argv[])
     //CurveMovingPoint *item = static_cast<CurveMovingPoint*>(qmlObject);
     FunctionDisplayView *displayView = static_cast<FunctionDisplayView*>(qmlObject2);
     //PointsInterest pointsInterest(myfunction, audioNotes, *item, parameters);
-<<<<<<< HEAD
     //engine.rootContext()->setContextProperty("pointsInterest", &pointsInterest);
-=======
 //    engine.rootContext()->setContextProperty("pointsInterest", &pointsInterest);
->>>>>>> 8f568634bdac3be11d9210afa67371546ef86b26
 
     functionController.setDisplayView(displayView);
 

@@ -513,6 +513,7 @@ Window {
         target: functionController
         onUpdateFinished: {
             graphRect.updateCanvas()
+            controlsRect.stopAudio()
         }
         //        onError: {
         //            console.log("Error: ", err, myfunction.expression())

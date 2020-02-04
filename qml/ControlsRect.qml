@@ -347,20 +347,20 @@ Rectangle {
         active = true
     }
 
-    function startPinch() {
-        stopAudio()
-        functionController.startPinch()
-    }
+//    function startPinch() {
+//        stopAudio()
+//        functionController.startPinch()
+//    }
 
-    function handlePinch(scale) {
-        functionController.pinch(scale)
-    }
+//    function handlePinch(scale) {
+//        functionController.pinch(scale)
+//    }
 
-    function pinchFinished() {
-        if (textInput.text !== "") {
-            active = true
-        }
-    }
+//    function pinchFinished() {
+//        if (textInput.text !== "") {
+//            active = true
+//        }
+//    }
 
     function calculate () {
         stopAudio()

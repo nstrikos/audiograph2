@@ -135,9 +135,15 @@ Rectangle {
 
     PinchArea {
         anchors.fill: parent
-        onPinchStarted: controlsRect.startPinch()
-        onPinchUpdated: controlsRect.handlePinch(pinch.scale)
-        onPinchFinished: controlsRect.pinchFinished()
+        onPinchStarted: {
+            controlsRect.stopAudio()
+            functionController.startPinch()
+        }
+        onPinchUpdated: {
+            controlsRect.stopAudio()
+            functionController.pinch(pinch.scale)
+        }
+//        onPinchFinished: controlsRect.pinchFinished()
         MouseArea {
             anchors.fill: parent
             onWheel: {
