@@ -18,6 +18,12 @@ FunctionDisplayView::~FunctionDisplayView()
 
 }
 
+void FunctionDisplayView::updateView()
+{
+    calcCoords(this->width(), this->height());
+    update();
+}
+
 void FunctionDisplayView::draw(FunctionModel *model)
 {
     m_model = model;

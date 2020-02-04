@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<CurveMovingPoint>("CurveMovingPoint", 1, 0, "CurveMovingPoint");
     qmlRegisterType<FunctionDisplayView>("DisplayView", 1, 0, "DisplayView");
 
-    Function myfunction;
+    //Function myfunction;
     FunctionController functionController;
 
     Parameters parameters;
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 //    qRegisterMetaType<FunctionController*>("FunctionController*");
 
     QQmlApplicationEngine engine;
-    engine.rootContext()->setContextProperty("myfunction", &myfunction);
+    //engine.rootContext()->setContextProperty("myfunction", &myfunction);
     engine.rootContext()->setContextProperty("parameters", &parameters);
     //engine.rootContext()->setContextProperty("audio", &audio);
     engine.rootContext()->setContextProperty("audioNotes", &audioNotes);
@@ -57,8 +57,8 @@ int main(int argc, char *argv[])
 
     CurveMovingPoint *item = static_cast<CurveMovingPoint*>(qmlObject);
     FunctionDisplayView *displayView = static_cast<FunctionDisplayView*>(qmlObject2);
-    PointsInterest pointsInterest(myfunction, audioNotes, *item, parameters);
-    engine.rootContext()->setContextProperty("pointsInterest", &pointsInterest);
+    //PointsInterest pointsInterest(myfunction, audioNotes, *item, parameters);
+//    engine.rootContext()->setContextProperty("pointsInterest", &pointsInterest);
 
     functionController.setDisplayView(displayView);
 

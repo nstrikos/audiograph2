@@ -42,6 +42,13 @@ void FunctionController::displayFunction(QString expression,
     m_model->calculate(expression, minX, maxX, minY, maxY);
 }
 
+void FunctionController::updateView()
+{
+    if (m_view == nullptr)
+        return;
+    m_view->updateView();
+}
+
 void FunctionController::updateDisplayView()
 {
     if (m_view != nullptr)
@@ -141,4 +148,36 @@ void FunctionController::stopAudio()
 {
     if (m_audio != nullptr)
         m_audio->stop();
+}
+
+double FunctionController::minX()
+{
+    if (m_model != nullptr)
+        return m_model->minX();
+    else
+        return -10;
+}
+
+double FunctionController::maxX()
+{
+    if (m_model != nullptr)
+        return m_model->maxX();
+    else
+        return 10;
+}
+
+double FunctionController::minY()
+{
+    if (m_model != nullptr)
+        return m_model->minY();
+    else
+        return -10;
+}
+
+double FunctionController::maxY()
+{
+    if (m_model != nullptr)
+        return m_model->maxY();
+    else
+        return 10;
 }
