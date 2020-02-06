@@ -152,36 +152,36 @@ QSGNode *FunctionDisplayView::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeD
                     }
                     tmpNode->markDirty(QSGNode::DirtyGeometry);
                 }
-            } else {
-                for (int i = 0; i < LINE_POINTS; i++) {
-                    QSGGeometryNode *tmpNode = nodeVector.at(i);
-                    QSGGeometry::Point2D *vertices = geometryVector.at(i)->vertexDataAsPoint2D();
+            }
+        }
+    } else if (nodeVector.size() > 0) {
+        for (int i = 0; i < LINE_POINTS; i++) {
+            QSGGeometryNode *tmpNode = nodeVector.at(i);
+            QSGGeometry::Point2D *vertices = geometryVector.at(i)->vertexDataAsPoint2D();
 //                    if (m_newColor != m_color) {
-                        QSGFlatColorMaterial *material = new QSGFlatColorMaterial;
-                        material->setColor(m_color);
-                        tmpNode->setMaterial(material);
-                        tmpNode->setFlag(QSGNode::OwnsMaterial);
-                        tmpNode->markDirty(QSGNode::DirtyMaterial);
+                QSGFlatColorMaterial *material = new QSGFlatColorMaterial;
+                material->setColor(m_color);
+                tmpNode->setMaterial(material);
+                tmpNode->setFlag(QSGNode::OwnsMaterial);
+                tmpNode->markDirty(QSGNode::DirtyMaterial);
 //                    }
 
 
-                    int cx;
-                    int cy;
-                    cx = -10;//m_points[i].x;
-                    cy = -10;//m_points[i].y;
+            int cx;
+            int cy;
+            cx = -10;//m_points[i].x;
+            cy = -10;//m_points[i].y;
 
-                    int r = m_lineWidth;
-                    for(int ii = 0; ii < POINT_SEGMENTS; ii++) {
-                        float theta = 2.0f * 3.1415926f * float(ii) / float(POINT_SEGMENTS);//get the current angle
+            int r = m_lineWidth;
+            for(int ii = 0; ii < POINT_SEGMENTS; ii++) {
+                float theta = 2.0f * 3.1415926f * float(ii) / float(POINT_SEGMENTS);//get the current angle
 
-                        float x = r * cos(theta);
-                        float y = r * sin(theta);
+                float x = r * cos(theta);
+                float y = r * sin(theta);
 
-                        vertices[ii].set(x + cx, y + cy);//output vertex
-                    }
-                    tmpNode->markDirty(QSGNode::DirtyGeometry);
-                }
+                vertices[ii].set(x + cx, y + cy);//output vertex
             }
+            tmpNode->markDirty(QSGNode::DirtyGeometry);
         }
     }
 #endif

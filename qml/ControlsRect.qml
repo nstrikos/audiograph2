@@ -44,10 +44,10 @@ Rectangle {
         } else if (event.key === Qt.Key_F5) {
             graphRect.sayYCoordinate()
         } // else if (event.key === Qt.Key_Control) {
-//            pointsInterest.previousPoint()
-//        } else if (event.key === Qt.Key_Alt) {
-//            pointsInterest.nextPoint()
-//        }
+        //            pointsInterest.previousPoint()
+        //        } else if (event.key === Qt.Key_Alt) {
+        //            pointsInterest.nextPoint()
+        //        }
     }
 
     ControlsTitleBar {
@@ -62,6 +62,31 @@ Rectangle {
         anchors.bottom: parent.bottom
         contentHeight: 500
         clip: true
+
+        onContentYChanged: {
+            ensureVisible(textInput)
+            ensureVisible(textInput2)
+            ensureVisible(textInput3)
+            ensureVisible(textInput4)
+            ensureVisible(textInput5)
+        }
+
+        function ensureVisible(item) {
+            var ypos = item.mapToItem(contentItem, 0, 0).y
+            var ext = item.height + ypos
+            if ( ypos < contentY // begins before
+                    || ypos > contentY + height // begins after
+                    || ext < contentY // ends before
+                    || ext > contentY + height) { // ends after
+                //            // don't exceed bounds
+                //            //contentY = Math.max(0, Math.min(ypos - height + item.height, contentHeight - height))
+                console.log(item.id, "not visible")
+                item.enabled = false
+            } else {
+                console.log(item.id, "visible")
+                item.enabled = true
+            }
+        }
 
         Item {
             id: controlsMainRect
@@ -89,6 +114,7 @@ Rectangle {
                 height: 50
                 selectByMouse: true
                 color: fontColor
+
                 background: Rectangle {
                     id: backRect
                     color: controlsRect.color
@@ -136,6 +162,7 @@ Rectangle {
                 placeholderText: (parent.width > 0) ? "minimum X" : ""
                 height: 50
                 selectByMouse: true
+                onFocusChanged: ensureVisible(textInput2)
                 color: fontColor
                 background: Rectangle {
                     id: backRect2
@@ -180,6 +207,7 @@ Rectangle {
                 placeholderText: (parent.width > 0) ? "maximum X" : ""
                 height: 50
                 selectByMouse: true
+                onFocusChanged: ensureVisible(textInput3)
                 color: fontColor
                 background: Rectangle {
                     id: backRect3
@@ -224,6 +252,7 @@ Rectangle {
                 placeholderText: (parent.width > 0) ? "minimum Y" : ""
                 height: 50
                 selectByMouse: true
+                onFocusChanged: ensureVisible(textInput4)
                 color: fontColor
                 background: Rectangle {
                     id: backRect4
@@ -268,6 +297,7 @@ Rectangle {
                 placeholderText: (parent.width > 0) ? "maximum Y" : ""
                 height: 50
                 selectByMouse: true
+                onFocusChanged: ensureVisible(textInput5)
                 color: fontColor
                 background: Rectangle {
                     id: backRect5
@@ -347,20 +377,20 @@ Rectangle {
         active = true
     }
 
-//    function startPinch() {
-//        stopAudio()
-//        functionController.startPinch()
-//    }
+    //    function startPinch() {
+    //        stopAudio()
+    //        functionController.startPinch()
+    //    }
 
-//    function handlePinch(scale) {
-//        functionController.pinch(scale)
-//    }
+    //    function handlePinch(scale) {
+    //        functionController.pinch(scale)
+    //    }
 
-//    function pinchFinished() {
-//        if (textInput.text !== "") {
-//            active = true
-//        }
-//    }
+    //    function pinchFinished() {
+    //        if (textInput.text !== "") {
+    //            active = true
+    //        }
+    //    }
 
     function calculate () {
         stopAudio()
