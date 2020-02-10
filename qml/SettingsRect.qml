@@ -15,7 +15,7 @@ Rectangle {
 
     Keys.onPressed: {
         if (event.key === Qt.Key_F2) {
-            startSoundButtonClicked()
+            controlsRect.startSoundButtonClicked()
             event.accepted = true;
         } else if (event.key === Qt.Key_F11) {
             graphRect.decStep()
@@ -96,6 +96,7 @@ Rectangle {
         id: colorDialog
         property var request
         onAccepted: {
+            controlsRect.stopAudio()
             if (request === "line color") {
                 parameters.lineColor = color
                 lineColor = color

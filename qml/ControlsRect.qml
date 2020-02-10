@@ -31,10 +31,10 @@ Rectangle {
             graphRect.decStep()
         } else if (event.key === Qt.Key_F12) {
             graphRect.incStep()
-        } else if (event.key === Qt.Key_F7) {
-            graphRect.moveBackward()
-        } else if (event.key === Qt.Key_F8) {
-            graphRect.moveForward()
+//        } else if (event.key === Qt.Key_F7) {
+            //graphRect.moveBackward()
+//        } else if (event.key === Qt.Key_F8) {
+//            graphRect.moveForward()
         } else if (event.key === Qt.Key_F9) {
             graphRect.previousPoint()
         } else if (event.key === Qt.Key_F10) {
@@ -43,11 +43,13 @@ Rectangle {
             graphRect.sayXCoordinate()
         } else if (event.key === Qt.Key_F5) {
             graphRect.sayYCoordinate()
-        } // else if (event.key === Qt.Key_Control) {
-        //            pointsInterest.previousPoint()
-        //        } else if (event.key === Qt.Key_Alt) {
-        //            pointsInterest.nextPoint()
-        //        }
+        } else if (event.key === Qt.Key_F7) {
+            //pointsInterest.previousPoint()
+            functionController.previousPointInterest()
+        } else if (event.key === Qt.Key_F8) {
+//            pointsInterest.nextPoint()
+            functionController.nextPointInterest()
+        }
     }
 
     ControlsTitleBar {

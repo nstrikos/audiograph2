@@ -13,6 +13,7 @@
 
 #include "function/functionController.h"
 #include "function/functionDisplayView.h"
+#include "function/functionPointView.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,8 +21,10 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
     qmlRegisterType<Curve>("Curve", 1, 0, "Curve");
-    qmlRegisterType<CurveMovingPoint>("CurveMovingPoint", 1, 0, "CurveMovingPoint");
+//    qmlRegisterType<CurveMovingPoint>("CurveMovingPoint", 1, 0, "CurveMovingPoint");
     qmlRegisterType<FunctionDisplayView>("DisplayView", 1, 0, "DisplayView");
+    qmlRegisterType<FunctionPointView>("PointView", 1, 0, "PointView");
+
 
     //Function myfunction;
     FunctionController functionController;
@@ -48,16 +51,18 @@ int main(int argc, char *argv[])
     engine.load(url);
 
     QObject *rootObject = engine.rootObjects().first();
-    QObject *qmlObject = rootObject->findChild<QObject*>("curveMovingPoint");
+    QObject *qmlObject = rootObject->findChild<QObject*>("pointView");
     QObject *qmlObject2 = rootObject->findChild<QObject*>("displayView");
 
     //CurveMovingPoint *item = static_cast<CurveMovingPoint*>(qmlObject);
+    FunctionPointView *pointView = static_cast<FunctionPointView*>(qmlObject);
     FunctionDisplayView *displayView = static_cast<FunctionDisplayView*>(qmlObject2);
     //PointsInterest pointsInterest(myfunction, audioNotes, *item, parameters);
     //engine.rootContext()->setContextProperty("pointsInterest", &pointsInterest);
 //    engine.rootContext()->setContextProperty("pointsInterest", &pointsInterest);
 
     functionController.setDisplayView(displayView);
+    functionController.setPointView(pointView);
 
     return app.exec();
 }

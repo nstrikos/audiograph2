@@ -29,6 +29,7 @@ SOURCES += \
         function/functionDisplayView.cpp \
         function/functionDisplayViewInterface.cpp \
         function/functionModel.cpp \
+        function/functionPointView.cpp \
         function/functionZoomer.cpp \
         function/pinchHandler.cpp \
         generator.cpp \
@@ -85,6 +86,7 @@ HEADERS += \
     function/functionDisplayView.h \
     function/functionDisplayViewInterface.h \
     function/functionModel.h \
+    function/functionPointView.h \
     function/functionZoomer.h \
     function/pinchHandler.h \
     generator.h \

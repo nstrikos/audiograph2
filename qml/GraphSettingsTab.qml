@@ -694,7 +694,7 @@ Rectangle {
                     parameters.reset()
                     lineColor = parameters.lineColor
                     graphRect.curveColor = parameters.lineColor
-                    backGroundColorRect.color = parameters.backgroundColor
+                    backgroundColor = parameters.backgroundColor
                     graphRect.curveWidth = parameters.lineWidth
                     lineWidthSpinbox.value = parameters.lineWidth
                     highlightColor = parameters.highlightColor
