@@ -6,6 +6,7 @@
 #include <QTimer>
 #include "function/functionPointView.h"
 #include "function/functionModel.h"
+#include "function/functionDescription.h"
 #include <audionotes.h>
 #include <parameters.h>
 
@@ -14,6 +15,7 @@ class PointsInterest : public QObject
     Q_OBJECT
 public:
     explicit PointsInterest(QObject *parent = nullptr);
+    ~PointsInterest();
     void nextPoint(FunctionModel *functionModel,
                    AudioNotes *audioNotes,
                    FunctionPointView *pointView,
@@ -39,6 +41,8 @@ private:
 //    CurveMovingPoint& m_curveMovingPoint;
     FunctionPointView *m_pointView;
     FunctionModel *m_model;
+    FunctionDescription *m_funcDescription;
+    QVector<InterestingPoint> m_points;
 //    Function& m_function;
 //    AudioNotes& m_audioNotes;
     AudioNotes *m_audioNotes;

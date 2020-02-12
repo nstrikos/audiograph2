@@ -103,6 +103,8 @@ private:
     QSGNode *updatePaintNode(QSGNode *, UpdatePaintNodeData *);
     QTimer timer;
 
+    QTimer timer2;
+
 
 
     int m_mouseX;

@@ -72,7 +72,7 @@ private:
     QVector<Point> m_linePoints;
     QVector<Point> m_points;
 
-    QString m_error;
+    QString m_error;    
 };
 
 #endif // FUNCTIONMODEL_H

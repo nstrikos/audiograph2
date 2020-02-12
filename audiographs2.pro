@@ -26,6 +26,7 @@ SOURCES += \
         function.cpp \
         function/dragHandler.cpp \
         function/functionController.cpp \
+        function/functionDescription.cpp \
         function/functionDisplayView.cpp \
         function/functionDisplayViewInterface.cpp \
         function/functionModel.cpp \
@@ -83,6 +84,7 @@ HEADERS += \
     function.h \
     function/dragHandler.h \
     function/functionController.h \
+    function/functionDescription.h \
     function/functionDisplayView.h \
     function/functionDisplayViewInterface.h \
     function/functionModel.h \

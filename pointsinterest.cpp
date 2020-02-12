@@ -2,6 +2,8 @@
 
 PointsInterest::PointsInterest(QObject *parent) : QObject(parent)
 {
+    m_funcDescription = nullptr;
+
     m_currentPoint = 0;
     m_pointInterest = 0;
     m_forward = true;
@@ -21,21 +23,36 @@ PointsInterest::PointsInterest(QObject *parent) : QObject(parent)
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(timerExpired()));
 }
 
+PointsInterest::~PointsInterest()
+{
+    if (m_funcDescription != nullptr)
+        delete m_funcDescription;
+}
+
 void PointsInterest::nextPoint(FunctionModel *functionModel,
                                AudioNotes *audioNotes,
                                FunctionPointView *pointView,
                                Parameters *parameters)
 {
+    if (m_funcDescription == nullptr)
+        m_funcDescription = new FunctionDescription;
+
+
+
     m_model = functionModel;
+
+    m_points.clear();
+    m_points = m_funcDescription->points(m_model);
+
     m_audioNotes = audioNotes;
     m_pointView = pointView;
     m_parameters = parameters;
 
     m_forward = true;
     m_pointInterest++;
-    if (m_pointInterest >= m_list.size())
-        m_pointInterest = m_list.size() - 1;
-    m_timer.setInterval(1);
+    if (m_pointInterest >= m_points.size())
+        m_pointInterest = m_points.size() - 1;
+    m_timer.setInterval(5);
     m_timer.start();
 }
 
@@ -44,7 +61,15 @@ void PointsInterest::previousPoint(FunctionModel *functionModel,
                                    FunctionPointView *pointView,
                                    Parameters *parameters)
 {
+    if (m_funcDescription == nullptr)
+        m_funcDescription = new FunctionDescription;
+
     m_model = functionModel;
+
+    m_points.clear();
+    m_points = m_funcDescription->points(m_model);
+
+
     m_audioNotes = audioNotes;
     m_pointView = pointView;
     m_parameters = parameters;
@@ -53,7 +78,7 @@ void PointsInterest::previousPoint(FunctionModel *functionModel,
     m_pointInterest--;
     if (m_pointInterest < 0)
         m_pointInterest = 0;
-    m_timer.setInterval(1);
+    m_timer.setInterval(5);
     m_timer.start();
 }
 
@@ -69,8 +94,8 @@ void PointsInterest::timerExpired()
         return;
 
     if (m_forward) {
-        m_currentPoint++;
-        if (m_currentPoint >= m_list.at(m_pointInterest)) {
+        m_currentPoint += 1;
+        if (m_currentPoint >= m_points[m_pointInterest].x) {
             m_timer.stop();
         } else {
 //            m_curveMovingPoint.setPoint(&m_function, m_currentPoint);
@@ -80,8 +105,8 @@ void PointsInterest::timerExpired()
 //            emit drawPoint(m_currentPoint);
         }
     } else {
-        m_currentPoint--;
-        if (m_currentPoint <= m_list.at(m_pointInterest)) {
+        m_currentPoint -= 1;
+        if (m_currentPoint <= m_points[m_pointInterest].x) {
             m_timer.stop();
         } else {
             m_pointView->setPoint(m_model, m_currentPoint);
