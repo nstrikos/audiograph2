@@ -12,6 +12,7 @@
 #include "functionZoomer.h"
 #include "pinchHandler.h"
 #include "pointsinterest.h"
+#include "currentPoint.h"
 
 class FunctionController : public QObject
 {
@@ -79,8 +80,8 @@ private:
     FunctionZoomer *m_zoomer;
     DragHandler *m_dragHandler;
     PinchHandler *m_pinchHandler;
-    int m_currentPoint;
     PointsInterest *m_pointsInterest;
+    CurrentPoint *m_currentPoint;
 };
 
 #endif // FUNCTIONCONTROLLER_H

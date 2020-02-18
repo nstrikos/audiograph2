@@ -2,6 +2,8 @@
 #include "math.h"
 #include "constants.h"
 
+#include <QDebug>
+
 AudioNotes::AudioNotes()
 {
     m_model = nullptr;

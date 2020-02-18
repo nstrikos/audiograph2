@@ -9,6 +9,7 @@
 #include "function/functionDescription.h"
 #include <audionotes.h>
 #include <parameters.h>
+#include "function/currentPoint.h"
 
 class PointsInterest : public QObject
 {
@@ -16,15 +17,19 @@ class PointsInterest : public QObject
 public:
     explicit PointsInterest(QObject *parent = nullptr);
     ~PointsInterest();
-    void nextPoint(FunctionModel *functionModel,
-                   AudioNotes *audioNotes,
+    void nextPoint(AudioNotes *audioNotes,
+                   CurrentPoint *currentPoint,
                    FunctionPointView *pointView,
                    Parameters *parameters);
 
-    void previousPoint(FunctionModel *functionModel,
-                       AudioNotes *audioNotes,
+    void previousPoint(AudioNotes *audioNotes,
+                       CurrentPoint *currentPoint,
                        FunctionPointView *pointView,
                        Parameters *parameters);
+
+    void stop();
+
+    void setModel(FunctionModel *model);
 
 signals:
     void drawPoint(int point);
@@ -33,7 +38,7 @@ private slots:
     void timerExpired();
 
 private:
-    int m_currentPoint;
+//    int m_currentPoint;
     int m_pointInterest;
     QVector<int> m_list;
     QTimer m_timer;
@@ -47,7 +52,9 @@ private:
 //    AudioNotes& m_audioNotes;
     AudioNotes *m_audioNotes;
     Parameters *m_parameters;
+    CurrentPoint *m_currentPoint;
 //    Parameters& m_parameters;
+    bool m_isUpdated;
 };
 
 #endif // POINTSINTEREST_H

@@ -4,6 +4,7 @@
 
 #include <QtQuick/QQuickItem>
 #include "functionDisplayViewInterface.h"
+#include "currentPoint.h"
 #include <QTimer>
 
 class FunctionPointView : public QQuickItem, public FunctionDisplayViewInterface
@@ -17,6 +18,7 @@ class FunctionPointView : public QQuickItem, public FunctionDisplayViewInterface
 public:
     FunctionPointView(QQuickItem *parent = 0);
     ~FunctionPointView();
+    void setCurrentPoint(CurrentPoint *point);
 
     Q_INVOKABLE void drawPoint(FunctionModel *model, int duration);
     Q_INVOKABLE void stopPoint();
@@ -131,6 +133,7 @@ private:
     QColor m_color;
     QColor m_newColor;
     int m_size;
+    CurrentPoint *m_currentPoint;
 };
 
 #endif // FUNCTIONPOINTVIEW_H

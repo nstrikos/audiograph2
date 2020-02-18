@@ -24,6 +24,7 @@ SOURCES += \
         fparser/fparser.cc \
         fparser/fpoptimizer.cc \
         function.cpp \
+        function/currentPoint.cpp \
         function/dragHandler.cpp \
         function/functionController.cpp \
         function/functionDescription.cpp \
@@ -82,6 +83,7 @@ HEADERS += \
     fparser/fparser_mpfr.hh \
     fparser/fpconfig.hh \
     function.h \
+    function/currentPoint.h \
     function/dragHandler.h \
     function/functionController.h \
     function/functionDescription.h \

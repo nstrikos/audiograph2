@@ -10,11 +10,11 @@ FunctionPointView::FunctionPointView(QQuickItem *parent)
 {
     setFlag(ItemHasContents, true);
 
-//    timer.setTimerType(Qt::PreciseTimer);
-    timer.setInterval(50);
-    connect(&timer, SIGNAL(timeout()), this, SLOT(timerExpired()));
-    m_X = -20;
-    m_Y = -20;
+    //    timer.setTimerType(Qt::PreciseTimer);
+    //    timer.setInterval(50);
+    //    connect(&timer, SIGNAL(timeout()), this, SLOT(timerExpired()));
+    //    m_X = -20;
+    //    m_Y = -20;
     m_newColor = m_color;
 
     timer2.setInterval(50);
@@ -27,9 +27,14 @@ FunctionPointView::~FunctionPointView()
 
 }
 
+void FunctionPointView::setCurrentPoint(CurrentPoint *point)
+{
+    m_currentPoint = point;
+}
+
 void FunctionPointView::drawPoint(FunctionModel *model, int duration)
 {
-//    m_function = function;
+    //    m_function = function;
     m_model = model;
     if (m_model->lineSize() > 0) {
         m_duration = duration * 1000;
@@ -48,7 +53,7 @@ QSGNode *FunctionPointView::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeDat
         node = new QSGGeometryNode;
 
         geometry = new QSGGeometry(QSGGeometry::defaultAttributes_Point2D(), POINT_SEGMENTS);
-//        geometry->setLineWidth(2);
+        //        geometry->setLineWidth(2);
         geometry->setDrawingMode(QSGGeometry::DrawTriangleFan);
         node->setGeometry(geometry);
         node->setFlag(QSGNode::OwnsGeometry);
@@ -61,13 +66,13 @@ QSGNode *FunctionPointView::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeDat
         node = static_cast<QSGGeometryNode *>(oldNode);
         geometry = node->geometry();
         geometry->allocate(POINT_SEGMENTS);
-//        if (m_newColor != m_color) {
-//            QSGFlatColorMaterial *material = new QSGFlatColorMaterial;
-//            material->setColor(m_color);
-//            node->setMaterial(material);
-//            node->setFlag(QSGNode::OwnsMaterial);
-//            node->markDirty(QSGNode::DirtyMaterial);
-//        }
+        //        if (m_newColor != m_color) {
+        //            QSGFlatColorMaterial *material = new QSGFlatColorMaterial;
+        //            material->setColor(m_color);
+        //            node->setMaterial(material);
+        //            node->setFlag(QSGNode::OwnsMaterial);
+        //            node->markDirty(QSGNode::DirtyMaterial);
+        //        }
     }
 
     QSGGeometry::Point2D *lineVertices = geometry->vertexDataAsPoint2D();
@@ -79,10 +84,13 @@ QSGNode *FunctionPointView::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeDat
         float x = r * cos(theta);
         float y = r * sin(theta);
 
-        lineVertices[ii].set(x + m_X, y + m_Y);//output vertex
+        if (m_currentPoint != nullptr)
+            lineVertices[ii].set(x + m_currentPoint->X(), y + m_currentPoint->Y());//output vertex
+        else
+            lineVertices[ii].set(-20, -20);//output vertex
     }
-//    lineVertices[0].set(m_X, 0);
-//    lineVertices[1].set(m_X, height());
+    //    lineVertices[0].set(m_X, 0);
+    //    lineVertices[1].set(m_X, height());
 
     node->markDirty(QSGNode::DirtyGeometry);
     m_newColor = m_color;
@@ -128,7 +136,7 @@ void FunctionPointView::timerExpired()
     m_X = m_points.at(x).x;
     m_Y = m_points.at(x).y;
 
-//    update();
+    //    update();
 }
 
 double FunctionPointView::slowPoint() const
@@ -174,7 +182,7 @@ void FunctionPointView::setMouseX(FunctionModel *model, int mouseX)
 
     m_X = x;
     m_Y = y;
-//    update();
+    //    update();
 }
 
 void FunctionPointView::setPoint(FunctionModel *model, int point)
@@ -200,7 +208,7 @@ void FunctionPointView::setPoint(FunctionModel *model, int point)
 
     m_X = x;
     m_Y = y;
-//    update();
+    //    update();
 }
 
 void FunctionPointView::clearMouse()
