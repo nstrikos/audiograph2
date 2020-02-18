@@ -13,6 +13,8 @@ public:
 
     double X() const;
     double Y() const;
+    double point() const;
+
     void setMouseX(FunctionModel *model, double width, double height, int mouseX);
     void nextPoint(FunctionModel *model, double width, double height);
     void previousPoint(FunctionModel *model, double width, double height);
@@ -20,24 +22,18 @@ public:
     void decPoint(FunctionModel *model, double width, double height);
     void update(FunctionModel *model, double width, double height);
     void startMoving(FunctionModel *model, double width, double height, int duration);
-    void reset();
     void stop();
-
-    double point() const;
-
-signals:
-    void finished();
 
 private slots:
     void timerExpired();
 
 private:
+    void setPoint(FunctionModel *model, double width, double height, int point);
     double m_X;
     double m_Y;
     double m_point;
     QTimer timer;
     int m_timeElapsed;
-    void setPoint(FunctionModel *model, double width, double height, int point);
     int m_duration;
     FunctionModel *m_model;
     double m_width;

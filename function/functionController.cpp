@@ -102,7 +102,6 @@ void FunctionController::setDisplayView(FunctionDisplayView *view)
 void FunctionController::setPointView(FunctionPointView *pointView)
 {
     m_pointView = pointView;
-    connect(m_pointView, SIGNAL(finished()), this, SIGNAL(movingPointFinished()));
     m_pointView->setCurrentPoint(m_currentPoint);
 }
 
@@ -181,10 +180,6 @@ void FunctionController::pinch(double scale)
 
 void FunctionController::previousPoint()
 {
-    stopAudio();
-    if (m_pointsInterest != nullptr)
-        m_pointsInterest->stop();
-
     if (m_pointView == nullptr)
         return;
     if (m_model == nullptr)
@@ -204,10 +199,6 @@ void FunctionController::previousPoint()
 
 void FunctionController::nextPoint()
 {
-    stopAudio();
-    if (m_pointsInterest != nullptr)
-        m_pointsInterest->stop();
-
     if (m_pointView == nullptr)
         return;
     if (m_model == nullptr)
@@ -225,37 +216,8 @@ void FunctionController::nextPoint()
                           m_parameters->useNotes());
 }
 
-void FunctionController::setPoint(int point)
-{
-    stopAudio();
-    if (m_pointsInterest != nullptr)
-        m_pointsInterest->stop();
-
-    int m_point = point;
-    if (m_pointView == nullptr)
-        return;
-    if (m_model == nullptr)
-        return;
-    if (m_audioNotes == nullptr) {
-        m_audioNotes = new AudioNotes();
-    }
-
-    if (point < 0)
-        m_point = 0;
-    if (point >= m_model->lineSize())
-        m_point = m_model->lineSize() - 1;
-
-    m_pointView->setPoint(m_model, m_point);
-    m_audioNotes->setNote(m_model,
-                          m_point,
-                          m_parameters->minFreq(),
-                          m_parameters->maxFreq(),
-                          m_parameters->useNotes());
-}
-
 void FunctionController::mousePoint(int point)
 {
-    stopAudio();
     if (m_pointsInterest != nullptr)
         m_pointsInterest->stop();
 
@@ -276,8 +238,6 @@ void FunctionController::mousePoint(int point)
                           m_parameters->minFreq(),
                           m_parameters->maxFreq(),
                           m_parameters->useNotes());
-    qDebug() << point;
-
 }
 
 void FunctionController::nextPointInterest()
@@ -371,8 +331,7 @@ void FunctionController::stopAudio()
         m_audio->stop();
     if (m_audioNotes != nullptr)
         m_audioNotes->stopNotes();
-    if (m_pointView != nullptr)
-        m_pointView->stopPoint();
+
    m_currentPoint->stop();
 }
 

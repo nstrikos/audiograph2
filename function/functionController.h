@@ -11,7 +11,7 @@
 #include "dragHandler.h"
 #include "functionZoomer.h"
 #include "pinchHandler.h"
-#include "pointsinterest.h"
+#include "pointInterest.h"
 #include "currentPoint.h"
 
 class FunctionController : public QObject

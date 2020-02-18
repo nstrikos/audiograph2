@@ -1,5 +1,5 @@
-#ifndef POINTSINTEREST_H
-#define POINTSINTEREST_H
+#ifndef POINTINTEREST_H
+#define POINTINTEREST_H
 
 #include <QObject>
 #include <QVector>
@@ -31,30 +31,26 @@ public:
 
     void setModel(FunctionModel *model);
 
-signals:
-    void drawPoint(int point);
-
 private slots:
     void timerExpired();
 
 private:
-//    int m_currentPoint;
     int m_pointInterest;
-    QVector<int> m_list;
     QTimer m_timer;
     bool m_forward;
-//    CurveMovingPoint& m_curveMovingPoint;
     FunctionPointView *m_pointView;
     FunctionModel *m_model;
     FunctionDescription *m_funcDescription;
     QVector<InterestingPoint> m_points;
-//    Function& m_function;
-//    AudioNotes& m_audioNotes;
     AudioNotes *m_audioNotes;
     Parameters *m_parameters;
     CurrentPoint *m_currentPoint;
-//    Parameters& m_parameters;
     bool m_isUpdated;
+    int getNextPointInterest();
+    void start(AudioNotes *audioNotes,
+               CurrentPoint *currentPoint,
+               FunctionPointView *pointView,
+               Parameters *parameters);
 };
 
 #endif // POINTSINTEREST_H

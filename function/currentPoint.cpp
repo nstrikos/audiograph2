@@ -22,6 +22,11 @@ double CurrentPoint::Y() const
     return m_Y;
 }
 
+double CurrentPoint::point() const
+{
+    return m_point;
+}
+
 void CurrentPoint::setMouseX(FunctionModel *model, double width, double height, int mouseX)
 {
     int m_mouseX = mouseX;
@@ -119,22 +124,11 @@ void CurrentPoint::startMoving(FunctionModel *model, double width, double height
     timer.start();
 }
 
-void CurrentPoint::reset()
-{
-    m_point = 0;
-}
-
-double CurrentPoint::point() const
-{
-    return m_point;
-}
-
 void CurrentPoint::timerExpired()
 {
     m_timeElapsed += timer.interval();
     if (m_timeElapsed >= m_duration) {
         stop();
-        emit finished();
         return;
     }
 

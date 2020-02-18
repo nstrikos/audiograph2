@@ -9,7 +9,6 @@
 #include "audio.h"
 #include "audionotes.h"
 #include "texttospeech.h"
-#include "pointsinterest.h"
 
 #include "function/functionController.h"
 #include "function/functionDisplayView.h"

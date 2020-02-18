@@ -34,6 +34,7 @@ SOURCES += \
         function/functionPointView.cpp \
         function/functionZoomer.cpp \
         function/pinchHandler.cpp \
+        function/pointInterest.cpp \
         generator.cpp \
         generator/genclipper.cpp \
         generator/genfunctioncalculator.cpp \
@@ -47,7 +48,6 @@ SOURCES += \
         main.cpp \
         parameters.cpp \
         point.cpp \
-        pointsinterest.cpp \
         texttospeech.cpp
 
 RESOURCES += qml.qrc
@@ -93,6 +93,7 @@ HEADERS += \
     function/functionPointView.h \
     function/functionZoomer.h \
     function/pinchHandler.h \
+    function/pointInterest.h \
     generator.h \
     generator/genclipper.h \
     generator/genfunctioncalculator.h \
@@ -105,5 +106,4 @@ HEADERS += \
     generator/gensum.h \
     parameters.h \
     point.h \
-    pointsinterest.h \
     texttospeech.h
