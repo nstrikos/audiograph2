@@ -37,11 +37,12 @@ void AudioPoints::stopAudio()
     //    setFreq(0);
 }
 
-void AudioPoints::setFreq(double freq, bool useNotes, bool n)
+void AudioPoints::setFreq(double freq, bool useNotes, bool n, double ratio)
 {
     xx = freq;
     m_n = n;
     m_n = false;
+    m_ratio = ratio;
 
     if (useNotes) {
         if ( xx < 110.0)
@@ -221,7 +222,7 @@ void AudioPoints::writeMoreData()
 
     while (chunks){
 
-        for (int sample=0; sample<periodSize/2; sample++) {
+        for (int sample=0; sample<periodSize/2; sample += 2) {
             m_sum += xx/DataFrequencyHz;
             m_sum2 += xx2/DataFrequencyHz;
             m_phi = m_sum * 2 * M_PI;
@@ -336,7 +337,8 @@ void AudioPoints::writeMoreData()
             float x_x = 1.0 * x + 0.0 * x2 + 0.0 * x3;
 
             signed short value = static_cast<signed short>(x_x * 32767);
-            aubuffer[sample] = value;
+            aubuffer[sample] = value * (1 - m_ratio);
+            aubuffer[sample + 1] = value * m_ratio ;
         }
 
         auIObuffer->write((const char*) &aubuffer[0], periodSize);

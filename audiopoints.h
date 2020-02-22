@@ -12,9 +12,9 @@ const int DataFrequencyHz = 48000;
 #ifdef Q_OS_WIN
 const int BufferSize   = 16000;
 #else
-const int BufferSize = 6000;
+const int BufferSize = 16000;
 #endif
-const int ChannelCount = 1;
+const int ChannelCount = 2;
 const int SampleSize = 16;
 const int TimerMSeconds = 5;
 const int duration = 1000;
@@ -29,7 +29,7 @@ public:
 public:
     void startAudio();
     Q_INVOKABLE void stopAudio();
-    Q_INVOKABLE void setFreq(double freq, bool useNotes, bool n);
+    Q_INVOKABLE void setFreq(double freq, bool useNotes, bool n, double ratio);
 
     Q_PROPERTY(double f0 READ f0 WRITE setF0 NOTIFY f0Changed)
     Q_PROPERTY(double f1 READ f1 WRITE setF1 NOTIFY f1Changed)
@@ -113,6 +113,7 @@ private:
 
     bool m_n;
     int m_time;
+    double m_ratio;
 
 signals:
     void f0Changed();

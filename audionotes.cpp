@@ -48,6 +48,8 @@ void AudioNotes::setNote(FunctionModel *model,
     if (m_mouseX > width)
         m_mouseX = width;
 
+    double ratio = (double) m_mouseX / width;
+
     int i = round((1.0 * m_mouseX / width) * LINE_POINTS);
     if (i < 0)
         i = 0;
@@ -76,9 +78,9 @@ void AudioNotes::setNote(FunctionModel *model,
         else
             n = false;
         freq = a * l + b;
-        m_audioPoints->setFreq(freq, useNotes, n);
+        m_audioPoints->setFreq(freq, useNotes, n, ratio);
     } else {
-        m_audioPoints->setFreq((m_fmax - m_fmin) / 2, useNotes, n);
+        m_audioPoints->setFreq((m_fmax - m_fmin) / 2, useNotes, n, ratio);
     }
 }
 
@@ -102,6 +104,8 @@ void AudioNotes::setNote(FunctionModel *model, int currentPoint, int fmin, int f
     if (min < 10 * m_model->minY())
         min = 10 * m_model->minY();
 
+    double ratio = (double) m_currentPoint / LINE_POINTS;
+
     double a;
     double b;
     double l;
@@ -116,9 +120,9 @@ void AudioNotes::setNote(FunctionModel *model, int currentPoint, int fmin, int f
         else
             n = false;
         freq = a * l + b;
-        m_audioPoints->setFreq(freq, useNotes, n);
+        m_audioPoints->setFreq(freq, useNotes, n, ratio);
     } else {
-        m_audioPoints->setFreq((m_fmax - m_fmin) / 2, useNotes, n);
+        m_audioPoints->setFreq((m_fmax - m_fmin) / 2, useNotes, n, ratio);
     }
 }
 
@@ -165,8 +169,8 @@ void AudioNotes::timerExpired()
         else
             n = false;
         freq = a * l + b;
-        m_audioPoints->setFreq(freq, true, n);
+        m_audioPoints->setFreq(freq, true, n, cx);
     } else {
-        m_audioPoints->setFreq((m_fmax - m_fmin) / 2, true, n);
+        m_audioPoints->setFreq((m_fmax - m_fmin) / 2, true, n, cx);
     }
 }

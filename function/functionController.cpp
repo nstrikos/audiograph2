@@ -218,8 +218,8 @@ void FunctionController::nextPoint()
 
 void FunctionController::mousePoint(int point)
 {
-    if (m_pointsInterest != nullptr)
-        m_pointsInterest->stop();
+//    if (m_pointsInterest != nullptr)
+//        m_pointsInterest->stop();
 
     if (m_pointView == nullptr)
         return;
