@@ -24,6 +24,11 @@ public:
     void startMoving(FunctionModel *model, double width, double height, int duration);
     void stop();
 
+    void incStep();
+    void decStep();
+
+    int step() const;
+
 private slots:
     void timerExpired();
 
@@ -32,6 +37,7 @@ private:
     double m_X;
     double m_Y;
     double m_point;
+    int m_step;
     QTimer timer;
     int m_timeElapsed;
     int m_duration;

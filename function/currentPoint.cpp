@@ -7,6 +7,7 @@ CurrentPoint::CurrentPoint()
     m_point = 0;
     m_X = -20;
     m_Y = -20;
+    m_step = 10;
     timer.setTimerType(Qt::PreciseTimer);
     timer.setInterval(50);
     connect(&timer, SIGNAL(timeout()), this, SLOT(timerExpired()));
@@ -60,7 +61,7 @@ void CurrentPoint::setMouseX(FunctionModel *model, double width, double height, 
 
 void CurrentPoint::nextPoint(FunctionModel *model, double width, double height)
 {
-    m_point += 10;
+    m_point += m_step;
 
     if (m_point >= LINE_POINTS)
         m_point = LINE_POINTS - 1;
@@ -70,7 +71,7 @@ void CurrentPoint::nextPoint(FunctionModel *model, double width, double height)
 
 void CurrentPoint::previousPoint(FunctionModel *model, double width, double height)
 {
-    m_point -= 10;
+    m_point -= m_step;
 
     if (m_point < 0)
         m_point = 0;
@@ -169,9 +170,35 @@ void CurrentPoint::setPoint(FunctionModel *model, double width, double height, i
     m_Y = y;
 }
 
+int CurrentPoint::step() const
+{
+    return m_step;
+}
+
 void CurrentPoint::stop()
 {
     timer.stop();
     m_X = -20;
     m_Y = -20;
+}
+
+void CurrentPoint::incStep()
+{
+    if (m_step == 1) {
+        m_step = 10;
+        return;
+    }
+
+    m_step += 10;
+    m_step = round(m_step);
+    if (m_step > 100)
+        m_step = 100;
+}
+
+void CurrentPoint::decStep()
+{
+    m_step -= 10;
+    m_step = round(m_step);
+    if (m_step < 1)
+        m_step = 1;
 }

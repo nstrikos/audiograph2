@@ -13,6 +13,7 @@
 #include "pinchHandler.h"
 #include "pointInterest.h"
 #include "currentPoint.h"
+#include "texttospeech.h"
 
 class FunctionController : public QObject
 {
@@ -42,6 +43,10 @@ public:
     Q_INVOKABLE void mousePoint(int point);
     Q_INVOKABLE void nextPointInterest();
     Q_INVOKABLE void previousPointInterest();
+    Q_INVOKABLE void incStep();
+    Q_INVOKABLE void decStep();
+    Q_INVOKABLE void sayXCoordinate();
+    Q_INVOKABLE void sayYCoordinate();
 
     Q_INVOKABLE void audio();
     Q_INVOKABLE void stopAudio();
@@ -54,6 +59,8 @@ public:
     Q_INVOKABLE double maxY();
 
     void setParameters(Parameters *parameters);
+
+    void setTextToSpeech(TextToSpeech *textToSpeech);
 
 signals:
     void updateFinished();
@@ -82,6 +89,7 @@ private:
     PinchHandler *m_pinchHandler;
     PointsInterest *m_pointsInterest;
     CurrentPoint *m_currentPoint;
+    TextToSpeech *m_textToSpeech;
 };
 
 #endif // FUNCTIONCONTROLLER_H

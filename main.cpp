@@ -62,6 +62,7 @@ int main(int argc, char *argv[])
 
     functionController.setDisplayView(displayView);
     functionController.setPointView(pointView);
+    functionController.setTextToSpeech(&textToSpeech);
 
     return app.exec();
 }

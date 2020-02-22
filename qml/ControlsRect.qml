@@ -20,35 +20,27 @@ Rectangle {
         lightColor = parameters.invertTheme ? "yellow" : "blue"
     }
 
-
-
     focus: true
     Keys.onPressed: {
         if (event.key === Qt.Key_F2) {
             startSoundButtonClicked()
             event.accepted = true;
-        } else if (event.key === Qt.Key_F11) {
-            graphRect.decStep()
-        } else if (event.key === Qt.Key_F12) {
-            graphRect.incStep()
-//        } else if (event.key === Qt.Key_F7) {
-            //graphRect.moveBackward()
-//        } else if (event.key === Qt.Key_F8) {
-//            graphRect.moveForward()
-        } else if (event.key === Qt.Key_F9) {
-            graphRect.previousPoint()
-        } else if (event.key === Qt.Key_F10) {
-            graphRect.nextPoint()
+        } else if (event.key === Qt.Key_F3) {
+            functionController.sayXCoordinate()
         } else if (event.key === Qt.Key_F4) {
-            graphRect.sayXCoordinate()
-        } else if (event.key === Qt.Key_F5) {
-            graphRect.sayYCoordinate()
+            functionController.sayYCoordinate()
         } else if (event.key === Qt.Key_F7) {
-            //pointsInterest.previousPoint()
             functionController.previousPointInterest()
         } else if (event.key === Qt.Key_F8) {
-//            pointsInterest.nextPoint()
             functionController.nextPointInterest()
+        } else if (event.key === Qt.Key_F9) {
+            functionController.previousPoint()
+        } else if (event.key === Qt.Key_F10) {
+            functionController.nextPoint()
+        } else if (event.key === Qt.Key_F11) {
+            functionController.decStep()
+        } else if (event.key === Qt.Key_F12) {
+            functionController.incStep()
         }
     }
 

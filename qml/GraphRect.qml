@@ -39,46 +39,46 @@ Rectangle {
         sayYCoordinate()
     }
 
-    function sayXCoordinate() {
-        if (myfunction.isValid(currentPoint)) {
-            var x = Math.round(myfunction.x(currentPoint) * 100) / 100
-            textToSpeech.speak(x)
-        } else {
-            textToSpeech.speak(qsTr("out of function domain"))
-        }
+//    function sayXCoordinate() {
+//        if (myfunction.isValid(currentPoint)) {
+//            var x = Math.round(myfunction.x(currentPoint) * 100) / 100
+//            textToSpeech.speak(x)
+//        } else {
+//            textToSpeech.speak(qsTr("out of function domain"))
+//        }
 
-    }
+//    }
 
-    function sayYCoordinate() {
-        if (myfunction.isValid(currentPoint)) {
-            var y = Math.round(myfunction.y(currentPoint) * 100) / 100
-            textToSpeech.speak(y)
-        } else {
-            textToSpeech.speak(qsTr("not defined"))
-        }
-    }
+//    function sayYCoordinate() {
+//        if (myfunction.isValid(currentPoint)) {
+//            var y = Math.round(myfunction.y(currentPoint) * 100) / 100
+//            textToSpeech.speak(y)
+//        } else {
+//            textToSpeech.speak(qsTr("not defined"))
+//        }
+//    }
 
     function stopPoint() {
         audioNotes.stopNotes()
     }
 
-    function previousPoint() {
-        //currentPoint -= step;
-        //if (currentPoint < 0)
-        //    currentPoint = 0;
-        functionController.previousPoint()
-        //curveMovingPoint.setPoint(myfunction, currentPoint)
-        //audioNotes.setNote(myfunction, currentPoint, parameters.minFreq, parameters.maxFreq, parameters.useNotes)
-    }
+//    function previousPoint() {
+//        //currentPoint -= step;
+//        //if (currentPoint < 0)
+//        //    currentPoint = 0;
+//        functionController.previousPoint()
+//        //curveMovingPoint.setPoint(myfunction, currentPoint)
+//        //audioNotes.setNote(myfunction, currentPoint, parameters.minFreq, parameters.maxFreq, parameters.useNotes)
+//    }
 
-    function nextPoint() {
-        //currentPoint += step;
-        //if (currentPoint >= myfunction.lineSize())
-        //    currentPoint = myfunction.lineSize() - 1
-        functionController.nextPoint()
-        //curveMovingPoint.setPoint(myfunction, currentPoint)
-        //audioNotes.setNote(myfunction, currentPoint, parameters.minFreq, parameters.maxFreq, parameters.useNotes)
-    }
+//    function nextPoint() {
+//        //currentPoint += step;
+//        //if (currentPoint >= myfunction.lineSize())
+//        //    currentPoint = myfunction.lineSize() - 1
+//        functionController.nextPoint()
+//        //curveMovingPoint.setPoint(myfunction, currentPoint)
+//        //audioNotes.setNote(myfunction, currentPoint, parameters.minFreq, parameters.maxFreq, parameters.useNotes)
+//    }
 
     function incStep() {
         step *= 2

@@ -12,6 +12,7 @@ FunctionController::FunctionController(QObject *parent) : QObject(parent)
     m_pointView = nullptr;
     m_pointsInterest = nullptr;
     m_currentPoint = new CurrentPoint();
+    m_textToSpeech = nullptr;
 }
 
 FunctionController::~FunctionController()
@@ -218,8 +219,8 @@ void FunctionController::nextPoint()
 
 void FunctionController::mousePoint(int point)
 {
-//    if (m_pointsInterest != nullptr)
-//        m_pointsInterest->stop();
+    //    if (m_pointsInterest != nullptr)
+    //        m_pointsInterest->stop();
 
     if (m_pointView == nullptr)
         return;
@@ -265,6 +266,68 @@ void FunctionController::previousPointInterest()
 
     m_pointsInterest->previousPoint(m_audioNotes, m_currentPoint, m_pointView, m_parameters);
 }
+
+void FunctionController::incStep()
+{
+    if (m_currentPoint == nullptr)
+        return;
+    if (m_textToSpeech == nullptr)
+        return;
+    if (m_model == nullptr)
+        return;
+
+    m_currentPoint->incStep();
+
+    double realStep = (double) m_currentPoint->step() / m_model->lineSize() * (m_model->maxX() - m_model->minX());
+    m_textToSpeech->speak(tr("Step is ") + ":" + QString::number(realStep));
+}
+
+void FunctionController::decStep()
+{
+    if (m_currentPoint == nullptr)
+        return;
+    if (m_textToSpeech == nullptr)
+        return;
+    if (m_model == nullptr)
+        return;
+
+    m_currentPoint->decStep();
+
+    double realStep = (double) m_currentPoint->step() / m_model->lineSize() * (m_model->maxX() - m_model->minX());
+    m_textToSpeech->speak(tr("Step is ") + ":" + QString::number(realStep));
+}
+
+void FunctionController::sayXCoordinate()
+{
+    if (m_currentPoint == nullptr)
+        return;
+    if (m_textToSpeech == nullptr)
+        return;
+    if (m_model == nullptr)
+        return;
+
+    double x = m_model->x(m_currentPoint->point());
+
+    x = round( x * 100.0) / 100;
+    m_textToSpeech->speak(QString::number(x));
+}
+
+void FunctionController::sayYCoordinate()
+{
+    if (m_currentPoint == nullptr)
+        return;
+    if (m_textToSpeech == nullptr)
+        return;
+    if (m_model == nullptr)
+        return;
+
+    double y = m_model->y(m_currentPoint->point());
+
+    y = round( y * 100.0) / 100;
+
+    m_textToSpeech->speak(QString::number(y));
+}
+
 
 void FunctionController::audio()
 {
@@ -332,7 +395,7 @@ void FunctionController::stopAudio()
     if (m_audioNotes != nullptr)
         m_audioNotes->stopNotes();
 
-   m_currentPoint->stop();
+    m_currentPoint->stop();
 }
 
 bool FunctionController::validExpression()
@@ -352,6 +415,11 @@ void FunctionController::startNotes()
                              m_parameters->maxFreq(),
                              m_parameters->minFreq(),
                              m_parameters->duration());
+}
+
+void FunctionController::setTextToSpeech(TextToSpeech *textToSpeech)
+{
+    m_textToSpeech = textToSpeech;
 }
 
 double FunctionController::minX()
