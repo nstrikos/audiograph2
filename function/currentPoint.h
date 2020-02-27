@@ -23,6 +23,7 @@ public:
     void update(FunctionModel *model, double width, double height);
     void startMoving(FunctionModel *model, double width, double height, int duration);
     void stop();
+    void reset();
 
     void incStep();
     void decStep();

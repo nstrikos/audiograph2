@@ -5,6 +5,7 @@ AudioPoints::AudioPoints()
 {
     timer = nullptr;
     audioOutput = nullptr;
+    m_isPlaying = false;
 }
 
 AudioPoints::~AudioPoints()
@@ -43,9 +44,12 @@ void AudioPoints::setFreq(double freq, bool useNotes, bool n, double ratio)
     m_n = n;
     m_n = false;
     m_ratio = ratio;
+    m_isPlaying = true;
 
     if (useNotes) {
-        if ( xx < 110.0)
+        if ( xx == 0)
+            xx = 0;
+        else if ( xx < 110.0)
             xx = 110.0;
         else if ( xx >= 110.0 && xx <  116.54) // A2
             xx = 110;
@@ -211,9 +215,14 @@ void AudioPoints::initializeAudio()
 
 void AudioPoints::writeMoreData()
 {
-    m_time += 5;
-    if (m_time > duration)
+    if (m_isPlaying == false)
         return;
+    m_time += 5;
+    if (m_time > duration) {
+        m_isPlaying = false;
+        emit finished();
+        return;
+    }
     int emptyBytes = audioOutput->bytesFree();
     //if (emptyBytes > BufferSize) emptyBytes = BufferSize;// Check how many empty bytes are in the device buffer
     int periodSize = audioOutput->periodSize(); // Check the ideal chunk size, in bytes

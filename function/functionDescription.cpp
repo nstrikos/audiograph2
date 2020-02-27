@@ -21,6 +21,8 @@ QVector<InterestingPoint> FunctionDescription::points(FunctionModel *model)
         int prev = 0;
         int next = 0;
         for (int i = 0; i < model->lineSize(); i++) {
+            if (!model->isValid(i))
+                continue;
             prev = i - 1;
             if (prev < 0)
                 prev = 0;
@@ -28,19 +30,55 @@ QVector<InterestingPoint> FunctionDescription::points(FunctionModel *model)
             if (next >= model->lineSize())
                 next = model->lineSize() - 1;
 
-            if (model->y(i) > model->y(prev) && model->y(i) > model->y(next)) {
+            if (!model->isValid(prev) && !model->isValid(next)) {
                 tmp.x = i;
-                tmp.y = i;
-                tmp.label = "maximum";
+                tmp.y = model->y(i);
+                tmp.label = "edge";
                 m_points.append(tmp);
+            } else if (!model->isValid(prev) && model->isValid(next)) {
+                if (model->y(i) > model->y(next)) {
+                    tmp.x = i;
+                    tmp.y = model->y(i);
+                    tmp.label = "maximum";
+                    m_points.append(tmp);
+                }
+            } else if (model->isValid(prev) && !model->isValid(next)) {
+                if (model->y(i) > model->y(prev)) {
+                    tmp.x = i;
+                    tmp.y = model->y(i);
+                    tmp.label = "maximum";
+                    m_points.append(tmp);
+                }
+            } else if (model->isValid(prev) && model->isValid(next)) {
+                if (model->y(i) > model->y(prev) && model->y(i) > model->y(next)) {
+                    tmp.x = i;
+                    tmp.y = model->y(i);
+                    tmp.label = "maximum";
+                    m_points.append(tmp);
+                }
             }
 
-            if (model->y(i) < model->y(prev) && model->y(i) < model->y(next)) {
-                InterestingPoint tmp;
-                tmp.x = i;
-                tmp.y = i;
-                tmp.label = "minimum";
-                m_points.append(tmp);
+            if (!model->isValid(prev) && model->isValid(next)) {
+                if (model->y(i) < model->y(next)) {
+                    tmp.x = i;
+                    tmp.y = model->y(i);
+                    tmp.label = "minimum";
+                    m_points.append(tmp);
+                }
+            } else if (model->isValid(prev) && !model->isValid(next)) {
+                if (model->y(i) < model->y(prev)) {
+                    tmp.x = i;
+                    tmp.y = model->y(i);
+                    tmp.label = "minimum";
+                    m_points.append(tmp);
+                }
+            } else if (model->isValid(prev) && model->isValid(next)) {
+                if (model->y(i) < model->y(prev) && model->y(i) < model->y(next)) {
+                    tmp.x = i;
+                    tmp.y = model->y(i);
+                    tmp.label = "minimum";
+                    m_points.append(tmp);
+                }
             }
         }
 

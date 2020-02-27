@@ -71,6 +71,7 @@ signals:
 private slots:
     void updateDisplayView();
     void clearDisplayView();
+    void audioNotesFinished();
 
 private:
     void startAudio();

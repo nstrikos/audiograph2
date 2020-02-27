@@ -182,6 +182,11 @@ void CurrentPoint::stop()
     m_Y = -20;
 }
 
+void CurrentPoint::reset()
+{
+    m_point = 0;
+}
+
 void CurrentPoint::incStep()
 {
     if (m_step == 1) {

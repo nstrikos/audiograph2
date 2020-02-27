@@ -11,6 +11,7 @@ AudioNotes::AudioNotes()
     m_timer.setInterval(50);
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(timerExpired()));
     m_audioPoints = new AudioPoints();
+    connect(m_audioPoints, SIGNAL(finished()), this, SIGNAL(finished()));
 }
 
 AudioNotes::~AudioNotes()
@@ -78,7 +79,11 @@ void AudioNotes::setNote(FunctionModel *model,
         else
             n = false;
         freq = a * l + b;
-        m_audioPoints->setFreq(freq, useNotes, n, ratio);
+
+        if (m_model->isValid(i))
+            m_audioPoints->setFreq(freq, useNotes, n, ratio);
+        else
+            m_audioPoints->setFreq(0, useNotes, n, ratio);
     } else {
         m_audioPoints->setFreq((m_fmax - m_fmin) / 2, useNotes, n, ratio);
     }
@@ -120,7 +125,10 @@ void AudioNotes::setNote(FunctionModel *model, int currentPoint, int fmin, int f
         else
             n = false;
         freq = a * l + b;
-        m_audioPoints->setFreq(freq, useNotes, n, ratio);
+        if (m_model->isValid(m_currentPoint))
+            m_audioPoints->setFreq(freq, useNotes, n, ratio);
+        else
+            m_audioPoints->setFreq(0, useNotes, n, ratio);
     } else {
         m_audioPoints->setFreq((m_fmax - m_fmin) / 2, useNotes, n, ratio);
     }
@@ -169,7 +177,10 @@ void AudioNotes::timerExpired()
         else
             n = false;
         freq = a * l + b;
-        m_audioPoints->setFreq(freq, true, n, cx);
+        if (m_model->isValid(i))
+            m_audioPoints->setFreq(freq, true, n, cx);
+        else
+            m_audioPoints->setFreq(0, true, n, cx);
     } else {
         m_audioPoints->setFreq((m_fmax - m_fmin) / 2, true, n, cx);
     }

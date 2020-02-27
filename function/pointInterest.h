@@ -31,6 +31,11 @@ public:
 
     void setModel(FunctionModel *model);
 
+    double currentPointX();
+    double currentPointY();
+    QString currentPointLabel();
+
+
 private slots:
     void timerExpired();
 

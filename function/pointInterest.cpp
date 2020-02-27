@@ -53,7 +53,7 @@ void PointsInterest::start(AudioNotes *audioNotes, CurrentPoint *currentPoint, F
 
     m_pointInterest = getNextPointInterest();
 
-    m_timer.setInterval(1);
+    m_timer.setInterval(5);
     m_timer.start();
 }
 
@@ -136,4 +136,19 @@ void PointsInterest::setModel(FunctionModel *model)
 {
     m_model = model;
     m_isUpdated = false;
+}
+
+double PointsInterest::currentPointX()
+{
+    return m_model->x(m_points[m_pointInterest].x);
+}
+
+double PointsInterest::currentPointY()
+{
+    return m_points[m_pointInterest].y;
+}
+
+QString PointsInterest::currentPointLabel()
+{
+    return m_points[m_pointInterest].label;
 }

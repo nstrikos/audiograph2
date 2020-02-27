@@ -114,6 +114,7 @@ private:
     bool m_n;
     int m_time;
     double m_ratio;
+    bool m_isPlaying;
 
 signals:
     void f0Changed();
@@ -127,6 +128,7 @@ signals:
     void f8Changed();
     void f9Changed();
     void f10Changed();
+    void finished();
 };
 
 #endif // AUDIOPOINTS_H

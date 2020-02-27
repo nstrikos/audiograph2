@@ -30,6 +30,9 @@ public:
                              bool useNotes);
     Q_INVOKABLE void stopNotes();
 
+signals:
+    void finished();
+
 private slots:
     void timerExpired();
 
