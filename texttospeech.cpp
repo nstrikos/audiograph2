@@ -1,5 +1,7 @@
 #include "texttospeech.h"
 
+#include <QDebug>
+
 TextToSpeech::TextToSpeech(Parameters &parameters) : m_parameters(parameters)
 {
     m_volume = m_parameters.volume();
@@ -125,6 +127,7 @@ QStringList TextToSpeech::languages() const
 void TextToSpeech::speak(QString text)
 {
     m_speech->say(text);
+    qDebug() << text;
 }
 
 void TextToSpeech::stop()

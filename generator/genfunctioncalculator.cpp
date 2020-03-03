@@ -3,6 +3,8 @@
 #include <QElapsedTimer>
 #include <QVector>
 
+#include <QtMath>
+
 GenFunctionCalculator::GenFunctionCalculator(GenParameters *params)
 {
     m_params = params;

@@ -1,6 +1,8 @@
 #include "functionModel.h"
 #include "constants.h"
 
+#include <QtMath>
+
 FunctionModel::FunctionModel(QObject *parent) : QObject(parent)
 {
 

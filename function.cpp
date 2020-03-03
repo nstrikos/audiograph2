@@ -1,6 +1,8 @@
 #include "function.h"
 #include "constants.h"
 
+#include <QtMath>
+
 Function::~Function()
 {
 

@@ -167,13 +167,13 @@ void AudioPoints::setFreq(double freq, bool useNotes, bool n, double ratio)
             xx = 2793.83;
         else if ( xx >= 2959.96)// && xx < 3135.96) //F#7
             xx = 2959.96;
-//        else if ( xx >= 3135.96 && xx < 3322.44) //G7
-//            xx = 3135.96;
-//        else if ( xx >= 3322.44)// && xx <= 3520.00) //A7
-//            xx = 3322.44;
+        //        else if ( xx >= 3135.96 && xx < 3322.44) //G7
+        //            xx = 3135.96;
+        //        else if ( xx >= 3322.44)// && xx <= 3520.00) //A7
+        //            xx = 3322.44;
     }
 
-        //xx = xx / 4;
+    //xx = xx / 4;
     m_time = 0;
     if (audioPlaying == false)
         startAudio();
@@ -208,7 +208,7 @@ void AudioPoints::initializeAudio()
     m_phi2 = 0;
     auIObuffer = audioOutput->start();
 #ifdef Q_OS_WIN
-//    auIObuffer = audioOutput->start(); //In windows calling audioOutput->start
+    //    auIObuffer = audioOutput->start(); //In windows calling audioOutput->start
     //for second time gives better results
 #endif
 }
@@ -249,21 +249,21 @@ void AudioPoints::writeMoreData()
 
             double x;
 
-//            if (!m_n) {
-//                m_f0 = 10;
-//                m_f1 = 35;
-//                m_f2 = 5;
-//                m_f3 = 5;
-//                m_f4 = 5;
-//                m_f10 = 0;
-//            } else {
-//                m_f0 = 100;
-//                m_f1 = 0;
-//                m_f2 = 0;
-//                m_f3 = 0;
-//                m_f4 = 0;
-//                m_f10 = 5;
-//            }
+            //            if (!m_n) {
+            //                m_f0 = 10;
+            //                m_f1 = 35;
+            //                m_f2 = 5;
+            //                m_f3 = 5;
+            //                m_f4 = 5;
+            //                m_f10 = 0;
+            //            } else {
+            //                m_f0 = 100;
+            //                m_f1 = 0;
+            //                m_f2 = 0;
+            //                m_f3 = 0;
+            //                m_f4 = 0;
+            //                m_f10 = 5;
+            //            }
 
 
             x = 1/(m_f0 + m_f1 + m_f2 + m_f3 + m_f4 + m_f5 + m_f6 + m_f7 + m_f8 + m_f9 + m_f10) *
@@ -346,8 +346,14 @@ void AudioPoints::writeMoreData()
             float x_x = 1.0 * x + 0.0 * x2 + 0.0 * x3;
 
             signed short value = static_cast<signed short>(x_x * 32767);
-            aubuffer[sample] = value * (1 - m_ratio);
-            aubuffer[sample + 1] = value * m_ratio ;
+
+            if (m_ratio < 0.5) {
+                aubuffer[sample] = value * m_ratio * 2;
+                aubuffer[sample + 1] = 0;
+            } else {
+                aubuffer[sample] = 0;
+                aubuffer[sample + 1] = (-2 * m_ratio + 2) * value ;
+            }
         }
 
         auIObuffer->write((const char*) &aubuffer[0], periodSize);

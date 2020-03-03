@@ -1,5 +1,7 @@
 #include "audio.h"
 
+#include <QtMath>
+
 Audio::Audio()
 {
     m_audioEngine = nullptr;

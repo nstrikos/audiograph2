@@ -1,6 +1,8 @@
 #include "genphicalculator.h"
 #include <math.h>
 
+#include <QtMath>
+
 GenPhiCalculator::GenPhiCalculator(GenParameters *params)
 {
     m_params = params;

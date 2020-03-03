@@ -80,6 +80,11 @@ void AudioNotes::setNote(FunctionModel *model,
             n = false;
         freq = a * l + b;
 
+        if (freq > m_fmax)
+            freq = m_fmax;
+        if (freq < m_fmin)
+            freq = m_fmin;
+
         if (m_model->isValid(i))
             m_audioPoints->setFreq(freq, useNotes, n, ratio);
         else
@@ -125,6 +130,12 @@ void AudioNotes::setNote(FunctionModel *model, int currentPoint, int fmin, int f
         else
             n = false;
         freq = a * l + b;
+
+        if (freq > m_fmax)
+            freq = m_fmax;
+        if (freq < m_fmin)
+            freq = m_fmin;
+
         if (m_model->isValid(m_currentPoint))
             m_audioPoints->setFreq(freq, useNotes, n, ratio);
         else
@@ -167,8 +178,6 @@ void AudioNotes::timerExpired()
     double freq;
     bool n = true;
     if (max != min) {
-        m_fmin = 110;
-        m_fmax = 2959.96;
         a =  (m_fmax-m_fmin)/(max - min);
         b = m_fmax - a * max;
         l = m_model->y(i);
