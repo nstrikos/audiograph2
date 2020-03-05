@@ -30,9 +30,21 @@ Rectangle {
         } else if (event.key === Qt.Key_F4) {
             functionController.sayYCoordinate()
         } else if (event.key === Qt.Key_F7) {
-            functionController.previousPointInterest()
+            if (startSoundButton.checked) {
+                startSoundButton.checked = false
+                functionController.previousPointInterest()
+            } else {
+                startSoundButton.checked = true
+                functionController.stopAudio()
+            }
         } else if (event.key === Qt.Key_F8) {
-            functionController.nextPointInterest()
+            if (startSoundButton.checked) {
+                startSoundButton.checked = false
+                functionController.nextPointInterest()
+            } else {
+                startSoundButton.checked = true
+                functionController.stopAudio()
+            }
         } else if (event.key === Qt.Key_F9) {
             functionController.previousPoint()
         } else if (event.key === Qt.Key_F10) {
@@ -41,6 +53,9 @@ Rectangle {
             functionController.decStep()
         } else if (event.key === Qt.Key_F12) {
             functionController.incStep()
+        } else if (event.key === Qt.Key_PageUp) {
+            console.log("got here")
+            functionController.firstPoint()
         }
     }
 
@@ -109,6 +124,8 @@ Rectangle {
                 selectByMouse: true
                 color: fontColor
 
+
+
                 background: Rectangle {
                     id: backRect
                     color: controlsRect.color
@@ -123,6 +140,64 @@ Rectangle {
                         }
                     }
                     border.width: textInput.activeFocus ? 2 : 1
+                }
+
+
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.RightButton
+                    hoverEnabled: true
+
+                    property int selectStart
+                    property int selectEnd
+                    property int curPos
+
+                    onClicked: {
+                        selectStart = textInput.selectionStart;
+                        selectEnd = textInput.selectionEnd;
+                        curPos = textInput.cursorPosition;
+                        contextMenu.x = mouse.x;
+                        contextMenu.y = mouse.y;
+                        contextMenu.open();
+                        textInput.cursorPosition = curPos;
+                        textInput.select(selectStart,selectEnd);
+                    }
+                    onPressAndHold: {
+                        if (mouse.source === Qt.MouseEventNotSynthesized) {
+                            selectStart = textInput.selectionStart;
+                            selectEnd = textInput.selectionEnd;
+                            curPos = textInput.cursorPosition;
+                            contextMenu.x = mouse.x;
+                            contextMenu.y = mouse.y;
+                            contextMenu.open();
+                            textInput.cursorPosition = curPos;
+                            textInput.select(selectStart,selectEnd);
+                        }
+                    }
+
+                    onEntered: cursorShape = Qt.IBeamCursor
+
+                    Menu {
+                        id: contextMenu
+                        MenuItem {
+                            text: "Cut"
+                            onTriggered: {
+                                textInput.cut()
+                            }
+                        }
+                        MenuItem {
+                            text: "Copy"
+                            onTriggered: {
+                                textInput.copy()
+                            }
+                        }
+                        MenuItem {
+                            text: "Paste"
+                            onTriggered: {
+                                textInput.paste()
+                            }
+                        }
+                    }
                 }
 
                 onTextChanged: {

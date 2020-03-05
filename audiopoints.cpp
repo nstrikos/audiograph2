@@ -42,7 +42,7 @@ void AudioPoints::setFreq(double freq, bool useNotes, bool n, double ratio)
 {
     xx = freq;
     m_n = n;
-    m_n = false;
+    //m_n = false;
     m_ratio = ratio;
     m_isPlaying = true;
 
@@ -249,21 +249,21 @@ void AudioPoints::writeMoreData()
 
             double x;
 
-            //            if (!m_n) {
-            //                m_f0 = 10;
-            //                m_f1 = 35;
-            //                m_f2 = 5;
-            //                m_f3 = 5;
-            //                m_f4 = 5;
-            //                m_f10 = 0;
-            //            } else {
-            //                m_f0 = 100;
-            //                m_f1 = 0;
-            //                m_f2 = 0;
-            //                m_f3 = 0;
-            //                m_f4 = 0;
-            //                m_f10 = 5;
-            //            }
+                        if (!m_n) {
+                            m_f0 = 10;
+                            m_f1 = 35;
+                            m_f2 = 5;
+                            m_f3 = 5;
+                            m_f4 = 5;
+                            m_f10 = 0;
+                        } else {
+                            m_f0 = 100;
+                            m_f1 = 0;
+                            m_f2 = 0;
+                            m_f3 = 0;
+                            m_f4 = 0;
+                            m_f10 = 5;
+                        }
 
 
             x = 1/(m_f0 + m_f1 + m_f2 + m_f3 + m_f4 + m_f5 + m_f6 + m_f7 + m_f8 + m_f9 + m_f10) *

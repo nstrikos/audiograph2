@@ -10,9 +10,9 @@
 
 const int DataFrequencyHz = 48000;
 #ifdef Q_OS_WIN
-const int BufferSize   = 16000;
+const int BufferSize   = 32000;
 #else
-const int BufferSize = 16000;
+const int BufferSize = 32000;
 #endif
 const int ChannelCount = 2;
 const int SampleSize = 16;

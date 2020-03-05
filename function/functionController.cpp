@@ -389,6 +389,12 @@ void FunctionController::sayYCoordinate()
     }
 }
 
+void FunctionController::firstPoint()
+{
+    stopAudio();
+    m_currentPoint->reset();
+}
+
 
 void FunctionController::audio()
 {

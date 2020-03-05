@@ -47,6 +47,7 @@ public:
     Q_INVOKABLE void decStep();
     Q_INVOKABLE void sayXCoordinate();
     Q_INVOKABLE void sayYCoordinate();
+    Q_INVOKABLE void firstPoint();
 
     Q_INVOKABLE void audio();
     Q_INVOKABLE void stopAudio();
