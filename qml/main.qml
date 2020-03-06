@@ -1,6 +1,8 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 
+import QtQml.StateMachine 1.0 as DSM
+
 Window {
     id: window
     visible: true
@@ -14,29 +16,6 @@ Window {
     title: qsTr("Audiographs")
 
     property bool anchorToLeft: undefined
-
-//    function clearAnchors() {
-//        controlsRect.anchors.top = undefined
-//        controlsRect.anchors.bottom = undefined
-//        controlsRect.anchors.left = undefined
-//        controlsRect.anchors.right = undefined
-//        graphRect.anchors.top = undefined
-//        graphRect.anchors.bottom = undefined
-//        graphRect.anchors.left = undefined
-//        graphRect.anchors.right = undefined
-//        settingsRect.anchors.top = undefined
-//        settingsRect.anchors.bottom = undefined
-//        settingsRect.anchors.left = undefined
-//        settingsRect.anchors.right = undefined
-//        controlsButton.anchors.top = undefined
-//        controlsButton.anchors.bottom = undefined
-//        controlsButton.anchors.left = undefined
-//        controlsButton.anchors.right = undefined
-//        settingsButton.anchors.top = undefined
-//        settingsButton.anchors.bottom = undefined
-//        settingsButton.anchors.left = undefined
-//        settingsButton.anchors.right = undefined
-//    }
 
     Item {
         anchors.fill: parent
@@ -142,4 +121,40 @@ Window {
     //        target: graphRect.curveMovingPoint
     //        onFinished: controlsRect.stopAudio()
     //    }
+
+    DSM.StateMachine {
+        id: stateMachine
+        initialState: state1
+        running: true
+        DSM.State {
+            id: state1
+            DSM.SignalTransition {
+                targetState: state2
+                signal: controlsRect.startSoundButton.clicked
+            }
+            DSM.SignalTransition {
+                targetState: state2
+                signal: controlsRect.f2Pressed
+            }
+            onEntered: {
+                console.log("state1")
+                controlsRect.startSoundButton.text = qsTr("Start sound")
+            }
+        }
+        DSM.State {
+            id: state2
+            DSM.SignalTransition {
+                targetState: state1
+                signal: controlsRect.startSoundButton.clicked//button.clicked
+            }
+            DSM.SignalTransition {
+                targetState: state1
+                signal: controlsRect.f2Pressed
+            }
+            onEntered: {
+                console.log("state2")
+                controlsRect.startSoundButton.text = qsTr("Stop sound")
+            }
+        }
+    }
 }

@@ -5,6 +5,8 @@ Rectangle {
     id: controlsRect
     anchors.rightMargin: window.width / 4
 
+    signal f2Pressed()
+
     property bool active: true
     color : !parameters.invertTheme ? "white" : "black"
     property color fontColor: parameters.invertTheme ? "white" : "black"
@@ -23,7 +25,8 @@ Rectangle {
     focus: true
     Keys.onPressed: {
         if (event.key === Qt.Key_F2) {
-            startSoundButtonClicked()
+            //startSoundButtonClicked()
+            controlsRect.f2Pressed()
             event.accepted = true;
         } else if (event.key === Qt.Key_F3) {
             functionController.sayXCoordinate()
@@ -412,8 +415,13 @@ Rectangle {
                     border.color: startButtonFocusScope.activeFocus ? lightColor : "light gray"
                     border.width: startButtonFocusScope.activeFocus ? 2 : 1
                     property bool checked: true
+                    property var text: "Start sound"
+
+                    signal clicked()
+
                     Text {
-                        text: startSoundButton.checked ? qsTr("Start sound") : qsTr("Stop sound")
+                        id: text
+                        text: startSoundButton.text//startSoundButton.checked ? qsTr("Start sound") : qsTr("Stop sound")
                         anchors.centerIn: parent
                         font.pointSize: 16
                         color: fontColor
@@ -422,7 +430,7 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onPressed: {
-                            startSoundButtonClicked()
+                            startSoundButton.clicked()//startSoundButtonClicked()
                         }
                     }
                     onCheckedChanged: {

@@ -71,6 +71,8 @@ void AudioNotes::setNote(FunctionModel *model,
     double freq;
     bool n = true;
     if (max != min) {
+        m_fmin = 110;
+        m_fmax = 2959.96;
         a =  (m_fmax-m_fmin)/(max - min);
         b = m_fmax - a * max;
         l = m_model->y(i);
@@ -122,6 +124,8 @@ void AudioNotes::setNote(FunctionModel *model, int currentPoint, int fmin, int f
     double freq;
     bool n = true;
     if (max != min) {
+        m_fmin = 110;
+        m_fmax = 2959.96;
         a =  (m_fmax-m_fmin)/(max - min);
         b = m_fmax - a * max;
         l = m_model->y(m_currentPoint);
@@ -178,6 +182,8 @@ void AudioNotes::timerExpired()
     double freq;
     bool n = true;
     if (max != min) {
+        m_fmin = 110;
+        m_fmax = 2959.96;
         a =  (m_fmax-m_fmin)/(max - min);
         b = m_fmax - a * max;
         l = m_model->y(i);

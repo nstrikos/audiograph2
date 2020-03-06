@@ -173,7 +173,7 @@ void AudioPoints::setFreq(double freq, bool useNotes, bool n, double ratio)
         //            xx = 3322.44;
     }
 
-    //xx = xx / 4;
+    xx = xx / 4;
     m_time = 0;
     if (audioPlaying == false)
         startAudio();
