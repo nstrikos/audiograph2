@@ -17,6 +17,9 @@ Window {
 
     property bool anchorToLeft: undefined
 
+    signal newGraph()
+    signal error()
+
     Item {
         anchors.fill: parent
         focus: true
@@ -97,8 +100,9 @@ Window {
     Connections {
         target: functionController
         onUpdateFinished: {
-            graphRect.updateCanvas()
-            controlsRect.stopAudio()
+            //graphRect.updateCanvas()
+            //controlsRect.stopAudio()
+            newGraph()
         }
         //        onError: {
         //            console.log("Error: ", err, myfunction.expression())
@@ -115,6 +119,7 @@ Window {
         onMovingPointFinished: {
             controlsRect.stopAudio()
         }
+        onError: error()
     }
 
     //    Connections {
@@ -124,36 +129,76 @@ Window {
 
     DSM.StateMachine {
         id: stateMachine
-        initialState: state1
+        initialState: initialState
         running: true
         DSM.State {
-            id: state1
+            id: initialState
             DSM.SignalTransition {
-                targetState: state2
-                signal: controlsRect.startSoundButton.clicked
-            }
-            DSM.SignalTransition {
-                targetState: state2
-                signal: controlsRect.f2Pressed
+                targetState: evaluateState
+                signal: controlsRect.evaluate
             }
             onEntered: {
-                console.log("state1")
-                controlsRect.startSoundButton.text = qsTr("Start sound")
+                console.log("initial state")
+                controlsRect.startSoundButton.enabled = false
             }
         }
         DSM.State {
-            id: state2
+            id: evaluateState
             DSM.SignalTransition {
-                targetState: state1
-                signal: controlsRect.startSoundButton.clicked//button.clicked
+                targetState: initialState
+                signal: error
             }
             DSM.SignalTransition {
-                targetState: state1
-                signal: controlsRect.f2Pressed
+                targetState: graphReadyState
+                signal: newGraph
             }
             onEntered: {
-                console.log("state2")
+                console.log("evaluate state")
+                functionController.displayFunction(controlsRect.textInput.text,
+                                                   controlsRect.textInput2.text,
+                                                   controlsRect.textInput3.text,
+                                                   controlsRect.textInput4.text,
+                                                   controlsRect.textInput5.text)
+                controlsRect.startSoundButton.enabled = false
+            }
+        }
+        DSM.State {
+            id: graphReadyState
+            DSM.SignalTransition {
+                targetState: evaluateState
+                signal: controlsRect.evaluate
+            }
+            DSM.SignalTransition {
+                targetState: initialState
+                signal: error
+            }
+            DSM.SignalTransition {
+                targetState: playSoundState
+                signal: controlsRect.startSoundButton.clicked
+            }
+            onEntered: {
+                console.log("graph ready state")
+                controlsRect.startSoundButton.enabled = true
+                controlsRect.startSoundButton.text = qsTr("Start sound")
+                graphRect.updateCanvas()
+            }
+        }
+
+        DSM.State {
+            id: playSoundState
+            DSM.SignalTransition {
+                targetState: evaluateState
+                signal: controlsRect.evaluate
+            }
+            DSM.SignalTransition {
+                targetState: initialState
+                signal: error
+            }
+            onEntered: {
+                console.log("play sound state")
+                controlsRect.startSoundButton.enabled = true
                 controlsRect.startSoundButton.text = qsTr("Stop sound")
+                functionController.audio()
             }
         }
     }

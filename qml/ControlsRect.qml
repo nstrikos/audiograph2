@@ -6,6 +6,7 @@ Rectangle {
     anchors.rightMargin: window.width / 4
 
     signal f2Pressed()
+    signal evaluate()
 
     property bool active: true
     color : !parameters.invertTheme ? "white" : "black"
@@ -15,6 +16,13 @@ Rectangle {
     property bool invertTheme: parameters.invertTheme
 
     property alias startSoundButton: startSoundButton
+
+    property alias textInput: textInput
+    property alias textInput2: textInput2
+    property alias textInput3: textInput3
+    property alias textInput4: textInput4
+    property alias textInput5: textInput5
+
 
     onInvertThemeChanged: {
         fontColor: parameters.invertTheme ? "white" : "black"
@@ -204,11 +212,14 @@ Rectangle {
                 }
 
                 onTextChanged: {
+                    active = false
                     textInput2.text = "-10"
                     textInput3.text = "10"
                     textInput4.text = "-10"
                     textInput5.text = "10"
-                    calculate()
+                    evaluate()
+                    active = true
+                    //calculate()
                 }
                 Accessible.name: qsTr("Set expression")
             }
@@ -253,7 +264,7 @@ Rectangle {
                 }
                 onTextChanged: {
                     if (active)
-                        calculate()
+                        evaluate()//calculate()
                 }
                 Accessible.name: qsTr("Set minimum x")
             }
@@ -298,7 +309,7 @@ Rectangle {
                 }
                 onTextChanged: {
                     if (active)
-                        calculate()
+                        evaluate()//calculate()
                 }
                 Accessible.name: qsTr("Set maximum x")
             }
@@ -343,7 +354,7 @@ Rectangle {
                 }
                 onTextChanged: {
                     if (active)
-                        calculate()
+                        evaluate()//calculate()
                 }
                 Accessible.name: qsTr("Set minimum Y")
             }
@@ -388,7 +399,7 @@ Rectangle {
                 }
                 onTextChanged: {
                     if (active)
-                        calculate()
+                        evaluate()//calculate()
                 }
                 Accessible.name: qsTr("Set maximum Y")
             }
@@ -416,6 +427,7 @@ Rectangle {
                     border.width: startButtonFocusScope.activeFocus ? 2 : 1
                     property bool checked: true
                     property var text: "Start sound"
+                    enabled: false
 
                     signal clicked()
 
