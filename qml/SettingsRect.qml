@@ -13,28 +13,28 @@ Rectangle {
     property color highlightColor: parameters.highlightColor
     property color axesColor: parameters.axesColor
 
-    Keys.onPressed: {
-        if (event.key === Qt.Key_F2) {
-            controlsRect.startSoundButtonClicked()
-            event.accepted = true;
-        } else if (event.key === Qt.Key_F11) {
-            graphRect.decStep()
-        } else if (event.key === Qt.Key_F12) {
-            graphRect.incStep()
-        } else if (event.key === Qt.Key_F7) {
-            graphRect.moveBackward()
-        } else if (event.key === Qt.Key_F8) {
-            graphRect.moveForward()
-        } else if (event.key === Qt.Key_F9) {
-            graphRect.previousPoint()
-        } else if (event.key === Qt.Key_F10) {
-            graphRect.nextPoint()
-        } else if (event.key === Qt.Key_F4) {
-            graphRect.sayXCoordinate()
-        } else if (event.key === Qt.Key_F5) {
-            graphRect.sayYCoordinate()
-        }
-    }
+//    Keys.onPressed: {
+//        if (event.key === Qt.Key_F2) {
+//            controlsRect.startSoundButtonClicked()
+//            event.accepted = true;
+//        } else if (event.key === Qt.Key_F11) {
+//            graphRect.decStep()
+//        } else if (event.key === Qt.Key_F12) {
+//            graphRect.incStep()
+//        } else if (event.key === Qt.Key_F7) {
+//            graphRect.moveBackward()
+//        } else if (event.key === Qt.Key_F8) {
+//            graphRect.moveForward()
+//        } else if (event.key === Qt.Key_F9) {
+//            graphRect.previousPoint()
+//        } else if (event.key === Qt.Key_F10) {
+//            graphRect.nextPoint()
+//        } else if (event.key === Qt.Key_F4) {
+//            graphRect.sayXCoordinate()
+//        } else if (event.key === Qt.Key_F5) {
+//            graphRect.sayYCoordinate()
+//        }
+//    }
     TabBar {
         id: bar
         width: parent.width

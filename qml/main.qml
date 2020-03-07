@@ -19,6 +19,7 @@ Window {
 
     signal newGraph()
     signal error()
+    signal stopAudio()
 
     Item {
         anchors.fill: parent
@@ -100,24 +101,13 @@ Window {
     Connections {
         target: functionController
         onUpdateFinished: {
-            //graphRect.updateCanvas()
-            //controlsRect.stopAudio()
             newGraph()
         }
-        //        onError: {
-        //            console.log("Error: ", err, myfunction.expression())
-        //            graphParameters.minX = -10;
-        //            graphParameters.maxX = 10;
-        //            graphParameters.minY = -10;
-        //            graphParameters.maxY = 10;
-        //graphRect.clearCanvas()
-        //            graphRect.updateCanvas();
-        //        }
         onNewInputValues: {
             controlsRect.newInputValues(minX, maxX, minY, maxY)
         }
         onMovingPointFinished: {
-            controlsRect.stopAudio()
+            stopAudio()
         }
         onError: error()
     }
@@ -173,6 +163,10 @@ Window {
                 signal: error
             }
             DSM.SignalTransition {
+                targetState: graphReadyState
+                signal: newGraph
+            }
+            DSM.SignalTransition {
                 targetState: playSoundState
                 signal: controlsRect.startSoundButton.clicked
             }
@@ -194,11 +188,23 @@ Window {
                 targetState: initialState
                 signal: error
             }
+            DSM.SignalTransition {
+                targetState: graphReadyState
+                signal: stopAudio
+            }
+            DSM.SignalTransition {
+                targetState: graphReadyState
+                signal: controlsRect.startSoundButton.clicked
+            }
             onEntered: {
                 console.log("play sound state")
                 controlsRect.startSoundButton.enabled = true
                 controlsRect.startSoundButton.text = qsTr("Stop sound")
                 functionController.audio()
+            }
+            onExited: {
+                controlsRect.startSoundButton.text = qsTr("Start sound")
+                functionController.stopAudio()
             }
         }
     }

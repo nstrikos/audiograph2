@@ -48,7 +48,10 @@ Rectangle {
             value: parameters.duration
             from: 10
             to: 100
-            onValueChanged: parameters.duration = value
+            onValueChanged: {
+                window.stopAudio()
+                parameters.duration = value
+            }
 
             editable: false
 
@@ -173,7 +176,10 @@ Rectangle {
             from: 200
             to: 4000
             stepSize: 100
-            onValueChanged: parameters.minFreq = value
+            onValueChanged: {
+                window.stopAudio()
+                parameters.minFreq = value
+            }
 
             editable: false
 
@@ -297,7 +303,10 @@ Rectangle {
             from: 400
             to: 8000
             stepSize: 100
-            onValueChanged: parameters.maxFreq = value
+            onValueChanged: {
+                window.stopAudio
+                parameters.maxFreq = value
+            }
 
             editable: false
 
@@ -447,6 +456,7 @@ Rectangle {
                     }
                 }
                 onCheckedChanged: {
+                    window.stopAudio()
                     parameters.useNotes = checked
                 }
             }
@@ -502,6 +512,7 @@ Rectangle {
                     }
                 }
                 onCheckedChanged: {
+                    window.stopAudio()
                     parameters.exploreMode = checked
                 }
             }
@@ -542,6 +553,7 @@ Rectangle {
                 minFreqSpinbox.value = parameters.minFreq
                 maxFreqSpinbox.value = parameters.maxFreq
                 useNotesCheckBox.checked = parameters.useNotes
+                window.stopAudio()
             }
         }
     }

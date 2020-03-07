@@ -180,6 +180,7 @@ void CurrentPoint::stop()
     timer.stop();
     m_X = -20;
     m_Y = -20;
+    emit movingPointFinished();
 }
 
 void CurrentPoint::reset()

@@ -12,6 +12,7 @@ FunctionController::FunctionController(QObject *parent) : QObject(parent)
     m_pointView = nullptr;
     m_pointsInterest = nullptr;
     m_currentPoint = new CurrentPoint();
+    connect(m_currentPoint, SIGNAL(movingPointFinished()), this, SIGNAL(movingPointFinished()));
     m_textToSpeech = nullptr;
 }
 

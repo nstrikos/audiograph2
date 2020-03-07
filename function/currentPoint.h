@@ -30,6 +30,9 @@ public:
 
     int step() const;
 
+signals:
+    void movingPointFinished();
+
 private slots:
     void timerExpired();
 

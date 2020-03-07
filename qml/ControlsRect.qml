@@ -34,7 +34,7 @@ Rectangle {
     Keys.onPressed: {
         if (event.key === Qt.Key_F2) {
             //startSoundButtonClicked()
-            controlsRect.f2Pressed()
+            controlsRect.startSoundButton.clicked()
             event.accepted = true;
         } else if (event.key === Qt.Key_F3) {
             functionController.sayXCoordinate()
