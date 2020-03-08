@@ -3,8 +3,6 @@
 #include <QQmlContext>
 
 #include "function.h"
-#include "curve.h"
-#include "curvemovingpoint.h"
 #include "parameters.h"
 #include "audio.h"
 #include "audionotes.h"
@@ -19,8 +17,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
-    qmlRegisterType<Curve>("Curve", 1, 0, "Curve");
-//    qmlRegisterType<CurveMovingPoint>("CurveMovingPoint", 1, 0, "CurveMovingPoint");
+
     qmlRegisterType<FunctionDisplayView>("DisplayView", 1, 0, "DisplayView");
     qmlRegisterType<FunctionPointView>("PointView", 1, 0, "PointView");
 

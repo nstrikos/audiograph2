@@ -1,8 +1,9 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-//import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.12
 import QtQuick.Dialogs 1.3
+
+import "AudioSettings"
 
 Rectangle {
     id: settingsRect
@@ -13,28 +14,6 @@ Rectangle {
     property color highlightColor: parameters.highlightColor
     property color axesColor: parameters.axesColor
 
-//    Keys.onPressed: {
-//        if (event.key === Qt.Key_F2) {
-//            controlsRect.startSoundButtonClicked()
-//            event.accepted = true;
-//        } else if (event.key === Qt.Key_F11) {
-//            graphRect.decStep()
-//        } else if (event.key === Qt.Key_F12) {
-//            graphRect.incStep()
-//        } else if (event.key === Qt.Key_F7) {
-//            graphRect.moveBackward()
-//        } else if (event.key === Qt.Key_F8) {
-//            graphRect.moveForward()
-//        } else if (event.key === Qt.Key_F9) {
-//            graphRect.previousPoint()
-//        } else if (event.key === Qt.Key_F10) {
-//            graphRect.nextPoint()
-//        } else if (event.key === Qt.Key_F4) {
-//            graphRect.sayXCoordinate()
-//        } else if (event.key === Qt.Key_F5) {
-//            graphRect.sayYCoordinate()
-//        }
-//    }
     TabBar {
         id: bar
         width: parent.width
@@ -60,43 +39,12 @@ Rectangle {
         Item {
             id: activityTab
         }
-    }
-
-    //    TabView {
-    //        id: frame
-    //        anchors.fill: parent
-    //        anchors.margins: 4
-    //        AudioSettingsTab {
-    //        }
-    //        GraphSettingsTab {
-    //        }
-    //        Tab { title: "Tab 2" }
-    //        Tab { title: "Tab 3" }
-
-    //        style: TabViewStyle {
-    //            frameOverlap: 10
-    //            tab: Rectangle {
-    //                color: styleData.selected ? "gray" :"light gray"
-    //                border.color:  "gray"
-    //                implicitWidth: settingsRect.width / 2
-    //                implicitHeight: 30
-    //                radius: 2
-    //                Text {
-    //                    id: text
-    //                    anchors.centerIn: parent
-    //                    text: styleData.title
-    //                    color: styleData.selected ? "white" : "black"
-    //                }
-    //            }
-    //            frame: Rectangle { color: !parameters.invertTheme ? "white" : "black" }
-    //        }
-    //    }
+    }  
 
     ColorDialog {
         id: colorDialog
         property var request
         onAccepted: {
-            controlsRect.stopAudio()
             if (request === "line color") {
                 parameters.lineColor = color
                 lineColor = color

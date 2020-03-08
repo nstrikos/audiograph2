@@ -18,9 +18,6 @@ SOURCES += \
         audioengine.cpp \
         audionotes.cpp \
         audiopoints.cpp \
-        curve.cpp \
-        curveinterface.cpp \
-        curvemovingpoint.cpp \
         fparser/fparser.cc \
         fparser/fpoptimizer.cc \
         function.cpp \
@@ -73,9 +70,6 @@ HEADERS += \
     audionotes.h \
     audiopoints.h \
     constants.h \
-    curve.h \
-    curveinterface.h \
-    curvemovingpoint.h \
     fparser/extrasrc/fpaux.hh \
     fparser/extrasrc/fptypes.hh \
     fparser/fparser.hh \

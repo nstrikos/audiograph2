@@ -4,11 +4,7 @@
         <file>qml/ControlsButton.qml</file>
         <file>qml/SettingsButton.qml</file>
         <file>qml/SettingsIcon.qml</file>
-        <file>qml/SettingsRect.qml</file>
         <file>qml/main.qml</file>
-        <file>qml/GraphParameters.qml</file>
-        <file>qml/GraphSettingsTab.qml</file>
-        <file>qml/AudioSettingsTab.qml</file>
         <file>qml/StateMachine.qml</file>
         <file>qml/ControlsRect/ControlsRect.qml</file>
         <file>qml/ControlsRect/ControlsTitleBar.qml</file>
@@ -20,5 +16,19 @@
         <file>qml/ControlsRect/CustomTextInput.qml</file>
         <file>qml/ControlsRect/StartButtonFocusScope.qml</file>
         <file>qml/ControlsRect/ControlRectFlickable.qml</file>
+        <file>qml/SettingsRect/SettingsRect.qml</file>
+        <file>qml/SettingsRect/AudioSettings/AudioSettingsTab.qml</file>
+        <file>qml/SettingsRect/AudioSettings/DurationSpinbox.qml</file>
+        <file>qml/SettingsRect/AudioSettings/ExploreModeFocusScope.qml</file>
+        <file>qml/SettingsRect/AudioSettings/Label1.qml</file>
+        <file>qml/SettingsRect/AudioSettings/Label2.qml</file>
+        <file>qml/SettingsRect/AudioSettings/Label3.qml</file>
+        <file>qml/SettingsRect/AudioSettings/Label4.qml</file>
+        <file>qml/SettingsRect/AudioSettings/Label5.qml</file>
+        <file>qml/SettingsRect/AudioSettings/ResetButton.qml</file>
+        <file>qml/SettingsRect/AudioSettings/UseNotesFocusScope.qml</file>
+        <file>qml/SettingsRect/AudioSettings/MaxFreqSpinbox.qml</file>
+        <file>qml/SettingsRect/AudioSettings/MinFreqSpinbox.qml</file>
+        <file>qml/SettingsRect/GraphSettings/GraphSettingsTab.qml</file>
     </qresource>
 </RCC>

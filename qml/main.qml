@@ -5,6 +5,7 @@ import QtQml.StateMachine 1.0 as DSM
 
 import "ControlsRect"
 import "GraphRect"
+import "SettingsRect"
 
 Window {
     id: window
@@ -52,13 +53,6 @@ Window {
         id: anchorChangeState
     }
 
-    function setAnchor() {
-        if (width >= height)
-            anchorToLeft = true
-        else
-            anchorToLeft = false
-    }
-
     Component.onCompleted: {
         setAnchor()
         if (anchorToLeft)
@@ -67,9 +61,15 @@ Window {
             anchorChangeState.state = 'state4'
     }
 
-
     onWidthChanged: setAnchor()
     onHeightChanged: setAnchor()
+
+    function setAnchor() {
+        if (width >= height)
+            anchorToLeft = true
+        else
+            anchorToLeft = false
+    }
     onAnchorToLeftChanged: anchorChangeState.anchorChanged()
 
     function setColor() {

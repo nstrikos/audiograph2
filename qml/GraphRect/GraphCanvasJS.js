@@ -37,19 +37,19 @@ function drawGrid()
     if (parameters.showAxes) {
 
 
-        var xStart = functionController.minX()//graphParameters.minX
-        var xEnd = functionController.maxX()// graphParameters.maxX
+        var xStart = functionController.minX()
+        var xEnd = functionController.maxX()
 
         var xInterval = findInterval(xEnd - xStart)
         findVerticalGridLines(xStart, xEnd, xInterval)
 
         ctx.lineWidth = 0.1
-        ctx.strokeStyle = "black"//myparameters.axesColor;
+        ctx.strokeStyle = "black"
 
         drawVerticalLines()
 
-        var yStart = functionController.minY()//graphParameters.minY
-        var yEnd = functionController.maxY()// graphParameters.maxY
+        var yStart = functionController.minY()
+        var yEnd = functionController.maxY()
         var yInterval = findInterval(yEnd - yStart)
         findHorizontalGridLines(yStart, yEnd, yInterval)
         drawHorizontalLines()
