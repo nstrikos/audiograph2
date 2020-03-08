@@ -14,7 +14,7 @@ Canvas {
     renderStrategy: Canvas.Immediate
 
     function updateCanvas() {
-        controlsRect.stopAudio()
+//        controlsRect.stopAudio()
         if (available)
             CanvasJS.paintCanvas()
     }

@@ -1,6 +1,8 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 
+import "../BeautityRect"
+
 Rectangle {
     id: controlsRect
     anchors.rightMargin: window.width / 4
@@ -41,24 +43,16 @@ Rectangle {
         } else if (event.key === Qt.Key_F4) {
             functionController.sayYCoordinate()
         } else if (event.key === Qt.Key_F7) {
-            if (startSoundButton.checked) {
-                startSoundButton.checked = false
-                functionController.previousPointInterest()
-            } else {
-                startSoundButton.checked = true
-                functionController.stopAudio()
-            }
+            window.interestingPoint()
+            functionController.previousPointInterest()
         } else if (event.key === Qt.Key_F8) {
-            if (startSoundButton.checked) {
-                startSoundButton.checked = false
-                functionController.nextPointInterest()
-            } else {
-                startSoundButton.checked = true
-                functionController.stopAudio()
-            }
+            window.interestingPoint()
+            functionController.nextPointInterest()
         } else if (event.key === Qt.Key_F9) {
+            window.explore()
             functionController.previousPoint()
         } else if (event.key === Qt.Key_F10) {
+            window.explore()
             functionController.nextPoint()
         } else if (event.key === Qt.Key_F11) {
             functionController.decStep()
@@ -123,105 +117,8 @@ Rectangle {
                 color: fontColor
             }
 
-            TextField {
+            CustomTextInput {
                 id: textInput
-                anchors.left: label1.right
-                anchors.leftMargin: 10
-                anchors.right: parent.right
-                anchors.rightMargin: 10
-                anchors.verticalCenter: label1.verticalCenter
-                placeholderText: (parent.width > 0) ? "Function expression" : ""
-                height: 50
-                selectByMouse: true
-                color: fontColor
-
-
-
-                background: Rectangle {
-                    id: backRect
-                    color: controlsRect.color
-                    border.color: {
-                        if (textInput.activeFocus) {
-                            if (invertTheme)
-                                return "yellow"
-                            else
-                                return "blue"
-                        } else {
-                            return "light gray"
-                        }
-                    }
-                    border.width: textInput.activeFocus ? 2 : 1
-                }
-
-
-                MouseArea {
-                    anchors.fill: parent
-                    acceptedButtons: Qt.RightButton
-                    hoverEnabled: true
-
-                    property int selectStart
-                    property int selectEnd
-                    property int curPos
-
-                    onClicked: {
-                        selectStart = textInput.selectionStart;
-                        selectEnd = textInput.selectionEnd;
-                        curPos = textInput.cursorPosition;
-                        contextMenu.x = mouse.x;
-                        contextMenu.y = mouse.y;
-                        contextMenu.open();
-                        textInput.cursorPosition = curPos;
-                        textInput.select(selectStart,selectEnd);
-                    }
-                    onPressAndHold: {
-                        if (mouse.source === Qt.MouseEventNotSynthesized) {
-                            selectStart = textInput.selectionStart;
-                            selectEnd = textInput.selectionEnd;
-                            curPos = textInput.cursorPosition;
-                            contextMenu.x = mouse.x;
-                            contextMenu.y = mouse.y;
-                            contextMenu.open();
-                            textInput.cursorPosition = curPos;
-                            textInput.select(selectStart,selectEnd);
-                        }
-                    }
-
-                    onEntered: cursorShape = Qt.IBeamCursor
-
-                    Menu {
-                        id: contextMenu
-                        MenuItem {
-                            text: "Cut"
-                            onTriggered: {
-                                textInput.cut()
-                            }
-                        }
-                        MenuItem {
-                            text: "Copy"
-                            onTriggered: {
-                                textInput.copy()
-                            }
-                        }
-                        MenuItem {
-                            text: "Paste"
-                            onTriggered: {
-                                textInput.paste()
-                            }
-                        }
-                    }
-                }
-
-                onTextChanged: {
-                    active = false
-                    textInput2.text = "-10"
-                    textInput3.text = "10"
-                    textInput4.text = "-10"
-                    textInput5.text = "10"
-                    evaluate()
-                    active = true
-                    //calculate()
-                }
-                Accessible.name: qsTr("Set expression")
             }
 
             Label {
@@ -235,39 +132,49 @@ Rectangle {
                 color: fontColor
             }
 
-            TextField {
+            CustomTextInput {
                 id: textInput2
                 anchors.left: label2.right
                 anchors.leftMargin: 10
-                anchors.verticalCenter: label2.verticalCenter
                 anchors.right: parent.right
                 anchors.rightMargin: 10
-                placeholderText: (parent.width > 0) ? "minimum X" : ""
-                height: 50
-                selectByMouse: true
-                onFocusChanged: ensureVisible(textInput2)
-                color: fontColor
-                background: Rectangle {
-                    id: backRect2
-                    color: controlsRect.color
-                    border.color: {
-                        if (textInput2.activeFocus) {
-                            if (invertTheme)
-                                return "yellow"
-                            else
-                                return "blue"
-                        } else {
-                            return "light gray"
-                        }
-                    }
-                    border.width: textInput2.activeFocus ? 2 : 1
-                }
-                onTextChanged: {
-                    if (active)
-                        evaluate()//calculate()
-                }
-                Accessible.name: qsTr("Set minimum x")
+                anchors.verticalCenter: label2.verticalCenter
+                placeholderText: (parent.width > 0) ? "Function expression" : ""
             }
+
+//            TextField {
+//                id: textInput2
+//                anchors.left: label2.right
+//                anchors.leftMargin: 10
+//                anchors.verticalCenter: label2.verticalCenter
+//                anchors.right: parent.right
+//                anchors.rightMargin: 10
+//                placeholderText: (parent.width > 0) ? "minimum X" : ""
+//                height: 50
+//                selectByMouse: true
+//                onFocusChanged: ensureVisible(textInput2)
+//                color: fontColor
+//                background: Rectangle {
+//                    id: backRect2
+//                    color: controlsRect.color
+//                    border.color: {
+//                        if (textInput2.activeFocus) {
+//                            if (invertTheme)
+//                                return "yellow"
+//                            else
+//                                return "blue"
+//                        } else {
+//                            return "light gray"
+//                        }
+//                    }
+//                    border.width: textInput2.activeFocus ? 2 : 1
+//                }
+//                onTextChanged: {
+//                    if (active)
+//                        evaluate()//calculate()
+//                }
+//                Accessible.name: qsTr("Set minimum x")
+//            }
 
             Label {
                 id: label3
@@ -464,50 +371,5 @@ Rectangle {
         textInput4.text = minY
         textInput5.text = maxY
         active = true
-    }
-
-    //    function startPinch() {
-    //        stopAudio()
-    //        functionController.startPinch()
-    //    }
-
-    //    function handlePinch(scale) {
-    //        functionController.pinch(scale)
-    //    }
-
-    //    function pinchFinished() {
-    //        if (textInput.text !== "") {
-    //            active = true
-    //        }
-    //    }
-
-    function calculate () {
-        stopAudio()
-        functionController.displayFunction(textInput.text,
-                                           textInput2.text,
-                                           textInput3.text,
-                                           textInput4.text,
-                                           textInput5.text)
-    }
-
-    function startSoundButtonClicked() {
-        if (startSoundButton.checked)
-            startAudio()
-        else
-            stopAudio()
-    }
-
-    function startAudio() {
-        if (functionController.validExpression()) {
-            functionController.audio()
-            startSoundButton.checked = false
-        }
-
-    }
-
-    function stopAudio() {
-        functionController.stopAudio()
-        graphRect.stopMovingPoint()
-        startSoundButton.checked = true
     }
 }

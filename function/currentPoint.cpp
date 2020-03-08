@@ -186,8 +186,8 @@ void CurrentPoint::stop()
 void CurrentPoint::reset()
 {
     m_point = 0;
-    m_X = -20;
-    m_Y = -20;
+    m_X = -200;
+    m_Y = -200;
 }
 
 void CurrentPoint::incStep()

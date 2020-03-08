@@ -326,7 +326,7 @@ Item {
     ]
 
     function controlsButtonPressed() {
-        controlsRect.stopAudio()
+//        controlsRect.stopAudio()
         if (state == 'state1') {
             state = 'state2'
         }
@@ -341,7 +341,7 @@ Item {
     }
 
     function settingsButtonPressed() {
-        controlsRect.stopAudio()
+//        controlsRect.stopAudio()
         if (state == 'state1' || state == 'state2')
             state = 'state3'
         else if (state == 'state3')
@@ -353,7 +353,7 @@ Item {
     }
 
     function anchorChanged() {
-        controlsRect.stopAudio()
+//        controlsRect.stopAudio()
         if (anchorToLeft == false) {
             if (state == 'state1')
                 state = 'state4'

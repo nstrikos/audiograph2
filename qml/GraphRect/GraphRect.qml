@@ -4,6 +4,8 @@ import QtQuick 2.12
 import DisplayView 1.0
 import PointView 1.0
 
+import "../BeautityRect"
+
 Rectangle {
     id: graphRect
     z: 10

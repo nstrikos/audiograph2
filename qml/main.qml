@@ -3,6 +3,9 @@ import QtQuick.Window 2.12
 
 import QtQml.StateMachine 1.0 as DSM
 
+import "ControlsRect"
+import "GraphRect"
+
 Window {
     id: window
     visible: true
@@ -20,6 +23,8 @@ Window {
     signal newGraph()
     signal error()
     signal stopAudio()
+    signal explore()
+    signal interestingPoint()
 
     Item {
         anchors.fill: parent
@@ -73,7 +78,7 @@ Window {
     }
 
     function setAnchor() {
-        controlsRect.stopAudio()
+        //controlsRect.stopAudio()
         if (width >= height)
             anchorToLeft = true
         else
@@ -112,100 +117,6 @@ Window {
         onError: error()
     }
 
-    //    Connections {
-    //        target: graphRect.curveMovingPoint
-    //        onFinished: controlsRect.stopAudio()
-    //    }
-
-    DSM.StateMachine {
-        id: stateMachine
-        initialState: initialState
-        running: true
-        DSM.State {
-            id: initialState
-            DSM.SignalTransition {
-                targetState: evaluateState
-                signal: controlsRect.evaluate
-            }
-            onEntered: {
-                console.log("initial state")
-                controlsRect.startSoundButton.enabled = false
-            }
-        }
-        DSM.State {
-            id: evaluateState
-            DSM.SignalTransition {
-                targetState: initialState
-                signal: error
-            }
-            DSM.SignalTransition {
-                targetState: graphReadyState
-                signal: newGraph
-            }
-            onEntered: {
-                console.log("evaluate state")
-                functionController.displayFunction(controlsRect.textInput.text,
-                                                   controlsRect.textInput2.text,
-                                                   controlsRect.textInput3.text,
-                                                   controlsRect.textInput4.text,
-                                                   controlsRect.textInput5.text)
-                controlsRect.startSoundButton.enabled = false
-            }
-        }
-        DSM.State {
-            id: graphReadyState
-            DSM.SignalTransition {
-                targetState: evaluateState
-                signal: controlsRect.evaluate
-            }
-            DSM.SignalTransition {
-                targetState: initialState
-                signal: error
-            }
-            DSM.SignalTransition {
-                targetState: graphReadyState
-                signal: newGraph
-            }
-            DSM.SignalTransition {
-                targetState: playSoundState
-                signal: controlsRect.startSoundButton.clicked
-            }
-            onEntered: {
-                console.log("graph ready state")
-                controlsRect.startSoundButton.enabled = true
-                controlsRect.startSoundButton.text = qsTr("Start sound")
-                graphRect.updateCanvas()
-            }
-        }
-
-        DSM.State {
-            id: playSoundState
-            DSM.SignalTransition {
-                targetState: evaluateState
-                signal: controlsRect.evaluate
-            }
-            DSM.SignalTransition {
-                targetState: initialState
-                signal: error
-            }
-            DSM.SignalTransition {
-                targetState: graphReadyState
-                signal: stopAudio
-            }
-            DSM.SignalTransition {
-                targetState: graphReadyState
-                signal: controlsRect.startSoundButton.clicked
-            }
-            onEntered: {
-                console.log("play sound state")
-                controlsRect.startSoundButton.enabled = true
-                controlsRect.startSoundButton.text = qsTr("Stop sound")
-                functionController.audio()
-            }
-            onExited: {
-                controlsRect.startSoundButton.text = qsTr("Start sound")
-                functionController.stopAudio()
-            }
-        }
+    StateMachine {
     }
 }
