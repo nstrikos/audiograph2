@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.12
 import QtQuick.Dialogs 1.3
 
 import "AudioSettings"
+import "GraphSettings"
 
 Rectangle {
     id: settingsRect
@@ -40,43 +41,4 @@ Rectangle {
             id: activityTab
         }
     }  
-
-    ColorDialog {
-        id: colorDialog
-        property var request
-        onAccepted: {
-            if (request === "line color") {
-                parameters.lineColor = color
-                lineColor = color
-                graphRect.curveColor = color
-            } else if (request === "background color") {
-                parameters.backgroundColor = color
-                backgroundColor = color
-                graphRect.graphCanvas.updateCanvas()
-            } else if (request === "axes color") {
-                parameters.axesColor = color
-                axesColor = color
-                graphRect.graphCanvas.updateCanvas()
-            } else if (request === "highlight color") {
-                parameters.highlightColor = color
-                highlightColor = color
-                graphRect.highlightColor = color
-            }
-        }
-    }
-
-    function openColorDialog(request) {
-        if (request === "line color") {
-            colorDialog.color = parameters.lineColor
-        } else if (request === "background color") {
-            colorDialog.color = parameters.backgroundColor
-        } else if (request === "axes color") {
-            colorDialog.color = parameters.axesColor
-        } else if (request === "highlight color") {
-            colorDialog.color = parameters.highlightColor
-        }
-
-        colorDialog.request = request
-        colorDialog.open()
-    }
 }

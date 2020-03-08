@@ -30,5 +30,25 @@
         <file>qml/SettingsRect/AudioSettings/MaxFreqSpinbox.qml</file>
         <file>qml/SettingsRect/AudioSettings/MinFreqSpinbox.qml</file>
         <file>qml/SettingsRect/GraphSettings/GraphSettingsTab.qml</file>
+        <file>qml/SettingsRect/GraphSettings/ColorDialog.qml</file>
+        <file>qml/SettingsRect/GraphSettings/Label1.qml</file>
+        <file>qml/SettingsRect/GraphSettings/GraphColorFocusScope.qml</file>
+        <file>qml/SettingsRect/GraphSettings/Label2.qml</file>
+        <file>qml/SettingsRect/GraphSettings/BackgroundColorFocusScope.qml</file>
+        <file>qml/SettingsRect/GraphSettings/Label3.qml</file>
+        <file>qml/SettingsRect/GraphSettings/LineWidthSpinbox.qml</file>
+        <file>qml/SettingsRect/GraphSettings/Label4.qml</file>
+        <file>qml/SettingsRect/GraphSettings/HighlightColorFocusScope.qml</file>
+        <file>qml/SettingsRect/GraphSettings/Label5.qml</file>
+        <file>qml/SettingsRect/GraphSettings/HighlightSizeSpinbox.qml</file>
+        <file>qml/SettingsRect/GraphSettings/Label6.qml</file>
+        <file>qml/SettingsRect/GraphSettings/AxesColorFocusScope.qml</file>
+        <file>qml/SettingsRect/GraphSettings/Label7.qml</file>
+        <file>qml/SettingsRect/GraphSettings/AxesSizeSpinbox.qml</file>
+        <file>qml/SettingsRect/GraphSettings/Label8.qml</file>
+        <file>qml/SettingsRect/GraphSettings/ShowAxesFocusScope.qml</file>
+        <file>qml/SettingsRect/GraphSettings/Label9.qml</file>
+        <file>qml/SettingsRect/GraphSettings/InvertThemeFocusScope.qml</file>
+        <file>qml/SettingsRect/GraphSettings/ResetButton.qml</file>
     </qresource>
 </RCC>
