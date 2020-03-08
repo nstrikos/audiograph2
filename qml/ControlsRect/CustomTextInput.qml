@@ -4,22 +4,22 @@ import QtQuick.Controls 2.12
 import "../BeautityRect"
 
 TextField {
-    id: root
-    anchors.left: label1.right
+    id: textInput2
+    anchors.left: label2.right
     anchors.leftMargin: 10
+    anchors.verticalCenter: label2.verticalCenter
     anchors.right: parent.right
     anchors.rightMargin: 10
-    anchors.verticalCenter: label1.verticalCenter
-    placeholderText: (parent.width > 0) ? "Function expression" : ""
+    placeholderText: (parent.width > 0) ? "minimum X" : ""
     height: 50
     selectByMouse: true
+    onFocusChanged: ensureVisible(textInput2)
     color: fontColor
-    
     background: Rectangle {
-        id: backRect
+        id: backRect2
         color: controlsRect.color
         border.color: {
-            if (root.activeFocus) {
+            if (textInput2.activeFocus) {
                 if (invertTheme)
                     return "yellow"
                 else
@@ -28,75 +28,11 @@ TextField {
                 return "light gray"
             }
         }
-        border.width: root.activeFocus ? 2 : 1
-    }    
-    
-    MouseArea {
-        anchors.fill: parent
-        acceptedButtons: Qt.RightButton
-        hoverEnabled: true
-        
-        property int selectStart
-        property int selectEnd
-        property int curPos
-        
-        onClicked: {
-            selectStart = root.selectionStart;
-            selectEnd = root.selectionEnd;
-            curPos = root.cursorPosition;
-            contextMenu.x = mouse.x;
-            contextMenu.y = mouse.y;
-            contextMenu.open();
-            root.cursorPosition = curPos;
-            root.select(selectStart,selectEnd);
-        }
-        onPressAndHold: {
-            if (mouse.source === Qt.MouseEventNotSynthesized) {
-                selectStart = root.selectionStart;
-                selectEnd = root.selectionEnd;
-                curPos = root.cursorPosition;
-                contextMenu.x = mouse.x;
-                contextMenu.y = mouse.y;
-                contextMenu.open();
-                root.cursorPosition = curPos;
-                root.select(selectStart,selectEnd);
-            }
-        }
-        
-        onEntered: cursorShape = Qt.IBeamCursor
-        
-        Menu {
-            id: contextMenu
-            MenuItem {
-                text: "Cut"
-                onTriggered: {
-                    root.cut()
-                }
-            }
-            MenuItem {
-                text: "Copy"
-                onTriggered: {
-                    root.copy()
-                }
-            }
-            MenuItem {
-                text: "Paste"
-                onTriggered: {
-                    root.paste()
-                }
-            }
-        }
+        border.width: textInput2.activeFocus ? 2 : 1
     }
-    
     onTextChanged: {
-        active = false
-        textInput2.text = "-10"
-        textInput3.text = "10"
-        textInput4.text = "-10"
-        textInput5.text = "10"
-        evaluate()
-        active = true
+        if (active)
+            evaluate()//calculate()
     }
-
-    Accessible.name: qsTr("Set expression")
+    Accessible.name: qsTr("Set minimum x")
 }

@@ -18,5 +18,7 @@
         <file>qml/GraphRect/GraphCanvas.qml</file>
         <file>qml/GraphRect/GraphCanvasJS.js</file>
         <file>qml/ControlsRect/CustomTextInput.qml</file>
+        <file>qml/ControlsRect/StartButtonFocusScope.qml</file>
+        <file>qml/ControlsRect/ControlRectFlickable.qml</file>
     </qresource>
 </RCC>

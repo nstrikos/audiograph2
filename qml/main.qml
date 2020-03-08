@@ -20,38 +20,13 @@ Window {
 
     property bool anchorToLeft: undefined
 
+    signal evaluate()
+    signal playPressed()
     signal newGraph()
     signal error()
     signal stopAudio()
     signal explore()
     signal interestingPoint()
-
-    Item {
-        anchors.fill: parent
-        focus: true
-        Keys.onPressed: {
-            if (event.key === Qt.Key_F2) {
-                startSoundButtonClicked()
-                event.accepted = true;
-            } else if (event.key === Qt.Key_F11) {
-                graphRect.decStep()
-            } else if (event.key === Qt.Key_F12) {
-                graphRect.incStep()
-            } else if (event.key === Qt.Key_F7) {
-                graphRect.moveBackward()
-            } else if (event.key === Qt.Key_F8) {
-                graphRect.moveForward()
-            } else if (event.key === Qt.Key_F9) {
-                graphRect.previousPoint()
-            } else if (event.key === Qt.Key_F10) {
-                graphRect.nextPoint()
-            } else if (event.key === Qt.Key_F4) {
-                graphRect.sayXCoordinate()
-            } else if (event.key === Qt.Key_F5) {
-                graphRect.sayYCoordinate()
-            }
-        }
-    }
 
     ControlsRect {
         id: controlsRect
@@ -78,7 +53,6 @@ Window {
     }
 
     function setAnchor() {
-        //controlsRect.stopAudio()
         if (width >= height)
             anchorToLeft = true
         else
@@ -105,15 +79,9 @@ Window {
 
     Connections {
         target: functionController
-        onUpdateFinished: {
-            newGraph()
-        }
-        onNewInputValues: {
-            controlsRect.newInputValues(minX, maxX, minY, maxY)
-        }
-        onMovingPointFinished: {
-            stopAudio()
-        }
+        onUpdateFinished: newGraph()
+        onNewInputValues: controlsRect.newInputValues(minX, maxX, minY, maxY)
+        onMovingPointFinished: stopAudio()
         onError: error()
     }
 

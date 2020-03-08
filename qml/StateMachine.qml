@@ -12,7 +12,7 @@ Item {
             id: initialState
             DSM.SignalTransition {
                 targetState: evaluateState
-                signal: controlsRect.evaluate
+                signal: window.evaluate
             }
             onEntered: {
                 console.log("initial state")
@@ -43,7 +43,7 @@ Item {
             id: graphReadyState
             DSM.SignalTransition {
                 targetState: evaluateState
-                signal: controlsRect.evaluate
+                signal: window.evaluate
             }
             DSM.SignalTransition {
                 targetState: initialState
@@ -55,7 +55,7 @@ Item {
             }
             DSM.SignalTransition {
                 targetState: playSoundState
-                signal: controlsRect.startSoundButton.clicked
+                signal: playPressed
             }
             DSM.SignalTransition {
                 targetState: pointState
@@ -77,7 +77,7 @@ Item {
             id: playSoundState
             DSM.SignalTransition {
                 targetState: evaluateState
-                signal: controlsRect.evaluate
+                signal: window.evaluate
             }
             DSM.SignalTransition {
                 targetState: initialState
@@ -89,7 +89,7 @@ Item {
             }
             DSM.SignalTransition {
                 targetState: graphReadyState
-                signal: controlsRect.startSoundButton.clicked
+                signal: playPressed
             }
             DSM.SignalTransition {
                 targetState: pointState
@@ -115,11 +115,11 @@ Item {
             id: pointState
             DSM.SignalTransition {
                 targetState: evaluateState
-                signal: controlsRect.evaluate
+                signal: evaluate
             }
             DSM.SignalTransition {
                 targetState: playSoundState
-                signal: controlsRect.startSoundButton.clicked
+                signal: playPressed
             }
             DSM.SignalTransition {
                 targetState: exploreState
@@ -139,11 +139,11 @@ Item {
             id: exploreState
             DSM.SignalTransition {
                 targetState: evaluateState
-                signal: controlsRect.evaluate
+                signal: evaluate
             }
             DSM.SignalTransition {
                 targetState: playSoundState
-                signal: controlsRect.startSoundButton.clicked
+                signal: playPressed
             }
             DSM.SignalTransition {
                 targetState: interestingPointState
@@ -158,11 +158,11 @@ Item {
             id: interestingPointState
             DSM.SignalTransition {
                 targetState: evaluateState
-                signal: controlsRect.evaluate
+                signal: evaluate
             }
             DSM.SignalTransition {
                 targetState: playSoundState
-                signal: controlsRect.startSoundButton.clicked
+                signal: playPressed
             }
             DSM.SignalTransition {
                 targetState: exploreState
