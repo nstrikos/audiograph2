@@ -2,7 +2,6 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
-#include "function.h"
 #include "parameters.h"
 #include "audio.h"
 #include "audionotes.h"

@@ -20,7 +20,6 @@ SOURCES += \
         audiopoints.cpp \
         fparser/fparser.cc \
         fparser/fpoptimizer.cc \
-        function.cpp \
         function/currentPoint.cpp \
         function/dragHandler.cpp \
         function/functionController.cpp \
@@ -76,7 +75,6 @@ HEADERS += \
     fparser/fparser_gmpint.hh \
     fparser/fparser_mpfr.hh \
     fparser/fpconfig.hh \
-    function.h \
     function/currentPoint.h \
     function/dragHandler.h \
     function/functionController.h \
