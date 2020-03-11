@@ -67,7 +67,7 @@ void GenFunctionCalculatorThread::run()
 //    size_t err = parser.parse(byteCode, exp, "x");
 //    if ( err  )
 
-    int res = m_fparser.Parse(exp, "x");
+//    int res = m_fparser.Parse(exp, "x");
 
 //    if(res >= 0 || exp == "") {
 //        emit error(tr("Cannot understand expression.\n") + m_fparser.ErrorMsg());
@@ -81,7 +81,7 @@ void GenFunctionCalculatorThread::run()
         //result = byteCode.run();
         vals[0] = x;
         result = m_fparser.Eval(vals);
-        res = m_fparser.EvalError();
+//        res = m_fparser.EvalError();
 
         if (result > 10 * m_params->maxY())
             result = 10 * m_params->maxY();

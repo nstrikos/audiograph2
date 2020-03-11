@@ -1,5 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
+import Qt.labs.settings 1.1
 
 import QtQml.StateMachine 1.0 as DSM
 
@@ -13,8 +14,8 @@ Window {
 
     //on android setting width and height results in
     //not showing correctly the application
-    width: Qt.platform.os === "android" ? 320 : Screen.width
-    height: Qt.platform.os === "android" ? 350 : Screen.height
+//    width: Qt.platform.os === "android" ? 320 : 1024//: Screen.width
+//    height: Qt.platform.os === "android" ? 350 : 768//Screen.height
     minimumWidth: 320
     minimumHeight: 320
     title: qsTr("Audiographs")
@@ -28,6 +29,13 @@ Window {
     signal stopAudio()
     signal explore()
     signal interestingPoint()
+
+    Settings {
+        property alias x: window.x
+        property alias y: window.y
+        property alias width: window.width
+        property alias height: window.height
+    }
 
     ControlsRect {
         id: controlsRect

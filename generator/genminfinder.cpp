@@ -124,11 +124,11 @@ double GenMinFinder::min()
     }
 
     double min = m_minThreads.at(0)->min();
-    double tmin = m_minThreads.at(0)->tmin();
+//    double tmin = m_minThreads.at(0)->tmin();
     for (unsigned int i = 1; i < numThreads; i++) {
         if (min > m_minThreads.at(i)->min()) {
             min = m_minThreads.at(i)->min();
-            tmin = m_minThreads.at(i)->tmin();
+//            tmin = m_minThreads.at(i)->tmin();
         }
     }
 

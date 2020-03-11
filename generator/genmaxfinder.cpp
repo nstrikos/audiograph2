@@ -68,11 +68,11 @@ double GenMaxFinder::max()
     }
 
     double max = m_maxThreads.at(0)->max();
-    double tmax = m_maxThreads.at(0)->tmax();
+//    double tmax = m_maxThreads.at(0)->tmax();
     for (unsigned int i = 1; i < numThreads; i++) {
         if (max < m_maxThreads.at(i)->max()) {
             max = m_maxThreads.at(i)->max();
-            tmax = m_maxThreads.at(i)->tmax();
+//            tmax = m_maxThreads.at(i)->tmax();
         }
     }
 
