@@ -89,6 +89,10 @@ Item {
             }
             DSM.SignalTransition {
                 targetState: graphReadyState
+                signal: newGraph
+            }
+            DSM.SignalTransition {
+                targetState: graphReadyState
                 signal: playPressed
             }
             DSM.SignalTransition {
@@ -131,7 +135,6 @@ Item {
             }
             onEntered: {
                 console.log("point state")
-                functionController.stopAudio()
                 functionController.firstPoint()
             }
         }

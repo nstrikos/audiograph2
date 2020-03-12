@@ -131,7 +131,7 @@ void FunctionController::zoom(double delta)
         m_zoomer = new FunctionZoomer();
         connect(m_zoomer, SIGNAL(newInputValues(double,double,double,double)), this, SIGNAL(newInputValues(double,double,double,double)));
     }
-    stopAudio();
+    //stopAudio();
     m_zoomer->zoom(*m_model, delta);
 }
 
