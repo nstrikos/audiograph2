@@ -42,11 +42,6 @@ void FunctionController::displayFunction(QString expression,
                                          QString minY,
                                          QString maxY)
 {
-    stopAudio();
-
-    if (m_pointsInterest != nullptr)
-        m_pointsInterest->stop();
-
     if (m_model == nullptr) {
         m_model = new FunctionModel();
         connect(m_model, SIGNAL(update()), this, SLOT(updateDisplayView()));
@@ -64,12 +59,6 @@ void FunctionController::updateView()
         return;
     if (m_model == nullptr)
         return;
-    stopAudio();
-
-    if (m_pointsInterest != nullptr) {
-        m_pointsInterest->stop();
-        disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
-    }
 
     m_view->updateView();
     m_currentPoint->update(m_model, m_pointView->width(), m_pointView->height());
@@ -96,7 +85,8 @@ void FunctionController::clearDisplayView()
 
 void FunctionController::audioNotesFinished()
 {
-    disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
+    if (m_audioNotes != nullptr)
+        disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
     QString label = m_pointsInterest->currentPointLabel();
     m_textToSpeech->speak(label);
 }
@@ -119,11 +109,7 @@ void FunctionController::setPointView(FunctionPointView *pointView)
 
 void FunctionController::zoom(double delta)
 {
-    if (m_pointsInterest != nullptr) {
-        m_pointsInterest->stop();
-        disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
-    }
-
+    m_currentPoint->reset();
     if (m_model == nullptr)
         return;
 
@@ -137,10 +123,7 @@ void FunctionController::zoom(double delta)
 
 void FunctionController::startDrag(int x, int y)
 {
-    if (m_pointsInterest != nullptr) {
-        m_pointsInterest->stop();
-        disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
-    }
+    m_currentPoint->reset();
 
     if (m_model == nullptr)
         return;
@@ -157,10 +140,7 @@ void FunctionController::startDrag(int x, int y)
 
 void FunctionController::drag(int diffX, int diffY, int width, int height)
 {
-    if (m_pointsInterest != nullptr) {
-        m_pointsInterest->stop();
-        disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
-    }
+    m_currentPoint->reset();
 
     if (m_model == nullptr)
         return;
@@ -211,11 +191,6 @@ void FunctionController::previousPoint()
     if (m_audioNotes == nullptr)
         m_audioNotes = new AudioNotes();
 
-    //    if (m_pointsInterest != nullptr) {
-    //        m_pointsInterest->stop();
-    //        disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
-    //    }
-
     m_currentPoint->previousPoint(m_model, m_pointView->width(), m_pointView->height());
     m_audioNotes->setNote(m_model,
                           m_currentPoint->point(),
@@ -235,11 +210,6 @@ void FunctionController::nextPoint()
     if (m_audioNotes == nullptr)
         m_audioNotes = new AudioNotes();
 
-    //    if (m_pointsInterest != nullptr) {
-    //        m_pointsInterest->stop();
-    //        disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
-    //    }
-
     m_currentPoint->nextPoint(m_model, m_pointView->width(), m_pointView->height());
     m_audioNotes->setNote(m_model,
                           m_currentPoint->point(),
@@ -250,9 +220,6 @@ void FunctionController::nextPoint()
 
 void FunctionController::mousePoint(int point)
 {
-    //    if (m_pointsInterest != nullptr)
-    //        m_pointsInterest->stop();
-
     if (m_pointView == nullptr)
         return;
     if (m_model == nullptr)
@@ -262,12 +229,6 @@ void FunctionController::mousePoint(int point)
     if (m_audioNotes == nullptr)
         m_audioNotes = new AudioNotes();
 
-    //    if (m_pointsInterest != nullptr) {
-    //        m_pointsInterest->stop();
-    //        disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
-    //    }
-
-    //m_pointView->setMouseX(m_model, point);
     m_currentPoint->setMouseX(m_model, m_pointView->width(), m_pointView->height(), point);
     m_audioNotes->setNote(m_model,
                           point,
@@ -401,32 +362,18 @@ void FunctionController::audio()
 {
     if (m_pointsInterest != nullptr) {
         m_pointsInterest->stop();
-        disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
+
+        if (m_audioNotes != nullptr)
+            disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
     }
 
     if (m_model->validExpression()) {
         if (m_parameters->useNotes()) {
-            //                audioNotes.startNotes(myfunction,
-            //                                      parameters.minFreq,
-            //                                      parameters.maxFreq,
-            //                                      parameters.duration)
             startNotes();
         } else {
-            //                audio.start(textInput.text,
-            //                            textInput2.text,
-            //                            textInput3.text,
-            //                            textInput4.text,
-            //                            textInput5.text,
-            //                            parameters.duration,
-            //                            parameters.minFreq,
-            //                            parameters.maxFreq)
             startAudio();
         }
 
-        //graphRect.startMovingPoint()
-        //        startSoundButton.checked = false
-        //if (m_pointView != nullptr && m_model != nullptr && m_parameters != nullptr)
-        //    m_pointView->drawPoint(m_model, m_parameters->duration());
         m_currentPoint->startMoving(m_model,
                                     m_pointView->width(),
                                     m_pointView->height(),
@@ -438,7 +385,8 @@ void FunctionController::startAudio()
 {
     if (m_pointsInterest != nullptr) {
         m_pointsInterest->stop();
-        disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
+        if (m_audioNotes != nullptr)
+            disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
     }
 
     if (m_model == nullptr)
@@ -461,7 +409,8 @@ void FunctionController::stopAudio()
 {
     if (m_pointsInterest != nullptr) {
         m_pointsInterest->stop();
-        disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
+        if (m_audioNotes != nullptr)
+            disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
     }
 
     if (m_audio != nullptr)
@@ -484,7 +433,8 @@ void FunctionController::startNotes()
 
     if (m_pointsInterest != nullptr) {
         m_pointsInterest->stop();
-        disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
+        if (m_audioNotes != nullptr)
+            disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
     }
 
     m_audioNotes->startNotes(m_model,

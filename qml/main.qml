@@ -77,6 +77,7 @@ Window {
             anchorToLeft = true
         else
             anchorToLeft = false
+
     }
     onAnchorToLeftChanged: anchorChangeState.anchorChanged()
 

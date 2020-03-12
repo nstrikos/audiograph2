@@ -95,6 +95,7 @@ Rectangle {
     }
 
     function updateCanvas() {
+        window.stopAudio()
         graphCanvas.updateCanvas()
         functionController.updateView()
     }
