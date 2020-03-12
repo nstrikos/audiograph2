@@ -64,13 +64,9 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onWheel: {
-                if (!parameters.exploreMode)
+                if (!parameters.exploreMode) {
+                    //window.newGraph()
                     functionController.zoom(wheel.angleDelta.y)
-                else {
-                    if (wheel.angleDelta.y > 0)
-                        functionController.previousPoint()
-                    else
-                        functionController.nextPoint()
                 }
             }
             onPressedChanged: {
