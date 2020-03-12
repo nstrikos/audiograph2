@@ -51,6 +51,7 @@ public:
 
     Q_INVOKABLE void audio();
     Q_INVOKABLE void stopAudio();
+    Q_INVOKABLE void stopInterestingPoint();
 
     Q_INVOKABLE bool validExpression();
 

@@ -102,6 +102,7 @@ void PointsInterest::stop()
     m_timer.stop();
     if (m_audioNotes != nullptr)
         m_audioNotes->stopNotes();
+    m_isUpdated = false;
 }
 
 void PointsInterest::timerExpired()

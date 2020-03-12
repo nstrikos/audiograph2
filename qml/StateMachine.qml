@@ -122,6 +122,10 @@ Item {
                 signal: evaluate
             }
             DSM.SignalTransition {
+                targetState: graphReadyState
+                signal: newGraph
+            }
+            DSM.SignalTransition {
                 targetState: playSoundState
                 signal: playPressed
             }
@@ -137,6 +141,9 @@ Item {
                 console.log("point state")
                 functionController.firstPoint()
             }
+            onExited: {
+                functionController.stopInterestingPoint()
+            }
         }
         DSM.State {
             id: exploreState
@@ -147,6 +154,10 @@ Item {
             DSM.SignalTransition {
                 targetState: playSoundState
                 signal: playPressed
+            }
+            DSM.SignalTransition {
+                targetState: graphReadyState
+                signal: newGraph
             }
             DSM.SignalTransition {
                 targetState: interestingPointState
@@ -168,12 +179,19 @@ Item {
                 signal: playPressed
             }
             DSM.SignalTransition {
+                targetState: graphReadyState
+                signal: newGraph
+            }
+            DSM.SignalTransition {
                 targetState: exploreState
                 signal: explore
             }
             onEntered: {
                 console.log("interesting point state")
                 functionController.stopAudio()
+            }
+            onExited: {
+                functionController.stopInterestingPoint()
             }
         }
     }

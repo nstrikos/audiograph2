@@ -64,15 +64,15 @@ void GenFunctionCalculatorThread::run()
     double vals[] = { 0 };
     double result;
 
-//    size_t err = parser.parse(byteCode, exp, "x");
-//    if ( err  )
+    //    size_t err = parser.parse(byteCode, exp, "x");
+    //    if ( err  )
 
-//    int res = m_fparser.Parse(exp, "x");
+    m_fparser.Parse(exp, "x");
 
-//    if(res >= 0 || exp == "") {
-//        emit error(tr("Cannot understand expression.\n") + m_fparser.ErrorMsg());
-//        return false;
-//    }
+    //    if(res >= 0 || exp == "") {
+    //        emit error(tr("Cannot understand expression.\n") + m_fparser.ErrorMsg());
+    //        return false;
+    //    }
 
 
     for (i = m_first; i < m_last; i++) {
@@ -81,7 +81,7 @@ void GenFunctionCalculatorThread::run()
         //result = byteCode.run();
         vals[0] = x;
         result = m_fparser.Eval(vals);
-//        res = m_fparser.EvalError();
+        //        res = m_fparser.EvalError();
 
         if (result > 10 * m_params->maxY())
             result = 10 * m_params->maxY();
@@ -89,36 +89,36 @@ void GenFunctionCalculatorThread::run()
             result = 10 * m_params->minY();
 
 
-//        if (x > -4.0 && x < -3.0)
-//            result = 440.0;
-//        if (x >= -3.0 && x < -2.0)
-//            result = 493.88;
-//        if (x >= -2.0 && x < -1.0)
-//            result = 523.25;
-//        if (x >= -1.0 && x < 0.0)
-//            result = 587.33;
-//        if (x >= 0.0 && x < 1.0)
-//            result = 659.25;
-//        if (x >= 1.0 && x < 2.0)
-//            result = 698.46;
-//        if (x >= 2.0 && x < 3.0)
-//            result = 783.99;
-//        if (x >= 3.0 && x <= 4.0)
-//            result = 880.00;
+        //        if (x > -4.0 && x < -3.0)
+        //            result = 440.0;
+        //        if (x >= -3.0 && x < -2.0)
+        //            result = 493.88;
+        //        if (x >= -2.0 && x < -1.0)
+        //            result = 523.25;
+        //        if (x >= -1.0 && x < 0.0)
+        //            result = 587.33;
+        //        if (x >= 0.0 && x < 1.0)
+        //            result = 659.25;
+        //        if (x >= 1.0 && x < 2.0)
+        //            result = 698.46;
+        //        if (x >= 2.0 && x < 3.0)
+        //            result = 783.99;
+        //        if (x >= 3.0 && x <= 4.0)
+        //            result = 880.00;
 
         functionValues[i] = result;
 
-//        if (is_positive_infinite(result)) {
-//            functionValues[i] = std::numeric_limits<double>::max();
-//        }
+        //        if (is_positive_infinite(result)) {
+        //            functionValues[i] = std::numeric_limits<double>::max();
+        //        }
 
-//        if (is_negative_infinite(result)) {
-//            functionValues[i] = -std::numeric_limits<double>::max();
-//        }
+        //        if (is_negative_infinite(result)) {
+        //            functionValues[i] = -std::numeric_limits<double>::max();
+        //        }
 
-//        if (is_nan(result)) {
-//            functionValues[i] = 0;
-//        }
+        //        if (is_nan(result)) {
+        //            functionValues[i] = 0;
+        //        }
         //        m_functionValues[i] = sin(x)*x*x*x - x*x*sin(x);
         //        functionValues[i] = -5/(x*x + 1);
         //        m_functionValues[i] = x;

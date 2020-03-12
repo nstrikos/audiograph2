@@ -421,6 +421,15 @@ void FunctionController::stopAudio()
     m_currentPoint->stop();
 }
 
+void FunctionController::stopInterestingPoint()
+{
+    if (m_pointsInterest != nullptr) {
+        m_pointsInterest->stop();
+        if (m_audioNotes != nullptr)
+            disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
+    }
+}
+
 bool FunctionController::validExpression()
 {
     return m_model->validExpression();
