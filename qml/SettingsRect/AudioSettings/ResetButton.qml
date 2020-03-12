@@ -36,7 +36,7 @@ Button {
         durationSpinbox.value = parameters.duration
         minFreqSpinbox.value = parameters.minFreq
         maxFreqSpinbox.value = parameters.maxFreq
-        useNotesCheckBox.checked = parameters.useNotes
+        useNotesFocusScope.useNotesCheckBox.checked = parameters.useNotes
         window.stopAudio()
     }
 }

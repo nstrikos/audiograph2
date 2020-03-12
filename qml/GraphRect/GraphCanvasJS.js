@@ -148,11 +148,11 @@ function drawVerticalLines()
             var pos = x - w/2 - 10
         }
         else if (x - w/2 <= 0) {
-            console.log("Error: " + i)
             pos = 0
         }
-        else
+        else {
             pos = x - w/2
+        }
         ctx.fillText(text, pos, 10);
         ctx.moveTo(x, 0)
         ctx.lineTo(x, canvas.height)

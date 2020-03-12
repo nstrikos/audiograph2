@@ -30,9 +30,5 @@ TextField {
         }
         border.width: textInput2.activeFocus ? 2 : 1
     }
-    onTextChanged: {
-        if (active)
-            evaluate()//calculate()
-    }
     Accessible.name: qsTr("Set minimum x")
 }

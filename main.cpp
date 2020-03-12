@@ -17,6 +17,10 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
+    app.setOrganizationName("Nick Strikos");
+    app.setOrganizationDomain("nstrikos@yahoo.gr");
+    app.setApplicationName("audiographs");
+
     qmlRegisterType<FunctionDisplayView>("DisplayView", 1, 0, "DisplayView");
     qmlRegisterType<FunctionPointView>("PointView", 1, 0, "PointView");
 

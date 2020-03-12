@@ -67,13 +67,13 @@ Flickable {
             onFocusChanged: ensureVisible(textInput)
             Accessible.name: qsTr("Function expression")
             onTextChanged: {
-                active = false
+                controlsRect.active = false
                 textInput2.text = "-10"
                 textInput3.text = "10"
                 textInput4.text = "-10"
                 textInput5.text = "10"
                 window.evaluate()
-                active = true
+                controlsRect.active = true
             }
         }
         
@@ -90,6 +90,10 @@ Flickable {
         
         CustomTextInput {
             id: textInput2
+            onTextChanged: {
+                if (controlsRect.active)
+                    evaluate()
+            }
         }
         
         Label {
@@ -110,6 +114,10 @@ Flickable {
             placeholderText: (parent.width > 0) ? "maximum X" : ""
             onFocusChanged: ensureVisible(textInput3)
             Accessible.name: qsTr("Set maximum x")
+            onTextChanged: {
+                if (controlsRect.active)
+                    evaluate()
+            }
         }
         
         Label {
@@ -130,6 +138,10 @@ Flickable {
             placeholderText: (parent.width > 0) ? "minimum Y" : ""
             onFocusChanged: ensureVisible(textInput4)
             Accessible.name: qsTr("Set minimum Y")
+            onTextChanged: {
+                if (controlsRect.active)
+                    evaluate()
+            }
         }
         
         Label {
@@ -150,6 +162,10 @@ Flickable {
             placeholderText: (parent.width > 0) ? "maximum Y" : ""
             onFocusChanged: ensureVisible(textInput5)
             Accessible.name: qsTr("Set maximum Y")
+            onTextChanged: {
+                if (controlsRect.active)
+                    evaluate()
+            }
         }
         
         StartButtonFocusScope {

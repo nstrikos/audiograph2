@@ -9,6 +9,7 @@ FocusScope {
     anchors.verticalCenter: label4.verticalCenter
     anchors.right: parent.right
     anchors.rightMargin: 10
+    property alias useNotesCheckBox: useNotesCheckBox
     property alias color: useNotesCheckBox.color
     activeFocusOnTab: true
     Accessible.name: qsTr("Use notes")
