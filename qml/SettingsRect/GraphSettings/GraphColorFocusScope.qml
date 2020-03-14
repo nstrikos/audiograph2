@@ -24,7 +24,10 @@ FocusScope {
         border.width: graphColorFocusScope.activeFocus ? 2 : 1
         MouseArea {
             anchors.fill: parent
-            onPressed: openColorDialog("line color")
+            onPressed: {
+                window.stopAudio()
+                openColorDialog("line color")
+            }
         }
     }
 }

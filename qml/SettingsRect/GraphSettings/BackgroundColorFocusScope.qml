@@ -23,7 +23,10 @@ FocusScope {
         border.width: backgroundColorFocusScope.activeFocus ? 2 : 1
         MouseArea {
             anchors.fill: parent
-            onPressed: openColorDialog("background color")
+            onPressed: {
+                window.stopAudio()
+                openColorDialog("background color")
+            }
         }
     }
 }
