@@ -10,6 +10,7 @@ FocusScope {
     anchors.right: parent.right
     anchors.rightMargin: 10
     property alias color: invertThemeCheckBox.color
+    property alias invertThemeCheckBox: invertThemeCheckBox
     activeFocusOnTab: true
     Accessible.name: qsTr("Invert theme")
     
@@ -38,6 +39,7 @@ FocusScope {
             }
         }
         onCheckedChanged: {
+            window.stopAudio()
             parameters.invertTheme = checked
             controlsRect.invertTheme = checked
             audioSettingsTab.invertTheme = checked

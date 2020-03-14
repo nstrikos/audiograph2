@@ -54,11 +54,9 @@ Rectangle {
     PinchArea {
         anchors.fill: parent
         onPinchStarted: {
-            controlsRect.stopAudio()
             functionController.startPinch()
         }
         onPinchUpdated: {
-            controlsRect.stopAudio()
             functionController.pinch(pinch.scale)
         }
         MouseArea {

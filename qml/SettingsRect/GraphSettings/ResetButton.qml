@@ -34,6 +34,7 @@ Button {
         border.width: resetButton.activeFocus ? 2 : 1
     }
     onClicked: {
+        window.stopAudio()
         parameters.reset()
         lineColor = parameters.lineColor
         graphRect.curveColor = parameters.lineColor
@@ -42,11 +43,11 @@ Button {
         lineWidthSpinbox.value = parameters.lineWidth
         highlightColor = parameters.highlightColor
         graphRect.highlightColor = parameters.highlightColor
-        axesColorRect.color = parameters.axesColor
+        axesColorFocusScope.axesColorRect.color = parameters.axesColor
         axesSizeSpinbox.value = parameters.axesSize
-        showAxesCheckBox.checked = parameters.showAxes
+        showAxesFocusScope.showAxesCheckBox.checked = parameters.showAxes
         graphRect.updateCanvas()
-        invertThemeCheckBox.checked = parameters.invertTheme
+        invertThemeFocusScope.invertThemeCheckBox.checked = parameters.invertTheme
         window.setColor()
     }
 }

@@ -35,8 +35,10 @@ Rectangle {
             window.playPressed()
             event.accepted = true;
         } else if (event.key === Qt.Key_F3) {
+            window.stopAudio()
             functionController.sayXCoordinate()
         } else if (event.key === Qt.Key_F4) {
+            window.stopAudio()
             functionController.sayYCoordinate()
         } else if (event.key === Qt.Key_F7) {
             window.interestingPoint()

@@ -10,6 +10,7 @@ FocusScope {
     anchors.right: parent.right
     anchors.rightMargin: 10
     property alias color: showAxesCheckBox.color
+    property alias showAxesCheckBox: showAxesCheckBox
     activeFocusOnTab: true
     Accessible.name: qsTr("Show grid")
     Keys.onSpacePressed: showAxesCheckBox.checked = ! showAxesCheckBox.checked
@@ -37,6 +38,7 @@ FocusScope {
             }
         }
         onCheckedChanged: {
+            window.stopAudio()
             parameters.showAxes = checked
             graphRect.graphCanvas.updateCanvas()
         }

@@ -14,6 +14,7 @@ SpinBox {
     value: parameters.axesSize
     Accessible.name: qsTr("Axes size")
     onValueChanged: {
+        window.stopAudio()
         parameters.axesSize = value
         graphRect.graphCanvas.updateCanvas()
     }

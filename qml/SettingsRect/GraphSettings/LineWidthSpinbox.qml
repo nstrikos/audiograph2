@@ -14,6 +14,7 @@ SpinBox {
     value: parameters.lineWidth
     Accessible.name: qsTr("Line width")
     onValueChanged: {
+        window.stopAudio()
         graphRect.curveWidth = value
         parameters.lineWidth = value
     }

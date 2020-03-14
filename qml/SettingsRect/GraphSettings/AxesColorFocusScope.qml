@@ -10,6 +10,7 @@ FocusScope {
     anchors.right: parent.right
     anchors.rightMargin: 10
     property alias color: axesColorRect.color
+    property alias axesColorRect: axesColorRect
     Accessible.name: qsTr("Axes color")
     activeFocusOnTab: true
     Keys.onSpacePressed: openColorDialog("axes color")
@@ -23,7 +24,10 @@ FocusScope {
         border.width: axesColorFocusScope.activeFocus ? 2 : 1
         MouseArea {
             anchors.fill: parent
-            onPressed: openColorDialog("axes color")
+            onPressed: {
+                window.stopAudio()
+                openColorDialog("axes color")
+            }
         }
     }
 }
