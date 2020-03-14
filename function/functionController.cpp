@@ -186,6 +186,8 @@ void FunctionController::previousPoint()
         return;
     if (m_model == nullptr)
         return;
+    if (m_model->lineSize() == 0)
+        return;
     if (m_parameters == nullptr)
         return;
     if (m_audioNotes == nullptr)
@@ -205,6 +207,9 @@ void FunctionController::nextPoint()
         return;
     if (m_model == nullptr)
         return;
+    if (m_model->lineSize() == 0)
+        return;
+
     if (m_parameters == nullptr)
         return;
     if (m_audioNotes == nullptr)
@@ -224,6 +229,8 @@ void FunctionController::mousePoint(int point)
         return;
     if (m_model == nullptr)
         return;
+    if (m_model->lineSize() == 0)
+        return;
     if (m_parameters == nullptr)
         return;
     if (m_audioNotes == nullptr)
@@ -240,6 +247,9 @@ void FunctionController::mousePoint(int point)
 
 void FunctionController::nextPointInterest()
 {
+    if (m_model->lineSize() == 0)
+        return;
+
     if (m_pointsInterest == nullptr) {
         m_pointsInterest = new PointsInterest();
     }
@@ -254,6 +264,9 @@ void FunctionController::nextPointInterest()
 
 void FunctionController::previousPointInterest()
 {
+    if (m_model->lineSize() == 0)
+        return;
+
     if (m_pointsInterest == nullptr) {
         m_pointsInterest = new PointsInterest();
     }

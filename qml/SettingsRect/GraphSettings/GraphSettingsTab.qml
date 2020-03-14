@@ -19,6 +19,26 @@ Rectangle {
 
     ColorDialog {
         id: colorDialog
+        property var request
+        onAccepted: {
+            if (request === "line color") {
+                parameters.lineColor = color
+                lineColor = color
+                graphRect.curveColor = color
+            } else if (request === "background color") {
+                parameters.backgroundColor = color
+                backgroundColor = color
+                graphRect.graphCanvas.updateCanvas()
+            } else if (request === "axes color") {
+                parameters.axesColor = color
+                axesColor = color
+                graphRect.graphCanvas.updateCanvas()
+            } else if (request === "highlight color") {
+                parameters.highlightColor = color
+                highlightColor = color
+                graphRect.highlightColor = color
+            }
+        }
     }
 
     function openColorDialog(request) {

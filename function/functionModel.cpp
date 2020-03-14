@@ -46,6 +46,7 @@ void FunctionModel::performCalculation()
     }
     else {
         m_validExpression = false;
+        clear();
     }
 }
 
@@ -123,6 +124,11 @@ bool FunctionModel::check()
     }
 
     return true;
+}
+
+void FunctionModel::clear()
+{
+    m_linePoints.clear();
 }
 
 void FunctionModel::calculatePoints()

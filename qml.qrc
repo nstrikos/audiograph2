@@ -30,7 +30,6 @@
         <file>qml/SettingsRect/AudioSettings/MaxFreqSpinbox.qml</file>
         <file>qml/SettingsRect/AudioSettings/MinFreqSpinbox.qml</file>
         <file>qml/SettingsRect/GraphSettings/GraphSettingsTab.qml</file>
-        <file>qml/SettingsRect/GraphSettings/ColorDialog.qml</file>
         <file>qml/SettingsRect/GraphSettings/Label1.qml</file>
         <file>qml/SettingsRect/GraphSettings/GraphColorFocusScope.qml</file>
         <file>qml/SettingsRect/GraphSettings/Label2.qml</file>

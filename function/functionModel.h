@@ -51,6 +51,7 @@ private:
     void performCalculation();
     void replaceConstants();
     bool check();
+    void clear();
     void calculatePoints();
     void performZoom(double factor);
     QString m_expression;

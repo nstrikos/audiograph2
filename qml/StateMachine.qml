@@ -58,11 +58,11 @@ Item {
                 signal: playPressed
             }
             DSM.SignalTransition {
-                targetState: pointState
+                targetState: exploreState//pointState
                 signal: explore
             }
             DSM.SignalTransition {
-                targetState: pointState
+                targetState: interestingPointState//pointState
                 signal: interestingPoint
             }
             onEntered: {
@@ -96,11 +96,11 @@ Item {
                 signal: playPressed
             }
             DSM.SignalTransition {
-                targetState: pointState
+                targetState: exploreState//pointState
                 signal: explore
             }
             DSM.SignalTransition {
-                targetState: pointState
+                targetState: interestingPointState//pointState
                 signal: interestingPoint
             }
             onEntered: {
@@ -115,41 +115,45 @@ Item {
                 functionController.firstPoint()
             }
         }
-        DSM.State {
-            id: pointState
-            DSM.SignalTransition {
-                targetState: evaluateState
-                signal: evaluate
-            }
-            DSM.SignalTransition {
-                targetState: graphReadyState
-                signal: newGraph
-            }
-            DSM.SignalTransition {
-                targetState: playSoundState
-                signal: playPressed
-            }
-            DSM.SignalTransition {
-                targetState: exploreState
-                signal: explore
-            }
-            DSM.SignalTransition {
-                targetState: interestingPointState
-                signal: interestingPoint
-            }
-            onEntered: {
-                console.log("point state")
-                functionController.firstPoint()
-            }
-            onExited: {
-                functionController.stopInterestingPoint()
-            }
-        }
+//        DSM.State {
+//            id: pointState
+//            DSM.SignalTransition {
+//                targetState: evaluateState
+//                signal: evaluate
+//            }
+//            DSM.SignalTransition {
+//                targetState: graphReadyState
+//                signal: newGraph
+//            }
+//            DSM.SignalTransition {
+//                targetState: graphReadyState
+//                signal: playPressed
+//            }
+//            DSM.SignalTransition {
+//                targetState: exploreState
+//                signal: explore
+//            }
+//            DSM.SignalTransition {
+//                targetState: interestingPointState
+//                signal: interestingPoint
+//            }
+//            onEntered: {
+//                console.log("point state")
+//                functionController.firstPoint()
+//            }
+//            onExited: {
+//                functionController.stopInterestingPoint()
+//            }
+//        }
         DSM.State {
             id: exploreState
             DSM.SignalTransition {
                 targetState: evaluateState
                 signal: evaluate
+            }
+            DSM.SignalTransition {
+                targetState: initialState
+                signal: error
             }
             DSM.SignalTransition {
                 targetState: playSoundState
@@ -175,7 +179,7 @@ Item {
                 signal: evaluate
             }
             DSM.SignalTransition {
-                targetState: playSoundState
+                targetState: graphReadyState
                 signal: playPressed
             }
             DSM.SignalTransition {
@@ -189,9 +193,11 @@ Item {
             onEntered: {
                 console.log("interesting point state")
                 functionController.stopAudio()
+                controlsRect.startSoundButton.text = qsTr("Stop sound")
             }
             onExited: {
                 functionController.stopInterestingPoint()
+                controlsRect.startSoundButton.text = qsTr("Start sound")
             }
         }
     }

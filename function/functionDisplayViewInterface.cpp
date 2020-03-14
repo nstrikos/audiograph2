@@ -19,6 +19,9 @@ void FunctionDisplayViewInterface::calcCoords(int width, int height)
 
         int size = m_model->lineSize();
 
+        if (size == 0)
+            return;
+
         double xStart = m_model->x(0);
         double xEnd = m_model->x(size - 1);
 

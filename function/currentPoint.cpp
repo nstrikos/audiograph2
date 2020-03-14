@@ -61,6 +61,9 @@ void CurrentPoint::setMouseX(FunctionModel *model, double width, double height, 
 
 void CurrentPoint::nextPoint(FunctionModel *model, double width, double height)
 {
+    if (model->lineSize() == 0)
+        return;
+
     m_point += m_step;
 
     if (m_point >= LINE_POINTS)
@@ -102,6 +105,8 @@ void CurrentPoint::decPoint(FunctionModel *model, double width, double height)
 void CurrentPoint::update(FunctionModel *model, double width, double height)
 {
     int size = model->lineSize();
+    if (size == 0)
+        return;
     double xStart = model->x(0);
     double xEnd = model->x(size - 1);
     double minY = model->minY();
