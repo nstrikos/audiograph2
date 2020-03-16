@@ -22,6 +22,13 @@ class FunctionController : public QObject
 public:
     explicit FunctionController(QObject *parent = nullptr);
     ~FunctionController();
+
+    void setParameters(Parameters *parameters);
+    void setDisplayView(FunctionDisplayView *view);
+    void setPointView(FunctionPointView *pointView);
+    void setTextToSpeech(TextToSpeech *textToSpeech);
+
+
     Q_INVOKABLE void displayFunction(QString expression,
                                      QString minX,
                                      QString maxX,
@@ -30,23 +37,25 @@ public:
 
     Q_INVOKABLE void updateView();
 
-    void setDisplayView(FunctionDisplayView *view);
-    void setPointView(FunctionPointView *pointView);
-
     Q_INVOKABLE void zoom(double delta);
     Q_INVOKABLE void startDrag(int x, int y);
     Q_INVOKABLE void drag(int diffX, int diffY, int width, int height);
     Q_INVOKABLE void startPinch();
     Q_INVOKABLE void pinch(double scale);
+
     Q_INVOKABLE void nextPoint();
     Q_INVOKABLE void previousPoint();
     Q_INVOKABLE void mousePoint(int point);
+
     Q_INVOKABLE void nextPointInterest();
     Q_INVOKABLE void previousPointInterest();
+
     Q_INVOKABLE void incStep();
     Q_INVOKABLE void decStep();
+
     Q_INVOKABLE void sayXCoordinate();
     Q_INVOKABLE void sayYCoordinate();
+
     Q_INVOKABLE void firstPoint();
 
     Q_INVOKABLE void audio();
@@ -59,10 +68,6 @@ public:
     Q_INVOKABLE double maxX();
     Q_INVOKABLE double minY();
     Q_INVOKABLE double maxY();
-
-    void setParameters(Parameters *parameters);
-
-    void setTextToSpeech(TextToSpeech *textToSpeech);
 
 signals:
     void updateFinished();
