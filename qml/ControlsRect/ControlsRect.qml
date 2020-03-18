@@ -32,7 +32,10 @@ Rectangle {
     focus: true
     Keys.onPressed: {
         if (event.key === Qt.Key_F2) {
-            window.playPressed()
+            if (functionController.validExpression())
+                window.playPressed()
+            else
+                textToSpeech.speak(qsTr("Cannot understand expression"))
             event.accepted = true;
         } else if (event.key === Qt.Key_F3) {
             window.stopAudio()

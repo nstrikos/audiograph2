@@ -445,7 +445,10 @@ void FunctionController::stopInterestingPoint()
 
 bool FunctionController::validExpression()
 {
-    return m_model->validExpression();
+    if (m_model != nullptr)
+        return m_model->validExpression();
+    else
+        return false;
 }
 
 void FunctionController::startNotes()
