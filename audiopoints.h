@@ -8,6 +8,8 @@
 #include <QTimer>
 #include <qendian.h>
 
+#include <random>
+
 const int DataFrequencyHz = 48000;
 #ifdef Q_OS_WIN
 const int BufferSize   = 32000;
@@ -115,6 +117,10 @@ private:
     int m_time;
     double m_ratio;
     bool m_isPlaying;
+
+    const double m_mean = 0.0;
+    const double m_stddev = 100;
+    std::default_random_engine m_generator;
 
 signals:
     void f0Changed();

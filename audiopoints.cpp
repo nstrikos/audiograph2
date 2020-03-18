@@ -1,5 +1,6 @@
 #include "audiopoints.h"
 #include <qmath.h>
+#include <random>
 
 AudioPoints::AudioPoints()
 {
@@ -173,7 +174,7 @@ void AudioPoints::setFreq(double freq, bool useNotes, bool n, double ratio)
         //            xx = 3322.44;
     }
 
-//    xx = xx / 4;
+    //    xx = xx / 4;
     m_time = 0;
     if (audioPlaying == false)
         startAudio();
@@ -249,21 +250,21 @@ void AudioPoints::writeMoreData()
 
             double x;
 
-//                        if (!m_n) {
-//                            m_f0 = 10;
-//                            m_f1 = 35;
-//                            m_f2 = 5;
-//                            m_f3 = 5;
-//                            m_f4 = 5;
-//                            m_f10 = 0;
-//                        } else {
-//                            m_f0 = 100;
-//                            m_f1 = 0;
-//                            m_f2 = 0;
-//                            m_f3 = 0;
-//                            m_f4 = 0;
-//                            m_f10 = 5;
-//                        }
+            //                        if (!m_n) {
+            //                            m_f0 = 10;
+            //                            m_f1 = 35;
+            //                            m_f2 = 5;
+            //                            m_f3 = 5;
+            //                            m_f4 = 5;
+            //                            m_f10 = 0;
+            //                        } else {
+            //                            m_f0 = 100;
+            //                            m_f1 = 0;
+            //                            m_f2 = 0;
+            //                            m_f3 = 0;
+            //                            m_f4 = 0;
+            //                            m_f10 = 5;
+            //                        }
 
 
             x = 1/(m_f0 + m_f1 + m_f2 + m_f3 + m_f4 + m_f5 + m_f6 + m_f7 + m_f8 + m_f9 + m_f10) *
@@ -347,12 +348,19 @@ void AudioPoints::writeMoreData()
 
             signed short value = static_cast<signed short>(x_x * 32767);
 
-            if (m_ratio < 0.5) {
-                aubuffer[sample] = value * m_ratio * 2;
-                aubuffer[sample + 1] = 0;
+            if (xx == 0) {
+                std::normal_distribution<double> dist(m_mean, m_stddev);
+                value += dist(m_generator);
+                aubuffer[sample] = value;
+                aubuffer[sample + 1] = value;
             } else {
-                aubuffer[sample] = 0;
-                aubuffer[sample + 1] = (-2 * m_ratio + 2) * value ;
+                if (m_ratio < 0.5) {
+                    aubuffer[sample] = value * m_ratio * 2;
+                    aubuffer[sample + 1] = 0;
+                } else {
+                    aubuffer[sample] = 0;
+                    aubuffer[sample + 1] = (-2 * m_ratio + 2) * value ;
+                }
             }
         }
 

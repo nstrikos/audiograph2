@@ -2,7 +2,6 @@ import QtQuick 2.12
 import QtQuick.Window 2.12
 
 import QtQml.StateMachine 1.0 as DSM
- import QtMultimedia 5.12
 
 Item {
     DSM.StateMachine {
@@ -77,11 +76,6 @@ Item {
         DSM.State {
             id: playSoundState
 
-            SoundEffect {
-                id: playSound
-                source: "qrc:/resources/beep.wav"
-            }
-
             DSM.SignalTransition {
                 targetState: evaluateState
                 signal: window.evaluate
@@ -114,13 +108,11 @@ Item {
                 console.log("play sound state")
                 controlsRect.startSoundButton.enabled = true
                 controlsRect.startSoundButton.text = qsTr("Stop sound")
-                playSound.play()
                 functionController.audio()
             }
             onExited: {
                 controlsRect.startSoundButton.text = qsTr("Start sound")
                 functionController.stopAudio()
-                playSound.play()
                 functionController.firstPoint()
             }
         }
