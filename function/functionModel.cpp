@@ -5,7 +5,7 @@
 
 FunctionModel::FunctionModel(QObject *parent) : QObject(parent)
 {
-
+    m_error = "";
 }
 
 FunctionModel::~FunctionModel()
@@ -74,7 +74,8 @@ bool FunctionModel::check()
         m_minX = minDouble;
     }
     else {
-        emit error(tr("Minimum is not a real number."));
+        m_error = tr("Minimum is not a real number.");
+        emit error();
         return false;
     }
 
@@ -83,7 +84,8 @@ bool FunctionModel::check()
         m_maxX = maxDouble;
     }
     else {
-        emit error(tr("Maximum is not a real number."));
+        m_error = tr("Maximum is not a real number.");
+        emit error();
         return false;
     }
 
@@ -92,7 +94,8 @@ bool FunctionModel::check()
         m_minY = minYDouble;
     }
     else {
-        emit error(tr("Minimum Y is not a real number."));
+        m_error = tr("Minimum Y is not a real number.");
+        emit error();
         return false;
     }
 
@@ -101,17 +104,20 @@ bool FunctionModel::check()
         m_maxY = maxYDouble;
     }
     else {
-        emit error(tr("Maximum Y is not a real number."));
+        m_error = tr("Maximum Y is not a real number.");
+        emit error();
         return false;
     }
 
     if (m_maxX <= m_minX) {
-        emit error(tr("Maximum must be greater than minimum."));
+        m_error = tr("Maximum must be greater than minimum.");
+        emit error();
         return false;
     }
 
     if (m_maxY <= m_minY) {
-        emit error(tr("Maximum Y must be greater than minimum Y."));
+        m_error = tr("Maximum Y must be greater than minimum Y.");
+        emit error();
         return false;
     }
 
@@ -119,7 +125,8 @@ bool FunctionModel::check()
     m_fparser.AddConstant("e", M_E);
     int res = m_fparser.Parse(m_expression.toStdString(), "x");
     if(res >= 0 || m_expression == "") {
-        emit error(tr("Cannot understand expression.\n") + m_fparser.ErrorMsg());
+        m_error = tr("Cannot understand expression.");
+        emit error();
         return false;
     }
 
@@ -299,6 +306,11 @@ void FunctionModel::performZoom(double factor)
 bool FunctionModel::validExpression() const
 {
     return m_validExpression;
+}
+
+QString FunctionModel::getError()
+{
+    return m_error;
 }
 
 QString FunctionModel::expression() const

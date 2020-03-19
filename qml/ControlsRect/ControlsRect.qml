@@ -35,7 +35,7 @@ Rectangle {
             if (functionController.validExpression())
                 window.playPressed()
             else
-                textToSpeech.speak(qsTr("Cannot understand expression"))
+                textToSpeech.speak(functionController.getError())
             event.accepted = true;
         } else if (event.key === Qt.Key_F3) {
             window.stopAudio()

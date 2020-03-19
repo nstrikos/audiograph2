@@ -45,8 +45,8 @@ void FunctionController::displayFunction(QString expression,
     if (m_model == nullptr) {
         m_model = new FunctionModel();
         connect(m_model, SIGNAL(update()), this, SLOT(updateDisplayView()));
-        connect(m_model, SIGNAL(error(QString)), this, SLOT(clearDisplayView()));
-        connect(m_model, SIGNAL(error(QString)), this, SIGNAL(error()));
+        connect(m_model, SIGNAL(error()), this, SLOT(clearDisplayView()));
+        connect(m_model, SIGNAL(error()), this, SIGNAL(error()));
         connect(m_model, SIGNAL(newInputValues(double, double, double, double)), this, SIGNAL(newInputValues(double,double,double,double)));
     }
     m_model->calculate(expression, minX, maxX, minY, maxY);
@@ -503,4 +503,12 @@ double FunctionController::maxY()
         return m_model->maxY();
     else
         return 10;
+}
+
+QString FunctionController::getError()
+{
+    if (m_model != nullptr)
+        return m_model->getError();
+    else
+        return (tr("Empty expression"));
 }

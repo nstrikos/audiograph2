@@ -41,10 +41,11 @@ public:
 //    void pinch(double scale);
 
     bool validExpression() const;
+    QString getError();
 
 signals:
     void update();
-    void error(QString err);
+    void error();
     void newInputValues(double minX, double maxX, double minY, double maxY);
 
 private:

@@ -69,6 +69,8 @@ public:
     Q_INVOKABLE double minY();
     Q_INVOKABLE double maxY();
 
+    Q_INVOKABLE QString getError();
+
 signals:
     void updateFinished();
     void error();
