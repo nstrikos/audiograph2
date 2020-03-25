@@ -327,6 +327,8 @@ void FunctionController::sayXCoordinate()
         return;
     if (m_model == nullptr)
         return;
+    if (m_model->lineSize() == 0)
+        return;
 
     if (m_pointsInterest != nullptr) {
         m_pointsInterest->stop();
@@ -346,6 +348,8 @@ void FunctionController::sayYCoordinate()
     if (m_textToSpeech == nullptr)
         return;
     if (m_model == nullptr)
+        return;
+    if (m_model->lineSize() == 0)
         return;
 
     if (m_pointsInterest != nullptr) {

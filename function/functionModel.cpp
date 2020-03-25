@@ -54,6 +54,9 @@ void FunctionModel::replaceConstants()
 {
     QString piString = QString::number(M_PI);
     QString eString = QString::number(M_E);
+    QString ln = "ln";
+
+    m_expression.replace(ln, "log");
 
     m_minXString.replace("pi", piString);
     m_minXString.replace("e", eString);
