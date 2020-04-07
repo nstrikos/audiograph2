@@ -69,6 +69,7 @@ HEADERS += \
     audionotes.h \
     audiopoints.h \
     constants.h \
+    exprtk/exprtk.hpp \
     fparser/extrasrc/fpaux.hh \
     fparser/extrasrc/fptypes.hh \
     fparser/fparser.hh \
