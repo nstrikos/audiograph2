@@ -16,6 +16,7 @@ public:
     double point() const;
 
     void setMouseX(FunctionModel *model, double width, double height, int mouseX);
+    void setPoint(FunctionModel *model, double width, double height, int point);
     void nextPoint(FunctionModel *model, double width, double height);
     void previousPoint(FunctionModel *model, double width, double height);
     void incPoint(FunctionModel *model, double width, double height);
@@ -37,7 +38,6 @@ private slots:
     void timerExpired();
 
 private:
-    void setPoint(FunctionModel *model, double width, double height, int point);
     double m_X;
     double m_Y;
     double m_point;

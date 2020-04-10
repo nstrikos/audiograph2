@@ -49,6 +49,9 @@ public:
 
     Q_INVOKABLE void nextPointInterest();
     Q_INVOKABLE void previousPointInterest();
+    Q_INVOKABLE void nextPointInterestFast();
+    Q_INVOKABLE void previousPointInterestFast();
+
 
     Q_INVOKABLE void incStep();
     Q_INVOKABLE void decStep();
