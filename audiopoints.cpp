@@ -233,6 +233,9 @@ void AudioPoints::writeMoreData()
     while (chunks){
 
         for (int sample=0; sample<periodSize/2; sample += 2) {
+            if (xx != xx)
+                xx = 0;
+
             m_sum += xx/DataFrequencyHz;
             m_sum2 += xx2/DataFrequencyHz;
             m_phi = m_sum * 2 * M_PI;
