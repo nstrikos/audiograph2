@@ -171,6 +171,7 @@ void CurrentPoint::setPoint(FunctionModel *model, double width, double height, i
 
     y = height - y;
 
+    m_point = point;
     m_X = x;
     m_Y = y;
 }

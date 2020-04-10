@@ -43,9 +43,15 @@ Rectangle {
         } else if (event.key === Qt.Key_F4) {
             window.stopAudio()
             functionController.sayYCoordinate()
+        } else if ((event.key === Qt.Key_F7) && (event.modifiers & Qt.ShiftModifier)) {
+            window.interestingPoint()
+            functionController.previousPointInterestFast()
         } else if (event.key === Qt.Key_F7) {
             window.interestingPoint()
             functionController.previousPointInterest()
+        } else if ((event.key === Qt.Key_F8) && (event.modifiers & Qt.ShiftModifier)) {
+            window.interestingPoint()
+            functionController.nextPointInterestFast()
         } else if (event.key === Qt.Key_F8) {
             window.interestingPoint()
             functionController.nextPointInterest()

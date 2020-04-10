@@ -27,6 +27,14 @@ public:
                        FunctionPointView *pointView,
                        Parameters *parameters);
 
+    void nextPointFast(CurrentPoint *currentPoint,
+                       FunctionPointView *pointView,
+                       Parameters *parameters);
+
+    void previousPointFast(CurrentPoint *currentPoint,
+                           FunctionPointView *pointView,
+                           Parameters *parameters);
+
     void stop();
 
     void setModel(FunctionModel *model);

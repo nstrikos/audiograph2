@@ -34,6 +34,48 @@ void PointsInterest::previousPoint(AudioNotes *audioNotes,
     start(audioNotes, currentPoint, pointView, parameters);
 }
 
+void PointsInterest::nextPointFast(CurrentPoint *currentPoint, FunctionPointView *pointView, Parameters *parameters)
+{
+    if (m_funcDescription == nullptr)
+        m_funcDescription = new FunctionDescription;
+
+
+    if (m_isUpdated == false) {
+        m_points.clear();
+        m_points = m_funcDescription->points(m_model);
+        m_isUpdated = true;
+    }
+
+    m_currentPoint = currentPoint;
+    m_pointView = pointView;
+    m_parameters = parameters;
+
+    m_forward = true;
+    m_pointInterest = getNextPointInterest();
+    m_currentPoint->setPoint(m_model, m_pointView->width(), m_pointView->height(), m_points[m_pointInterest].x);
+}
+
+void PointsInterest::previousPointFast(CurrentPoint *currentPoint, FunctionPointView *pointView, Parameters *parameters)
+{
+    if (m_funcDescription == nullptr)
+        m_funcDescription = new FunctionDescription;
+
+
+    if (m_isUpdated == false) {
+        m_points.clear();
+        m_points = m_funcDescription->points(m_model);
+        m_isUpdated = true;
+    }
+
+    m_currentPoint = currentPoint;
+    m_pointView = pointView;
+    m_parameters = parameters;
+
+    m_forward = false;
+    m_pointInterest = getNextPointInterest();
+    m_currentPoint->setPoint(m_model, m_pointView->width(), m_pointView->height(), m_points[m_pointInterest].x);
+}
+
 void PointsInterest::start(AudioNotes *audioNotes, CurrentPoint *currentPoint, FunctionPointView *pointView, Parameters *parameters)
 {
     if (m_funcDescription == nullptr)

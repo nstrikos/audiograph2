@@ -247,6 +247,8 @@ void FunctionController::mousePoint(int point)
 
 void FunctionController::nextPointInterest()
 {
+    if (m_model == nullptr)
+        return;
     if (m_model->lineSize() == 0)
         return;
 
@@ -264,6 +266,8 @@ void FunctionController::nextPointInterest()
 
 void FunctionController::previousPointInterest()
 {
+    if (m_model == nullptr)
+        return;
     if (m_model->lineSize() == 0)
         return;
 
@@ -277,6 +281,34 @@ void FunctionController::previousPointInterest()
 
     connect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
     m_pointsInterest->previousPoint(m_audioNotes, m_currentPoint, m_pointView, m_parameters);
+}
+
+void FunctionController::nextPointInterestFast()
+{
+    if (m_model == nullptr)
+        return;
+    if (m_model->lineSize() == 0)
+        return;
+
+    if (m_pointsInterest == nullptr) {
+        m_pointsInterest = new PointsInterest();
+    }
+
+    m_pointsInterest->nextPointFast(m_currentPoint, m_pointView, m_parameters);
+}
+
+void FunctionController::previousPointInterestFast()
+{
+    if (m_model == nullptr)
+        return;
+    if (m_model->lineSize() == 0)
+        return;
+
+    if (m_pointsInterest == nullptr) {
+        m_pointsInterest = new PointsInterest();
+    }
+
+    m_pointsInterest->previousPointFast(m_currentPoint, m_pointView, m_parameters);
 }
 
 void FunctionController::incStep()
