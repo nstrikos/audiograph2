@@ -14,8 +14,8 @@ Window {
 
     //on android setting width and height results in
     //not showing correctly the application
-//    width: Qt.platform.os === "android" ? 320 : 1024//: Screen.width
-//    height: Qt.platform.os === "android" ? 350 : 768//Screen.height
+    //    width: Qt.platform.os === "android" ? 320 : 1024//: Screen.width
+    //    height: Qt.platform.os === "android" ? 350 : 768//Screen.height
     minimumWidth: 320
     minimumHeight: 320
     title: qsTr("Audiographs")
@@ -67,6 +67,8 @@ Window {
             anchorChangeState.state = 'state1'
         else
             anchorChangeState.state = 'state4'
+
+        controlsRect.textInput.forceActiveFocus()
     }
 
     onWidthChanged: setAnchor()
@@ -84,6 +86,10 @@ Window {
     function setColor() {
         controlsRect.color = !parameters.invertTheme ? "white" : "black"
         controlsRect.fontColor = parameters.invertTheme ? "white" : "black"
+    }
+
+    Shortcuts {
+        id: shortcuts
     }
 
     Connections {

@@ -21,6 +21,10 @@ FocusScope {
     Keys.onEnterPressed: anchorChangeState.controlsButtonPressed()
     Keys.onReturnPressed: anchorChangeState.controlsButtonPressed()
 
+//    Keys.onPressed: {
+//        window.keyEvent(event)
+//    }
+
     Rectangle {
         id: borderRect
         anchors.fill: parent

@@ -15,6 +15,7 @@ Rectangle {
     property bool invertTheme: parameters.invertTheme
 
     property alias startSoundButton: controlRectFlickable.startSoundButton
+    property alias startSoundButtonFocusScope: controlRectFlickable.startSoundButtonFocusScope
 
     property alias textInput: controlRectFlickable.textInput
     property alias textInput2: controlRectFlickable.textInput2
@@ -30,46 +31,9 @@ Rectangle {
     }
 
     focus: true
-    Keys.onPressed: {
-        if (event.key === Qt.Key_F2) {
-            if (functionController.validExpression())
-                window.playPressed()
-            else
-                textToSpeech.speak(functionController.getError())
-            event.accepted = true;
-        } else if (event.key === Qt.Key_F3) {
-            window.stopAudio()
-            functionController.sayXCoordinate()
-        } else if (event.key === Qt.Key_F4) {
-            window.stopAudio()
-            functionController.sayYCoordinate()
-        } else if ((event.key === Qt.Key_F7) && (event.modifiers & Qt.ShiftModifier)) {
-            window.interestingPoint()
-            functionController.previousPointInterestFast()
-        } else if (event.key === Qt.Key_F7) {
-            window.interestingPoint()
-            functionController.previousPointInterest()
-        } else if ((event.key === Qt.Key_F8) && (event.modifiers & Qt.ShiftModifier)) {
-            window.interestingPoint()
-            functionController.nextPointInterestFast()
-        } else if (event.key === Qt.Key_F8) {
-            window.interestingPoint()
-            functionController.nextPointInterest()
-        } else if (event.key === Qt.Key_F9) {
-            window.explore()
-            functionController.previousPoint()
-        } else if (event.key === Qt.Key_F10) {
-            window.explore()
-            functionController.nextPoint()
-        } else if (event.key === Qt.Key_F11) {
-            functionController.decStep()
-        } else if (event.key === Qt.Key_F12) {
-            functionController.incStep()
-        } else if (event.key === Qt.Key_PageUp) {
-            console.log("got here")
-            functionController.firstPoint()
-        }
-    }
+//    Keys.onPressed: {
+//        window.keyEvent(event)
+//    }
 
     ControlsTitleBar {
         id: controlsTitleBar
