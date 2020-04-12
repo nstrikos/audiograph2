@@ -92,14 +92,13 @@ Window {
         id: shortcuts
     }
 
-    Connections {
-        target: functionController
-        onUpdateFinished: newGraph()
-        onNewInputValues: controlsRect.newInputValues(minX, maxX, minY, maxY)
-        onMovingPointFinished: stopAudio()
-        onError: error()
+    StateMachine {
     }
 
-    StateMachine {
+    function loadConnections() {
+        var component = Qt.createComponent("Connections.qml");
+        if (component.status === Component.Ready) {
+            var connections = component.createObject(window);
+        }
     }
 }
