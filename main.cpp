@@ -24,22 +24,12 @@ int main(int argc, char *argv[])
     qmlRegisterType<FunctionDisplayView>("DisplayView", 1, 0, "DisplayView");
     qmlRegisterType<FunctionPointView>("PointView", 1, 0, "PointView");
 
-
-    //Function myfunction;
-    FunctionController functionController;
-
     Parameters parameters;
-    functionController.setParameters(&parameters);
     TextToSpeech textToSpeech(parameters);
 
-//    qRegisterMetaType<Function*>("Function*");
-//    qRegisterMetaType<FunctionController*>("FunctionController*");
-
     QQmlApplicationEngine engine;
-    //engine.rootContext()->setContextProperty("myfunction", &myfunction);
     engine.rootContext()->setContextProperty("parameters", &parameters);
     engine.rootContext()->setContextProperty("textToSpeech", &textToSpeech);
-    engine.rootContext()->setContextProperty("functionController", &functionController);
 
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
@@ -50,19 +40,17 @@ int main(int argc, char *argv[])
     engine.load(url);
 
     QObject *rootObject = engine.rootObjects().first();
-    QObject *qmlObject = rootObject->findChild<QObject*>("pointView");
-    QObject *qmlObject2 = rootObject->findChild<QObject*>("displayView");
+    QObject *qmlPointView = rootObject->findChild<QObject*>("pointView");
+    QObject *qmlDisplayView = rootObject->findChild<QObject*>("displayView");
 
-    //CurveMovingPoint *item = static_cast<CurveMovingPoint*>(qmlObject);
-    FunctionPointView *pointView = static_cast<FunctionPointView*>(qmlObject);
-    FunctionDisplayView *displayView = static_cast<FunctionDisplayView*>(qmlObject2);
-    //PointsInterest pointsInterest(myfunction, audioNotes, *item, parameters);
-    //engine.rootContext()->setContextProperty("pointsInterest", &pointsInterest);
-//    engine.rootContext()->setContextProperty("pointsInterest", &pointsInterest);
+    FunctionPointView *pointView = static_cast<FunctionPointView*>(qmlPointView);
+    FunctionDisplayView *displayView = static_cast<FunctionDisplayView*>(qmlDisplayView);
 
-    functionController.setDisplayView(displayView);
-    functionController.setPointView(pointView);
-    functionController.setTextToSpeech(&textToSpeech);
+    FunctionController functionController(*displayView, *pointView, parameters, textToSpeech);
+//    qRegisterMetaType<FunctionController*>("FunctionController*");
+    engine.rootContext()->setContextProperty("functionController", &functionController);
+
+    QMetaObject::invokeMethod(rootObject, "loadConnections");
 
     return app.exec();
 }

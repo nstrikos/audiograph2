@@ -49,5 +49,7 @@
         <file>qml/SettingsRect/GraphSettings/Label9.qml</file>
         <file>qml/SettingsRect/GraphSettings/InvertThemeFocusScope.qml</file>
         <file>qml/SettingsRect/GraphSettings/ResetButton.qml</file>
+        <file>qml/Shortcuts.qml</file>
+        <file>qml/Connections.qml</file>
     </qresource>
 </RCC>

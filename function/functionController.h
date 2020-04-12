@@ -20,14 +20,12 @@ class FunctionController : public QObject
     Q_OBJECT
 
 public:
-    explicit FunctionController(QObject *parent = nullptr);
+    explicit FunctionController(FunctionDisplayView &displayView,
+                                FunctionPointView &pointView,
+                                Parameters &parameters,
+                                TextToSpeech &textToSpeech,
+                                QObject *parent = nullptr);
     ~FunctionController();
-
-    void setParameters(Parameters *parameters);
-    void setDisplayView(FunctionDisplayView *view);
-    void setPointView(FunctionPointView *pointView);
-    void setTextToSpeech(TextToSpeech *textToSpeech);
-
 
     Q_INVOKABLE void displayFunction(QString expression,
                                      QString minX,
@@ -90,19 +88,22 @@ private:
     void startNotes();
     void setPoint(int point);
 
+    //These are defined outside of the class
+    FunctionDisplayView &m_view;
+    FunctionPointView &m_pointView;
+    Parameters &m_parameters;
+    TextToSpeech &m_textToSpeech;
+
+
+    //These classes are internal
     FunctionModel *m_model;
-    FunctionDisplayView *m_view;
-    FunctionPointView *m_pointView;
     Audio *m_audio;
     AudioNotes *m_audioNotes;
-    Parameters *m_parameters;
-
     FunctionZoomer *m_zoomer;
     DragHandler *m_dragHandler;
     PinchHandler *m_pinchHandler;
     PointsInterest *m_pointsInterest;
     CurrentPoint *m_currentPoint;
-    TextToSpeech *m_textToSpeech;
 };
 
 #endif // FUNCTIONCONTROLLER_H

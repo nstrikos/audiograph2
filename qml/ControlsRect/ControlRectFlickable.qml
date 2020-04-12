@@ -18,7 +18,8 @@ Flickable {
     property alias textInput4: textInput4
     property alias textInput5: textInput5
     property alias startSoundButton: startButtonFocusScope.startSoundButton
-    
+    property alias startSoundButtonFocusScope: startButtonFocusScope
+
     onContentYChanged: {
         ensureVisible(textInput)
         ensureVisible(textInput2)
