@@ -267,6 +267,11 @@ void FunctionController::previousPointInterest()
 
 void FunctionController::nextPointInterestFast()
 {
+    if (m_pointsInterest != nullptr) {
+        m_pointsInterest->stop();
+        disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
+    }
+
     if (m_model == nullptr)
         return;
     if (m_model->lineSize() == 0)
@@ -277,10 +282,17 @@ void FunctionController::nextPointInterestFast()
     }
 
     m_pointsInterest->nextPointFast(m_currentPoint, &m_pointView);
+
+    sayYCoordinate();
 }
 
 void FunctionController::previousPointInterestFast()
 {
+    if (m_pointsInterest != nullptr) {
+        m_pointsInterest->stop();
+        disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
+    }
+
     if (m_model == nullptr)
         return;
     if (m_model->lineSize() == 0)
@@ -291,6 +303,7 @@ void FunctionController::previousPointInterestFast()
     }
 
     m_pointsInterest->previousPointFast(m_currentPoint, &m_pointView);
+    sayYCoordinate();
 }
 
 void FunctionController::incStep()
