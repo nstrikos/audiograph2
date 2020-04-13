@@ -22,8 +22,6 @@ class FunctionController : public QObject
 public:
     explicit FunctionController(FunctionDisplayView &displayView,
                                 FunctionPointView &pointView,
-                                Parameters &parameters,
-                                TextToSpeech &textToSpeech,
                                 QObject *parent = nullptr);
     ~FunctionController();
 
@@ -91,9 +89,7 @@ private:
     //These are defined outside of the class
     FunctionDisplayView &m_view;
     FunctionPointView &m_pointView;
-    Parameters &m_parameters;
-    TextToSpeech &m_textToSpeech;
-
+    Parameters *m_parameters;
 
     //These classes are internal
     FunctionModel *m_model;
@@ -104,6 +100,7 @@ private:
     PinchHandler *m_pinchHandler;
     PointsInterest *m_pointsInterest;
     CurrentPoint *m_currentPoint;
+    TextToSpeech *m_textToSpeech;
 };
 
 #endif // FUNCTIONCONTROLLER_H

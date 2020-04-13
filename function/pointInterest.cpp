@@ -18,23 +18,21 @@ PointsInterest::~PointsInterest()
 
 void PointsInterest::nextPoint(AudioNotes *audioNotes,
                                CurrentPoint *currentPoint,
-                               FunctionPointView *pointView,
-                               Parameters *parameters)
+                               FunctionPointView *pointView)
 {
     m_forward = true;
-    start(audioNotes, currentPoint, pointView, parameters);
+    start(audioNotes, currentPoint, pointView);
 }
 
 void PointsInterest::previousPoint(AudioNotes *audioNotes,
                                    CurrentPoint *currentPoint,
-                                   FunctionPointView *pointView,
-                                   Parameters *parameters)
+                                   FunctionPointView *pointView)
 {
     m_forward = false;
-    start(audioNotes, currentPoint, pointView, parameters);
+    start(audioNotes, currentPoint, pointView);
 }
 
-void PointsInterest::nextPointFast(CurrentPoint *currentPoint, FunctionPointView *pointView, Parameters *parameters)
+void PointsInterest::nextPointFast(CurrentPoint *currentPoint, FunctionPointView *pointView)
 {
     if (m_funcDescription == nullptr)
         m_funcDescription = new FunctionDescription;
@@ -48,14 +46,13 @@ void PointsInterest::nextPointFast(CurrentPoint *currentPoint, FunctionPointView
 
     m_currentPoint = currentPoint;
     m_pointView = pointView;
-    m_parameters = parameters;
 
     m_forward = true;
     m_pointInterest = getNextPointInterest();
     m_currentPoint->setPoint(m_model, m_pointView->width(), m_pointView->height(), m_points[m_pointInterest].x);
 }
 
-void PointsInterest::previousPointFast(CurrentPoint *currentPoint, FunctionPointView *pointView, Parameters *parameters)
+void PointsInterest::previousPointFast(CurrentPoint *currentPoint, FunctionPointView *pointView)
 {
     if (m_funcDescription == nullptr)
         m_funcDescription = new FunctionDescription;
@@ -69,14 +66,13 @@ void PointsInterest::previousPointFast(CurrentPoint *currentPoint, FunctionPoint
 
     m_currentPoint = currentPoint;
     m_pointView = pointView;
-    m_parameters = parameters;
 
     m_forward = false;
     m_pointInterest = getNextPointInterest();
     m_currentPoint->setPoint(m_model, m_pointView->width(), m_pointView->height(), m_points[m_pointInterest].x);
 }
 
-void PointsInterest::start(AudioNotes *audioNotes, CurrentPoint *currentPoint, FunctionPointView *pointView, Parameters *parameters)
+void PointsInterest::start(AudioNotes *audioNotes, CurrentPoint *currentPoint, FunctionPointView *pointView)
 {
     if (m_funcDescription == nullptr)
         m_funcDescription = new FunctionDescription;
@@ -91,7 +87,6 @@ void PointsInterest::start(AudioNotes *audioNotes, CurrentPoint *currentPoint, F
     m_audioNotes = audioNotes;
     m_currentPoint = currentPoint;
     m_pointView = pointView;
-    m_parameters = parameters;
 
     m_pointInterest = getNextPointInterest();
 
@@ -155,22 +150,22 @@ void PointsInterest::timerExpired()
         return;
     if (m_model == nullptr)
         return;
-    if (m_parameters == nullptr)
-        return;
+
+    Parameters *parameters = &Parameters::getInstance();
 
     if (m_forward) {
         m_currentPoint->incPoint(m_model, m_pointView->width(), m_pointView->height());
         if (m_currentPoint->point() >= m_points[m_pointInterest].x) {
             m_timer.stop();
         } else {
-            m_audioNotes->setNote(m_model, m_currentPoint->point(), m_parameters->minFreq(), m_parameters->maxFreq(), m_parameters->useNotes());
+            m_audioNotes->setNote(m_model, m_currentPoint->point(), parameters->minFreq(), parameters->maxFreq(), parameters->useNotes());
         }
     } else {
         m_currentPoint->decPoint(m_model, m_pointView->width(), m_pointView->height());
         if (m_currentPoint->point() <= m_points[m_pointInterest].x) {
             m_timer.stop();
         } else {
-            m_audioNotes->setNote(m_model, m_currentPoint->point(), m_parameters->minFreq(), m_parameters->maxFreq(), m_parameters->useNotes());
+            m_audioNotes->setNote(m_model, m_currentPoint->point(), parameters->minFreq(), parameters->maxFreq(), parameters->useNotes());
         }
     }
 }

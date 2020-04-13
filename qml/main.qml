@@ -100,5 +100,6 @@ Window {
         if (component.status === Component.Ready) {
             var connections = component.createObject(window);
         }
+        graphRect.functionControllerLoaded = true
     }
 }

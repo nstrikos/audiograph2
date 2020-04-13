@@ -14,6 +14,8 @@ Rectangle {
     layer.enabled: true
     layer.samples: 256
 
+    property bool functionControllerLoaded: false
+
     property var graphCanvas: graphCanvas
     property color curveColor: parameters.lineColor
     property var curveWidth: parameters.lineWidth
@@ -91,7 +93,8 @@ Rectangle {
     function updateCanvas() {
         window.stopAudio()
         graphCanvas.updateCanvas()
-        functionController.updateView()
+        if (functionControllerLoaded)
+            functionController.updateView()
     }
 
     onWidthChanged: updateCanvas()

@@ -1,10 +1,5 @@
 #include "parameters.h"
 
-Parameters::Parameters()
-{
-    read();
-}
-
 Parameters::~Parameters()
 {
     write();

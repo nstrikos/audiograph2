@@ -19,21 +19,17 @@ public:
     ~PointsInterest();
     void nextPoint(AudioNotes *audioNotes,
                    CurrentPoint *currentPoint,
-                   FunctionPointView *pointView,
-                   Parameters *parameters);
+                   FunctionPointView *pointView);
 
     void previousPoint(AudioNotes *audioNotes,
                        CurrentPoint *currentPoint,
-                       FunctionPointView *pointView,
-                       Parameters *parameters);
+                       FunctionPointView *pointView);
 
     void nextPointFast(CurrentPoint *currentPoint,
-                       FunctionPointView *pointView,
-                       Parameters *parameters);
+                       FunctionPointView *pointView);
 
     void previousPointFast(CurrentPoint *currentPoint,
-                           FunctionPointView *pointView,
-                           Parameters *parameters);
+                           FunctionPointView *pointView);
 
     void stop();
 
@@ -56,14 +52,12 @@ private:
     FunctionDescription *m_funcDescription;
     QVector<InterestingPoint> m_points;
     AudioNotes *m_audioNotes;
-    Parameters *m_parameters;
     CurrentPoint *m_currentPoint;
     bool m_isUpdated;
     int getNextPointInterest();
     void start(AudioNotes *audioNotes,
                CurrentPoint *currentPoint,
-               FunctionPointView *pointView,
-               Parameters *parameters);
+               FunctionPointView *pointView);
 };
 
 #endif // POINTSINTEREST_H

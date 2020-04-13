@@ -13,7 +13,7 @@ class TextToSpeech : public QObject
     Q_OBJECT
 
 public:
-    TextToSpeech(Parameters &parameters);
+    TextToSpeech();
     ~TextToSpeech();
 
     Q_PROPERTY(QStringList engines  READ engines NOTIFY enginesChanged())
@@ -64,7 +64,7 @@ private:
     double m_volume;
     double m_pitch;
     double m_rate;
-    Parameters &m_parameters;
+    Parameters *m_parameters;
 };
 
 #endif // TEXTTOSPEECH_H

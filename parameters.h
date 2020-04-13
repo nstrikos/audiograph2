@@ -34,7 +34,12 @@ class Parameters : public QObject
     Q_PROPERTY(bool exploreMode READ exploreMode WRITE setExploreMode NOTIFY exploreModeChanged)
 
 public:
-    Parameters();
+public:
+    static Parameters& getInstance()
+    {
+        static Parameters instance;
+        return instance;
+    }
     ~Parameters();
 
     bool showPoints() const;
@@ -106,6 +111,10 @@ public:
     void setExploreMode(bool exploreMode);
 
 private:
+    Parameters() {read();}
+    Parameters(Parameters const&);              // Don't Implement
+    void operator=(Parameters const&); // Don't implement
+
     bool m_showPoints;
     bool m_showLine;
     bool m_showAxes;

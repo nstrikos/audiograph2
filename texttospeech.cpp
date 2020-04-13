@@ -2,11 +2,12 @@
 
 #include <QDebug>
 
-TextToSpeech::TextToSpeech(Parameters &parameters) : m_parameters(parameters)
+TextToSpeech::TextToSpeech()
 {
-    m_volume = m_parameters.volume();
-    m_rate = m_parameters.rate();
-    m_pitch = m_parameters.pitch();
+    m_parameters = &Parameters::getInstance();
+    m_volume = m_parameters->volume();
+    m_rate = m_parameters->rate();
+    m_pitch = m_parameters->pitch();
 
     m_speech = nullptr;
 
@@ -92,7 +93,7 @@ void TextToSpeech::setVolume(double volume)
 {
     m_volume = volume / 100.0;
     m_speech->setVolume(m_volume);
-    m_parameters.setVolume(m_volume);
+    m_parameters->setVolume(m_volume);
 }
 
 double TextToSpeech::pitch() const
@@ -104,7 +105,7 @@ void TextToSpeech::setPitch(double pitch)
 {
     m_pitch = pitch / 100.0;
     m_speech->setPitch(m_pitch);
-    m_parameters.setPitch(m_pitch);
+    m_parameters->setPitch(m_pitch);
 }
 
 double TextToSpeech::rate() const
@@ -116,7 +117,7 @@ void TextToSpeech::setRate(double rate)
 {
     m_rate = rate / 100.0;
     m_speech->setRate(m_rate);
-    m_parameters.setRate(m_rate);
+    m_parameters->setRate(m_rate);
 }
 
 QStringList TextToSpeech::languages() const
