@@ -25,9 +25,12 @@ int main(int argc, char *argv[])
     qmlRegisterType<FunctionPointView>("PointView", 1, 0, "PointView");
 
     Parameters *parameters = &Parameters::getInstance();
+    FunctionController functionController;
+    //    qRegisterMetaType<FunctionController*>("FunctionController*");
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("parameters", parameters);
+    engine.rootContext()->setContextProperty("functionController", &functionController);
 
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
@@ -43,12 +46,8 @@ int main(int argc, char *argv[])
 
     FunctionPointView *pointView = static_cast<FunctionPointView*>(qmlPointView);
     FunctionDisplayView *displayView = static_cast<FunctionDisplayView*>(qmlDisplayView);
-
-    FunctionController functionController(*displayView, *pointView);
-//    qRegisterMetaType<FunctionController*>("FunctionController*");
-    engine.rootContext()->setContextProperty("functionController", &functionController);
-
-    QMetaObject::invokeMethod(rootObject, "loadConnections");
+    functionController.setView(displayView);
+    functionController.setPointView(pointView);
 
     return app.exec();
 }

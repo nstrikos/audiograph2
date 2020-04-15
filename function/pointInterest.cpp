@@ -1,6 +1,7 @@
 #include "pointInterest.h"
 
-PointsInterest::PointsInterest(QObject *parent) : QObject(parent)
+PointsInterest::PointsInterest(TextToSpeech &textToSpeech):
+    m_textToSpeech(textToSpeech)
 {
     m_funcDescription = nullptr;
     m_pointInterest = 0;
@@ -20,6 +21,9 @@ void PointsInterest::nextPoint(AudioNotes *audioNotes,
                                CurrentPoint *currentPoint,
                                FunctionPointView *pointView)
 {
+    if (m_model->lineSize() == 0)
+        return;
+
     m_forward = true;
     start(audioNotes, currentPoint, pointView);
 }
@@ -28,12 +32,18 @@ void PointsInterest::previousPoint(AudioNotes *audioNotes,
                                    CurrentPoint *currentPoint,
                                    FunctionPointView *pointView)
 {
+    if (m_model->lineSize() == 0)
+        return;
+
     m_forward = false;
     start(audioNotes, currentPoint, pointView);
 }
 
 void PointsInterest::nextPointFast(CurrentPoint *currentPoint, FunctionPointView *pointView)
 {
+    if (m_model->lineSize() == 0)
+        return;
+
     if (m_funcDescription == nullptr)
         m_funcDescription = new FunctionDescription;
 
@@ -54,6 +64,9 @@ void PointsInterest::nextPointFast(CurrentPoint *currentPoint, FunctionPointView
 
 void PointsInterest::previousPointFast(CurrentPoint *currentPoint, FunctionPointView *pointView)
 {
+
+    if (m_model->lineSize() == 0)
+        return;
     if (m_funcDescription == nullptr)
         m_funcDescription = new FunctionDescription;
 
@@ -157,6 +170,8 @@ void PointsInterest::timerExpired()
         m_currentPoint->incPoint(m_model, m_pointView->width(), m_pointView->height());
         if (m_currentPoint->point() >= m_points[m_pointInterest].x) {
             m_timer.stop();
+            QString label = currentPointLabel();
+            m_textToSpeech.speak(label);
         } else {
             m_audioNotes->setNote(m_model, m_currentPoint->point(), parameters->minFreq(), parameters->maxFreq(), parameters->useNotes());
         }
@@ -164,6 +179,8 @@ void PointsInterest::timerExpired()
         m_currentPoint->decPoint(m_model, m_pointView->width(), m_pointView->height());
         if (m_currentPoint->point() <= m_points[m_pointInterest].x) {
             m_timer.stop();
+            QString label = currentPointLabel();
+            m_textToSpeech.speak(label);
         } else {
             m_audioNotes->setNote(m_model, m_currentPoint->point(), parameters->minFreq(), parameters->maxFreq(), parameters->useNotes());
         }

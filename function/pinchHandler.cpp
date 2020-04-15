@@ -9,16 +9,20 @@ PinchHandler::PinchHandler(QObject *parent) : QObject(parent)
 
 void PinchHandler::startPinch(FunctionModel &model)
 {
-    if (model.expression() != "") {
-        m_minX = model.minX();
-        m_maxX = model.maxX();
-        m_minY = model.minY();
-        m_maxY = model.maxY();
-    }
+    if (!model.validExpression())
+        return;
+
+    m_minX = model.minX();
+    m_maxX = model.maxX();
+    m_minY = model.minY();
+    m_maxY = model.maxY();
 }
 
 void PinchHandler::pinch(FunctionModel &model, double scale)
 {
+    if (!model.validExpression())
+        return;
+
     scale = 1 / scale;
 
     double distanceX = m_maxX - m_minX;

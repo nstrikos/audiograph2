@@ -37,8 +37,6 @@ public:
     double minY() const;
     double maxY() const;
     int lineSize() const;
-    void zoom(double delta);
-//    void pinch(double scale);
 
     bool validExpression() const;
     QString getError();
@@ -46,7 +44,6 @@ public:
 signals:
     void update();
     void error();
-    void newInputValues(double minX, double maxX, double minY, double maxY);
 
 private:
     void performCalculation();
@@ -54,7 +51,6 @@ private:
     bool check();
     void clear();
     void calculatePoints();
-    void performZoom(double factor);
     QString m_expression;
     QString m_minXString;
     QString m_maxXString;

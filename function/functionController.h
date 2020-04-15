@@ -20,10 +20,11 @@ class FunctionController : public QObject
     Q_OBJECT
 
 public:
-    explicit FunctionController(FunctionDisplayView &displayView,
-                                FunctionPointView &pointView,
-                                QObject *parent = nullptr);
+    explicit FunctionController(QObject *parent = nullptr);
     ~FunctionController();
+
+    void setView(FunctionDisplayView *view);
+    void setPointView(FunctionPointView *pointView);
 
     Q_INVOKABLE void displayFunction(QString expression,
                                      QString minX,
@@ -31,13 +32,16 @@ public:
                                      QString minY,
                                      QString maxY);
 
-    Q_INVOKABLE void updateView();
+    Q_INVOKABLE void viewDimensionsChanged();
 
     Q_INVOKABLE void zoom(double delta);
     Q_INVOKABLE void startDrag(int x, int y);
     Q_INVOKABLE void drag(int diffX, int diffY, int width, int height);
     Q_INVOKABLE void startPinch();
     Q_INVOKABLE void pinch(double scale);
+
+    Q_INVOKABLE void audio();
+    Q_INVOKABLE void stopAudio();
 
     Q_INVOKABLE void nextPoint();
     Q_INVOKABLE void previousPoint();
@@ -57,8 +61,6 @@ public:
 
     Q_INVOKABLE void firstPoint();
 
-    Q_INVOKABLE void audio();
-    Q_INVOKABLE void stopAudio();
     Q_INVOKABLE void stopInterestingPoint();
 
     Q_INVOKABLE bool validExpression();
@@ -79,7 +81,6 @@ signals:
 private slots:
     void updateDisplayView();
     void clearDisplayView();
-    void audioNotesFinished();
 
 private:
     void startAudio();
@@ -87,8 +88,8 @@ private:
     void setPoint(int point);
 
     //These are defined outside of the class
-    FunctionDisplayView &m_view;
-    FunctionPointView &m_pointView;
+    FunctionDisplayView *m_view;
+    FunctionPointView *m_pointView;
     Parameters *m_parameters;
 
     //These classes are internal

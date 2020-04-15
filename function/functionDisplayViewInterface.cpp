@@ -12,7 +12,7 @@ FunctionDisplayViewInterface::~FunctionDisplayViewInterface()
 
 void FunctionDisplayViewInterface::calcCoords(int width, int height)
 {
-    if (m_model != nullptr) {
+    if (m_model != nullptr && m_model->lineSize() > 0) {
 
         m_points.clear();
         Point tmpPoint;

@@ -8,18 +8,22 @@ DragHandler::DragHandler()
 
 void DragHandler::startDrag(FunctionModel &model, int x, int y)
 {
-    if (model.expression() != "") {
-        m_dragX = x;
-        m_dragY = y;
-        m_minX = model.minX();
-        m_maxX = model.maxX();
-        m_minY = model.minY();
-        m_maxY = model.maxY();
-    }
+    if (!model.validExpression())
+        return;
+
+    m_dragX = x;
+    m_dragY = y;
+    m_minX = model.minX();
+    m_maxX = model.maxX();
+    m_minY = model.minY();
+    m_maxY = model.maxY();
 }
 
 void DragHandler::drag(FunctionModel &model, int diffX, int diffY, int width, int height)
 {
+    if (!model.validExpression())
+        return;
+
     double distanceX = m_maxX - m_minX;
 
     int power = -floor(log10(distanceX)) + 2;

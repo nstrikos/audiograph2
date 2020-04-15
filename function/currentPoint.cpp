@@ -161,6 +161,9 @@ void CurrentPoint::timerExpired()
 
 void CurrentPoint::setPoint(FunctionModel *model, double width, double height, int point)
 {
+    if (model->lineSize() == 0)
+        return;
+
     int size = model->lineSize();
     double xStart = model->x(0);
     double xEnd = model->x(size - 1);

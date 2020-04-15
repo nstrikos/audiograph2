@@ -14,8 +14,6 @@ Rectangle {
     layer.enabled: true
     layer.samples: 256
 
-    property bool functionControllerLoaded: false
-
     property var graphCanvas: graphCanvas
     property color curveColor: parameters.lineColor
     property var curveWidth: parameters.lineWidth
@@ -90,15 +88,14 @@ Rectangle {
         }
     }
 
+    onWidthChanged: updateCanvas()
+    onHeightChanged: updateCanvas()
+
     function updateCanvas() {
         window.stopAudio()
         graphCanvas.updateCanvas()
-        if (functionControllerLoaded)
-            functionController.updateView()
+        functionController.viewDimensionsChanged()
     }
-
-    onWidthChanged: updateCanvas()
-    onHeightChanged: updateCanvas()
 
     BeautifyGraphRect {
 

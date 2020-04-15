@@ -1,44 +1,46 @@
 #include "functionController.h"
 
-FunctionController::FunctionController(FunctionDisplayView &displayView,
-                                       FunctionPointView &pointView,
-                                       QObject *parent)
-    : m_view(displayView),
-      m_pointView(pointView),
-      QObject(parent)
+FunctionController::FunctionController(QObject *parent) : QObject(parent)
 {
-    m_model = nullptr;
-    m_dragHandler = nullptr;
-    m_zoomer = nullptr;
-    m_pinchHandler = nullptr;
-    m_audio = nullptr;
-    m_audioNotes = nullptr;
-    m_pointsInterest = nullptr;
-    m_currentPoint = new CurrentPoint();
-    m_pointView.setCurrentPoint(m_currentPoint);
-    connect(m_currentPoint, SIGNAL(movingPointFinished()), this, SIGNAL(movingPointFinished()));
-    //    m_textToSpeech = nullptr;
-    m_parameters = &Parameters::getInstance();
+    m_model = new FunctionModel();
+    connect(m_model, SIGNAL(update()), this, SLOT(updateDisplayView()));
+    connect(m_model, SIGNAL(error()), this, SLOT(clearDisplayView()));
+
+    m_zoomer = new FunctionZoomer();
+    connect(m_zoomer, SIGNAL(newInputValues(double,double,double,double)), this, SIGNAL(newInputValues(double,double,double,double)));
+
+    m_dragHandler = new DragHandler();
+    connect(m_dragHandler, SIGNAL(newInputValues(double,double,double,double)), this, SIGNAL(newInputValues(double,double,double,double)));
+
+    m_pinchHandler = new PinchHandler();
+    connect(m_pinchHandler, SIGNAL(newInputValues(double,double,double,double)), this, SIGNAL(newInputValues(double,double,double,double)));
+
+    m_audio = new Audio();
+    m_audioNotes = new AudioNotes();
     m_textToSpeech = new TextToSpeech();
+
+    m_pointsInterest = new PointsInterest(*m_textToSpeech);
+    m_pointsInterest->setModel(m_model);
+
+    m_currentPoint = new CurrentPoint();
+    connect(m_currentPoint, SIGNAL(movingPointFinished()), this, SIGNAL(movingPointFinished()));
+
+    m_parameters = &Parameters::getInstance();
+
+    m_view = nullptr;
+    m_pointView = nullptr;
 }
 
 FunctionController::~FunctionController()
 {
-    if (m_model != nullptr)
-        delete m_model;
-    if (m_dragHandler != nullptr)
-        delete m_dragHandler;
-    if (m_zoomer != nullptr)
-        delete m_zoomer;
-    if (m_pinchHandler != nullptr)
-        delete m_pinchHandler;
-    if (m_audio != nullptr)
-        delete m_audio;
-    if (m_audioNotes != nullptr)
-        delete m_audioNotes;
-    if (m_pointsInterest != nullptr)
-        delete m_pointsInterest;
+    delete m_model;
+    delete m_zoomer;
+    delete m_dragHandler;
+    delete m_pinchHandler;
+    delete m_audio;
+    delete m_audioNotes;
 
+    delete m_pointsInterest;
     delete m_currentPoint;
     delete m_textToSpeech;
 }
@@ -49,137 +51,121 @@ void FunctionController::displayFunction(QString expression,
                                          QString minY,
                                          QString maxY)
 {
-    if (m_model == nullptr) {
-        m_model = new FunctionModel();
-        connect(m_model, SIGNAL(update()), this, SLOT(updateDisplayView()));
-        connect(m_model, SIGNAL(error()), this, SLOT(clearDisplayView()));
-        connect(m_model, SIGNAL(error()), this, SIGNAL(error()));
-        connect(m_model, SIGNAL(newInputValues(double, double, double, double)), this, SIGNAL(newInputValues(double,double,double,double)));
-    }
     m_model->calculate(expression, minX, maxX, minY, maxY);
     m_currentPoint->reset();
 }
 
-void FunctionController::updateView()
+void FunctionController::updateDisplayView()
 {
     if (m_model == nullptr)
         return;
+    if (m_view == nullptr)
+        return;
 
-    m_view.updateView();
-    m_currentPoint->update(m_model, m_pointView.width(), m_pointView.height());
-}
-
-void FunctionController::updateDisplayView()
-{
-    if (m_model != nullptr)
-        m_view.draw(m_model);
-
-    if (m_pointsInterest == nullptr)
-        m_pointsInterest = new PointsInterest();
-
-    m_pointsInterest->setModel(m_model);
+    m_view->draw(m_model);
 
     emit updateFinished();
 }
 
 void FunctionController::clearDisplayView()
 {
-    m_view.clear();
+    if (m_view == nullptr)
+        return;
+    m_view->clear();
+
+    emit error();
 }
 
-void FunctionController::audioNotesFinished()
+void FunctionController::viewDimensionsChanged()
 {
-    if (m_audioNotes != nullptr)
-        disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
-    QString label = m_pointsInterest->currentPointLabel();
-    m_textToSpeech->speak(label);
+    if (m_view == nullptr)
+        return;
+    if (m_pointView == nullptr)
+        return;
+
+    m_view->updateView();
+    m_currentPoint->update(m_model, m_pointView->width(), m_pointView->height());
 }
 
 void FunctionController::zoom(double delta)
 {
     m_currentPoint->reset();
-    if (m_model == nullptr)
-        return;
-
-    if (m_zoomer == nullptr) {
-        m_zoomer = new FunctionZoomer();
-        connect(m_zoomer, SIGNAL(newInputValues(double,double,double,double)), this, SIGNAL(newInputValues(double,double,double,double)));
-    }
-    //stopAudio();
     m_zoomer->zoom(*m_model, delta);
 }
 
 void FunctionController::startDrag(int x, int y)
 {
     m_currentPoint->reset();
-
-    if (m_model == nullptr)
-        return;
-
-    if (m_dragHandler == nullptr) {
-        m_dragHandler = new DragHandler();
-        connect(m_dragHandler, SIGNAL(newInputValues(double,double,double,double)), this, SIGNAL(newInputValues(double,double,double,double)));
-    }
-
-    stopAudio();
-
     m_dragHandler->startDrag(*m_model, x, y);
 }
 
 void FunctionController::drag(int diffX, int diffY, int width, int height)
 {
-    m_currentPoint->reset();
-
-    if (m_model == nullptr)
-        return;
-
     m_dragHandler->drag(*m_model, diffX, diffY, width, height);
 }
 
 void FunctionController::startPinch()
 {
-    if (m_pointsInterest != nullptr) {
-        m_pointsInterest->stop();
-        disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
-    }
-
-    if (m_model == nullptr)
-        return;
-
-    if (m_pinchHandler == nullptr) {
-        m_pinchHandler = new PinchHandler();
-        connect(m_pinchHandler, SIGNAL(newInputValues(double,double,double,double)), this, SIGNAL(newInputValues(double,double,double,double)));
-    }
-
-    stopAudio();
+    m_currentPoint->reset();
     m_pinchHandler->startPinch(*m_model);
 }
 
 void FunctionController::pinch(double scale)
 {
-    if (m_pointsInterest != nullptr) {
-        m_pointsInterest->stop();
-        disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
-    }
+    m_pinchHandler->pinch(*m_model, scale);
+}
 
-    if (m_model == nullptr)
+void FunctionController::audio()
+{
+    //i have to fix this check
+    if (m_pointView == nullptr)
         return;
 
-    m_pinchHandler->pinch(*m_model, scale);
+    if (m_parameters->useNotes())
+        startNotes();
+    else
+        startAudio();
+
+    m_currentPoint->startMoving(m_model,
+                                m_pointView->width(),
+                                m_pointView->height(),
+                                m_parameters->duration());
+}
+
+void FunctionController::startNotes()
+{
+    m_audioNotes->startNotes(m_model,
+                             m_parameters->maxFreq(),
+                             m_parameters->minFreq(),
+                             m_parameters->duration());
+}
+
+void FunctionController::startAudio()
+{
+    m_audio->start(m_model->expression(),
+                   m_model->minX(),
+                   m_model->maxX(),
+                   m_model->minY(),
+                   m_model->maxX(),
+                   m_parameters->duration(),
+                   m_parameters->minFreq(),
+                   m_parameters->maxFreq());
+}
+
+void FunctionController::stopAudio()
+{
+    m_audio->stop();
+    m_audioNotes->stopNotes();
+    m_currentPoint->stop();
 }
 
 void FunctionController::previousPoint()
 {
-    if (m_model == nullptr)
+    //i have to fix this check
+    if (m_pointView == nullptr)
         return;
-    if (m_model->lineSize() == 0)
-        return;
-    //    if (m_parameters == nullptr)
-    //        return;
-    if (m_audioNotes == nullptr)
-        m_audioNotes = new AudioNotes();
 
-    m_currentPoint->previousPoint(m_model, m_pointView.width(), m_pointView.height());
+    m_currentPoint->previousPoint(m_model, m_pointView->width(), m_pointView->height());
     m_audioNotes->setNote(m_model,
                           m_currentPoint->point(),
                           m_parameters->minFreq(),
@@ -189,17 +175,11 @@ void FunctionController::previousPoint()
 
 void FunctionController::nextPoint()
 {
-    if (m_model == nullptr)
-        return;
-    if (m_model->lineSize() == 0)
+    //i have to fix this
+    if (m_pointView == nullptr)
         return;
 
-    //    if (m_parameters == nullptr)
-    //        return;
-    if (m_audioNotes == nullptr)
-        m_audioNotes = new AudioNotes();
-
-    m_currentPoint->nextPoint(m_model, m_pointView.width(), m_pointView.height());
+    m_currentPoint->nextPoint(m_model, m_pointView->width(), m_pointView->height());
     m_audioNotes->setNote(m_model,
                           m_currentPoint->point(),
                           m_parameters->minFreq(),
@@ -213,15 +193,17 @@ void FunctionController::mousePoint(int point)
         return;
     if (m_model->lineSize() == 0)
         return;
+    if (m_pointView == nullptr)
+        return;
     //    if (m_parameters == nullptr)
     //        return;
     if (m_audioNotes == nullptr)
         m_audioNotes = new AudioNotes();
 
-    m_currentPoint->setMouseX(m_model, m_pointView.width(), m_pointView.height(), point);
+    m_currentPoint->setMouseX(m_model, m_pointView->width(), m_pointView->height(), point);
     m_audioNotes->setNote(m_model,
                           point,
-                          static_cast<int>(m_pointView.width()),
+                          static_cast<int>(m_pointView->width()),
                           m_parameters->minFreq(),
                           m_parameters->maxFreq(),
                           m_parameters->useNotes());
@@ -229,80 +211,35 @@ void FunctionController::mousePoint(int point)
 
 void FunctionController::nextPointInterest()
 {
-    if (m_model == nullptr)
-        return;
-    if (m_model->lineSize() == 0)
+    if (m_pointView == nullptr)
         return;
 
-    if (m_pointsInterest == nullptr) {
-        m_pointsInterest = new PointsInterest();
-    }
-
-    if (m_audioNotes == nullptr) {
-        m_audioNotes = new AudioNotes();
-    }
-
-    connect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
-    m_pointsInterest->nextPoint(m_audioNotes, m_currentPoint, &m_pointView);
+    m_pointsInterest->nextPoint(m_audioNotes, m_currentPoint, m_pointView);
 }
 
 void FunctionController::previousPointInterest()
 {
-    if (m_model == nullptr)
-        return;
-    if (m_model->lineSize() == 0)
+    if (m_pointView == nullptr)
         return;
 
-    if (m_pointsInterest == nullptr) {
-        m_pointsInterest = new PointsInterest();
-    }
-
-    if (m_audioNotes == nullptr) {
-        m_audioNotes = new AudioNotes();
-    }
-
-    connect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
-    m_pointsInterest->previousPoint(m_audioNotes, m_currentPoint, &m_pointView);
+    m_pointsInterest->previousPoint(m_audioNotes, m_currentPoint, m_pointView);
 }
 
 void FunctionController::nextPointInterestFast()
 {
-    if (m_pointsInterest != nullptr) {
-        m_pointsInterest->stop();
-        disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
-    }
-
-    if (m_model == nullptr)
-        return;
-    if (m_model->lineSize() == 0)
+    if (m_pointView == nullptr)
         return;
 
-    if (m_pointsInterest == nullptr) {
-        m_pointsInterest = new PointsInterest();
-    }
-
-    m_pointsInterest->nextPointFast(m_currentPoint, &m_pointView);
-
+    m_pointsInterest->nextPointFast(m_currentPoint, m_pointView);
     sayYCoordinate();
 }
 
 void FunctionController::previousPointInterestFast()
 {
-    if (m_pointsInterest != nullptr) {
-        m_pointsInterest->stop();
-        disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
-    }
-
-    if (m_model == nullptr)
-        return;
-    if (m_model->lineSize() == 0)
+    if (m_pointView == nullptr)
         return;
 
-    if (m_pointsInterest == nullptr) {
-        m_pointsInterest = new PointsInterest();
-    }
-
-    m_pointsInterest->previousPointFast(m_currentPoint, &m_pointView);
+    m_pointsInterest->previousPointFast(m_currentPoint, m_pointView);
     sayYCoordinate();
 }
 
@@ -394,107 +331,30 @@ void FunctionController::firstPoint()
     m_currentPoint->reset();
 }
 
-
-void FunctionController::audio()
-{
-    if (m_pointsInterest != nullptr) {
-        m_pointsInterest->stop();
-
-        if (m_audioNotes != nullptr)
-            disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
-    }
-
-    if (m_model->validExpression()) {
-        if (m_parameters->useNotes()) {
-            startNotes();
-        } else {
-            startAudio();
-        }
-
-        m_currentPoint->startMoving(m_model,
-                                    m_pointView.width(),
-                                    m_pointView.height(),
-                                    m_parameters->duration());
-    }
-}
-
-void FunctionController::startAudio()
-{
-    if (m_pointsInterest != nullptr) {
-        m_pointsInterest->stop();
-        if (m_audioNotes != nullptr)
-            disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
-    }
-
-    if (m_model == nullptr)
-        return;
-
-    if (m_audio == nullptr)
-        m_audio = new Audio();
-
-    m_audio->start(m_model->expression(),
-                   m_model->minX(),
-                   m_model->maxX(),
-                   m_model->minY(),
-                   m_model->maxX(),
-                   m_parameters->duration(),
-                   m_parameters->minFreq(),
-                   m_parameters->maxFreq());
-}
-
-void FunctionController::stopAudio()
-{
-    if (m_pointsInterest != nullptr) {
-        m_pointsInterest->stop();
-        if (m_audioNotes != nullptr)
-            disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
-    }
-
-    if (m_audio != nullptr)
-        m_audio->stop();
-    if (m_audioNotes != nullptr)
-        m_audioNotes->stopNotes();
-
-    m_currentPoint->stop();
-}
-
 void FunctionController::stopInterestingPoint()
 {
-    if (m_pointsInterest != nullptr) {
         m_pointsInterest->stop();
-        if (m_audioNotes != nullptr)
-            disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
-    }
 }
 
 bool FunctionController::validExpression()
 {
-    if (m_model != nullptr)
         return m_model->validExpression();
-    else
-        return false;
 }
 
-void FunctionController::startNotes()
+void FunctionController::setPointView(FunctionPointView *pointView)
 {
-    if (m_audioNotes == nullptr)
-        m_audioNotes = new AudioNotes();
+    m_pointView = pointView;
+    m_pointView->setCurrentPoint(m_currentPoint);
+}
 
-    if (m_pointsInterest != nullptr) {
-        m_pointsInterest->stop();
-        if (m_audioNotes != nullptr)
-            disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
-    }
-
-    m_audioNotes->startNotes(m_model,
-                             m_parameters->maxFreq(),
-                             m_parameters->minFreq(),
-                             m_parameters->duration());
+void FunctionController::setView(FunctionDisplayView *view)
+{
+    m_view = view;
 }
 
 double FunctionController::minX()
 {
-    if (m_model != nullptr)
+    if (m_model->lineSize() > 0)
         return m_model->minX();
     else
         return -10;
@@ -502,7 +362,7 @@ double FunctionController::minX()
 
 double FunctionController::maxX()
 {
-    if (m_model != nullptr)
+    if (m_model->lineSize() > 0)
         return m_model->maxX();
     else
         return 10;
@@ -510,7 +370,7 @@ double FunctionController::maxX()
 
 double FunctionController::minY()
 {
-    if (m_model != nullptr)
+    if (m_model->lineSize() > 0)
         return m_model->minY();
     else
         return -10;
@@ -518,7 +378,7 @@ double FunctionController::minY()
 
 double FunctionController::maxY()
 {
-    if (m_model != nullptr)
+    if (m_model->lineSize() > 0)
         return m_model->maxY();
     else
         return 10;

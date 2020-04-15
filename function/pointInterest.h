@@ -10,12 +10,13 @@
 #include <audionotes.h>
 #include <parameters.h>
 #include "function/currentPoint.h"
+#include <texttospeech.h>
 
 class PointsInterest : public QObject
 {
     Q_OBJECT
 public:
-    explicit PointsInterest(QObject *parent = nullptr);
+    explicit PointsInterest(TextToSpeech &textToSpeech);
     ~PointsInterest();
     void nextPoint(AudioNotes *audioNotes,
                    CurrentPoint *currentPoint,
@@ -53,6 +54,7 @@ private:
     QVector<InterestingPoint> m_points;
     AudioNotes *m_audioNotes;
     CurrentPoint *m_currentPoint;
+    TextToSpeech &m_textToSpeech;
     bool m_isUpdated;
     int getNextPointInterest();
     void start(AudioNotes *audioNotes,

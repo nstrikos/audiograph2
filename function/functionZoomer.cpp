@@ -8,14 +8,16 @@ FunctionZoomer::FunctionZoomer(QObject *parent) : QObject(parent)
 
 void FunctionZoomer::zoom(FunctionModel &model, double delta)
 {
+    if (!model.validExpression())
+        return;
+
     double factor;
     if (delta < 0)
         factor = 1.1;
     else
         factor = 0.9;
 
-    if (model.expression() != "")
-        performZoom(model, factor);
+    performZoom(model, factor);
 }
 
 void FunctionZoomer::performZoom(FunctionModel &model, double factor)

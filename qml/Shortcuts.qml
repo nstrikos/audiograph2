@@ -12,8 +12,8 @@ Item {
         onActivated: {
             if (functionController.validExpression())
                 window.playPressed()
-            else
-                textToSpeech.speak(functionController.getError())
+            //else
+            //    textToSpeech.speak(functionController.getError())
         }
     }
     Shortcut {
