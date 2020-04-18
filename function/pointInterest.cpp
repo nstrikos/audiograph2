@@ -59,7 +59,7 @@ void PointsInterest::nextPointFast(CurrentPoint *currentPoint, FunctionPointView
 
     m_forward = true;
     m_pointInterest = getNextPointInterest();
-    m_currentPoint->setPoint(m_model, m_pointView->width(), m_pointView->height(), m_points[m_pointInterest].x);
+    m_currentPoint->setPoint(m_points[m_pointInterest].x);
 }
 
 void PointsInterest::previousPointFast(CurrentPoint *currentPoint, FunctionPointView *pointView)
@@ -82,7 +82,7 @@ void PointsInterest::previousPointFast(CurrentPoint *currentPoint, FunctionPoint
 
     m_forward = false;
     m_pointInterest = getNextPointInterest();
-    m_currentPoint->setPoint(m_model, m_pointView->width(), m_pointView->height(), m_points[m_pointInterest].x);
+    m_currentPoint->setPoint(m_points[m_pointInterest].x);
 }
 
 void PointsInterest::start(AudioNotes *audioNotes, CurrentPoint *currentPoint, FunctionPointView *pointView)
@@ -167,7 +167,7 @@ void PointsInterest::timerExpired()
     Parameters *parameters = &Parameters::getInstance();
 
     if (m_forward) {
-        m_currentPoint->incPoint(m_model, m_pointView->width(), m_pointView->height());
+        m_currentPoint->incPoint();
         if (m_currentPoint->point() >= m_points[m_pointInterest].x) {
             m_timer.stop();
             QString label = currentPointLabel();
@@ -176,7 +176,7 @@ void PointsInterest::timerExpired()
             m_audioNotes->setNote(m_model, m_currentPoint->point(), parameters->minFreq(), parameters->maxFreq(), parameters->useNotes());
         }
     } else {
-        m_currentPoint->decPoint(m_model, m_pointView->width(), m_pointView->height());
+        m_currentPoint->decPoint();
         if (m_currentPoint->point() <= m_points[m_pointInterest].x) {
             m_timer.stop();
             QString label = currentPointLabel();

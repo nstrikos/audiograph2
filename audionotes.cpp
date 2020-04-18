@@ -40,6 +40,12 @@ void AudioNotes::setNote(FunctionModel *model,
                          bool useNotes)
 {
     m_model = model;
+
+    if (m_model == nullptr)
+        return;
+    if (m_model->lineSize() == 0)
+        return;
+
     m_mouseX = mouseX;
     m_fmin = fmin;
     m_fmax = fmax;
@@ -99,6 +105,13 @@ void AudioNotes::setNote(FunctionModel *model,
 void AudioNotes::setNote(FunctionModel *model, int currentPoint, int fmin, int fmax, bool useNotes)
 {
     m_model = model;
+
+    if (m_model == nullptr)
+        return;
+
+    if (m_model->lineSize() == 0)
+        return;
+
     m_fmin = fmin;
     m_fmax = fmax;
     m_currentPoint = currentPoint;

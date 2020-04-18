@@ -23,6 +23,7 @@ FunctionController::FunctionController(QObject *parent) : QObject(parent)
     m_pointsInterest->setModel(m_model);
 
     m_currentPoint = new CurrentPoint();
+    m_currentPoint->setModel(m_model);
     connect(m_currentPoint, SIGNAL(movingPointFinished()), this, SIGNAL(movingPointFinished()));
 
     m_parameters = &Parameters::getInstance();
@@ -45,6 +46,19 @@ FunctionController::~FunctionController()
     delete m_textToSpeech;
 }
 
+void FunctionController::setPointView(FunctionPointView *pointView)
+{
+    m_pointView = pointView;
+    m_currentPoint->setWidth(m_pointView->width());
+    m_currentPoint->setHeight(m_pointView->height());
+    m_pointView->setCurrentPoint(m_currentPoint);
+}
+
+void FunctionController::setView(FunctionDisplayView *view)
+{
+    m_view = view;
+}
+
 void FunctionController::displayFunction(QString expression,
                                          QString minX,
                                          QString maxX,
@@ -57,8 +71,6 @@ void FunctionController::displayFunction(QString expression,
 
 void FunctionController::updateDisplayView()
 {
-    if (m_model == nullptr)
-        return;
     if (m_view == nullptr)
         return;
 
@@ -84,7 +96,7 @@ void FunctionController::viewDimensionsChanged()
         return;
 
     m_view->updateView();
-    m_currentPoint->update(m_model, m_pointView->width(), m_pointView->height());
+    m_currentPoint->update(m_pointView->width(), m_pointView->height());
 }
 
 void FunctionController::zoom(double delta)
@@ -117,19 +129,12 @@ void FunctionController::pinch(double scale)
 
 void FunctionController::audio()
 {
-    //i have to fix this check
-    if (m_pointView == nullptr)
-        return;
-
     if (m_parameters->useNotes())
         startNotes();
     else
         startAudio();
 
-    m_currentPoint->startMoving(m_model,
-                                m_pointView->width(),
-                                m_pointView->height(),
-                                m_parameters->duration());
+    m_currentPoint->startMoving(m_parameters->duration());
 }
 
 void FunctionController::startNotes()
@@ -161,11 +166,7 @@ void FunctionController::stopAudio()
 
 void FunctionController::previousPoint()
 {
-    //i have to fix this check
-    if (m_pointView == nullptr)
-        return;
-
-    m_currentPoint->previousPoint(m_model, m_pointView->width(), m_pointView->height());
+    m_currentPoint->previousPoint();
     m_audioNotes->setNote(m_model,
                           m_currentPoint->point(),
                           m_parameters->minFreq(),
@@ -175,11 +176,7 @@ void FunctionController::previousPoint()
 
 void FunctionController::nextPoint()
 {
-    //i have to fix this
-    if (m_pointView == nullptr)
-        return;
-
-    m_currentPoint->nextPoint(m_model, m_pointView->width(), m_pointView->height());
+    m_currentPoint->nextPoint();
     m_audioNotes->setNote(m_model,
                           m_currentPoint->point(),
                           m_parameters->minFreq(),
@@ -189,24 +186,35 @@ void FunctionController::nextPoint()
 
 void FunctionController::mousePoint(int point)
 {
-    if (m_model == nullptr)
-        return;
-    if (m_model->lineSize() == 0)
-        return;
-    if (m_pointView == nullptr)
-        return;
-    //    if (m_parameters == nullptr)
-    //        return;
-    if (m_audioNotes == nullptr)
-        m_audioNotes = new AudioNotes();
-
-    m_currentPoint->setMouseX(m_model, m_pointView->width(), m_pointView->height(), point);
+    m_currentPoint->setMouseX(point);
     m_audioNotes->setNote(m_model,
                           point,
                           static_cast<int>(m_pointView->width()),
                           m_parameters->minFreq(),
                           m_parameters->maxFreq(),
                           m_parameters->useNotes());
+}
+
+void FunctionController::firstPoint()
+{
+    stopAudio();
+    m_currentPoint->reset();
+}
+
+void FunctionController::incStep()
+{
+    m_currentPoint->incStep();
+
+    double realStep = (double) m_currentPoint->step() / m_model->lineSize() * (m_model->maxX() - m_model->minX());
+    m_textToSpeech->speak(tr("Step is ") + ":" + QString::number(realStep));
+}
+
+void FunctionController::decStep()
+{
+    m_currentPoint->decStep();
+
+    double realStep = (double) m_currentPoint->step() / m_model->lineSize() * (m_model->maxX() - m_model->minX());
+    m_textToSpeech->speak(tr("Step is ") + ":" + QString::number(realStep));
 }
 
 void FunctionController::nextPointInterest()
@@ -241,43 +249,6 @@ void FunctionController::previousPointInterestFast()
 
     m_pointsInterest->previousPointFast(m_currentPoint, m_pointView);
     sayYCoordinate();
-}
-
-void FunctionController::incStep()
-{
-    if (m_currentPoint == nullptr)
-        return;
-    if (m_model == nullptr)
-        return;
-
-    m_currentPoint->incStep();
-
-    if (m_pointsInterest != nullptr) {
-        m_pointsInterest->stop();
-        disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
-    }
-
-    double realStep = (double) m_currentPoint->step() / m_model->lineSize() * (m_model->maxX() - m_model->minX());
-    m_textToSpeech->speak(tr("Step is ") + ":" + QString::number(realStep));
-}
-
-void FunctionController::decStep()
-{
-    if (m_currentPoint == nullptr)
-        return;
-
-    if (m_model == nullptr)
-        return;
-
-    m_currentPoint->decStep();
-
-    if (m_pointsInterest != nullptr) {
-        m_pointsInterest->stop();
-        disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
-    }
-
-    double realStep = (double) m_currentPoint->step() / m_model->lineSize() * (m_model->maxX() - m_model->minX());
-    m_textToSpeech->speak(tr("Step is ") + ":" + QString::number(realStep));
 }
 
 void FunctionController::sayXCoordinate()
@@ -325,31 +296,14 @@ void FunctionController::sayYCoordinate()
     }
 }
 
-void FunctionController::firstPoint()
-{
-    stopAudio();
-    m_currentPoint->reset();
-}
-
 void FunctionController::stopInterestingPoint()
 {
-        m_pointsInterest->stop();
+    m_pointsInterest->stop();
 }
 
 bool FunctionController::validExpression()
 {
-        return m_model->validExpression();
-}
-
-void FunctionController::setPointView(FunctionPointView *pointView)
-{
-    m_pointView = pointView;
-    m_pointView->setCurrentPoint(m_currentPoint);
-}
-
-void FunctionController::setView(FunctionDisplayView *view)
-{
-    m_view = view;
+    return m_model->validExpression();
 }
 
 double FunctionController::minX()

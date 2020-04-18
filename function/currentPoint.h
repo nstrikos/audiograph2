@@ -11,18 +11,18 @@ class CurrentPoint : public QObject
 public:
     CurrentPoint();
 
-    double X() const;
-    double Y() const;
-    double point() const;
+    void setWidth(double width);
+    void setHeight(double height);
+    void setModel(FunctionModel *model);
 
-    void setMouseX(FunctionModel *model, double width, double height, int mouseX);
-    void setPoint(FunctionModel *model, double width, double height, int point);
-    void nextPoint(FunctionModel *model, double width, double height);
-    void previousPoint(FunctionModel *model, double width, double height);
-    void incPoint(FunctionModel *model, double width, double height);
-    void decPoint(FunctionModel *model, double width, double height);
-    void update(FunctionModel *model, double width, double height);
-    void startMoving(FunctionModel *model, double width, double height, int duration);
+    void setMouseX(int mouseX);
+    void setPoint(int point);
+    void nextPoint();
+    void previousPoint();
+    void incPoint();
+    void decPoint();
+    void update(double width, double height);
+    void startMoving(int duration);
     void stop();
     void reset();
 
@@ -30,6 +30,10 @@ public:
     void decStep();
 
     int step() const;
+
+    double X() const;
+    double Y() const;
+    double point() const;
 
 signals:
     void movingPointFinished();

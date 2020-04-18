@@ -4,7 +4,10 @@
 
 CurrentPoint::CurrentPoint()
 {
+    m_model = nullptr;
     m_point = 0;
+    m_width = -1;
+    m_height = -1;
     m_X = -20;
     m_Y = -20;
     m_step = 10;
@@ -13,31 +16,37 @@ CurrentPoint::CurrentPoint()
     connect(&timer, SIGNAL(timeout()), this, SLOT(timerExpired()));
 }
 
-double CurrentPoint::X() const
+void CurrentPoint::setModel(FunctionModel *model)
 {
-    return m_X;
+    m_model = model;
 }
 
-double CurrentPoint::Y() const
+void CurrentPoint::setHeight(double height)
 {
-    return m_Y;
+    m_height = height;
 }
 
-double CurrentPoint::point() const
+void CurrentPoint::setWidth(double width)
 {
-    return m_point;
+    m_width = width;
 }
 
-void CurrentPoint::setMouseX(FunctionModel *model, double width, double height, int mouseX)
+void CurrentPoint::setMouseX(int mouseX)
 {
+    if (m_width == -1 || m_height == -1)
+        return;
+
+    if (m_model == nullptr)
+        return;
+
     int m_mouseX = mouseX;
 
     if (m_mouseX < 0)
         m_mouseX = 0;
-    if (m_mouseX > width)
-        m_mouseX = static_cast<int>(width);
+    if (m_mouseX > m_width)
+        m_mouseX = static_cast<int>(m_width);
 
-    int i = round((m_mouseX / width) * LINE_POINTS);
+    int i = round((m_mouseX / m_width) * LINE_POINTS);
     if (i < 0)
         i = 0;
     if (i >= LINE_POINTS)
@@ -45,23 +54,31 @@ void CurrentPoint::setMouseX(FunctionModel *model, double width, double height, 
 
     m_point = i;
 
-    int size = model->lineSize();
-    double xStart = model->x(0);
-    double xEnd = model->x(size - 1);
-    double minY = model->minY();
-    double maxY = model->maxY();
-    double x =  ( width / (xEnd - xStart) * (model->x(i) - xStart) );
-    double y = ( height / (maxY - minY) * (model->y(i) - minY) );
+    int size = m_model->lineSize();
+    if (size == 0)
+        return;
+    double xStart = m_model->x(0);
+    double xEnd = m_model->x(size - 1);
+    double minY = m_model->minY();
+    double maxY = m_model->maxY();
+    double x =  ( m_width / (xEnd - xStart) * (m_model->x(i) - xStart) );
+    double y = ( m_height / (maxY - minY) * (m_model->y(i) - minY) );
 
-    y = height - y;
+    y = m_height - y;
 
     m_X = x;
     m_Y = y;
 }
 
-void CurrentPoint::nextPoint(FunctionModel *model, double width, double height)
+void CurrentPoint::nextPoint()
 {
-    if (model->lineSize() == 0)
+    if (m_width == -1 || m_height == -1)
+        return;
+
+    if (m_model == nullptr)
+        return;
+
+    if (m_model->lineSize() == 0)
         return;
 
     m_point += m_step;
@@ -69,62 +86,95 @@ void CurrentPoint::nextPoint(FunctionModel *model, double width, double height)
     if (m_point >= LINE_POINTS)
         m_point = LINE_POINTS - 1;
 
-    setPoint(model, width, height, m_point);
+    setPoint(m_point);
 }
 
-void CurrentPoint::previousPoint(FunctionModel *model, double width, double height)
+void CurrentPoint::previousPoint()
 {
+    if (m_width == -1 || m_height ==- -1)
+        return;
+
+    if (m_model == nullptr)
+        return;
+
+    if (m_model->lineSize() == 0)
+        return;
+
     m_point -= m_step;
 
     if (m_point < 0)
         m_point = 0;
 
-    setPoint(model, width, height, m_point);
+    setPoint(m_point);
 }
 
-void CurrentPoint::incPoint(FunctionModel *model, double width, double height)
+void CurrentPoint::incPoint()
 {
+    if (m_width == -1 || m_height == -1)
+        return;
+
+    if (m_model == nullptr)
+        return;
+
     m_point++;
 
     if (m_point >= LINE_POINTS)
         m_point = LINE_POINTS - 1;
 
-    setPoint(model, width, height, m_point);
+    setPoint(m_point);
 }
 
-void CurrentPoint::decPoint(FunctionModel *model, double width, double height)
+void CurrentPoint::decPoint()
 {
+    if (m_width == -1 || m_height == -1)
+        return;
+
+    if (m_model == nullptr)
+        return;
+
     m_point--;
 
     if (m_point <= 0)
         m_point = 0;
 
-    setPoint(model, width, height, m_point);
+    setPoint(m_point);
 }
 
-void CurrentPoint::update(FunctionModel *model, double width, double height)
+void CurrentPoint::update(double width, double height)
 {
-    int size = model->lineSize();
+    m_width = width;
+    m_height = height;
+
+    if (m_width == -1 || m_height == -1)
+        return;
+
+    if (m_model == nullptr)
+        return;
+
+    int size = m_model->lineSize();
     if (size == 0)
         return;
-    double xStart = model->x(0);
-    double xEnd = model->x(size - 1);
-    double minY = model->minY();
-    double maxY = model->maxY();
-    double x =  ( width / (xEnd - xStart) * (model->x(m_point) - xStart) );
-    double y = ( height / (maxY - minY) * (model->y(m_point) - minY) );
+    double xStart = m_model->x(0);
+    double xEnd = m_model->x(size - 1);
+    double minY = m_model->minY();
+    double maxY = m_model->maxY();
+    double x =  ( m_width / (xEnd - xStart) * (m_model->x(m_point) - xStart) );
+    double y = ( m_height / (maxY - minY) * (m_model->y(m_point) - minY) );
 
-    y = height - y;
+    y = m_height - y;
 
     m_X = x;
     m_Y = y;
 }
 
-void CurrentPoint::startMoving(FunctionModel *model, double width, double height, int duration)
+void CurrentPoint::startMoving(int duration)
 {
-    m_model = model;
-    m_width = width;
-    m_height = height;
+    if (m_width == -1 || m_height == -1)
+        return;
+
+    if (m_model == nullptr)
+        return;
+
     m_duration = duration * 1000;
     m_timeElapsed = 0;
     timer.start();
@@ -159,20 +209,26 @@ void CurrentPoint::timerExpired()
     m_Y = y;
 }
 
-void CurrentPoint::setPoint(FunctionModel *model, double width, double height, int point)
+void CurrentPoint::setPoint(int point)
 {
-    if (model->lineSize() == 0)
+    if (m_width == -1 || m_height == -1)
         return;
 
-    int size = model->lineSize();
-    double xStart = model->x(0);
-    double xEnd = model->x(size - 1);
-    double minY = model->minY();
-    double maxY = model->maxY();
-    double x =  ( width / (xEnd - xStart) * (model->x(point) - xStart) );
-    double y = ( height / (maxY - minY) * (model->y(point) - minY) );
+    if (m_model == nullptr)
+        return;
 
-    y = height - y;
+    if (m_model->lineSize() == 0)
+        return;
+
+    int size = m_model->lineSize();
+    double xStart = m_model->x(0);
+    double xEnd = m_model->x(size - 1);
+    double minY = m_model->minY();
+    double maxY = m_model->maxY();
+    double x =  ( m_width / (xEnd - xStart) * (m_model->x(point) - xStart) );
+    double y = ( m_height / (maxY - minY) * (m_model->y(point) - minY) );
+
+    y = m_height - y;
 
     m_point = point;
     m_X = x;
@@ -218,4 +274,19 @@ void CurrentPoint::decStep()
     m_step = round(m_step);
     if (m_step < 1)
         m_step = 1;
+}
+
+double CurrentPoint::X() const
+{
+    return m_X;
+}
+
+double CurrentPoint::Y() const
+{
+    return m_Y;
+}
+
+double CurrentPoint::point() const
+{
+    return m_point;
 }
