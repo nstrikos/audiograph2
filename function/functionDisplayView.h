@@ -13,7 +13,7 @@ class FunctionDisplayView : public QQuickItem, public FunctionDisplayViewInterfa
     Q_PROPERTY(int lineWidth READ lineWidth WRITE setLineWidth)
 
 public:
-    FunctionDisplayView(QQuickItem *parent = 0);
+    FunctionDisplayView(QQuickItem *parent = nullptr);
     ~FunctionDisplayView () override;
 
     void updateView();
@@ -28,7 +28,7 @@ public:
     void setLineWidth(int lineWidth);
 
 private:
-    QSGNode *updatePaintNode(QSGNode *, UpdatePaintNodeData *);
+    QSGNode *updatePaintNode(QSGNode *, UpdatePaintNodeData *) override;
     QColor m_color;
     QColor m_newColor;
     int m_lineWidth;
