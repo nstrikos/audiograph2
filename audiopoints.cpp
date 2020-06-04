@@ -47,6 +47,9 @@ void AudioPoints::setFreq(double freq, bool useNotes, bool n, double ratio)
     m_ratio = ratio;
     m_isPlaying = true;
 
+    xx = xx / 2;
+
+
     if (useNotes) {
         if ( xx == 0)
             xx = 0;
@@ -174,7 +177,6 @@ void AudioPoints::setFreq(double freq, bool useNotes, bool n, double ratio)
         //            xx = 3322.44;
     }
 
-    //    xx = xx / 4;
     m_time = 0;
     if (audioPlaying == false)
         startAudio();
@@ -261,12 +263,12 @@ void AudioPoints::writeMoreData()
             //                            m_f4 = 5;
             //                            m_f10 = 0;
             //                        } else {
-            //                            m_f0 = 100;
-            //                            m_f1 = 0;
-            //                            m_f2 = 0;
-            //                            m_f3 = 0;
-            //                            m_f4 = 0;
-            //                            m_f10 = 5;
+                                        m_f0 = 10;
+                                        m_f1 = 0;
+                                        m_f2 = 0;
+                                        m_f3 = 0;
+                                        m_f4 = 100;
+                                        m_f10 = 0;
             //                        }
 
 

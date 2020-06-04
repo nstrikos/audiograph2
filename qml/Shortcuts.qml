@@ -31,6 +31,21 @@ Item {
         }
     }
     Shortcut {
+        sequence: "F5"
+        onActivated: {
+            window.explore
+            functionController.previousPointY();
+        }
+    }
+    Shortcut {
+        sequence: "F6"
+        onActivated: {
+            window.explore
+            functionController.nextPointY();
+        }
+    }
+
+    Shortcut {
         sequence: "Shift+F7"
         onActivated: {
             window.interestingPoint()

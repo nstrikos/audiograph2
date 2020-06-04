@@ -58,6 +58,8 @@ public:
 
     Q_INVOKABLE void sayXCoordinate();
     Q_INVOKABLE void sayYCoordinate();
+    Q_INVOKABLE void nextPointY();
+    Q_INVOKABLE void previousPointY();
 
     Q_INVOKABLE void firstPoint();
 
