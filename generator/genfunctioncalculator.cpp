@@ -116,9 +116,9 @@ void GenFunctionCalculatorThread::run()
         //            functionValues[i] = -std::numeric_limits<double>::max();
         //        }
 
-        //        if (is_nan(result)) {
-        //            functionValues[i] = 0;
-        //        }
+                if (is_nan(result)) {
+                    functionValues[i] = 0;
+                }
         //        m_functionValues[i] = sin(x)*x*x*x - x*x*sin(x);
         //        functionValues[i] = -5/(x*x + 1);
         //        m_functionValues[i] = x;

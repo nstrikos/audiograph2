@@ -267,7 +267,7 @@ void FunctionController::sayXCoordinate()
 
     double x = m_model->x(m_currentPoint->point());
 
-    x = round( x * 100.0) / 100;
+    //x = round( x * 100.0) / 100;
     m_textToSpeech->speak(QString::number(x));
 }
 
@@ -288,7 +288,7 @@ void FunctionController::sayYCoordinate()
     if (m_model->isValid(m_currentPoint->point())) {
         double y = m_model->y(m_currentPoint->point());
 
-        y = round( y * 100.0) / 100;
+        //y = round( y * 100.0) / 100;
 
         m_textToSpeech->speak(QString::number(y));
     } else {

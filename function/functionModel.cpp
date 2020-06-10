@@ -160,19 +160,22 @@ void FunctionModel::calculatePoints()
         res = m_fparser.EvalError();
         tmpPoint.x = x;
         tmpPoint.y = result;
-        if (res == 0)
-            tmpPoint.isValid = true;
-        else if (res > 0) {
+        if (result != result)
             tmpPoint.isValid = false;
-       }
+        else if (res > 0)
+            tmpPoint.isValid = false;
+        else if (res == 0)
+            tmpPoint.isValid = true;
 
         m_linePoints.append(tmpPoint);
     }
 
-    m_minValue = m_linePoints[0].y;
-    m_maxValue = m_linePoints[0].y;
+    m_minValue = std::numeric_limits<double>::max();//m_linePoints[0].y;
+    m_maxValue = std::numeric_limits<double>::min();//m_linePoints[0].y;
 
     for (int i = 1; i < LINE_POINTS; i++) {
+        if (!m_linePoints[i].isValid)
+            continue;
         if (m_linePoints[i].y < m_minValue)
             m_minValue = m_linePoints[i].y;
         if (m_linePoints[i].y > m_maxValue)

@@ -60,6 +60,56 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/AndroidManifest.xml \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/AndroidManifest.xml \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/AndroidManifest.xml \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/AndroidManifest.xml \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/AndroidManifest.xml \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/AndroidManifest.xml \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/AndroidManifest.xml \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/build.gradle \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/build.gradle \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/build.gradle \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/build.gradle \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/build.gradle \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/build.gradle \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/build.gradle \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradle/wrapper/gradle-wrapper.jar \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradle/wrapper/gradle-wrapper.jar \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradle/wrapper/gradle-wrapper.jar \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradle/wrapper/gradle-wrapper.jar \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradle/wrapper/gradle-wrapper.jar \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradle/wrapper/gradle-wrapper.jar \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradle/wrapper/gradle-wrapper.jar \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradle/wrapper/gradle-wrapper.properties \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradle/wrapper/gradle-wrapper.properties \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradle/wrapper/gradle-wrapper.properties \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradle/wrapper/gradle-wrapper.properties \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradle/wrapper/gradle-wrapper.properties \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradle/wrapper/gradle-wrapper.properties \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradle/wrapper/gradle-wrapper.properties \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradlew \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradlew \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradlew \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradlew \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradlew \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradlew \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradlew \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradlew.bat \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradlew.bat \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradlew.bat \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradlew.bat \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradlew.bat \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradlew.bat \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradlew.bat \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/res/values/libs.xml \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/res/values/libs.xml \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/res/values/libs.xml \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/res/values/libs.xml \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/res/values/libs.xml \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/res/values/libs.xml \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/res/values/libs.xml \
+    android/AndroidManifest.xml \
     fparser/extrasrc/fp_identifier_parser.inc \
     fparser/extrasrc/fp_opcode_add.inc
 
@@ -100,3 +150,5 @@ HEADERS += \
     parameters.h \
     point.h \
     texttospeech.h
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
