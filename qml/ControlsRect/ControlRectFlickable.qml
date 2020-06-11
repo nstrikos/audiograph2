@@ -172,5 +172,31 @@ Flickable {
         StartButtonFocusScope {
             id: startButtonFocusScope
         }
+
+        Rectangle {
+            id: rect1
+            anchors.left: startButtonFocusScope.left
+//            anchors.leftMargin: 15
+            anchors.top: startButtonFocusScope.bottom
+            anchors.topMargin: 15
+            height: 50
+            //width: startButtonFocusScope.width / 2 - 15
+            anchors.right: startButtonFocusScope.horizontalCenter
+            anchors.rightMargin: 15
+            color: "red"
+        }
+
+        Rectangle {
+            id: rect2
+            anchors.left: startButtonFocusScope.horizontalCenter
+            anchors.leftMargin: 15
+            anchors.top: startButtonFocusScope.bottom
+            anchors.topMargin: 15
+            anchors.right: startButtonFocusScope.right
+//            anchors.rightMargin: 15
+            height: 50
+            //width: startButtonFocusScope.width / 2 - 15
+            color: "blue"
+        }
     }
 }
