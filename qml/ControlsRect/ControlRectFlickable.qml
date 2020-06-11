@@ -22,11 +22,11 @@ Flickable {
     property alias startSoundButtonFocusScope: startButtonFocusScope
 
     onContentYChanged: {
-        ensureVisible(textInput)
-        ensureVisible(textInput2)
-        ensureVisible(textInput3)
-        ensureVisible(textInput4)
-        ensureVisible(textInput5)
+//        ensureVisible(textInput)
+//        ensureVisible(textInput2)
+//        ensureVisible(textInput3)
+//        ensureVisible(textInput4)
+//        ensureVisible(textInput5)
     }
     
     function ensureVisible(item) {
