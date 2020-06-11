@@ -2,6 +2,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 
 import "../BeautityRect"
+import "./Focus"
 
 Flickable {
     id: controlRectFlickable
@@ -9,7 +10,7 @@ Flickable {
     anchors.top: controlsTitleBar.bottom
     anchors.topMargin: 40
     anchors.bottom: parent.bottom
-    contentHeight: 500
+    contentHeight: 800
     clip: true
 
     property alias textInput: textInput
@@ -37,10 +38,10 @@ Flickable {
                 || ext > contentY + height) { // ends after
             //            // don't exceed bounds
             //            //contentY = Math.max(0, Math.min(ypos - height + item.height, contentHeight - height))
-            console.log(item.id, "not visible")
+//            console.log(item.id, "not visible")
             item.enabled = false
         } else {
-            console.log(item.id, "visible")
+//            console.log(item.id, "visible")
             item.enabled = true
         }
     }
@@ -173,29 +174,85 @@ Flickable {
             id: startButtonFocusScope
         }
 
+        Focus1 {
+            id: focus1
+        }
+
+        Focus2 {
+            id: focus2
+        }
+
+        Focus3 {
+            id: focus3
+        }
+
+        Focus4 {
+            id: focus4
+        }
+
         Rectangle {
-            id: rect1
+            id: rect5
             anchors.left: startButtonFocusScope.left
-//            anchors.leftMargin: 15
-            anchors.top: startButtonFocusScope.bottom
+            anchors.top: focus3.bottom
             anchors.topMargin: 15
             height: 50
-            //width: startButtonFocusScope.width / 2 - 15
             anchors.right: startButtonFocusScope.horizontalCenter
             anchors.rightMargin: 15
             color: "red"
         }
 
         Rectangle {
-            id: rect2
+            id: rect6
             anchors.left: startButtonFocusScope.horizontalCenter
             anchors.leftMargin: 15
-            anchors.top: startButtonFocusScope.bottom
+            anchors.top: focus4.bottom
             anchors.topMargin: 15
             anchors.right: startButtonFocusScope.right
-//            anchors.rightMargin: 15
             height: 50
-            //width: startButtonFocusScope.width / 2 - 15
+            color: "blue"
+        }
+
+        Rectangle {
+            id: rect7
+            anchors.left: startButtonFocusScope.left
+            anchors.top: rect5.bottom
+            anchors.topMargin: 15
+            height: 50
+            anchors.right: startButtonFocusScope.horizontalCenter
+            anchors.rightMargin: 15
+            color: "red"
+        }
+
+        Rectangle {
+            id: rect8
+            anchors.left: startButtonFocusScope.horizontalCenter
+            anchors.leftMargin: 15
+            anchors.top: rect6.bottom
+            anchors.topMargin: 15
+            anchors.right: startButtonFocusScope.right
+            height: 50
+            color: "blue"
+        }
+
+        Rectangle {
+            id: rect9
+            anchors.left: startButtonFocusScope.left
+            anchors.top: rect7.bottom
+            anchors.topMargin: 15
+            height: 50
+            anchors.right: startButtonFocusScope.horizontalCenter
+            anchors.rightMargin: 15
+            color: "red"
+        }
+
+        Rectangle {
+            id: rect10
+            anchors.left: startButtonFocusScope.horizontalCenter
+            anchors.leftMargin: 15
+            anchors.top: rect8.bottom
+            anchors.topMargin: 15
+            anchors.right: startButtonFocusScope.right
+            height: 50
             color: "blue"
         }
     }

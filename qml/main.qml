@@ -97,9 +97,31 @@ Window {
 
     Connections {
         target: functionController
-        onUpdateFinished: newGraph()
-        onNewInputValues: controlsRect.newInputValues(minX, maxX, minY, maxY)
-        onMovingPointFinished: stopAudio()
-        onError: error()
+        function onUpdateFinished() {
+            newGraph()
+        }
     }
+
+    Connections {
+        target: functionController
+        function onNewInputValues(minX, maxX, minY, maxY) {
+            controlsRect.newInputValues(minX, maxX, minY, maxY)
+        }
+    }
+
+    Connections {
+        target: functionController
+        function onMovingPointFinished() {
+            stopAudio()
+        }
+    }
+
+    Connections {
+        target: functionController
+        function onError() {
+            error()
+        }
+    }
+
+
 }

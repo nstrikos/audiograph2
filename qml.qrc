@@ -50,5 +50,9 @@
         <file>qml/SettingsRect/GraphSettings/InvertThemeFocusScope.qml</file>
         <file>qml/SettingsRect/GraphSettings/ResetButton.qml</file>
         <file>qml/Shortcuts.qml</file>
+        <file>qml/ControlsRect/Focus/Focus1.qml</file>
+        <file>qml/ControlsRect/Focus/Focus2.qml</file>
+        <file>qml/ControlsRect/Focus/Focus3.qml</file>
+        <file>qml/ControlsRect/Focus/Focus4.qml</file>
     </qresource>
 </RCC>
