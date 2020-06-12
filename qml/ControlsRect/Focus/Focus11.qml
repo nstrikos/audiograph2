@@ -2,30 +2,30 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 
 FocusScope {
-    id: focus3
+    id: focus11
     anchors.left: startButtonFocusScope.left
-    anchors.top: focus1.bottom
+    anchors.top: focus9.bottom
     anchors.topMargin: 15
     height: 50
     anchors.right: startButtonFocusScope.horizontalCenter
     anchors.rightMargin: 15
     activeFocusOnTab: true
-    Accessible.name: qsTr("Previous point")
+    Accessible.name: qsTr("Decrease step")
     
     Rectangle {
-        id: rect3
+        id: rect11
         anchors.fill: parent
         color: bgColor
-        border.color: focus3.activeFocus ? lightColor : "light gray"
-        border.width: focus3.activeFocus ? 2 : 1
+        border.color: focus11.activeFocus ? lightColor : "light gray"
+        border.width: focus11.activeFocus ? 2 : 1
         property bool checked: true
-        property var text: "Previous point"
+        property var text: "Decrease step"
         
         signal clicked()
         
         Text {
             id: text
-            text: rect3.text
+            text: rect11.text
             anchors.centerIn: parent
             font.pointSize: 12
             color: fontColor
@@ -33,10 +33,7 @@ FocusScope {
         
         MouseArea {
             anchors.fill: parent
-            onPressed: {
-                window.explore
-                functionController.previousPointY();
-            }
+            onPressed: functionController.decStep()
         }
     }
     

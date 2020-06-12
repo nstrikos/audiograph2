@@ -15,10 +15,19 @@ FocusScope {
     anchors.rightMargin: 10
     activeFocusOnTab: true
     Accessible.name: qsTr("Start sound button")
-    Keys.onSpacePressed: startSoundButton.checked = ! startSoundButton.checked
-    Keys.onEnterPressed: startSoundButton.checked = ! startSoundButton.checked
-    Keys.onReturnPressed: startSoundButton.checked = ! startSoundButton.checked
-    
+    Keys.onSpacePressed: {
+        pressed()
+        startSoundButton.checked = ! startSoundButton.checked
+    }
+    Keys.onEnterPressed: {
+        pressed()
+        startSoundButton.checked = ! startSoundButton.checked
+    }
+    Keys.onReturnPressed: {
+        pressed()
+        startSoundButton.checked = ! startSoundButton.checked
+    }
+
     Rectangle {
         id: startSoundButton
         anchors.fill: parent
@@ -40,10 +49,14 @@ FocusScope {
         }
         
         MouseArea {
+            id: mouseArea
             anchors.fill: parent
-            onPressed: {
-                window.playPressed()
-            }
+            onPressed: pressed()
+
         }
+    }
+
+    function pressed() {
+        window.playPressed()
     }
 }

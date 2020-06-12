@@ -10,7 +10,7 @@ Flickable {
     anchors.top: controlsTitleBar.bottom
     anchors.topMargin: 40
     anchors.bottom: parent.bottom
-    contentHeight: 800
+    contentHeight: 870
     clip: true
 
     property alias textInput: textInput
@@ -22,11 +22,11 @@ Flickable {
     property alias startSoundButtonFocusScope: startButtonFocusScope
 
     onContentYChanged: {
-//        ensureVisible(textInput)
-//        ensureVisible(textInput2)
-//        ensureVisible(textInput3)
-//        ensureVisible(textInput4)
-//        ensureVisible(textInput5)
+        //        ensureVisible(textInput)
+        //        ensureVisible(textInput2)
+        //        ensureVisible(textInput3)
+        //        ensureVisible(textInput4)
+        //        ensureVisible(textInput5)
     }
     
     function ensureVisible(item) {
@@ -38,10 +38,10 @@ Flickable {
                 || ext > contentY + height) { // ends after
             //            // don't exceed bounds
             //            //contentY = Math.max(0, Math.min(ypos - height + item.height, contentHeight - height))
-//            console.log(item.id, "not visible")
+            //            console.log(item.id, "not visible")
             item.enabled = false
         } else {
-//            console.log(item.id, "visible")
+            //            console.log(item.id, "visible")
             item.enabled = true
         }
     }
@@ -190,70 +190,70 @@ Flickable {
             id: focus4
         }
 
-        Rectangle {
-            id: rect5
-            anchors.left: startButtonFocusScope.left
-            anchors.top: focus3.bottom
-            anchors.topMargin: 15
-            height: 50
-            anchors.right: startButtonFocusScope.horizontalCenter
-            anchors.rightMargin: 15
-            color: "red"
+        Focus5 {
+            id: focus5
         }
 
-        Rectangle {
-            id: rect6
+        Focus6 {
+            id: focus6
+        }
+
+        Focus7 {
+            id: focus7
+        }
+
+        Focus8 {
+            id: focus8
+        }
+
+        Focus9 {
+            id: focus9
+        }
+
+        Focus10 {
+            id: focus10
+        }
+
+        Focus11 {
+            id: focus11
+        }
+
+        FocusScope {
+            id: focus12
             anchors.left: startButtonFocusScope.horizontalCenter
             anchors.leftMargin: 15
-            anchors.top: focus4.bottom
+            anchors.top: focus10.bottom
             anchors.topMargin: 15
             anchors.right: startButtonFocusScope.right
             height: 50
-            color: "blue"
-        }
 
-        Rectangle {
-            id: rect7
-            anchors.left: startButtonFocusScope.left
-            anchors.top: rect5.bottom
-            anchors.topMargin: 15
-            height: 50
-            anchors.right: startButtonFocusScope.horizontalCenter
-            anchors.rightMargin: 15
-            color: "red"
-        }
+            activeFocusOnTab: true
+            Accessible.name: qsTr("Increase step")
 
-        Rectangle {
-            id: rect8
-            anchors.left: startButtonFocusScope.horizontalCenter
-            anchors.leftMargin: 15
-            anchors.top: rect6.bottom
-            anchors.topMargin: 15
-            anchors.right: startButtonFocusScope.right
-            height: 50
-            color: "blue"
-        }
+            Rectangle {
+                id: rect12
+                anchors.fill: parent
+                color: bgColor
+                border.color: focus12.activeFocus ? lightColor : "light gray"
+                border.width: focus12.activeFocus ? 2 : 1
+                property bool checked: true
+                property var text: "Increase step"
 
-        Rectangle {
-            id: rect9
-            anchors.left: startButtonFocusScope.left
-            anchors.top: rect7.bottom
-            anchors.topMargin: 15
-            height: 50
-            anchors.right: startButtonFocusScope.horizontalCenter
-            anchors.rightMargin: 15
-            color: "red"
-        }
+                signal clicked()
 
-        Rectangle {
-            id: rect10
-            anchors.left: startButtonFocusScope.horizontalCenter
-            anchors.leftMargin: 15
-            anchors.top: rect8.bottom
-            anchors.topMargin: 15
-            anchors.right: startButtonFocusScope.right
-            height: 50
-            color: "blue"
+                Text {
+                    id: text
+                    text: rect12.text
+                    anchors.centerIn: parent
+                    font.pointSize: 12
+                    color: fontColor
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onPressed: functionController.incStep()
+                }
+            }
         }
     }
 }
