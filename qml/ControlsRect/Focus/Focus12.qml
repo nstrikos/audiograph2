@@ -2,39 +2,39 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 
 FocusScope {
-    id: focus5
-    anchors.left: startButtonFocusScope.left
-    anchors.top: focus3.bottom
+    id: focus12
+    anchors.left: startButtonFocusScope.horizontalCenter
+    anchors.leftMargin: 15
+    anchors.top: focus10.bottom
     anchors.topMargin: 15
+    anchors.right: startButtonFocusScope.right
     height: 50
-    anchors.right: startButtonFocusScope.horizontalCenter
-    anchors.rightMargin: 15
+    
     activeFocusOnTab: true
-    Accessible.name: qsTr("Previous point of interest")
+    Accessible.name: qsTr("Increase step")
 
     Keys.onSpacePressed: pressed()
     Keys.onEnterPressed: pressed()
     Keys.onReturnPressed: pressed()
 
     function pressed() {
-        window.interestingPoint()
-        functionController.previousPointInterest()
+        functionController.incStep()
     }
     
     Rectangle {
-        id: rect5
+        id: rect12
         anchors.fill: parent
         color: bgColor
-        border.color: focus5.activeFocus ? lightColor : "light gray"
-        border.width: focus5.activeFocus ? 2 : 1
+        border.color: focus12.activeFocus ? lightColor : "light gray"
+        border.width: focus12.activeFocus ? 2 : 1
         property bool checked: true
-        property var text: "Previous point\n of interest"
+        property var text: "Increase step"
         
         signal clicked()
         
         Text {
             id: text
-            text: rect5.text
+            text: rect12.text
             anchors.centerIn: parent
             font.pointSize: 12
             color: fontColor

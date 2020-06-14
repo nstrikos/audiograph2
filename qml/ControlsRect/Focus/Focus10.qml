@@ -12,6 +12,15 @@ FocusScope {
     
     activeFocusOnTab: true
     Accessible.name: qsTr("Next point sound only")
+
+    Keys.onSpacePressed: pressed()
+    Keys.onEnterPressed: pressed()
+    Keys.onReturnPressed: pressed()
+
+    function pressed() {
+        window.explore()
+        functionController.nextPoint()
+    }
     
     Rectangle {
         id: rect10
@@ -34,10 +43,7 @@ FocusScope {
         
         MouseArea {
             anchors.fill: parent
-            onPressed: {
-                window.explore()
-                functionController.nextPoint()
-            }
+            onPressed: pressed()
         }
     }
 }

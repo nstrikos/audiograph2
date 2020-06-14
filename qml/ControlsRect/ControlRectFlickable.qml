@@ -65,6 +65,7 @@ Flickable {
             id: textInput
             anchors.left: label1.right
             anchors.verticalCenter: label1.verticalCenter
+            anchors.rightMargin: 50
             placeholderText: (parent.width > 0) ? "Function expression" : ""
             onFocusChanged: ensureVisible(textInput)
             Accessible.name: qsTr("Function expression")
@@ -76,6 +77,51 @@ Flickable {
                 textInput5.text = "10"
                 window.evaluate()
                 controlsRect.active = true
+            }
+        }
+
+        FocusScope {
+            id: clearExpressionFocusScope
+            anchors.left: textInput.right
+            anchors.right: parent.right
+            anchors.rightMargin: 10
+            anchors.top: textInput.top
+            anchors.bottom: textInput.bottom
+
+            activeFocusOnTab: true
+            Accessible.name: qsTr("Clear expression")
+
+            Keys.onSpacePressed: pressed()
+            Keys.onEnterPressed: pressed()
+            Keys.onReturnPressed: pressed()
+
+            function pressed() {
+                textInput.clear()
+            }
+
+            Rectangle {
+                id: button1
+                anchors.fill: parent
+                color: bgColor
+                border.color: clearExpressionFocusScope.activeFocus ? lightColor : "light gray"
+                border.width: clearExpressionFocusScope.activeFocus ? 2 : 1
+                property bool checked: true
+                property var text: "X"
+
+                signal clicked()
+
+                Text {
+                    id: text
+                    text: button1.text
+                    anchors.centerIn: parent
+                    font.pointSize: 24
+                    color: fontColor
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onPressed: pressed
+                }
             }
         }
         
@@ -218,42 +264,8 @@ Flickable {
             id: focus11
         }
 
-        FocusScope {
+        Focus12 {
             id: focus12
-            anchors.left: startButtonFocusScope.horizontalCenter
-            anchors.leftMargin: 15
-            anchors.top: focus10.bottom
-            anchors.topMargin: 15
-            anchors.right: startButtonFocusScope.right
-            height: 50
-
-            activeFocusOnTab: true
-            Accessible.name: qsTr("Increase step")
-
-            Rectangle {
-                id: rect12
-                anchors.fill: parent
-                color: bgColor
-                border.color: focus12.activeFocus ? lightColor : "light gray"
-                border.width: focus12.activeFocus ? 2 : 1
-                property bool checked: true
-                property var text: "Increase step"
-
-                signal clicked()
-
-                Text {
-                    id: text
-                    text: rect12.text
-                    anchors.centerIn: parent
-                    font.pointSize: 12
-                    color: fontColor
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onPressed: functionController.incStep()
-                }
-            }
         }
     }
 }

@@ -11,6 +11,15 @@ FocusScope {
     anchors.rightMargin: 15
     activeFocusOnTab: true
     Accessible.name: qsTr("Previous point of interest fast mode")
+
+    Keys.onSpacePressed: pressed()
+    Keys.onEnterPressed: pressed()
+    Keys.onReturnPressed: pressed()
+
+    function pressed() {
+        window.interestingPoint()
+        functionController.previousPointInterestFast()
+    }
     
     Rectangle {
         id: rect7
@@ -33,10 +42,7 @@ FocusScope {
         
         MouseArea {
             anchors.fill: parent
-            onPressed: {
-                window.interestingPoint()
-                functionController.previousPointInterestFast()
-            }
+            onPressed: pressed()
         }
     }
 }

@@ -11,6 +11,14 @@ FocusScope {
     anchors.rightMargin: 15
     activeFocusOnTab: true
     Accessible.name: qsTr("Decrease step")
+
+    Keys.onSpacePressed: pressed()
+    Keys.onEnterPressed: pressed()
+    Keys.onReturnPressed: pressed()
+
+    function pressed() {
+        functionController.decStep()
+    }
     
     Rectangle {
         id: rect11
@@ -33,7 +41,7 @@ FocusScope {
         
         MouseArea {
             anchors.fill: parent
-            onPressed: functionController.decStep()
+            onPressed: pressed()
         }
     }
     

@@ -179,8 +179,9 @@ Item {
             
             PropertyChanges {
                 target: settingsRect
-                height: 0
-                visible: false
+                //height: 0
+//                visible: true
+                z: controlsRect.z - 1
             }
             
             PropertyChanges {

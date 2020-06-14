@@ -11,6 +11,15 @@ FocusScope {
     anchors.rightMargin: 15
     activeFocusOnTab: true
     Accessible.name: qsTr("X")
+
+    Keys.onSpacePressed: pressed()
+    Keys.onEnterPressed: pressed()
+    Keys.onReturnPressed: pressed()
+
+    function pressed() {
+        window.stopAudio()
+        functionController.sayXCoordinate()
+    }
     
     Rectangle {
         id: button1
@@ -33,10 +42,7 @@ FocusScope {
         
         MouseArea {
             anchors.fill: parent
-            onPressed: {
-                window.stopAudio()
-                functionController.sayXCoordinate()
-            }
+            onPressed: pressed
         }
     }
 }

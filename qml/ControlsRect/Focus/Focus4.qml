@@ -11,6 +11,15 @@ FocusScope {
     height: 50
     activeFocusOnTab: true
     Accessible.name: qsTr("Next point")
+
+    Keys.onSpacePressed: pressed()
+    Keys.onEnterPressed: pressed()
+    Keys.onReturnPressed: pressed()
+
+    function pressed() {
+        window.explore()
+        functionController.nextPointY();
+    }
     
     Rectangle {
         id: rect4
@@ -33,10 +42,7 @@ FocusScope {
         
         MouseArea {
             anchors.fill: parent
-            onPressed: {
-                window.explore
-                functionController.nextPointY();
-            }
+            onPressed: pressed()
         }
     }
 }

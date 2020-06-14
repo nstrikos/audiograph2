@@ -17,6 +17,12 @@ Item {
         }
     }
     Shortcut {
+        sequence: "Shift+F2"
+        onActivated: {
+            controlsRect.textInput.clear()
+        }
+    }
+    Shortcut {
         sequence: "F3"
         onActivated: {
             window.stopAudio()

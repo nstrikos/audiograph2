@@ -11,6 +11,15 @@ FocusScope {
     anchors.rightMargin: 15
     activeFocusOnTab: true
     Accessible.name: qsTr("Previous point")
+
+    Keys.onSpacePressed: pressed()
+    Keys.onEnterPressed: pressed()
+    Keys.onReturnPressed: pressed()
+
+    function pressed() {
+        window.explore()
+        functionController.previousPointY();
+    }
     
     Rectangle {
         id: rect3
@@ -33,10 +42,7 @@ FocusScope {
         
         MouseArea {
             anchors.fill: parent
-            onPressed: {
-                window.explore
-                functionController.previousPointY();
-            }
+            onPressed: pressed
         }
     }
     

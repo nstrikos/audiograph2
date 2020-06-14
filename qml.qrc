@@ -61,5 +61,6 @@
         <file>qml/ControlsRect/Focus/Focus9.qml</file>
         <file>qml/ControlsRect/Focus/Focus10.qml</file>
         <file>qml/ControlsRect/Focus/Focus11.qml</file>
+        <file>qml/ControlsRect/Focus/Focus12.qml</file>
     </qresource>
 </RCC>
