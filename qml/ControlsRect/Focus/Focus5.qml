@@ -28,7 +28,7 @@ FocusScope {
         border.color: focus5.activeFocus ? lightColor : "light gray"
         border.width: focus5.activeFocus ? 2 : 1
         property bool checked: true
-        property var text: "Previous point\n of interest"
+        property var text: "Previous point of interest"
         
         signal clicked()
         
@@ -36,8 +36,11 @@ FocusScope {
             id: text
             text: rect5.text
             anchors.centerIn: parent
-            font.pointSize: 12
+            font.pointSize: 10
             color: fontColor
+            wrapMode: Text.Wrap
+            width: parent.width
+            horizontalAlignment: Text.AlignHCenter
         }
         
         MouseArea {

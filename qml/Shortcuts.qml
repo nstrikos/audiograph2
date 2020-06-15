@@ -10,7 +10,7 @@ Item {
     Shortcut {
         sequence: "F2"
         onActivated: {
-            if (functionController.validExpression())
+//            if (functionController.validExpression())
                 window.playPressed()
             //else
             //    textToSpeech.speak(functionController.getError())

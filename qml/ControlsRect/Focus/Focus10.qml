@@ -29,7 +29,7 @@ FocusScope {
         border.color: focus10.activeFocus ? lightColor : "light gray"
         border.width: focus10.activeFocus ? 2 : 1
         property bool checked: true
-        property var text: "Next point\n sound only"
+        property var text: "Next point sound only"
         
         signal clicked()
         
@@ -37,8 +37,11 @@ FocusScope {
             id: text
             text: rect10.text
             anchors.centerIn: parent
-            font.pointSize: 12
+            font.pointSize: 10
             color: fontColor
+            wrapMode: Text.Wrap
+            width: parent.width
+            horizontalAlignment: Text.AlignHCenter
         }
         
         MouseArea {

@@ -28,7 +28,7 @@ FocusScope {
         border.color: focus8.activeFocus ? lightColor : "light gray"
         border.width: focus8.activeFocus ? 2 : 1
         property bool checked: true
-        property var text: "Next point\n of interest fast mode"
+        property var text: "Next point of interest fast mode"
         
         signal clicked()
         
@@ -36,8 +36,11 @@ FocusScope {
             id: text
             text: rect8.text
             anchors.centerIn: parent
-            font.pointSize: 12
+            font.pointSize: 10
             color: fontColor
+            wrapMode: Text.Wrap
+            width: parent.width
+            horizontalAlignment: Text.AlignHCenter
         }
         
         MouseArea {

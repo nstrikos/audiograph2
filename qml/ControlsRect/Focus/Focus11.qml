@@ -35,7 +35,7 @@ FocusScope {
             id: text
             text: rect11.text
             anchors.centerIn: parent
-            font.pointSize: 12
+            font.pointSize: 10
             color: fontColor
         }
         

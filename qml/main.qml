@@ -1,6 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import Qt.labs.settings 1.1
+import QtQuick.Dialogs 1.1
 
 import QtQml.StateMachine 1.0 as DSM
 
@@ -26,6 +27,7 @@ Window {
     signal playPressed()
     signal newGraph()
     signal error()
+    signal init()
     signal stopAudio()
     signal explore()
     signal interestingPoint()
@@ -123,5 +125,28 @@ Window {
         }
     }
 
+    function showError(errorString) {
+        messageDialog.title = errorString
+        messageDialog.visible = true
+        timer.start()
+    }
 
+    MessageDialog {
+        id: messageDialog
+        title: "May I have your attention please"
+        text: title//"It's so cool that you are using Qt Quick."
+        onAccepted: visible = false
+        Component.onCompleted: visible = false
+//        Accessible.name: qsTr("Error")
+//        Accessible.description: qsTr("Error")
+    }
+
+    Timer {
+        id: timer
+        interval: 3000
+        onTriggered: {
+            messageDialog.visible = false
+            window.init()
+        }
+    }
 }

@@ -14,11 +14,27 @@ Item {
                 targetState: evaluateState
                 signal: window.evaluate
             }
+            DSM.SignalTransition {
+                targetState: errorDisplayState
+                signal: window.playPressed
+            }
             onEntered: {
                 console.log("initial state")
                 controlsRect.startSoundButton.enabled = false
             }
         }
+        DSM.State {
+            id: errorDisplayState
+            DSM.SignalTransition {
+                targetState: initialState
+                signal: window.init
+            }
+            onEntered: {
+                console.log("error state")
+                window.showError(functionController.getError())
+            }
+        }
+
         DSM.State {
             id: evaluateState
             DSM.SignalTransition {

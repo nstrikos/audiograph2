@@ -3,9 +3,11 @@
 
 #include <QtMath>
 
+#include <QDebug>
+
 FunctionModel::FunctionModel(QObject *parent) : QObject(parent)
 {
-    m_error = "";
+    m_error = tr("Syntax error");
 }
 
 FunctionModel::~FunctionModel()
@@ -128,7 +130,10 @@ bool FunctionModel::check()
     m_fparser.AddConstant("e", M_E);
     int res = m_fparser.Parse(m_expression.toStdString(), "x");
     if(res >= 0 || m_expression == "") {
-        m_error = tr("Cannot understand expression.");
+        const char *s;
+        s = m_fparser.ErrorMsg();
+        m_error = QString::fromUtf8(s);
+        qDebug() << m_error;
         emit error();
         return false;
     }
