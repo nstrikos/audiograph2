@@ -267,6 +267,8 @@ void FunctionController::sayXCoordinate()
 
     double x = m_model->x(m_currentPoint->point());
 
+    double Pow = pow(10.0, m_parameters->precisionDigits());
+    x = round (x * Pow) / Pow;
     //x = round( x * 100.0) / 100;
     m_textToSpeech->speak(QString::number(x));
 }
@@ -289,6 +291,8 @@ void FunctionController::sayYCoordinate()
         double y = m_model->y(m_currentPoint->point());
 
         //y = round( y * 100.0) / 100;
+        double Pow = pow(10.0, m_parameters->precisionDigits());
+        y = round (y * Pow) / Pow;
 
         m_textToSpeech->speak(QString::number(y));
     } else {

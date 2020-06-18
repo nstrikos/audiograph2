@@ -5,7 +5,7 @@ import QtQuick.Dialogs 1.3
 Label {
     id: label4
     text: qsTr("Use notes") + ":"
-    anchors.top: label3.bottom
+    anchors.top: label33.bottom
     anchors.topMargin: 30
     anchors.left: parent.left
     anchors.leftMargin: 10
