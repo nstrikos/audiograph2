@@ -62,5 +62,6 @@
         <file>qml/ControlsRect/Focus/Focus10.qml</file>
         <file>qml/ControlsRect/Focus/Focus11.qml</file>
         <file>qml/ControlsRect/Focus/Focus12.qml</file>
+        <file>qml/SettingsRect/AudioSettings/PrecisionSpinbox.qml</file>
     </qresource>
 </RCC>

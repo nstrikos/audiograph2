@@ -146,6 +146,7 @@ void Parameters::read()
     int maxFreq = settings.value("maxFreq", 2000).toInt();
     bool useNotes = settings.value("useNotes", false).toBool();
     bool exploreMode = settings.value("exploreMode", false).toBool();
+    int precisionDigits = settings.value("precisionDigits", 2).toInt();
 
     setPointColor(pointColor);
     setPointSize(pointSize);
@@ -168,6 +169,7 @@ void Parameters::read()
     setMaxFreq(maxFreq);
     setUseNotes(useNotes);
     setExploreMode(exploreMode);
+    setPrecisionDigits(precisionDigits);
 }
 
 void Parameters::write()
@@ -195,6 +197,7 @@ void Parameters::write()
     settings.setValue("maxFreq", m_maxFreq);
     settings.setValue("useNotes", m_useNotes);
     settings.setValue("exploreMode", m_exploreMode);
+    settings.setValue("precisionDigits", m_precisionDigits);
     settings.sync();
 }
 
@@ -222,6 +225,7 @@ void Parameters::resetAudio()
     setMinFreq(200);
     setMaxFreq(2000);
     setUseNotes(false);
+    setPrecisionDigits(2);
 }
 
 QColor Parameters::axesColor() const
@@ -350,4 +354,14 @@ void Parameters::setExploreMode(bool exploreMode)
 {
     m_exploreMode = exploreMode;
     write();
+}
+
+int Parameters::precisionDigits() const
+{
+    return m_precisionDigits;
+}
+
+void Parameters::setPrecisionDigits(int precisionDigits)
+{
+    m_precisionDigits = precisionDigits;
 }

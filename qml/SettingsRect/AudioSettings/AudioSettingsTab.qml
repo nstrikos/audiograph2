@@ -40,6 +40,22 @@ Rectangle {
         MaxFreqSpinbox {
             id: maxFreqSpinbox
         }
+        Label {
+            id: label33
+            text: qsTr("Precision digits") + ":"
+            anchors.top: label3.bottom
+            anchors.topMargin: 30
+            anchors.left: parent.left
+            anchors.leftMargin: 10
+            width: 80
+            height: 15
+            color: fontColor
+        }
+
+        PrecisionSpinbox {
+            id: precisionSpinbox
+        }
+
         Label4 {
             id: label4
         }

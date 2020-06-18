@@ -32,6 +32,7 @@ class Parameters : public QObject
     Q_PROPERTY(int maxFreq READ maxFreq WRITE setMaxFreq NOTIFY maxFreqChanged)
     Q_PROPERTY(bool useNotes READ useNotes WRITE setUseNotes NOTIFY useNotesChanged)
     Q_PROPERTY(bool exploreMode READ exploreMode WRITE setExploreMode NOTIFY exploreModeChanged)
+    Q_PROPERTY(int precisionDigits READ precisionDigits WRITE setPrecisionDigits NOTIFY precisionDigitsChanged)
 
 public:
 public:
@@ -110,6 +111,9 @@ public:
     bool exploreMode() const;
     void setExploreMode(bool exploreMode);
 
+    int precisionDigits() const;
+    void setPrecisionDigits(int precisionDigits);
+
 private:
     Parameters() {read();}
     Parameters(Parameters const&);              // Don't Implement
@@ -136,6 +140,7 @@ private:
     int m_maxFreq;
     bool m_useNotes;
     bool m_exploreMode;
+    int m_precisionDigits;
 
     const QString POINTCOLOR = "pointColor";
 
@@ -161,6 +166,7 @@ signals:
     void maxFreqChanged();
     void useNotesChanged();
     void exploreModeChanged();
+    void precisionDigitsChanged();
 };
 
 #endif // PARAMETERS_H
