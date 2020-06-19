@@ -51,7 +51,7 @@ FocusScope {
         MouseArea {
             id: mouseArea
             anchors.fill: parent
-            onPressed: pressed()
+            onPressed: startButtonFocusScope.pressed()
 
         }
     }

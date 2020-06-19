@@ -17,6 +17,7 @@ FocusScope {
     Keys.onReturnPressed: pressed()
 
     function pressed() {
+        console.log("pressed")
         window.stopAudio()
         functionController.sayXCoordinate()
     }
@@ -42,7 +43,7 @@ FocusScope {
         
         MouseArea {
             anchors.fill: parent
-            onPressed: pressed
+            onPressed: focus1.pressed()
         }
     }
 }
