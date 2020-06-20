@@ -20,6 +20,7 @@ Item {
         sequence: "Shift+F2"
         onActivated: {
             controlsRect.textInput.clear()
+            controlsRect.textInput.forceActiveFocus()
         }
     }
     Shortcut {

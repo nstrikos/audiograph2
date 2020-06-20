@@ -294,7 +294,9 @@ void FunctionController::sayYCoordinate()
         double Pow = pow(10.0, m_parameters->precisionDigits());
         y = round (y * Pow) / Pow;
 
-        m_textToSpeech->speak(QString::number(y));
+        char c = 'f';
+        QString value = QString::number(y, c, m_parameters->precisionDigits());
+        m_textToSpeech->speak(value);
     } else {
         m_textToSpeech->speak(tr("Not defined"));
     }
