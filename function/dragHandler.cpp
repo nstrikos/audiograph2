@@ -34,10 +34,19 @@ void DragHandler::drag(FunctionModel &model, int diffX, int diffY, int width, in
     double diffXDouble = (double)((m_maxX - m_minX)) / (double)width * diffX;
     double diffYDouble = (double)((m_maxY - m_minY)) / (double)height * diffY;
 
-    double minX = round( (m_minX - diffXDouble) * ten) / ten;
-    double maxX = round( (m_maxX - diffXDouble) * ten) / ten;
-    double minY = round( (m_minY + diffYDouble) * ten) / ten;
-    double maxY = round( (m_maxY + diffYDouble) * ten) / ten;
+    double minX, maxX, minY, maxY;
+
+    if (power > 0) {
+        minX = round( (m_minX - diffXDouble) * ten) / ten;
+        maxX = round( (m_maxX - diffXDouble) * ten) / ten;
+        minY = round( (m_minY + diffYDouble) * ten) / ten;
+        maxY = round( (m_maxY + diffYDouble) * ten) / ten;
+    } else {
+        minX = round(m_minX - diffXDouble);
+        maxX = round(m_maxX - diffXDouble);
+        minY = round(m_minY + diffYDouble);
+        maxY = round(m_maxY + diffYDouble);
+    }
 
     model.calculate(model.expression(),
                     minX,

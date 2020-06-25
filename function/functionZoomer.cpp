@@ -8,8 +8,8 @@ FunctionZoomer::FunctionZoomer(QObject *parent) : QObject(parent)
 
 void FunctionZoomer::zoom(FunctionModel &model, double delta)
 {
-    if (!model.validExpression())
-        return;
+//    if (!model.validExpression())
+//        return;
 
     double factor;
     if (delta < 0)
@@ -35,6 +35,9 @@ void FunctionZoomer::performZoom(FunctionModel &model, double factor)
 
     distanceX = distanceX * factor;
     distanceY = distanceY * factor;
+
+    if (distanceX > 100000 || distanceX < 0.001 || distanceY > 100000 || distanceY < 0.001)
+        return;
 
     if ( (abs(distanceX) > 0.00001) && (abs(distanceY) > 0.00001) ) {
         double x0 = centerX - distanceX / 2;
