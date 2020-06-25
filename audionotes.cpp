@@ -66,10 +66,10 @@ void AudioNotes::setNote(FunctionModel *model,
     double min = m_model->minValue();
     double max = m_model->maxValue();
 
-    if (max > 10 * m_model->maxY())
-        max = 10 * m_model->maxY();
-    if (min < 10 * m_model->minY())
-        min = 10 * m_model->minY();
+    if (max > 1 * m_model->maxY())
+        max = 1 * m_model->maxY();
+    if (min < 1 * m_model->minY())
+        min = 1 * m_model->minY();
 
     double a;
     double b;
@@ -124,10 +124,10 @@ void AudioNotes::setNote(FunctionModel *model, int currentPoint, int fmin, int f
     double min = m_model->minValue();
     double max = m_model->maxValue();
 
-    if (max > 10 * m_model->maxY())
-        max = 10 * m_model->maxY();
-    if (min < 10 * m_model->minY())
-        min = 10 * m_model->minY();
+    if (max > 1 * m_model->maxY())
+        max = 1 * m_model->maxY();
+    if (min < 1 * m_model->minY())
+        min = 1 * m_model->minY();
 
     double ratio = (double) m_currentPoint / LINE_POINTS;
 
@@ -184,11 +184,11 @@ void AudioNotes::timerExpired()
         i = 0;
 
     double min = m_model->minValue();
-    if (min < 10 * m_model->minY())
-        min = 10 * m_model->minY();
+    if (min < 1 * m_model->minY())
+        min = 1 * m_model->minY();
     double max = m_model->maxValue();
-    if (max > 10 * m_model->maxX())
-        max = 10 * m_model->maxY();
+    if (max > 1 * m_model->maxX())
+        max = 1 * m_model->maxY();
     double a;
     double b;
     double l;
