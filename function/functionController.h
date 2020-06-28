@@ -62,6 +62,7 @@ public:
     Q_INVOKABLE void previousPointY();
 
     Q_INVOKABLE void firstPoint();
+    Q_INVOKABLE void endPoint();
 
     Q_INVOKABLE void stopInterestingPoint();
 

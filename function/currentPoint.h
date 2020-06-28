@@ -25,6 +25,7 @@ public:
     void startMoving(int duration);
     void stop();
     void reset();
+    void endPoint();
 
     void incStep();
     void decStep();

@@ -201,6 +201,12 @@ void FunctionController::firstPoint()
     m_currentPoint->reset();
 }
 
+void FunctionController::endPoint()
+{
+    stopAudio();
+    m_currentPoint->endPoint();
+}
+
 void FunctionController::incStep()
 {
     m_currentPoint->incStep();

@@ -45,7 +45,7 @@ FocusScope {
         
         MouseArea {
             anchors.fill: parent
-            onPressed: focus5.pressed()
+            onClicked: focus5.pressed()
         }
     }
 }

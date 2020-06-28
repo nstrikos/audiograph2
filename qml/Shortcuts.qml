@@ -112,6 +112,12 @@ Item {
             functionController.firstPoint()
         }
     }
+    Shortcut {
+        sequence: StandardKey.MoveToNextPage
+        onActivated: {
+            functionController.endPoint()
+        }
+    }
 
     //    onActiveFocusItemChanged: {
     //        if (activeFocusItem == controlsRect.textInput)

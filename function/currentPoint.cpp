@@ -255,6 +255,12 @@ void CurrentPoint::reset()
     m_Y = -200;
 }
 
+void CurrentPoint::endPoint()
+{
+    if (m_model->lineSize() > 0)
+        m_point = m_model->lineSize() - 1;
+}
+
 void CurrentPoint::incStep()
 {
     if (m_step == 1) {

@@ -120,7 +120,7 @@ Flickable {
 
                 MouseArea {
                     anchors.fill: parent
-                    onPressed: pressed
+                    onClicked: pressed
                 }
             }
         }
