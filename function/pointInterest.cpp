@@ -172,6 +172,7 @@ void PointsInterest::timerExpired()
             m_timer.stop();
             QString label = currentPointLabel();
             m_textToSpeech.speak(label);
+            emit finished();
         } else {
             m_audioNotes->setNote(m_model, m_currentPoint->point(), parameters->minFreq(), parameters->maxFreq(), parameters->useNotes());
         }
@@ -181,6 +182,7 @@ void PointsInterest::timerExpired()
             m_timer.stop();
             QString label = currentPointLabel();
             m_textToSpeech.speak(label);
+            emit finished();
         } else {
             m_audioNotes->setNote(m_model, m_currentPoint->point(), parameters->minFreq(), parameters->maxFreq(), parameters->useNotes());
         }

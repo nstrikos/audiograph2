@@ -40,6 +40,9 @@ public:
     double currentPointY();
     QString currentPointLabel();
 
+signals:
+    void finished();
+
 
 private slots:
     void timerExpired();

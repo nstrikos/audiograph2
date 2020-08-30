@@ -21,6 +21,7 @@ FunctionController::FunctionController(QObject *parent) : QObject(parent)
 
     m_pointsInterest = new PointsInterest(*m_textToSpeech);
     m_pointsInterest->setModel(m_model);
+    connect(m_pointsInterest, SIGNAL(finished()), this, SLOT(interestingPointFinished()));
 
     m_currentPoint = new CurrentPoint();
     m_currentPoint->setModel(m_model);
@@ -86,6 +87,12 @@ void FunctionController::clearDisplayView()
     m_view->clear();
 
     emit error();
+}
+
+void FunctionController::interestingPointFinished()
+{
+    qDebug() << "interesting point finished";
+    emit interestingPointStopped();
 }
 
 void FunctionController::viewDimensionsChanged()

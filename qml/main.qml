@@ -31,6 +31,7 @@ Window {
     signal stopAudio()
     signal explore()
     signal interestingPoint()
+    signal interestingPointStopped()
 
     Settings {
         property alias x: window.x
@@ -102,6 +103,7 @@ Window {
         onUpdateFinished: newGraph()
         onNewInputValues: controlsRect.newInputValues(minX, maxX, minY, maxY)
         onMovingPointFinished: stopAudio()
+        onInterestingPointStopped: interestingPointStopped()
         onError: error()
     }
 

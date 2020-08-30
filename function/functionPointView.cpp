@@ -32,7 +32,7 @@ QSGNode *FunctionPointView::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeDat
     if (!oldNode) {
         node = new QSGGeometryNode;
 
-        geometry = new QSGGeometry(QSGGeometry::defaultAttributes_Point2D(), POINT_SEGMENTS);
+        geometry = new QSGGeometry(QSGGeometry::defaultAttributes_Point2D(), 16);
         geometry->setDrawingMode(QSGGeometry::DrawTriangleFan);
         node->setGeometry(geometry);
         node->setFlag(QSGNode::OwnsGeometry);
@@ -43,7 +43,7 @@ QSGNode *FunctionPointView::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeDat
     } else {
         node = static_cast<QSGGeometryNode *>(oldNode);
         geometry = node->geometry();
-        geometry->allocate(POINT_SEGMENTS);
+        geometry->allocate(16);
         m_material->setColor(m_color);
         node->setMaterial(m_material);
         node->setFlag(QSGNode::OwnsMaterial);
@@ -52,8 +52,8 @@ QSGNode *FunctionPointView::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeDat
     QSGGeometry::Point2D *lineVertices = geometry->vertexDataAsPoint2D();
 
     int r = m_size;
-    for(int ii = 0; ii < POINT_SEGMENTS; ii++) {
-        float theta = 2.0f * 3.1415926f * float(ii) / float(POINT_SEGMENTS);//get the current angle
+    for(int ii = 0; ii < 16; ii++) {
+        float theta = 2.0f * 3.1415926f * float(ii) / float(16);//get the current angle
 
         float x = r * cos(theta);
         float y = r * sin(theta);

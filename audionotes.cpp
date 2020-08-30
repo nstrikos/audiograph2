@@ -195,8 +195,8 @@ void AudioNotes::timerExpired()
     double freq;
     bool n = true;
     if (max != min) {
-        m_fmin = 110;
-        m_fmax = 830.61;
+        m_fmin = 220;
+        m_fmax = 493.88;
         a =  (m_fmax-m_fmin)/(max - min);
         b = m_fmax - a * max;
         l = m_model->y(i);
@@ -205,6 +205,11 @@ void AudioNotes::timerExpired()
         else
             n = false;
         freq = a * l + b;
+        if (freq < m_fmin)
+            freq = m_fmin;
+        if (freq > m_fmax)
+            freq = m_fmax;
+
         if (m_model->isValid(i))
             m_audioPoints->setFreq(freq, true, n, cx);
         else

@@ -1,5 +1,7 @@
 #include "functionDescription.h"
 
+#include <QDebug>
+
 FunctionDescription::FunctionDescription()
 {
 
@@ -29,6 +31,29 @@ QVector<InterestingPoint> FunctionDescription::points(FunctionModel *model)
             next = i + 1;
             if (next >= model->lineSize())
                 next = model->lineSize() - 1;
+
+//            if (model->isValid(next)) {
+//                if (model->y(i) * model->y(next) <= 0) {
+//                    tmp.x = i;
+//                    tmp.y = model->y(i);
+//                    tmp.label = "zero";
+//                    m_points.append(tmp);
+//                }
+//            }
+
+//            if (model->isValid(next)) {
+//                if (model->x(i) == 0) {
+//                    tmp.x = i;
+//                    tmp.y = model->y(i);
+//                    tmp.label = "y crossing";
+//                    m_points.append(tmp);
+//                } else if (model->x(i) * model->x(next) < 0 && (model->x(i) < 0)) {
+//                    tmp.x = i;
+//                    tmp.y = model->y(i);
+//                    tmp.label = "y crossing";
+//                    m_points.append(tmp);
+//                }
+//            }
 
             if (!model->isValid(prev) && !model->isValid(next)) {
                 tmp.x = i;

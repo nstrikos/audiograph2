@@ -207,13 +207,46 @@ Item {
                 targetState: exploreState
                 signal: explore
             }
+            DSM.SignalTransition {
+                targetState: interestingPointStoppedState
+                signal: interestingPointStopped
+            }
             onEntered: {
                 console.log("interesting point state")
-                functionController.stopAudio()
+                //functionController.stopAudio()
                 controlsRect.startSoundButton.text = qsTr("Stop sound")
             }
             onExited: {
                 functionController.stopInterestingPoint()
+                controlsRect.startSoundButton.text = qsTr("Start sound")
+            }
+        }
+
+        DSM.State {
+            id: interestingPointStoppedState
+            DSM.SignalTransition {
+                targetState: interestingPointState
+                signal: interestingPoint
+            }
+            DSM.SignalTransition {
+                targetState: evaluateState
+                signal: evaluate
+            }
+            DSM.SignalTransition {
+                targetState: playSoundState
+                signal: playPressed
+            }
+            DSM.SignalTransition {
+                targetState: graphReadyState
+                signal: newGraph
+            }
+            DSM.SignalTransition {
+                targetState: exploreState
+                signal: explore
+            }
+            onEntered: {
+                console.log("interesting point stopped state")
+                //functionController.stopAudio()
                 controlsRect.startSoundButton.text = qsTr("Start sound")
             }
         }

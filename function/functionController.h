@@ -80,10 +80,12 @@ signals:
     void error();
     void newInputValues(double minX, double maxX, double minY, double maxY);
     void movingPointFinished();
+    void interestingPointStopped();
 
 private slots:
     void updateDisplayView();
     void clearDisplayView();
+    void interestingPointFinished();
 
 private:
     void startAudio();

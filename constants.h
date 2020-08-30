@@ -8,7 +8,7 @@
 #ifndef Q_OS_ANDROID
 const int LINE_POINTS = 10000;
 #else
-const int LINE_POINTS = 1000;
+const int LINE_POINTS = 4000;
 #endif
 
 const int LINE_WIDTH = 10;
@@ -16,7 +16,7 @@ const int LINE_WIDTH = 10;
 #ifndef Q_OS_ANDROID
 const int POINT_SEGMENTS = 64;
 #else
-const int POINT_SEGMENTS = 16;
+const int POINT_SEGMENTS = 4;
 #endif
 
 const QColor DEFAULT_LINE_COLOR = QColor(255, 0, 0);

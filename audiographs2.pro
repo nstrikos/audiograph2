@@ -67,6 +67,8 @@ DISTFILES += \
     ../../../../../media/data/nick/projects/audiographs2/src/android/AndroidManifest.xml \
     ../../../../../media/data/nick/projects/audiographs2/src/android/AndroidManifest.xml \
     ../../../../../media/data/nick/projects/audiographs2/src/android/AndroidManifest.xml \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/AndroidManifest.xml \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/build.gradle \
     ../../../../../media/data/nick/projects/audiographs2/src/android/build.gradle \
     ../../../../../media/data/nick/projects/audiographs2/src/android/build.gradle \
     ../../../../../media/data/nick/projects/audiographs2/src/android/build.gradle \
@@ -81,6 +83,8 @@ DISTFILES += \
     ../../../../../media/data/nick/projects/audiographs2/src/android/gradle/wrapper/gradle-wrapper.jar \
     ../../../../../media/data/nick/projects/audiographs2/src/android/gradle/wrapper/gradle-wrapper.jar \
     ../../../../../media/data/nick/projects/audiographs2/src/android/gradle/wrapper/gradle-wrapper.jar \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradle/wrapper/gradle-wrapper.jar \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradle/wrapper/gradle-wrapper.properties \
     ../../../../../media/data/nick/projects/audiographs2/src/android/gradle/wrapper/gradle-wrapper.properties \
     ../../../../../media/data/nick/projects/audiographs2/src/android/gradle/wrapper/gradle-wrapper.properties \
     ../../../../../media/data/nick/projects/audiographs2/src/android/gradle/wrapper/gradle-wrapper.properties \
@@ -95,6 +99,7 @@ DISTFILES += \
     ../../../../../media/data/nick/projects/audiographs2/src/android/gradlew \
     ../../../../../media/data/nick/projects/audiographs2/src/android/gradlew \
     ../../../../../media/data/nick/projects/audiographs2/src/android/gradlew \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradlew \
     ../../../../../media/data/nick/projects/audiographs2/src/android/gradlew.bat \
     ../../../../../media/data/nick/projects/audiographs2/src/android/gradlew.bat \
     ../../../../../media/data/nick/projects/audiographs2/src/android/gradlew.bat \
@@ -102,6 +107,8 @@ DISTFILES += \
     ../../../../../media/data/nick/projects/audiographs2/src/android/gradlew.bat \
     ../../../../../media/data/nick/projects/audiographs2/src/android/gradlew.bat \
     ../../../../../media/data/nick/projects/audiographs2/src/android/gradlew.bat \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/gradlew.bat \
+    ../../../../../media/data/nick/projects/audiographs2/src/android/res/values/libs.xml \
     ../../../../../media/data/nick/projects/audiographs2/src/android/res/values/libs.xml \
     ../../../../../media/data/nick/projects/audiographs2/src/android/res/values/libs.xml \
     ../../../../../media/data/nick/projects/audiographs2/src/android/res/values/libs.xml \
