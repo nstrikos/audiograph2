@@ -120,7 +120,7 @@ Flickable {
 
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: pressed
+                    onClicked: clearExpressionFocusScope.pressed()
                 }
             }
         }

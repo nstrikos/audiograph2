@@ -11,6 +11,7 @@ FunctionDisplayView::FunctionDisplayView(QQuickItem *parent)
     setFlag(ItemHasContents, true);
     m_newColor = m_color;
     m_lineWidth = 10;
+    m_factor = 1;
 }
 
 FunctionDisplayView::~FunctionDisplayView()
@@ -47,7 +48,8 @@ QSGNode *FunctionDisplayView::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeD
         node = new QSGGeometryNode;
 
 #ifndef Q_OS_ANDROID
-        geometry = new QSGGeometry(QSGGeometry::defaultAttributes_Point2D(), LINE_POINTS);
+        qDebug() << LINE_POINTS / m_factor;
+        geometry = new QSGGeometry(QSGGeometry::defaultAttributes_Point2D(), LINE_POINTS / m_factor);
 #else
         //For android we use only 1 point as main geometry
         //all other points are appended to this point
@@ -64,7 +66,7 @@ QSGNode *FunctionDisplayView::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeD
         node->setFlag(QSGNode::OwnsMaterial);
 
 #ifdef Q_OS_ANDROID
-        for (int i = 0; i < LINE_POINTS; i++) {
+        for (int i = 0; i < LINE_POINTS / m_factor; i++) {
             QSGGeometryNode *tmpNode = new QSGGeometryNode;
             QSGGeometry *tmpGeometry = new QSGGeometry(QSGGeometry::defaultAttributes_Point2D(), 16);
             tmpGeometry->setDrawingMode(QSGGeometry::DrawTriangleFan);
@@ -89,13 +91,13 @@ QSGNode *FunctionDisplayView::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeD
             node->markDirty(QSGNode::DirtyMaterial);
 //        }
 #ifndef Q_OS_ANDROID
-        geometry->allocate(LINE_POINTS);
+        geometry->allocate(LINE_POINTS / m_factor);
 #else
         geometry->allocate(1);
 #endif
 
 #ifdef Q_OS_ANDROID
-        for (int i = 0; i < LINE_POINTS; i++) {
+        for (int i = 0; i < LINE_POINTS / m_factor; i++) {
             QSGGeometryNode *tmpNode = static_cast<QSGGeometryNode *>(oldNode->childAtIndex(i));
             nodeVector.append(tmpNode);
             QSGGeometry *tmpGeometry = tmpNode->geometry();
@@ -110,11 +112,13 @@ QSGNode *FunctionDisplayView::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeD
 
 #ifndef Q_OS_ANDROID
     if (m_model != nullptr && m_model->lineSize() > 0) {
-        for (int i = 0; i < LINE_POINTS; i++)
-            lineVertices[i].set(m_points[i].x, m_points[i].y);
+        for (int i = 0; i < LINE_POINTS / m_factor; i++) {
+            lineVertices[i].set(m_points[i * m_factor].x, m_points[i * m_factor].y);
+        }
     } else {
-        for (int i = 0; i < LINE_POINTS; i++)
+        for (int i = 0; i < LINE_POINTS / m_factor; i++) {
             lineVertices[i].set(-10, -10);
+        }
     }
 #else
     lineVertices[0].set(-10, -10);
@@ -124,7 +128,7 @@ QSGNode *FunctionDisplayView::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeD
     if (m_model != nullptr) {
         if (geometryVector.size() > 0) {
             if (m_points.size() > 0) {
-                for (int i = 0; i < LINE_POINTS; i++) {
+                for (int i = 0; i < LINE_POINTS  / m_factor; i++) {
                     QSGGeometryNode *tmpNode = nodeVector.at(i);
                     QSGGeometry::Point2D *vertices = geometryVector.at(i)->vertexDataAsPoint2D();
 //                    if (m_newColor != m_color) {
@@ -138,8 +142,8 @@ QSGNode *FunctionDisplayView::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeD
 
                     int cx;
                     int cy;
-                    cx = m_points[i].x;
-                    cy = m_points[i].y;
+                    cx = m_points[i * m_factor].x;
+                    cy = m_points[i * m_factor].y;
 
                     int r = m_lineWidth;
                     for(int ii = 0; ii < POINT_SEGMENTS; ii++) {
@@ -155,7 +159,7 @@ QSGNode *FunctionDisplayView::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeD
             }
         }
     } else if (nodeVector.size() > 0) {
-        for (int i = 0; i < LINE_POINTS; i++) {
+        for (int i = 0; i < LINE_POINTS / m_factor; i++) {
             QSGGeometryNode *tmpNode = nodeVector.at(i);
             QSGGeometry::Point2D *vertices = geometryVector.at(i)->vertexDataAsPoint2D();
 //                    if (m_newColor != m_color) {

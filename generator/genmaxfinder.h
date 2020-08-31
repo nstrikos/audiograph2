@@ -31,7 +31,7 @@ public:
     double max();
 private:
     GenParameters *m_params;
-    double m_max;
+    //double m_max;
     vector<GenMaxThread*> m_maxThreads;
     GenMaxThread* m_maxTmpThread = nullptr;
 };

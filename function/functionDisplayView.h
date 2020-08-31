@@ -32,6 +32,7 @@ private:
     QColor m_color;
     QColor m_newColor;
     int m_lineWidth;
+    int m_factor;
 };
 
 #endif // FUNCTIONDISPLAYVIEW_H
