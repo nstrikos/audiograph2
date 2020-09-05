@@ -45,6 +45,13 @@ GenFunctionCalculatorThread::GenFunctionCalculatorThread(GenParameters *params,
     m_params = params;
     m_first = first;
     m_last = last;
+
+    symbol_table.add_variable("x", m_x);
+    symbol_table.add_constant("pi", M_PI);
+    symbol_table.add_constant("e", M_E);
+    symbol_table.add_constants();
+
+    parser_expression.register_symbol_table(symbol_table);
 }
 
 void GenFunctionCalculatorThread::run()
@@ -58,29 +65,38 @@ void GenFunctionCalculatorThread::run()
     QString expression = m_params->expression();
     std::string exp = expression.toStdString();
 
-    m_fparser.AddConstant("pi", M_PI);
-    m_fparser.AddConstant("e", M_E);
+//    m_fparser.AddConstant("pi", M_PI);
+//    m_fparser.AddConstant("e", M_E);
 
-    double vals[] = { 0 };
+//    double vals[] = { 0 };
     double result;
 
     //    size_t err = parser.parse(byteCode, exp, "x");
     //    if ( err  )
 
-    m_fparser.Parse(exp, "x");
+//    m_fparser.Parse(exp, "x");
 
     //    if(res >= 0 || exp == "") {
     //        emit error(tr("Cannot understand expression.\n") + m_fparser.ErrorMsg());
     //        return false;
     //    }
 
+    typedef exprtk::parser<double>::settings_t settings_t;
+
+    std::size_t compile_options = settings_t::e_joiner            +
+            settings_t::e_commutative_check +
+            settings_t::e_strength_reduction;
+
+    parser_t parser(compile_options);
+    parser.compile(exp, parser_expression);
+
 
     for (i = m_first; i < m_last; i++) {
-        x = start + i * step;
+        m_x = start + i * step;
         //byteCode.var[0] = x;   // x is 1st in the above variables list, so it has index 0
         //result = byteCode.run();
-        vals[0] = x;
-        result = m_fparser.Eval(vals);
+//        vals[0] = x;
+        result = parser_expression.value();//m_fparser.Eval(vals);
         //        res = m_fparser.EvalError();
 
         if (result > 10 * m_params->maxY())

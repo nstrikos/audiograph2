@@ -18,8 +18,6 @@ SOURCES += \
         audioengine.cpp \
         audionotes.cpp \
         audiopoints.cpp \
-        fparser/fparser.cc \
-        fparser/fpoptimizer.cc \
         function/currentPoint.cpp \
         function/dragHandler.cpp \
         function/functionController.cpp \
@@ -116,9 +114,7 @@ DISTFILES += \
     ../../../../../media/data/nick/projects/audiographs2/src/android/res/values/libs.xml \
     ../../../../../media/data/nick/projects/audiographs2/src/android/res/values/libs.xml \
     ../../../../../media/data/nick/projects/audiographs2/src/android/res/values/libs.xml \
-    android/AndroidManifest.xml \
-    fparser/extrasrc/fp_identifier_parser.inc \
-    fparser/extrasrc/fp_opcode_add.inc
+    android/AndroidManifest.xml
 
 HEADERS += \
     audio.h \
@@ -127,12 +123,6 @@ HEADERS += \
     audiopoints.h \
     constants.h \
     exprtk/exprtk.hpp \
-    fparser/extrasrc/fpaux.hh \
-    fparser/extrasrc/fptypes.hh \
-    fparser/fparser.hh \
-    fparser/fparser_gmpint.hh \
-    fparser/fparser_mpfr.hh \
-    fparser/fpconfig.hh \
     function/currentPoint.h \
     function/dragHandler.h \
     function/functionController.h \

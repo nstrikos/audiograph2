@@ -4,7 +4,12 @@
 #include <QObject>
 #include <QVector>
 #include <point.h>
-#include "fparser/fparser.hh"
+
+#include "exprtk/exprtk.hpp"
+
+typedef exprtk::symbol_table<double> symbol_table_t;
+typedef exprtk::expression<double>     expression_t;
+typedef exprtk::parser<double>             parser_t;
 
 class FunctionModel : public QObject
 {
@@ -64,13 +69,16 @@ private:
     double m_maxValue;
     double m_minValue;
     int m_numPoints;
-    FunctionParser m_fparser;
     bool m_validExpression;
 
     QVector<Point> m_linePoints;
     QVector<Point> m_points;
 
     QString m_error;
+
+    symbol_table_t symbol_table;
+    double m_x;
+    expression_t parser_expression;
 };
 
 #endif // FUNCTIONMODEL_H

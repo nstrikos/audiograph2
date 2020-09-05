@@ -103,7 +103,7 @@ void PointsInterest::start(AudioNotes *audioNotes, CurrentPoint *currentPoint, F
 
     m_pointInterest = getNextPointInterest();
 
-    m_timer.setInterval(5);
+    m_timer.setInterval(2);
     m_timer.start();
 }
 

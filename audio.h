@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "audioengine.h"
-#include "fparser/fparser.hh"
+//#include "fparser/fparser.hh"
 
 class Audio : public QObject
 {
@@ -23,7 +23,7 @@ public:
 
 private:
     AudioEngine *m_audioEngine;
-    FunctionParser m_fparser;
+//    FunctionParser m_fparser;
     void reset();
 };
 

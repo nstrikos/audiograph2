@@ -5,8 +5,8 @@
 Audio::Audio()
 {
     m_audioEngine = nullptr;
-    m_fparser.AddConstant("pi", M_PI);
-    m_fparser.AddConstant("e", M_E);
+//    m_fparser.AddConstant("pi", M_PI);
+//    m_fparser.AddConstant("e", M_E);
 }
 
 Audio::~Audio()
@@ -28,9 +28,9 @@ void Audio::start(QString expression,
 
     std::string exp = expression.toStdString();
 
-    int res = m_fparser.Parse(exp, "x");
-    if (res >= 0)
-        return;
+//    int res = m_fparser.Parse(exp, "x");
+//    if (res >= 0)
+//        return;
 
     m_audioEngine = new AudioEngine(expression,
                                     start,

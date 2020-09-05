@@ -8,6 +8,14 @@
 FunctionModel::FunctionModel(QObject *parent) : QObject(parent)
 {
     m_error = tr("Syntax error");
+
+    symbol_table.add_variable("x",m_x);
+    symbol_table.add_constant("pi", M_PI);
+    symbol_table.add_constant("e", M_E);
+    symbol_table.add_constants();
+
+    parser_expression.register_symbol_table(symbol_table);
+
 }
 
 FunctionModel::~FunctionModel()
@@ -56,9 +64,9 @@ void FunctionModel::replaceConstants()
 {
     QString piString = QString::number(M_PI);
     QString eString = QString::number(M_E);
-    QString ln = "ln";
+    //    QString ln = "ln";
 
-    m_expression.replace(ln, "log");
+    //   m_expression.replace(ln, "log");
 
     m_minXString.replace("pi", piString);
     m_minXString.replace("e", eString);
@@ -126,13 +134,42 @@ bool FunctionModel::check()
         return false;
     }
 
-    m_fparser.AddConstant("pi", M_PI);
-    m_fparser.AddConstant("e", M_E);
-    int res = m_fparser.Parse(m_expression.toStdString(), "x");
-    if(res >= 0 || m_expression == "") {
-        const char *s;
-        s = m_fparser.ErrorMsg();
-        m_error = QString::fromUtf8(s);
+//    m_fparser.AddConstant("pi", M_PI);
+//    m_fparser.AddConstant("e", M_E);
+    //    int res = m_fparser.Parse(m_expression.toStdString(), "x");
+    //    if(res >= 0 || m_expression == "") {
+    //        const char *s;
+    //        s = m_fparser.ErrorMsg();
+    //        m_error = QString::fromUtf8(s);
+    //        qDebug() << m_error;
+    //        emit error();
+    //        return false;
+    //    }
+
+    typedef exprtk::parser<double>::settings_t settings_t;
+
+    std::size_t compile_options = settings_t::e_joiner            +
+            settings_t::e_commutative_check +
+            settings_t::e_strength_reduction;
+
+    parser_t parser(compile_options);
+    parser.compile(m_expression.toStdString(), parser_expression);
+
+    if (!parser.compile(m_expression.toStdString(),parser_expression))
+    {
+        for (std::size_t i = 0; i < 1; ++i)
+        {
+            typedef exprtk::parser_error::type error_t;
+
+            error_t error = parser.get_error(i);
+
+            std::string s = error.diagnostic.c_str();
+            m_error = QString::fromStdString(s);
+            int n = m_error.indexOf("-");
+            m_error = m_error.right(m_error.size() - n - 2);
+        }
+
+
         qDebug() << m_error;
         emit error();
         return false;
@@ -148,7 +185,7 @@ void FunctionModel::clear()
 
 void FunctionModel::calculatePoints()
 {
-    double x, result;
+    double result;
     Point tmpPoint;
 
     m_linePoints.clear();
@@ -157,20 +194,56 @@ void FunctionModel::calculatePoints()
     double step;
     int res;
 
+
+    //    typedef exprtk::symbol_table<double> symbol_table_t;
+    //    typedef exprtk::expression<double>     expression_t;
+    //    typedef exprtk::parser<double>             parser_t;
+
+    //    const std::string expression_string = m_expression.toStdString();
+
+    //    double x;
+
+    //    symbol_table_t symbol_table;
+    //    symbol_table.add_variable("x",x);
+    //    symbol_table.add_constants();
+
+    //    expression_t expression;
+    //    expression.register_symbol_table(symbol_table);
+
+    typedef exprtk::parser<double>::settings_t settings_t;
+
+    std::size_t compile_options = settings_t::e_joiner            +
+            settings_t::e_commutative_check +
+            settings_t::e_strength_reduction;
+
+    parser_t parser(compile_options);
+    parser.compile(m_expression.toStdString(), parser_expression);
+
     step = (m_maxX - m_minX) / LINE_POINTS;
     for (int i = 0; i < LINE_POINTS; i++) {
-        x = m_minX + i * step;
-        vals[0] = x;
-        result = m_fparser.Eval(vals);
-        res = m_fparser.EvalError();
-        tmpPoint.x = x;
+        m_x = m_minX + i * step;
+        double y = parser_expression.value();
+        vals[0] = m_x;
+        result = y;//m_fparser.Eval(vals);
+        //qDebug() << m_x << y;
+//        printf("%19.15f\t%19.15f\n", m_x, y);
+//        res = m_fparser.EvalError();
+        tmpPoint.x = m_x;
         tmpPoint.y = result;
-        if (result != result)
-            tmpPoint.isValid = false;
-        else if (res > 0)
-            tmpPoint.isValid = false;
-        else if (res == 0)
+//        if (result != result)
+//            tmpPoint.isValid = false;
+//        else if (res > 0)
+//            tmpPoint.isValid = false;
+//        else if (res == 0)
+//            tmpPoint.isValid = true;
+        if (std::isfinite(y)) {
             tmpPoint.isValid = true;
+        }
+        else {
+            tmpPoint.isValid = false;
+            qDebug() << m_x << y;
+        }
+
 
         m_linePoints.append(tmpPoint);
     }
