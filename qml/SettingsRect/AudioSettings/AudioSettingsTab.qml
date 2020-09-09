@@ -18,6 +18,8 @@ Rectangle {
 
     property color bgColor: !parameters.invertTheme ? "white" : "black"
 
+    property alias useNotesFocusScope: useNotesFocusScope
+
     Flickable {
         anchors.fill: parent
         contentHeight: 500

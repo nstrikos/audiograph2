@@ -56,7 +56,7 @@ GenFunctionCalculatorThread::GenFunctionCalculatorThread(GenParameters *params,
 
 void GenFunctionCalculatorThread::run()
 {
-    double x;
+//    double x;
     double start = m_params->start();
     double step = m_params->step();
     double *functionValues = m_params->functionValues();

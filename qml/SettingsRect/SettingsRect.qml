@@ -15,6 +15,8 @@ Rectangle {
     property color highlightColor: parameters.highlightColor
     property color axesColor: parameters.axesColor
 
+    property alias audioSettingsTab: audioSettingsTab
+
     TabBar {
         id: bar
         width: parent.width

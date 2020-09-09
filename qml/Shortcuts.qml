@@ -10,8 +10,8 @@ Item {
     Shortcut {
         sequence: "F2"
         onActivated: {
-//            if (functionController.validExpression())
-                window.playPressed()
+            //            if (functionController.validExpression())
+            window.playPressed()
             //else
             //    textToSpeech.speak(functionController.getError())
         }
@@ -41,11 +41,25 @@ Item {
         sequence: "F5"
         onActivated: {
             window.explore
-            functionController.previousPointY();
+            functionController.previousPointX();
         }
     }
     Shortcut {
         sequence: "F6"
+        onActivated: {
+            window.explore
+            functionController.nextPointX();
+        }
+    }
+    Shortcut {
+        sequence: "Shift+F5"
+        onActivated: {
+            window.explore
+            functionController.previousPointY();
+        }
+    }
+    Shortcut {
+        sequence: "Shift+F6"
         onActivated: {
             window.explore
             functionController.nextPointY();
@@ -116,6 +130,12 @@ Item {
         sequence: StandardKey.MoveToNextPage
         onActivated: {
             functionController.endPoint()
+        }
+    }
+    Shortcut {
+        sequence: "Ctrl+F12"
+        onActivated: {
+            window.settingsRect.audioSettingsTab.useNotesFocusScope.useNotesCheckBox.checked = !window.settingsRect.audioSettingsTab.useNotesFocusScope.useNotesCheckBox.checked
         }
     }
 

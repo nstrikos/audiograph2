@@ -275,7 +275,7 @@ void FunctionController::sayXCoordinate()
 
     if (m_pointsInterest != nullptr) {
         m_pointsInterest->stop();
-//        disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
+        //        disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
     }
 
     double x = m_model->x(m_currentPoint->point());
@@ -297,7 +297,7 @@ void FunctionController::sayYCoordinate()
 
     if (m_pointsInterest != nullptr) {
         m_pointsInterest->stop();
-//        disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
+        //        disconnect(m_audioNotes, SIGNAL(finished()), this, SLOT(audioNotesFinished()));
     }
 
     if (m_model->isValid(m_currentPoint->point())) {
@@ -313,6 +313,18 @@ void FunctionController::sayYCoordinate()
     } else {
         m_textToSpeech->speak(tr("Not defined"));
     }
+}
+
+void FunctionController::nextPointX()
+{
+    m_currentPoint->nextPoint();
+    sayXCoordinate();
+}
+
+void FunctionController::previousPointX()
+{
+    m_currentPoint->previousPoint();
+    sayXCoordinate();
 }
 
 void FunctionController::nextPointY()

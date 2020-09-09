@@ -192,7 +192,7 @@ void FunctionModel::calculatePoints()
 
     double vals[] = { 0 };
     double step;
-    int res;
+//    int res;
 
 
     //    typedef exprtk::symbol_table<double> symbol_table_t;
