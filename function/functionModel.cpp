@@ -64,9 +64,9 @@ void FunctionModel::replaceConstants()
 {
     QString piString = QString::number(M_PI);
     QString eString = QString::number(M_E);
-    //    QString ln = "ln";
+    QString ln = "ln";
 
-    //   m_expression.replace(ln, "log");
+    m_expression.replace(ln, "log");
 
     m_minXString.replace("pi", piString);
     m_minXString.replace("e", eString);
@@ -134,8 +134,8 @@ bool FunctionModel::check()
         return false;
     }
 
-//    m_fparser.AddConstant("pi", M_PI);
-//    m_fparser.AddConstant("e", M_E);
+    //    m_fparser.AddConstant("pi", M_PI);
+    //    m_fparser.AddConstant("e", M_E);
     //    int res = m_fparser.Parse(m_expression.toStdString(), "x");
     //    if(res >= 0 || m_expression == "") {
     //        const char *s;
@@ -192,7 +192,7 @@ void FunctionModel::calculatePoints()
 
     double vals[] = { 0 };
     double step;
-//    int res;
+    //    int res;
 
 
     //    typedef exprtk::symbol_table<double> symbol_table_t;
@@ -226,16 +226,16 @@ void FunctionModel::calculatePoints()
         vals[0] = m_x;
         result = y;//m_fparser.Eval(vals);
         //qDebug() << m_x << y;
-//        printf("%19.15f\t%19.15f\n", m_x, y);
-//        res = m_fparser.EvalError();
+        //        printf("%19.15f\t%19.15f\n", m_x, y);
+        //        res = m_fparser.EvalError();
         tmpPoint.x = m_x;
         tmpPoint.y = result;
-//        if (result != result)
-//            tmpPoint.isValid = false;
-//        else if (res > 0)
-//            tmpPoint.isValid = false;
-//        else if (res == 0)
-//            tmpPoint.isValid = true;
+        //        if (result != result)
+        //            tmpPoint.isValid = false;
+        //        else if (res > 0)
+        //            tmpPoint.isValid = false;
+        //        else if (res == 0)
+        //            tmpPoint.isValid = true;
         if (std::isfinite(y)) {
             tmpPoint.isValid = true;
         }
