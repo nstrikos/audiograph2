@@ -31,4 +31,18 @@ TextField {
         border.width: textInput2.activeFocus ? 2 : 1
     }
     Accessible.name: qsTr("Set minimum x")
+
+    Keys.onPressed: {
+        if (event.key === Qt.Key_Left  && event.modifiers & Qt.ControlModifier) {
+            window.interestingPoint()
+            functionController.previousPointInterest()
+            event.accepted = true;
+        }
+
+        if (event.key === Qt.Key_Right  && event.modifiers & Qt.ControlModifier) {
+            window.interestingPoint()
+            functionController.nextPointInterest()
+            event.accepted = true;
+        }
+    }
 }

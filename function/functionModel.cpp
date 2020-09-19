@@ -190,7 +190,7 @@ void FunctionModel::calculatePoints()
 
     m_linePoints.clear();
 
-    double vals[] = { 0 };
+    //double vals[] = { 0 };
     double step;
     //    int res;
 
@@ -223,7 +223,7 @@ void FunctionModel::calculatePoints()
     for (int i = 0; i < LINE_POINTS; i++) {
         m_x = m_minX + i * step;
         double y = parser_expression.value();
-        vals[0] = m_x;
+//        vals[0] = m_x;
         result = y;//m_fparser.Eval(vals);
         //qDebug() << m_x << y;
         //        printf("%19.15f\t%19.15f\n", m_x, y);

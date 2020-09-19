@@ -9,12 +9,11 @@ Item {
     }
     Shortcut {
         sequence: "F2"
-        onActivated: {
-            //            if (functionController.validExpression())
-            window.playPressed()
-            //else
-            //    textToSpeech.speak(functionController.getError())
-        }
+        onActivated: window.playPressed()
+    }
+    Shortcut {
+        sequence: "Ctrl+Space"
+        onActivated: window.playPressed()
     }
     Shortcut {
         sequence: "Shift+F2"
@@ -31,7 +30,21 @@ Item {
         }
     }
     Shortcut {
+        sequence: "Ctrl+Down"
+        onActivated: {
+            window.stopAudio()
+            functionController.sayXCoordinate()
+        }
+    }
+    Shortcut {
         sequence: "F4"
+        onActivated: {
+            window.stopAudio()
+            functionController.sayYCoordinate()
+        }
+    }
+    Shortcut {
+        sequence: "Ctrl+Up"
         onActivated: {
             window.stopAudio()
             functionController.sayYCoordinate()
@@ -81,6 +94,13 @@ Item {
         }
     }
     Shortcut {
+        sequence: "Ctrl+Left"
+        onActivated: {
+            window.interestingPoint()
+            functionController.previousPointInterest()
+        }
+    }
+    Shortcut {
         sequence: "Shift+F8"
         onActivated: {
             window.interestingPoint()
@@ -89,6 +109,13 @@ Item {
     }
     Shortcut {
         sequence: "F8"
+        onActivated: {
+            window.interestingPoint()
+            functionController.nextPointInterest()
+        }
+    }
+    Shortcut {
+        sequence: "Ctrl+Right"
         onActivated: {
             window.interestingPoint()
             functionController.nextPointInterest()
