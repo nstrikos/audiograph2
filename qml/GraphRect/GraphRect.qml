@@ -31,6 +31,17 @@ Rectangle {
     }
 
     DisplayView {
+        id: derivativeView
+        objectName: "derivativeView"
+        anchors.fill: parent
+        visible: true
+        layer.enabled: true
+        layer.samples: 256
+        color: "blue"
+        lineWidth: parameters.lineWidth
+    }
+
+    DisplayView {
         id: displayView
         objectName: "displayView"
         anchors.fill: parent

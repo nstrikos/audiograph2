@@ -13,6 +13,7 @@ public:
 protected:
     QVector<Point> m_points;
     void calcCoords(int width, int height);
+    void calcDerivCoords(int width, int height);
     FunctionModel *m_model;
 };
 

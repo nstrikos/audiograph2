@@ -30,6 +30,8 @@ public:
                    double minY,
                    double maxY);
 
+    void calculateDerivative();
+
     double x(int i) const;
     double y(int i) const;
     bool isValid(int i) const;
@@ -46,8 +48,11 @@ public:
     bool validExpression() const;
     QString getError();
 
+    double derivative(int i) const;
+
 signals:
     void update();
+    void updateDerivative();
     void error();
 
 private:
@@ -73,12 +78,15 @@ private:
 
     QVector<Point> m_linePoints;
     QVector<Point> m_points;
+    QVector<Point> m_deriv;
 
     QString m_error;
 
     symbol_table_t symbol_table;
     double m_x;
     expression_t parser_expression;
+    expression_t parser_expression2;
+    symbol_table_t symbol_table2;
 };
 
 #endif // FUNCTIONMODEL_H

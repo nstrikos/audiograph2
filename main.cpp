@@ -43,11 +43,14 @@ int main(int argc, char *argv[])
     QObject *rootObject = engine.rootObjects().first();
     QObject *qmlPointView = rootObject->findChild<QObject*>("pointView");
     QObject *qmlDisplayView = rootObject->findChild<QObject*>("displayView");
+    QObject *qmlDerivativeView = rootObject->findChild<QObject*>("derivativeView");
 
     FunctionPointView *pointView = static_cast<FunctionPointView*>(qmlPointView);
     FunctionDisplayView *displayView = static_cast<FunctionDisplayView*>(qmlDisplayView);
+    FunctionDisplayView *derivativeView = static_cast<FunctionDisplayView*>(qmlDerivativeView);
     functionController.setView(displayView);
     functionController.setPointView(pointView);
+    functionController.setDerivativeView(derivativeView);
 
     return app.exec();
 }

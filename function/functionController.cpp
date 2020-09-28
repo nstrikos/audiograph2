@@ -4,6 +4,7 @@ FunctionController::FunctionController(QObject *parent) : QObject(parent)
 {
     m_model = new FunctionModel();
     connect(m_model, SIGNAL(update()), this, SLOT(updateDisplayView()));
+    connect(m_model, SIGNAL(updateDerivative()), this, SLOT(updateDerivativeView()));
     connect(m_model, SIGNAL(error()), this, SLOT(clearDisplayView()));
 
     m_zoomer = new FunctionZoomer();
@@ -60,6 +61,11 @@ void FunctionController::setView(FunctionDisplayView *view)
     m_view = view;
 }
 
+void FunctionController::setDerivativeView(FunctionDisplayView *view)
+{
+    m_derivativeView = view;
+}
+
 void FunctionController::displayFunction(QString expression,
                                          QString minX,
                                          QString maxX,
@@ -68,6 +74,7 @@ void FunctionController::displayFunction(QString expression,
 {
     m_model->calculate(expression, minX, maxX, minY, maxY);
     m_currentPoint->reset();
+    m_mode = 0;
 }
 
 void FunctionController::updateDisplayView()
@@ -86,7 +93,19 @@ void FunctionController::clearDisplayView()
         return;
     m_view->clear();
 
+    if (m_derivativeView == nullptr)
+        return;
+    m_derivativeView->clear();
+
     emit error();
+}
+
+void FunctionController::updateDerivativeView()
+{
+    if (m_derivativeView == nullptr)
+        return;
+
+    m_derivativeView->drawDerivative(m_model);
 }
 
 void FunctionController::interestingPointFinished()
@@ -104,6 +123,11 @@ void FunctionController::viewDimensionsChanged()
 
     m_view->updateView();
     m_currentPoint->update(m_pointView->width(), m_pointView->height());
+
+    if (m_derivativeView == nullptr)
+        return;
+    if (m_mode == 1)
+        m_model->calculateDerivative();
 }
 
 void FunctionController::zoom(double delta)
@@ -387,4 +411,17 @@ QString FunctionController::getError()
         return m_model->getError();
     else
         return (tr("Empty expression"));
+}
+
+void FunctionController::setMode()
+{
+    if (m_mode == 0) {
+        m_mode = 1;
+        m_model->calculateDerivative();
+    }
+    else {
+        m_mode = 0;
+        if (m_derivativeView != nullptr)
+            m_derivativeView->clear();
+    }
 }

@@ -19,6 +19,7 @@ public:
     void updateView();
 
     void draw(FunctionModel *model);
+    void drawDerivative(FunctionModel *model);
     void clear();
 
     void setColor(const QColor &color);

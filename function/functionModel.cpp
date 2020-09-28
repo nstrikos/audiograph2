@@ -223,7 +223,7 @@ void FunctionModel::calculatePoints()
     for (int i = 0; i < LINE_POINTS; i++) {
         m_x = m_minX + i * step;
         double y = parser_expression.value();
-//        vals[0] = m_x;
+        //        vals[0] = m_x;
         result = y;//m_fparser.Eval(vals);
         //qDebug() << m_x << y;
         //        printf("%19.15f\t%19.15f\n", m_x, y);
@@ -263,6 +263,26 @@ void FunctionModel::calculatePoints()
     emit update();
 }
 
+void FunctionModel::calculateDerivative()
+{
+    if (m_linePoints.size() <= 0)
+        return;
+
+    Point tmpPoint;
+
+    m_deriv.clear();
+
+    for (int i = 0; i < LINE_POINTS; i++) {
+        m_x = m_linePoints[i].x;
+        double y = exprtk::derivative(parser_expression, m_x);
+        tmpPoint.x = m_x;
+        tmpPoint.y = y;
+        m_deriv.append(tmpPoint);
+    }
+
+    emit updateDerivative();
+}
+
 double FunctionModel::x(int i) const
 {
     return m_linePoints[i].x;
@@ -276,6 +296,11 @@ double FunctionModel::y(int i) const
 bool FunctionModel::isValid(int i) const
 {
     return m_linePoints[i].isValid;
+}
+
+double FunctionModel::derivative(int i) const
+{
+    return m_deriv[i].y;
 }
 
 int FunctionModel::lineSize() const

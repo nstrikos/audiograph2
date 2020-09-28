@@ -166,6 +166,13 @@ Item {
         }
     }
 
+    Shortcut {
+        sequence: "Ctrl+D"
+        onActivated: {
+            functionController.setMode()
+        }
+    }
+
     //    onActiveFocusItemChanged: {
     //        if (activeFocusItem == controlsRect.textInput)
     //            print("focus: textInput")

@@ -25,6 +25,7 @@ public:
 
     void setView(FunctionDisplayView *view);
     void setPointView(FunctionPointView *pointView);
+    void setDerivativeView(FunctionDisplayView *view);
 
     Q_INVOKABLE void displayFunction(QString expression,
                                      QString minX,
@@ -77,6 +78,8 @@ public:
 
     Q_INVOKABLE QString getError();
 
+    Q_INVOKABLE void setMode();
+
 signals:
     void updateFinished();
     void error();
@@ -87,6 +90,7 @@ signals:
 private slots:
     void updateDisplayView();
     void clearDisplayView();
+    void updateDerivativeView();
     void interestingPointFinished();
 
 private:
@@ -97,6 +101,7 @@ private:
     //These are defined outside of the class
     FunctionDisplayView *m_view;
     FunctionPointView *m_pointView;
+    FunctionDisplayView *m_derivativeView;
     Parameters *m_parameters;
 
     //These classes are internal
@@ -109,6 +114,8 @@ private:
     PointsInterest *m_pointsInterest;
     CurrentPoint *m_currentPoint;
     TextToSpeech *m_textToSpeech;
+
+    int m_mode = 0;
 };
 
 #endif // FUNCTIONCONTROLLER_H
