@@ -40,6 +40,8 @@ public:
     double currentPointY();
     QString currentPointLabel();
 
+    void setMode(int mode);
+
 signals:
     void finished();
 
@@ -63,6 +65,7 @@ private:
     void start(AudioNotes *audioNotes,
                CurrentPoint *currentPoint,
                FunctionPointView *pointView);
+    int m_mode = 0;
 };
 
 #endif // POINTSINTEREST_H

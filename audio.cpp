@@ -22,7 +22,8 @@ void Audio::start(QString expression,
                   double maxY,
                   int seconds,
                   double fmin,
-                  double fmax)
+                  double fmax,
+                  int mode)
 {
     reset();
 
@@ -39,7 +40,8 @@ void Audio::start(QString expression,
                                     maxY,
                                     seconds,
                                     fmin,
-                                    fmax);
+                                    fmax,
+                                    mode);
     m_audioEngine->createAudioOutput();
 }
 

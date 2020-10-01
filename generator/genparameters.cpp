@@ -8,6 +8,7 @@ GenParameters::GenParameters(double *functionValues,
                              double maxY,
                              double step,
                              double clip,
+                             int mode,
                              double *cs,
                              double kf,
                              double sampleRate,
@@ -23,6 +24,7 @@ GenParameters::GenParameters(double *functionValues,
     m_maxY = maxY;
     m_step = step;
     m_clip = clip;
+    m_mode = mode;
     m_cs = cs;
     m_kf = kf;
     m_sampleRate = sampleRate;
@@ -109,4 +111,9 @@ double GenParameters::minY() const
 double GenParameters::maxY() const
 {
     return m_maxY;
+}
+
+int GenParameters::mode() const
+{
+    return m_mode;
 }

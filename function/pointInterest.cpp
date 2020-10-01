@@ -52,13 +52,16 @@ void PointsInterest::nextPointFast(CurrentPoint *currentPoint, FunctionPointView
         m_points.clear();
         m_points = m_funcDescription->points(m_model);
         m_isUpdated = true;
+        qDebug() << "updated";
     }
 
     m_currentPoint = currentPoint;
+    qDebug() << "currentPoint " << m_currentPoint->X();
     m_pointView = pointView;
 
     m_forward = true;
     m_pointInterest = getNextPointInterest();
+    qDebug() << "pointInterest " << m_pointInterest << m_points[m_pointInterest].x;
     m_currentPoint->setPoint(m_points[m_pointInterest].x);
 }
 
@@ -105,6 +108,11 @@ void PointsInterest::start(AudioNotes *audioNotes, CurrentPoint *currentPoint, F
 
     m_timer.setInterval(2);
     m_timer.start();
+}
+
+void PointsInterest::setMode(int mode)
+{
+    m_mode = mode;
 }
 
 int PointsInterest::getNextPointInterest()
@@ -174,7 +182,7 @@ void PointsInterest::timerExpired()
             m_textToSpeech.speak(label);
             emit finished();
         } else {
-            m_audioNotes->setNote(m_model, m_currentPoint->point(), parameters->minFreq(), parameters->maxFreq(), parameters->useNotes());
+            m_audioNotes->setNote(m_model, m_currentPoint->point(), parameters->minFreq(), parameters->maxFreq(), parameters->useNotes(), m_mode);
         }
     } else {
         m_currentPoint->decPoint();
@@ -184,7 +192,7 @@ void PointsInterest::timerExpired()
             m_textToSpeech.speak(label);
             emit finished();
         } else {
-            m_audioNotes->setNote(m_model, m_currentPoint->point(), parameters->minFreq(), parameters->maxFreq(), parameters->useNotes());
+            m_audioNotes->setNote(m_model, m_currentPoint->point(), parameters->minFreq(), parameters->maxFreq(), parameters->useNotes(), m_mode);
         }
     }
 }

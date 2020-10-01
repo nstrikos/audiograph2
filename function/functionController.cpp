@@ -97,6 +97,11 @@ void FunctionController::clearDisplayView()
         return;
     m_derivativeView->clear();
 
+    m_mode = 0;
+    m_currentPoint->setMode(m_mode);
+    m_pointsInterest->setMode(m_mode);
+    m_currentPoint->reset();
+
     emit error();
 }
 
@@ -173,7 +178,8 @@ void FunctionController::startNotes()
     m_audioNotes->startNotes(m_model,
                              m_parameters->maxFreq(),
                              m_parameters->minFreq(),
-                             m_parameters->duration());
+                             m_parameters->duration(),
+                             m_mode);
 }
 
 void FunctionController::startAudio()
@@ -185,7 +191,8 @@ void FunctionController::startAudio()
                    m_model->maxX(),
                    m_parameters->duration(),
                    m_parameters->minFreq(),
-                   m_parameters->maxFreq());
+                   m_parameters->maxFreq(),
+                   m_mode);
 }
 
 void FunctionController::stopAudio()
@@ -202,7 +209,8 @@ void FunctionController::previousPoint()
                           m_currentPoint->point(),
                           m_parameters->minFreq(),
                           m_parameters->maxFreq(),
-                          m_parameters->useNotes());
+                          m_parameters->useNotes(),
+                          m_mode);
 }
 
 void FunctionController::nextPoint()
@@ -212,18 +220,20 @@ void FunctionController::nextPoint()
                           m_currentPoint->point(),
                           m_parameters->minFreq(),
                           m_parameters->maxFreq(),
-                          m_parameters->useNotes());
+                          m_parameters->useNotes(),
+                          m_mode);
 }
 
 void FunctionController::mousePoint(int point)
 {
     m_currentPoint->setMouseX(point);
-    m_audioNotes->setNote(m_model,
-                          point,
-                          static_cast<int>(m_pointView->width()),
-                          m_parameters->minFreq(),
-                          m_parameters->maxFreq(),
-                          m_parameters->useNotes());
+    m_audioNotes->setNoteFromMouse(m_model,
+                                   point,
+                                   static_cast<int>(m_pointView->width()),
+                                   m_parameters->minFreq(),
+                                   m_parameters->maxFreq(),
+                                   m_parameters->useNotes(),
+                                   m_mode);
 }
 
 void FunctionController::firstPoint()
@@ -424,4 +434,6 @@ void FunctionController::setMode()
         if (m_derivativeView != nullptr)
             m_derivativeView->clear();
     }
+    m_currentPoint->setMode(m_mode);
+    m_pointsInterest->setMode(m_mode);
 }

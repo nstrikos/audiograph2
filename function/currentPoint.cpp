@@ -61,8 +61,15 @@ void CurrentPoint::setMouseX(int mouseX)
     double xEnd = m_model->x(size - 1);
     double minY = m_model->minY();
     double maxY = m_model->maxY();
-    double x =  ( m_width / (xEnd - xStart) * (m_model->x(i) - xStart) );
-    double y = ( m_height / (maxY - minY) * (m_model->y(i) - minY) );
+
+    double x, y;
+    if (m_mode == 0) {
+        x =  ( m_width / (xEnd - xStart) * (m_model->x(i) - xStart) );
+        y = ( m_height / (maxY - minY) * (m_model->y(i) - minY) );
+    } else {
+        x =  ( m_width / (xEnd - xStart) * (m_model->x(i) - xStart) );
+        y = ( m_height / (maxY - minY) * (m_model->derivative(i) - minY) );
+    }
 
     y = m_height - y;
 
@@ -158,8 +165,14 @@ void CurrentPoint::update(double width, double height)
     double xEnd = m_model->x(size - 1);
     double minY = m_model->minY();
     double maxY = m_model->maxY();
-    double x =  ( m_width / (xEnd - xStart) * (m_model->x(m_point) - xStart) );
-    double y = ( m_height / (maxY - minY) * (m_model->y(m_point) - minY) );
+    double x, y;
+    if (m_mode == 0) {
+        x =  ( m_width / (xEnd - xStart) * (m_model->x(m_point) - xStart) );
+        y = ( m_height / (maxY - minY) * (m_model->y(m_point) - minY) );
+    } else {
+        x =  ( m_width / (xEnd - xStart) * (m_model->x(m_point) - xStart) );
+        y = ( m_height / (maxY - minY) * (m_model->derivative(m_point) - minY) );
+    }
 
     y = m_height - y;
 
@@ -200,13 +213,26 @@ void CurrentPoint::timerExpired()
     double xStart = m_model->minX();
     double xEnd = m_model->maxX();
 
-    double x =  ( m_width / (xEnd - xStart) * (m_model->x(i) - xStart) );
-    double y = ( m_height / (maxY - minY) * (m_model->y(i) - minY) );
+
+
+    double x, y;
+    if (m_mode == 0) {
+        x =  ( m_width / (xEnd - xStart) * (m_model->x(i) - xStart) );
+        y = ( m_height / (maxY - minY) * (m_model->y(i) - minY) );
+    } else {
+        x =  ( m_width / (xEnd - xStart) * (m_model->x(i) - xStart) );
+        y = ( m_height / (maxY - minY) * (m_model->derivative(i) - minY) );
+    }
 
     y = m_height - y;
 
     m_X = x;
     m_Y = y;
+}
+
+void CurrentPoint::setMode(int mode)
+{
+    m_mode = mode;
 }
 
 void CurrentPoint::setPoint(int point)
@@ -225,8 +251,15 @@ void CurrentPoint::setPoint(int point)
     double xEnd = m_model->x(size - 1);
     double minY = m_model->minY();
     double maxY = m_model->maxY();
-    double x =  ( m_width / (xEnd - xStart) * (m_model->x(point) - xStart) );
-    double y = ( m_height / (maxY - minY) * (m_model->y(point) - minY) );
+
+    double x, y;
+    if (m_mode == 0) {
+        x =  ( m_width / (xEnd - xStart) * (m_model->x(m_point) - xStart) );
+        y = ( m_height / (maxY - minY) * (m_model->y(m_point) - minY) );
+    } else {
+        x =  ( m_width / (xEnd - xStart) * (m_model->x(m_point) - xStart) );
+        y = ( m_height / (maxY - minY) * (m_model->derivative(m_point) - minY) );
+    }
 
     y = m_height - y;
 

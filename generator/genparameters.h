@@ -14,6 +14,7 @@ public:
                   double maxY,
                   double step,
                   double clip,
+                  int mode,
                   double *cs,
                   double kf,
                   double sampleRate,
@@ -39,6 +40,8 @@ public:
     double minY() const;
     double maxY() const;
 
+    int mode() const;
+
 private:
     double *m_functionValues;
     QString m_expression;
@@ -48,6 +51,7 @@ private:
     double m_maxY;
     unsigned long long int m_length;
     double m_clip;
+    int m_mode;
     double *m_cs;
     double m_kf;
     double m_sampleRate;

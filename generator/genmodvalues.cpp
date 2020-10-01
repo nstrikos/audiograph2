@@ -9,7 +9,8 @@ GenModValues::GenModValues(double *modulationValues,
                            unsigned long long int timeLength,
                            int fmin,
                            int fmax,
-                           int sampleRate)
+                           int sampleRate,
+                           int mode)
 {
     m_modulationValues = modulationValues;
     m_expression = expression;
@@ -21,6 +22,7 @@ GenModValues::GenModValues(double *modulationValues,
     m_fmin = fmin;
     m_fmax = fmax;
     m_sampleRate = sampleRate;
+    m_mode = mode;
 }
 
 double *GenModValues::modulationValues()
@@ -47,6 +49,7 @@ double *GenModValues::modulationValues()
                                               m_maxY,
                                               step,
                                               clip,
+                                              m_mode,
                                               cs,
                                               kf,
                                               m_sampleRate,

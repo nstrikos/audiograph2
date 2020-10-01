@@ -23,7 +23,8 @@ public:
                  unsigned long long int timeLength,
                  int fmin,
                  int fmax,
-                 int sampleRate);
+                 int sampleRate,
+                 int mode);
 
     double *modulationValues();
 
@@ -38,6 +39,7 @@ private:
     double m_end;
     double m_minY;
     double m_maxY;
+    int m_mode;
 };
 
 #endif // GENMODVALUES_H

@@ -96,13 +96,17 @@ void GenFunctionCalculatorThread::run()
         //byteCode.var[0] = x;   // x is 1st in the above variables list, so it has index 0
         //result = byteCode.run();
 //        vals[0] = x;
-        result = parser_expression.value();//m_fparser.Eval(vals);
+
+        if (m_params->mode() == 0)
+            result = parser_expression.value();//m_fparser.Eval(vals);
+        else
+            result = exprtk::derivative(parser_expression, m_x);
         //        res = m_fparser.EvalError();
 
-        if (result > 10 * m_params->maxY())
-            result = 10 * m_params->maxY();
-        if (result < 10 * m_params->minY())
-            result = 10 * m_params->minY();
+        if (result > 1 * m_params->maxY())
+            result = 1 * m_params->maxY();
+        if (result < 1 * m_params->minY())
+            result = 1 * m_params->minY();
 
 
         //        if (x > -4.0 && x < -3.0)

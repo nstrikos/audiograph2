@@ -11,7 +11,8 @@ Generator::Generator(QAudioFormat format,
                      double maxY,
                      int seconds,
                      int fmin,
-                     int fmax)
+                     int fmax,
+                     int mode)
 {
     //Initialize generator variables
     pos = 0;
@@ -24,6 +25,7 @@ Generator::Generator(QAudioFormat format,
     m_end = end;
     m_minY = minY;
     m_maxY = maxY;
+    m_mode = mode;
 
     if (format.isValid())
     {
@@ -108,7 +110,8 @@ void Generator::computeFunction()
                                                   timeLength,
                                                   fmin,
                                                   fmax,
-                                                  format.sampleRate());
+                                                  format.sampleRate(),
+                                                  m_mode);
     modulationValues = genModValues->modulationValues();
     delete genModValues;
 }

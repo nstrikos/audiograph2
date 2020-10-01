@@ -21,7 +21,8 @@ public:
               double maxY,
               int seconds,
               int fmin,
-              int fmax);
+              int fmax,
+              int mode);
     ~Generator();
     void start();
 
@@ -48,4 +49,5 @@ private:
     double m_end;
     double m_minY;
     double m_maxY;
+    int m_mode = 0;
 };

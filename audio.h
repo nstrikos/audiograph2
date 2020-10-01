@@ -18,7 +18,8 @@ public:
                            double maxY,
                            int seconds,
                            double fmin,
-                           double fmax);
+                           double fmax,
+                           int mode);
     Q_INVOKABLE void stop();
 
 private:

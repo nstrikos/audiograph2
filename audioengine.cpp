@@ -1,6 +1,6 @@
 #include "audioengine.h"
 
-AudioEngine::AudioEngine(QString expression, double start, double end, double minY, double maxY, int seconds, int fmin, int fmax)
+AudioEngine::AudioEngine(QString expression, double start, double end, double minY, double maxY, int seconds, int fmin, int fmax, int mode)
 {
     generator = NULL;
     audioOutput = nullptr;
@@ -13,6 +13,7 @@ AudioEngine::AudioEngine(QString expression, double start, double end, double mi
     m_end = end;
     m_minY = minY;
     m_maxY = maxY;
+    m_mode = mode;
     checkParameters();
 }
 
@@ -54,7 +55,7 @@ void AudioEngine::resetGenerator()
 {
     if (generator != NULL)
         delete generator;
-    generator = new Generator(format, m_expression, m_start, m_end, m_minY, m_maxY, seconds, fmin, fmax);
+    generator = new Generator(format, m_expression, m_start, m_end, m_minY, m_maxY, seconds, fmin, fmax, m_mode);
     generator->start();
 }
 

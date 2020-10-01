@@ -1,5 +1,12 @@
 QT += quick multimedia texttospeech
 
+#msvc compiler
+#QMAKE_CXXFLAGS += -bigobj
+
+#mingw compiler
+QMAKE_CXXFLAGS += -Wa,-mbig-obj
+QMAKE_CXXFLAGS += -O2
+
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use

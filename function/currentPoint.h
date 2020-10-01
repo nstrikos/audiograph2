@@ -36,6 +36,8 @@ public:
     double Y() const;
     double point() const;
 
+    void setMode(int mode);
+
 signals:
     void movingPointFinished();
 
@@ -53,6 +55,8 @@ private:
     FunctionModel *m_model;
     double m_width;
     double m_height;
+
+    int m_mode = 0;
 };
 
 #endif // CURRENTPOINT_H

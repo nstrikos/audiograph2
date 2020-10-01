@@ -22,22 +22,19 @@ AudioNotes::~AudioNotes()
 void AudioNotes::startNotes(FunctionModel *model,
                             int fmin,
                             int fmax,
-                            int duration)
+                            int duration,
+                            int mode)
 {
     m_model = model;
     m_fmin = fmin;
     m_fmax = fmax;
     m_duration = duration * 1000;
+    m_mode = mode;
     m_timeElapsed = 0;
     m_timer.start();
 }
 
-void AudioNotes::setNote(FunctionModel *model,
-                         int mouseX,
-                         int width,
-                         int fmin,
-                         int fmax,
-                         bool useNotes)
+void AudioNotes::setNoteFromMouse(FunctionModel *model, int mouseX, int width, int fmin, int fmax, bool useNotes, int mode)
 {
     m_model = model;
 
@@ -81,7 +78,10 @@ void AudioNotes::setNote(FunctionModel *model,
         m_fmax = 830;
         a =  (m_fmax-m_fmin)/(max - min);
         b = m_fmax - a * max;
-        l = m_model->y(i);
+        if (mode == 0)
+            l = m_model->y(i);
+        else
+            l = m_model->derivative(i);
         if (l >= 0)
             n = true;
         else
@@ -102,7 +102,7 @@ void AudioNotes::setNote(FunctionModel *model,
     }
 }
 
-void AudioNotes::setNote(FunctionModel *model, int currentPoint, int fmin, int fmax, bool useNotes)
+void AudioNotes::setNote(FunctionModel *model, int currentPoint, int fmin, int fmax, bool useNotes, int mode)
 {
     m_model = model;
 
@@ -141,7 +141,10 @@ void AudioNotes::setNote(FunctionModel *model, int currentPoint, int fmin, int f
         m_fmax = 830;
         a =  (m_fmax-m_fmin)/(max - min);
         b = m_fmax - a * max;
-        l = m_model->y(m_currentPoint);
+        if (mode == 0)
+            l = m_model->y(m_currentPoint);
+        else
+            l = m_model->derivative(m_currentPoint);
         if (l >= 0)
             n = true;
         else
@@ -199,7 +202,10 @@ void AudioNotes::timerExpired()
         m_fmax = 493;
         a =  (m_fmax-m_fmin)/(max - min);
         b = m_fmax - a * max;
-        l = m_model->y(i);
+        if (m_mode == 0)
+            l = m_model->y(i);
+        else
+            l = m_model->derivative(i);
         if (l >= 0)
             n = true;
         else

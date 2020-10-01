@@ -43,6 +43,8 @@ private:
     GenParameters *m_params;
     vector<GenFunctionCalculatorThread*> m_threads;
     GenFunctionCalculatorThread* m_tmpThread = nullptr;
+
+    int m_mode = 0;
 };
 
 #endif // GENFUNCTIONCALCULATOR_H

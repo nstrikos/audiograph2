@@ -16,18 +16,21 @@ public:
     Q_INVOKABLE void startNotes(FunctionModel *model,
                                 int fmin,
                                 int fmax,
-                                int duration);
-    Q_INVOKABLE void setNote(FunctionModel *model,
+                                int duration,
+                                int mode);
+    Q_INVOKABLE void setNoteFromMouse(FunctionModel *model,
                              int mouseX,
                              int width,
                              int fmin,
                              int fmax,
-                             bool useNotes);
+                             bool useNotes,
+                             int mode);
     Q_INVOKABLE void setNote(FunctionModel *model,
                              int currentPoint,
                              int fmin,
                              int fmax,
-                             bool useNotes);
+                             bool useNotes,
+                             int mode);
     Q_INVOKABLE void stopNotes();
 
 signals:
@@ -46,6 +49,8 @@ private:
     AudioPoints *m_audioPoints;
     int m_mouseX;
     int m_currentPoint;
+
+    int m_mode = 0;
 };
 
 #endif // AUDIONOTES_H
