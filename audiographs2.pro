@@ -4,8 +4,8 @@ QT += quick multimedia texttospeech
 #QMAKE_CXXFLAGS += -bigobj
 
 #mingw compiler
-QMAKE_CXXFLAGS += -Wa,-mbig-obj
-QMAKE_CXXFLAGS += -O2
+#QMAKE_CXXFLAGS += -Wa,-mbig-obj
+#QMAKE_CXXFLAGS += -O2
 
 CONFIG += c++11
 

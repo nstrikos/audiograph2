@@ -254,11 +254,11 @@ void CurrentPoint::setPoint(int point)
 
     double x, y;
     if (m_mode == 0) {
-        x =  ( m_width / (xEnd - xStart) * (m_model->x(m_point) - xStart) );
-        y = ( m_height / (maxY - minY) * (m_model->y(m_point) - minY) );
+        x =  ( m_width / (xEnd - xStart) * (m_model->x(point) - xStart) );
+        y = ( m_height / (maxY - minY) * (m_model->y(point) - minY) );
     } else {
-        x =  ( m_width / (xEnd - xStart) * (m_model->x(m_point) - xStart) );
-        y = ( m_height / (maxY - minY) * (m_model->derivative(m_point) - minY) );
+        x =  ( m_width / (xEnd - xStart) * (m_model->x(point) - xStart) );
+        y = ( m_height / (maxY - minY) * (m_model->derivative(point) - minY) );
     }
 
     y = m_height - y;
