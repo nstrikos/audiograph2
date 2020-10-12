@@ -31,6 +31,7 @@ public:
                    double maxY);
 
     void calculateDerivative();
+    void calculateDerivative2();
 
     double x(int i) const;
     double y(int i) const;
@@ -49,10 +50,12 @@ public:
     QString getError();
 
     double derivative(int i) const;
+    double derivative2(int i) const;
 
 signals:
     void update();
     void updateDerivative();
+    void updateDerivative2();
     void error();
 
 private:
@@ -79,6 +82,7 @@ private:
     QVector<Point> m_linePoints;
     QVector<Point> m_points;
     QVector<Point> m_deriv;
+    QVector<Point> m_deriv2;
 
     QString m_error;
 

@@ -5,6 +5,8 @@ FunctionController::FunctionController(QObject *parent) : QObject(parent)
     m_model = new FunctionModel();
     connect(m_model, SIGNAL(update()), this, SLOT(updateDisplayView()));
     connect(m_model, SIGNAL(updateDerivative()), this, SLOT(updateDerivativeView()));
+    connect(m_model, SIGNAL(updateDerivative2()), this, SLOT(updateDerivativeView2()));
+
     connect(m_model, SIGNAL(error()), this, SLOT(clearDisplayView()));
 
     m_zoomer = new FunctionZoomer();
@@ -66,6 +68,11 @@ void FunctionController::setDerivativeView(FunctionDisplayView *view)
     m_derivativeView = view;
 }
 
+void FunctionController::setDerivative2View(FunctionDisplayView *view)
+{
+    m_derivative2View = view;
+}
+
 void FunctionController::displayFunction(QString expression,
                                          QString minX,
                                          QString maxX,
@@ -97,6 +104,10 @@ void FunctionController::clearDisplayView()
         return;
     m_derivativeView->clear();
 
+    if (m_derivative2View == nullptr)
+        return;
+    m_derivative2View->clear();
+
     m_mode = 0;
     m_currentPoint->setMode(m_mode);
     m_pointsInterest->setMode(m_mode);
@@ -111,6 +122,14 @@ void FunctionController::updateDerivativeView()
         return;
 
     m_derivativeView->drawDerivative(m_model);
+}
+
+void FunctionController::updateDerivativeView2()
+{
+    if (m_derivative2View == nullptr)
+        return;
+
+    m_derivative2View->drawDerivative2(m_model);
 }
 
 void FunctionController::interestingPointFinished()
@@ -133,6 +152,11 @@ void FunctionController::viewDimensionsChanged()
         return;
     if (m_mode == 1)
         m_model->calculateDerivative();
+
+    if (m_derivative2View == nullptr)
+        return;
+    if (m_mode == 2)
+        m_model->calculateDerivative2();
 }
 
 void FunctionController::zoom(double delta)
@@ -423,17 +447,23 @@ QString FunctionController::getError()
         return (tr("Empty expression"));
 }
 
-void FunctionController::setMode()
+void FunctionController::setMode(int mode)
 {
+    m_mode = mode;
     if (m_mode == 0) {
-        m_mode = 1;
-        m_model->calculateDerivative();
-    }
-    else {
-        m_mode = 0;
         if (m_derivativeView != nullptr)
             m_derivativeView->clear();
+        if (m_derivative2View != nullptr)
+            m_derivative2View->clear();
+    } else if (m_mode == 1) {
+        m_model->calculateDerivative();
+        if (m_derivative2View != nullptr)
+            m_derivative2View->clear();
+    } else if (m_mode == 2) {
+        m_model->calculateDerivative();
+        m_model->calculateDerivative2();
     }
+
     m_currentPoint->setMode(m_mode);
     m_pointsInterest->setMode(m_mode);
 }

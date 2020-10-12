@@ -20,6 +20,8 @@ public:
 
     void draw(FunctionModel *model);
     void drawDerivative(FunctionModel *model);
+    void drawDerivative2(FunctionModel *model);
+
     void clear();
 
     void setColor(const QColor &color);

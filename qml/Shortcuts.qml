@@ -167,9 +167,23 @@ Item {
     }
 
     Shortcut {
+        sequence: "Ctrl+N"
+        onActivated: {
+            functionController.setMode(0)
+        }
+    }
+
+    Shortcut {
         sequence: "Ctrl+D"
         onActivated: {
-            functionController.setMode()
+            functionController.setMode(1)
+        }
+    }
+
+    Shortcut {
+        sequence: "Ctrl+Y"
+        onActivated: {
+            functionController.setMode(2)
         }
     }
 

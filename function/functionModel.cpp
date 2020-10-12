@@ -283,6 +283,26 @@ void FunctionModel::calculateDerivative()
     emit updateDerivative();
 }
 
+void FunctionModel::calculateDerivative2()
+{
+    if (m_linePoints.size() <= 0)
+        return;
+
+    Point tmpPoint;
+
+    m_deriv2.clear();
+
+    for (int i = 0; i < LINE_POINTS; i++) {
+        m_x = m_linePoints[i].x;
+        double y = exprtk::second_derivative(parser_expression, m_x);
+        tmpPoint.x = m_x;
+        tmpPoint.y = y;
+        m_deriv2.append(tmpPoint);
+    }
+
+    emit updateDerivative2();
+}
+
 double FunctionModel::x(int i) const
 {
     return m_linePoints[i].x;
@@ -301,6 +321,11 @@ bool FunctionModel::isValid(int i) const
 double FunctionModel::derivative(int i) const
 {
     return m_deriv[i].y;
+}
+
+double FunctionModel::derivative2(int i) const
+{
+    return m_deriv2[i].y;
 }
 
 int FunctionModel::lineSize() const

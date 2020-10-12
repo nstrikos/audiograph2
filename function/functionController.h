@@ -26,6 +26,7 @@ public:
     void setView(FunctionDisplayView *view);
     void setPointView(FunctionPointView *pointView);
     void setDerivativeView(FunctionDisplayView *view);
+    void setDerivative2View(FunctionDisplayView *view);
 
     Q_INVOKABLE void displayFunction(QString expression,
                                      QString minX,
@@ -78,7 +79,7 @@ public:
 
     Q_INVOKABLE QString getError();
 
-    Q_INVOKABLE void setMode();
+    Q_INVOKABLE void setMode(int mode);
 
 signals:
     void updateFinished();
@@ -91,6 +92,7 @@ private slots:
     void updateDisplayView();
     void clearDisplayView();
     void updateDerivativeView();
+    void updateDerivativeView2();
     void interestingPointFinished();
 
 private:
@@ -102,6 +104,7 @@ private:
     FunctionDisplayView *m_view;
     FunctionPointView *m_pointView;
     FunctionDisplayView *m_derivativeView;
+    FunctionDisplayView *m_derivative2View;
     Parameters *m_parameters;
 
     //These classes are internal

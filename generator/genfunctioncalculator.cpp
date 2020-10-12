@@ -99,8 +99,10 @@ void GenFunctionCalculatorThread::run()
 
         if (m_params->mode() == 0)
             result = parser_expression.value();//m_fparser.Eval(vals);
-        else
+        else if (m_params->mode() == 1)
             result = exprtk::derivative(parser_expression, m_x);
+        else
+            result = exprtk::second_derivative(parser_expression, m_x);
         //        res = m_fparser.EvalError();
 
         if (result > 1 * m_params->maxY())

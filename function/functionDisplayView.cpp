@@ -43,6 +43,15 @@ void FunctionDisplayView::drawDerivative(FunctionModel *model)
     }
 }
 
+void FunctionDisplayView::drawDerivative2(FunctionModel *model)
+{
+    m_model = model;
+    if (m_model != nullptr &&  m_model->lineSize() > 0) {
+        calcDeriv2Coords(this->width(), this->height());
+        update();
+    }
+}
+
 QSGNode *FunctionDisplayView::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
 {
     QSGGeometryNode *node = nullptr;
