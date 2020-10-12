@@ -80,8 +80,11 @@ void AudioNotes::setNoteFromMouse(FunctionModel *model, int mouseX, int width, i
         b = m_fmax - a * max;
         if (mode == 0)
             l = m_model->y(i);
-        else
+        else if (mode == 1)
             l = m_model->derivative(i);
+        else if (mode == 2)
+            l = m_model->derivative2(i);
+
         if (l >= 0)
             n = true;
         else
@@ -143,8 +146,10 @@ void AudioNotes::setNote(FunctionModel *model, int currentPoint, int fmin, int f
         b = m_fmax - a * max;
         if (mode == 0)
             l = m_model->y(m_currentPoint);
-        else
+        else if (mode == 1)
             l = m_model->derivative(m_currentPoint);
+        else if (mode == 2)
+            l = m_model->derivative2(m_currentPoint);
         if (l >= 0)
             n = true;
         else
@@ -204,8 +209,11 @@ void AudioNotes::timerExpired()
         b = m_fmax - a * max;
         if (m_mode == 0)
             l = m_model->y(i);
-        else
+        else if (m_mode == 1)
             l = m_model->derivative(i);
+        else if (m_mode == 2)
+            l = m_model->derivative2(i);
+
         if (l >= 0)
             n = true;
         else

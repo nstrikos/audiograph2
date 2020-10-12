@@ -150,13 +150,16 @@ void FunctionController::viewDimensionsChanged()
 
     if (m_derivativeView == nullptr)
         return;
+
     if (m_mode == 1)
         m_model->calculateDerivative();
 
     if (m_derivative2View == nullptr)
         return;
-    if (m_mode == 2)
+    if (m_mode == 2) {
+        m_model->calculateDerivative();
         m_model->calculateDerivative2();
+    }
 }
 
 void FunctionController::zoom(double delta)

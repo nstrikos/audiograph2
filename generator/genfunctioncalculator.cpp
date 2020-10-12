@@ -101,7 +101,7 @@ void GenFunctionCalculatorThread::run()
             result = parser_expression.value();//m_fparser.Eval(vals);
         else if (m_params->mode() == 1)
             result = exprtk::derivative(parser_expression, m_x);
-        else
+        else if (m_params->mode() == 2)
             result = exprtk::second_derivative(parser_expression, m_x);
         //        res = m_fparser.EvalError();
 

@@ -66,9 +66,12 @@ void CurrentPoint::setMouseX(int mouseX)
     if (m_mode == 0) {
         x =  ( m_width / (xEnd - xStart) * (m_model->x(i) - xStart) );
         y = ( m_height / (maxY - minY) * (m_model->y(i) - minY) );
-    } else {
+    } else if (m_mode == 1) {
         x =  ( m_width / (xEnd - xStart) * (m_model->x(i) - xStart) );
         y = ( m_height / (maxY - minY) * (m_model->derivative(i) - minY) );
+    } else if (m_mode == 2) {
+        x =  ( m_width / (xEnd - xStart) * (m_model->x(i) - xStart) );
+        y = ( m_height / (maxY - minY) * (m_model->derivative2(i) - minY) );
     }
 
     y = m_height - y;
@@ -169,9 +172,12 @@ void CurrentPoint::update(double width, double height)
     if (m_mode == 0) {
         x =  ( m_width / (xEnd - xStart) * (m_model->x(m_point) - xStart) );
         y = ( m_height / (maxY - minY) * (m_model->y(m_point) - minY) );
-    } else {
+    } else if (m_mode == 1) {
         x =  ( m_width / (xEnd - xStart) * (m_model->x(m_point) - xStart) );
         y = ( m_height / (maxY - minY) * (m_model->derivative(m_point) - minY) );
+    } else if (m_mode == 2) {
+        x =  ( m_width / (xEnd - xStart) * (m_model->x(m_point) - xStart) );
+        y = ( m_height / (maxY - minY) * (m_model->derivative2(m_point) - minY) );
     }
 
     y = m_height - y;
@@ -219,9 +225,12 @@ void CurrentPoint::timerExpired()
     if (m_mode == 0) {
         x =  ( m_width / (xEnd - xStart) * (m_model->x(i) - xStart) );
         y = ( m_height / (maxY - minY) * (m_model->y(i) - minY) );
-    } else {
+    } else if (m_mode == 1) {
         x =  ( m_width / (xEnd - xStart) * (m_model->x(i) - xStart) );
         y = ( m_height / (maxY - minY) * (m_model->derivative(i) - minY) );
+    } else if (m_mode == 2) {
+        x =  ( m_width / (xEnd - xStart) * (m_model->x(i) - xStart) );
+        y = ( m_height / (maxY - minY) * (m_model->derivative2(i) - minY) );
     }
 
     y = m_height - y;
@@ -256,9 +265,12 @@ void CurrentPoint::setPoint(int point)
     if (m_mode == 0) {
         x =  ( m_width / (xEnd - xStart) * (m_model->x(point) - xStart) );
         y = ( m_height / (maxY - minY) * (m_model->y(point) - minY) );
-    } else {
+    } else if (m_mode == 1) {
         x =  ( m_width / (xEnd - xStart) * (m_model->x(point) - xStart) );
         y = ( m_height / (maxY - minY) * (m_model->derivative(point) - minY) );
+    } else if (m_mode == 2) {
+        x =  ( m_width / (xEnd - xStart) * (m_model->x(point) - xStart) );
+        y = ( m_height / (maxY - minY) * (m_model->derivative2(point) - minY) );
     }
 
     y = m_height - y;
