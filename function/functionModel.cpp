@@ -9,12 +9,15 @@ FunctionModel::FunctionModel(QObject *parent) : QObject(parent)
 {
     m_error = tr("Syntax error");
 
+#ifndef Q_OS_WIN
+
     symbol_table.add_variable("x",m_x);
     symbol_table.add_constant("pi", M_PI);
     symbol_table.add_constant("e", M_E);
     symbol_table.add_constants();
 
     parser_expression.register_symbol_table(symbol_table);
+#endif
 
 }
 
@@ -134,17 +137,21 @@ bool FunctionModel::check()
         return false;
     }
 
-    //    m_fparser.AddConstant("pi", M_PI);
-    //    m_fparser.AddConstant("e", M_E);
-    //    int res = m_fparser.Parse(m_expression.toStdString(), "x");
-    //    if(res >= 0 || m_expression == "") {
-    //        const char *s;
-    //        s = m_fparser.ErrorMsg();
-    //        m_error = QString::fromUtf8(s);
-    //        qDebug() << m_error;
-    //        emit error();
-    //        return false;
-    //    }
+#ifdef Q_OS_WIN
+
+    m_fparser.AddConstant("pi", M_PI);
+    m_fparser.AddConstant("e", M_E);
+    int res = m_fparser.Parse(m_expression.toStdString(), "x");
+    if(res >= 0 || m_expression == "") {
+        const char *s;
+        s = m_fparser.ErrorMsg();
+        m_error = QString::fromUtf8(s);
+        qDebug() << m_error;
+        emit error();
+        return false;
+    }
+
+#else
 
     typedef exprtk::parser<double>::settings_t settings_t;
 
@@ -170,10 +177,13 @@ bool FunctionModel::check()
         }
 
 
+
         qDebug() << m_error;
         emit error();
         return false;
     }
+
+#endif
 
     return true;
 }
@@ -190,25 +200,38 @@ void FunctionModel::calculatePoints()
 
     m_linePoints.clear();
 
-    //double vals[] = { 0 };
     double step;
-    //    int res;
+
+#ifdef Q_OS_WIN
+
+    double x;
 
 
-    //    typedef exprtk::symbol_table<double> symbol_table_t;
-    //    typedef exprtk::expression<double>     expression_t;
-    //    typedef exprtk::parser<double>             parser_t;
+    double vals[] = { 0 };
+    int res;
 
-    //    const std::string expression_string = m_expression.toStdString();
+    step = (m_maxX - m_minX) / LINE_POINTS;
+    for (int i = 0; i < LINE_POINTS; i++) {
+        x = m_minX + i * step;
+        vals[0] = x;
+        result = m_fparser.Eval(vals);
+        res = m_fparser.EvalError();
+        tmpPoint.x = x;
+        tmpPoint.y = result;
+        if (result != result)
+            tmpPoint.isValid = false;
+        else if (res > 0)
+            tmpPoint.isValid = false;
+        else if (res == 0)
+            tmpPoint.isValid = true;
 
-    //    double x;
+        m_linePoints.append(tmpPoint);
+    }
 
-    //    symbol_table_t symbol_table;
-    //    symbol_table.add_variable("x",x);
-    //    symbol_table.add_constants();
+#else
 
-    //    expression_t expression;
-    //    expression.register_symbol_table(symbol_table);
+
+
 
     typedef exprtk::parser<double>::settings_t settings_t;
 
@@ -248,6 +271,8 @@ void FunctionModel::calculatePoints()
         m_linePoints.append(tmpPoint);
     }
 
+#endif
+
     m_minValue = std::numeric_limits<double>::max();//m_linePoints[0].y;
     m_maxValue = std::numeric_limits<double>::min();//m_linePoints[0].y;
 
@@ -265,6 +290,11 @@ void FunctionModel::calculatePoints()
 
 void FunctionModel::calculateDerivative()
 {
+
+#ifdef Q_OS_WIN
+
+#else
+
     if (m_linePoints.size() <= 0)
         return;
 
@@ -280,11 +310,17 @@ void FunctionModel::calculateDerivative()
         m_deriv.append(tmpPoint);
     }
 
+#endif
+
     emit updateDerivative();
 }
 
 void FunctionModel::calculateDerivative2()
 {
+#ifdef Q_OS_WIN
+
+#else
+
     if (m_linePoints.size() <= 0)
         return;
 
@@ -299,6 +335,8 @@ void FunctionModel::calculateDerivative2()
         tmpPoint.y = y;
         m_deriv2.append(tmpPoint);
     }
+
+#endif
 
     emit updateDerivative2();
 }

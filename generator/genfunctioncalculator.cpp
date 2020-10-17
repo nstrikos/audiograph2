@@ -46,35 +46,65 @@ GenFunctionCalculatorThread::GenFunctionCalculatorThread(GenParameters *params,
     m_first = first;
     m_last = last;
 
+#ifndef Q_OS_WIN
+
     symbol_table.add_variable("x", m_x);
     symbol_table.add_constant("pi", M_PI);
     symbol_table.add_constant("e", M_E);
     symbol_table.add_constants();
 
     parser_expression.register_symbol_table(symbol_table);
+#endif
 }
 
 void GenFunctionCalculatorThread::run()
 {
-//    double x;
     double start = m_params->start();
     double step = m_params->step();
     double *functionValues = m_params->functionValues();
     unsigned long long int i = 0;
+    double result;
 
     QString expression = m_params->expression();
     std::string exp = expression.toStdString();
 
-//    m_fparser.AddConstant("pi", M_PI);
-//    m_fparser.AddConstant("e", M_E);
+#ifdef Q_OS_WIN
+    double x;
+    m_fparser.AddConstant("pi", M_PI);
+    m_fparser.AddConstant("e", M_E);
 
-//    double vals[] = { 0 };
-    double result;
+    double vals[] = { 0 };
+    m_fparser.Parse(exp, "x");
+
+    for (i = m_first; i < m_last; i++) {
+        x = start + i * step;
+        vals[0] = x;
+        result = m_fparser.Eval(vals);
+
+        if (result > m_params->maxY())
+            result = m_params->maxY();
+        if (result < m_params->minY())
+            result = m_params->minY();
+
+        functionValues[i] = result;
+
+        if (is_nan(result)) {
+            functionValues[i] = 0;
+        }
+    }
+#else
+
+
+
+    //    m_fparser.AddConstant("pi", M_PI);
+    //    m_fparser.AddConstant("e", M_E);
+
+    //    double vals[] = { 0 };
 
     //    size_t err = parser.parse(byteCode, exp, "x");
     //    if ( err  )
 
-//    m_fparser.Parse(exp, "x");
+    //    m_fparser.Parse(exp, "x");
 
     //    if(res >= 0 || exp == "") {
     //        emit error(tr("Cannot understand expression.\n") + m_fparser.ErrorMsg());
@@ -95,7 +125,7 @@ void GenFunctionCalculatorThread::run()
         m_x = start + i * step;
         //byteCode.var[0] = x;   // x is 1st in the above variables list, so it has index 0
         //result = byteCode.run();
-//        vals[0] = x;
+        //        vals[0] = x;
 
         if (m_params->mode() == 0)
             result = parser_expression.value();//m_fparser.Eval(vals);
@@ -138,9 +168,9 @@ void GenFunctionCalculatorThread::run()
         //            functionValues[i] = -std::numeric_limits<double>::max();
         //        }
 
-                if (is_nan(result)) {
-                    functionValues[i] = 0;
-                }
+        if (is_nan(result)) {
+            functionValues[i] = 0;
+        }
         //        m_functionValues[i] = sin(x)*x*x*x - x*x*sin(x);
         //        functionValues[i] = -5/(x*x + 1);
         //        m_functionValues[i] = x;
@@ -156,6 +186,8 @@ void GenFunctionCalculatorThread::run()
         //            functionValues[i] = 1 / x;
 
     }
+
+#endif
 }
 
 bool GenFunctionCalculatorThread::is_positive_infinite(const double &value)

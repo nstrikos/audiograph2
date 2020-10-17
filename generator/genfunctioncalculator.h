@@ -6,7 +6,11 @@
 #include <vector>
 using namespace std;
 
+#ifdef Q_OS_WIN
+#include "fparser/fparser.hh"
+#else
 #include "exprtk/exprtk.hpp"
+#endif
 
 class GenFunctionCalculatorThread : public QThread
 {
@@ -23,15 +27,19 @@ private:
     bool is_negative_infinite( const double &value );
     bool is_nan( const double &value );
     bool is_valid( const double &value );
+    double m_x;
+    FunctionParser m_fparser;
+#ifdef Q_OS_WIN
+
+#else
 
     typedef exprtk::symbol_table<double> symbol_table_t;
     typedef exprtk::expression<double>     expression_t;
     typedef exprtk::parser<double>             parser_t;
 
     symbol_table_t symbol_table;
-    double m_x;
     expression_t parser_expression;
-
+#endif
 };
 
 

@@ -5,11 +5,17 @@
 #include <QVector>
 #include <point.h>
 
+#ifdef Q_OS_WIN
+#include "fparser/fparser.hh"
+#else
+
 #include "exprtk/exprtk.hpp"
 
 typedef exprtk::symbol_table<double> symbol_table_t;
 typedef exprtk::expression<double>     expression_t;
 typedef exprtk::parser<double>             parser_t;
+
+#endif
 
 class FunctionModel : public QObject
 {
@@ -86,11 +92,15 @@ private:
 
     QString m_error;
 
+#ifdef Q_OS_WIN
+    FunctionParser m_fparser;
+#else
     symbol_table_t symbol_table;
     double m_x;
     expression_t parser_expression;
     expression_t parser_expression2;
     symbol_table_t symbol_table2;
+#endif
 };
 
 #endif // FUNCTIONMODEL_H
