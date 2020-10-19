@@ -187,6 +187,20 @@ Item {
         }
     }
 
+    Shortcut {
+        sequence: "Ctrl+1"
+        onActivated: {
+            functionController.setMode(1)
+        }
+    }
+
+    Shortcut {
+        sequence: "Ctrl+2"
+        onActivated: {
+            functionController.setMode(2)
+        }
+    }
+
     //    onActiveFocusItemChanged: {
     //        if (activeFocusItem == controlsRect.textInput)
     //            print("focus: textInput")

@@ -290,17 +290,42 @@ void FunctionModel::calculatePoints()
 
 void FunctionModel::calculateDerivative()
 {
-
-#ifdef Q_OS_WIN
-
-#else
-
     if (m_linePoints.size() <= 0)
         return;
 
     Point tmpPoint;
 
     m_deriv.clear();
+
+#ifdef Q_OS_WIN
+    double vals[] = { 0 };
+    const double h = 0.00000001;
+    const double h2 = 2 * h;
+    double x_init;
+    double x;
+
+    for (int i = 0; i < LINE_POINTS; i++) {
+        x_init = m_linePoints[i].x;
+        x = x_init + h2;
+        vals[0] = x;
+        double y0 = m_fparser.Eval(vals);
+        x = x_init + h;
+        vals[0] = x;
+        double y1 = m_fparser.Eval(vals);
+        x = x_init - h;
+        vals[0] = x;
+        double y2 = m_fparser.Eval(vals);
+        x = x_init - h2;
+        vals[0] = x;
+        double y3 = m_fparser.Eval(vals);
+
+        tmpPoint.x = x_init;
+        tmpPoint.y = (-y0 + 8 * (y1 - y2) + y3) / (12 * h);
+        m_deriv.append(tmpPoint);
+    }
+#else
+
+
 
     for (int i = 0; i < LINE_POINTS; i++) {
         m_x = m_linePoints[i].x;
@@ -317,10 +342,6 @@ void FunctionModel::calculateDerivative()
 
 void FunctionModel::calculateDerivative2()
 {
-#ifdef Q_OS_WIN
-
-#else
-
     if (m_linePoints.size() <= 0)
         return;
 
@@ -328,6 +349,36 @@ void FunctionModel::calculateDerivative2()
 
     m_deriv2.clear();
 
+#ifdef Q_OS_WIN
+    double vals[] = { 0 };
+    const double h = 0.00001;
+    const double h2 = 2 * h;
+    double x_init;
+    double x;
+
+    for (int i = 0; i < LINE_POINTS; i++) {
+        x_init = m_linePoints[i].x;
+        x = x_init;
+        vals[0] = x;
+        double y = m_fparser.Eval(vals);
+        x = x_init + h2;
+        vals[0] = x;
+        double y0 = m_fparser.Eval(vals);
+        x = x_init + h;
+        vals[0] = x;
+        double y1 = m_fparser.Eval(vals);
+        x = x_init - h;
+        vals[0] = x;
+        double y2 = m_fparser.Eval(vals);
+        x = x_init - h2;
+        vals[0] = x;
+        double y3 = m_fparser.Eval(vals);
+
+        tmpPoint.x = x_init;
+        tmpPoint.y = (-y0 + 16 * (y1 + y2) - 30 * y - y3) / (12 * h * h);
+        m_deriv2.append(tmpPoint);
+    }
+#else
     for (int i = 0; i < LINE_POINTS; i++) {
         m_x = m_linePoints[i].x;
         double y = exprtk::second_derivative(parser_expression, m_x);
