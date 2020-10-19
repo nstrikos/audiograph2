@@ -34,6 +34,7 @@ FunctionController::FunctionController(QObject *parent) : QObject(parent)
 
     m_view = nullptr;
     m_pointView = nullptr;
+    m_lineView = nullptr;
 }
 
 FunctionController::~FunctionController()
@@ -56,6 +57,12 @@ void FunctionController::setPointView(FunctionPointView *pointView)
     m_currentPoint->setWidth(m_pointView->width());
     m_currentPoint->setHeight(m_pointView->height());
     m_pointView->setCurrentPoint(m_currentPoint);
+}
+
+void FunctionController::setLineView(FunctionLineView *lineView)
+{
+    m_lineView = lineView;
+    m_lineView->setCurrentPoint(m_currentPoint);
 }
 
 void FunctionController::setView(FunctionDisplayView *view)
@@ -143,6 +150,8 @@ void FunctionController::viewDimensionsChanged()
     if (m_view == nullptr)
         return;
     if (m_pointView == nullptr)
+        return;
+    if (m_lineView == nullptr)
         return;
 
     m_view->updateView();

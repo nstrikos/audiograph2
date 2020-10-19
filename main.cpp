@@ -10,6 +10,7 @@
 #include "function/functionController.h"
 #include "function/functionDisplayView.h"
 #include "function/functionPointView.h"
+#include "function/functionLineView.h"
 
 int main(int argc, char *argv[])
 {
@@ -23,6 +24,7 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<FunctionDisplayView>("DisplayView", 1, 0, "DisplayView");
     qmlRegisterType<FunctionPointView>("PointView", 1, 0, "PointView");
+    qmlRegisterType<FunctionPointView>("LineView", 1, 0, "LineView");
 
     Parameters *parameters = &Parameters::getInstance();
     FunctionController functionController;
@@ -42,17 +44,22 @@ int main(int argc, char *argv[])
 
     QObject *rootObject = engine.rootObjects().first();
     QObject *qmlPointView = rootObject->findChild<QObject*>("pointView");
+    QObject *qmlLineView = rootObject->findChild<QObject*>("lineView");
+
     QObject *qmlDisplayView = rootObject->findChild<QObject*>("displayView");
     QObject *qmlDerivativeView = rootObject->findChild<QObject*>("derivativeView");
     QObject *qmlDerivative2View = rootObject->findChild<QObject*>("derivative2View");
 
     FunctionPointView *pointView = static_cast<FunctionPointView*>(qmlPointView);
+    FunctionLineView *lineView = static_cast<FunctionLineView*>(qmlLineView);
+
     FunctionDisplayView *displayView = static_cast<FunctionDisplayView*>(qmlDisplayView);
     FunctionDisplayView *derivativeView = static_cast<FunctionDisplayView*>(qmlDerivativeView);
     FunctionDisplayView *derivative2View = static_cast<FunctionDisplayView*>(qmlDerivative2View);
 
     functionController.setView(displayView);
     functionController.setPointView(pointView);
+    functionController.setLineView(lineView);
     functionController.setDerivativeView(derivativeView);
     functionController.setDerivative2View(derivative2View);
 

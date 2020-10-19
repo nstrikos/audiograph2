@@ -33,6 +33,7 @@ SOURCES += \
         function/functionDescription.cpp \
         function/functionDisplayView.cpp \
         function/functionDisplayViewInterface.cpp \
+        function/functionLineView.cpp \
         function/functionModel.cpp \
         function/functionPointView.cpp \
         function/functionZoomer.cpp \
@@ -153,6 +154,7 @@ HEADERS += \
     function/functionDescription.h \
     function/functionDisplayView.h \
     function/functionDisplayViewInterface.h \
+    function/functionLineView.h \
     function/functionModel.h \
     function/functionPointView.h \
     function/functionZoomer.h \
