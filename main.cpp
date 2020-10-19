@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<FunctionDisplayView>("DisplayView", 1, 0, "DisplayView");
     qmlRegisterType<FunctionPointView>("PointView", 1, 0, "PointView");
-    qmlRegisterType<FunctionPointView>("LineView", 1, 0, "LineView");
+    qmlRegisterType<FunctionLineView>("LineView", 1, 0, "LineView");
 
     Parameters *parameters = &Parameters::getInstance();
     FunctionController functionController;

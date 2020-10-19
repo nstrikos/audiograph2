@@ -70,8 +70,8 @@ Rectangle {
         anchors.fill: parent
         layer.enabled: true
         layer.samples: 256
-        color: "green"//parameters.highlightColor
-        size: 25//parameters.highlightSize
+        color: parameters.highlightColor
+        size: parameters.highlightSize
     }
 
     PointView {

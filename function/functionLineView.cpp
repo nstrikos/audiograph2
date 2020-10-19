@@ -31,18 +31,20 @@ QSGNode *FunctionLineView::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData
     if (!oldNode) {
         node = new QSGGeometryNode;
 
-        geometry = new QSGGeometry(QSGGeometry::defaultAttributes_Point2D(), POINT_SEGMENTS);
-        geometry->setDrawingMode(QSGGeometry::DrawTriangleFan);
+        geometry = new QSGGeometry(QSGGeometry::defaultAttributes_Point2D(), 2);
+        geometry->setDrawingMode(QSGGeometry::DrawLines);
+        geometry->setLineWidth(1);
         node->setGeometry(geometry);
         node->setFlag(QSGNode::OwnsGeometry);
         m_material = new QSGFlatColorMaterial;
-//        m_material->setColor(m_color);
+        m_material->setColor(m_color);
         node->setMaterial(m_material);
         node->setFlag(QSGNode::OwnsMaterial);
     } else {
         node = static_cast<QSGGeometryNode *>(oldNode);
         geometry = node->geometry();
-        geometry->allocate(POINT_SEGMENTS);
+        geometry->allocate(2);
+        geometry->setLineWidth(1);
         m_material->setColor(m_color);
         node->setMaterial(m_material);
         node->setFlag(QSGNode::OwnsMaterial);
@@ -50,17 +52,14 @@ QSGNode *FunctionLineView::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData
 
     QSGGeometry::Point2D *lineVertices = geometry->vertexDataAsPoint2D();
 
-    int r = m_size;
-    for(int ii = 0; ii < POINT_SEGMENTS; ii++) {
-        float theta = 2.0f * 3.1415926f * float(ii) / float(POINT_SEGMENTS);//get the current angle
 
-        float x = r * cos(theta);
-        float y = r * sin(theta);
-
-        if (m_currentPoint != nullptr)
-            lineVertices[ii].set(x + m_currentPoint->X(), y + m_currentPoint->Y());//output vertex
-        else
-            lineVertices[ii].set(-20, -20);
+    if (m_currentPoint != nullptr) {
+        lineVertices[0].set(m_currentPoint->X(), 0);//output vertex
+        lineVertices[1].set(m_currentPoint->X(), this->height());
+    }
+    else {
+        lineVertices[0].set(-20, -20);
+        lineVertices[1].set(-20, -20);
     }
 
     node->markDirty(QSGNode::DirtyGeometry);
