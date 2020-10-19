@@ -3,6 +3,7 @@ import QtQuick 2.12
 //import CurveMovingPoint 1.0
 import DisplayView 1.0
 import PointView 1.0
+import LineView 1.0
 
 import "../BeautityRect"
 
@@ -61,6 +62,16 @@ Rectangle {
         layer.samples: 256
         color: parameters.lineColor
         lineWidth: parameters.lineWidth
+    }
+
+    LineView {
+        id: lineView
+        objectName: "lineView"
+        anchors.fill: parent
+        layer.enabled: true
+        layer.samples: 256
+        color: "green"//parameters.highlightColor
+        size: 25//parameters.highlightSize
     }
 
     PointView {

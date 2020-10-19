@@ -28,9 +28,8 @@ private:
     bool is_nan( const double &value );
     bool is_valid( const double &value );
     double m_x;
-    FunctionParser m_fparser;
 #ifdef Q_OS_WIN
-
+    FunctionParser m_fparser;
 #else
 
     typedef exprtk::symbol_table<double> symbol_table_t;

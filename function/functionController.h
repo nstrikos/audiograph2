@@ -5,6 +5,7 @@
 #include "functionModel.h"
 #include "functionDisplayView.h"
 #include "functionPointView.h"
+#include "functionLineView.h"
 #include "audio.h"
 #include "audionotes.h"
 #include "parameters.h"
@@ -25,6 +26,7 @@ public:
 
     void setView(FunctionDisplayView *view);
     void setPointView(FunctionPointView *pointView);
+    void setLineView(FunctionLineView *lineView);
     void setDerivativeView(FunctionDisplayView *view);
     void setDerivative2View(FunctionDisplayView *view);
 
@@ -103,6 +105,7 @@ private:
     //These are defined outside of the class
     FunctionDisplayView *m_view;
     FunctionPointView *m_pointView;
+    FunctionLineView *m_lineView;
     FunctionDisplayView *m_derivativeView;
     FunctionDisplayView *m_derivative2View;
     Parameters *m_parameters;
