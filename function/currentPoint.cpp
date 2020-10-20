@@ -242,6 +242,7 @@ void CurrentPoint::timerExpired()
 void CurrentPoint::setMode(int mode)
 {
     m_mode = mode;
+    update(m_width, m_height);
 }
 
 void CurrentPoint::setPoint(int point)

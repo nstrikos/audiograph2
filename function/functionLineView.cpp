@@ -33,7 +33,7 @@ QSGNode *FunctionLineView::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData
 
         geometry = new QSGGeometry(QSGGeometry::defaultAttributes_Point2D(), 2);
         geometry->setDrawingMode(QSGGeometry::DrawLines);
-        geometry->setLineWidth(1);
+        geometry->setLineWidth(m_size);
         node->setGeometry(geometry);
         node->setFlag(QSGNode::OwnsGeometry);
         m_material = new QSGFlatColorMaterial;
@@ -44,7 +44,7 @@ QSGNode *FunctionLineView::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData
         node = static_cast<QSGGeometryNode *>(oldNode);
         geometry = node->geometry();
         geometry->allocate(2);
-        geometry->setLineWidth(1);
+        geometry->setLineWidth(m_size);
         m_material->setColor(m_color);
         node->setMaterial(m_material);
         node->setFlag(QSGNode::OwnsMaterial);
@@ -53,7 +53,7 @@ QSGNode *FunctionLineView::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData
     QSGGeometry::Point2D *lineVertices = geometry->vertexDataAsPoint2D();
 
 
-    if (m_currentPoint != nullptr) {
+    if (m_currentPoint != nullptr && m_currentPoint->X() != 0 ) {
         lineVertices[0].set(m_currentPoint->X(), 0);//output vertex
         lineVertices[1].set(m_currentPoint->X(), this->height());
     }
@@ -74,7 +74,7 @@ int FunctionLineView::size() const
 
 void FunctionLineView::setSize(int size)
 {
-    m_size = size;
+    m_size = size / 4;
 }
 
 QColor FunctionLineView::color() const

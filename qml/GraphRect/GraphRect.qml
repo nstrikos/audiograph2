@@ -23,8 +23,14 @@ Rectangle {
 
     onCurveColorChanged: displayView.color = curveColor
     onCurveWidthChanged: displayView.lineWidth = curveWidth
-    onHighlightColorChanged: pointView.color = highlightColor
-    onHighlightSizeChanged: pointView.size = highlightSize
+    onHighlightColorChanged: {
+        pointView.color = highlightColor
+        lineView.color = highlightColor
+    }
+    onHighlightSizeChanged: {
+        pointView.size = highlightSize
+        lineView.size = highlightSize
+    }
 
     GraphCanvas {
         id: graphCanvas
